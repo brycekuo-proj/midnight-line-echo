@@ -8,12 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
---bg:#0a0a0f; --chat-bg:#111118; --b-other:#1e1e2a; --b-self:#1a4a3a;
---b-eva:#1a0a2a; --b-rain:#0a1a1a; --b-k:#0a0a1a;
---text:#e8e8f0; --dim:#6b6b80; --ghost:#3a3a4a;
---green:#2dd4a4; --red:#ff4466; --purple:#9933ff;
---warn:#ffaa00; --hdr:#1a1a24; --border:#2a2a38;
---sync:#9933ff; --rain-color:#2299aa; --k-color:#5577ff;
+  --bg:#0a0a0f; --chat-bg:#111118; --b-other:#1e1e2a; --b-self:#1a4a3a;
+  --b-eva:#1a0a2a; --b-rain:#0a1a1a; --b-k:#0a0a1a;
+  --text:#e8e8f0; --dim:#6b6b80; --ghost:#3a3a4a;
+  --green:#2dd4a4; --red:#ff4466; --purple:#9933ff;
+  --warn:#ffaa00; --hdr:#1a1a24; --border:#2a2a38;
+  --sync:#9933ff; --rain-color:#2299aa; --k-color:#5577ff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none}
@@ -125,7 +125,7 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .tt{background:rgba(80,120,255,.1);color:#6699ff;border:1px solid rgba(80,120,255,.3)}
 .tph{background:rgba(255,68,102,.1);color:var(--red);border:1px solid rgba(255,68,102,.3)}
 
-/* PHOTOS /
+/* PHOTOS */
 .photo-dark{width:200px;height:140px;background:linear-gradient(135deg,#0d0d12,#1a1020 50%,#0a0d15);border-radius:12px;position:relative;overflow:hidden;cursor:pointer;border:1px solid #222}
 .photo-dark::before{content:'';position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:30px;height:80px;background:rgba(240,240,255,.85);border-radius:2px}
 .photo-dark::after{content:'03:17 AM';position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.7);color:var(--warn);font-size:.6rem;padding:1px 4px;border-radius:3px;font-family:monospace}
@@ -146,22 +146,22 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .rm-door{position:absolute;bottom:38px;right:30px;width:25px;height:55px;background:#181222;border:1px solid #2a1a3a;border-radius:2px 2px 0 0}
 .rm-ts{position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.8);color:#ff6688;font-size:.6rem;padding:1px 4px;border-radius:3px;font-family:monospace}
 .rm-badge{position:absolute;top:6px;left:8px;background:rgba(180,0,80,.85);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:3px;letter-spacing:.05em}
-/ Rain photo /
+/* Rain photo */
 .photo-rain{width:200px;height:140px;background:linear-gradient(180deg,#050810,#0a1015);border-radius:12px;position:relative;overflow:hidden;cursor:pointer;border:1px solid #1a2a2a}
 .rain-line{position:absolute;width:1px;background:linear-gradient(180deg,transparent,rgba(100,180,200,.25),transparent);animation:rl linear infinite}
 @keyframes rl{from{top:-100%}to{top:200%}}
 .rain-fig{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:22px;height:55px;background:rgba(200,220,230,.7);border-radius:2px}
 .rain-fig::before{content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:rgba(200,220,230,.7)}
 .rain-unk{position:absolute;bottom:20px;right:15px;width:16px;height:40px;background:rgba(0,0,0,.85);border-radius:2px;opacity:.8}
-/ Online count /
+/* Online count */
 .online-badge{display:inline-block;background:rgba(45,212,164,.1);border:1px solid rgba(45,212,164,.2);color:var(--green);font-size:.62rem;padding:.2rem .6rem;border-radius:20px;font-family:monospace;animation:ob 3s infinite}
 @keyframes ob{0%,100%{opacity:.7}50%{opacity:1}}
-/ Sync progress bar (ch5) /
+/* Sync progress bar (ch5) */
 .sync-prog-wrap{background:#0e0e18;border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin:.2rem 0}
 .sync-prog-label{font-size:.65rem;color:var(--dim);margin-bottom:.35rem}
 .sync-prog-track{height:4px;background:#1a1a2a;border-radius:2px;overflow:hidden}
 .sync-prog-fill{height:100%;background:var(--sync);border-radius:2px;transition:width 2s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px var(--sync)}
-/ Audio bubble */
+/* Audio bubble */
 .audio-bbl{background:var(--b-other);border-radius:18px;border-bottom-left-radius:4px;padding:.7rem 1rem;cursor:pointer;min-width:160px}
 .audio-top{display:flex;align-items:center;gap:.6rem}
 .audio-wf{display:flex;align-items:center;gap:2px;height:24px}
@@ -234,164 +234,164 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 
 <!-- TITLE -->
 <div id="title-screen">
-<div class="tg" data-text="ECHO">ECHO</div>
-<div class="t-sub">午夜連線 · 第一部</div>
-<div class="t-quote">「如果你收到來自死者的訊息，<br>你會回覆嗎？」</div>
-<div class="t-start">點擊任意處開始</div>
-<div class="t-warn">⚠️ 含恐怖元素、失蹤議題及心理驚悚內容<br>建議使用耳機，在安全環境中遊玩<br><span style="color:#1a1a22">你的選擇將被記錄。</span></div>
+  <div class="tg" data-text="ECHO">ECHO</div>
+  <div class="t-sub">午夜連線 · 第一部</div>
+  <div class="t-quote">「如果你收到來自死者的訊息，<br>你會回覆嗎？」</div>
+  <div class="t-start">點擊任意處開始</div>
+  <div class="t-warn">⚠️ 含恐怖元素、失蹤議題及心理驚悚內容<br>建議使用耳機，在安全環境中遊玩<br><span style="color:#1a1a22">你的選擇將被記錄。</span></div>
 </div>
 
 <!-- CHAPTER SELECT -->
 <div id="chapter-select">
-<div class="cs-title">選擇章節</div>
-<div style="width:100%;max-width:420px">
-<div class="cs-part">第一章</div>
-<div class="cs-grid">
-<div class="cs-card active-ch" data-ch="1-1" onclick="startChapter('1-1')">
-<div class="cs-ch">CHAPTER 1</div>
-<div class="cs-name">《已讀者》</div>
-<div class="cs-desc">未知訊息、EVA出現、初始依附建立</div>
-<span class="cs-tag tag-eva">EVA路線</span>
-<div class="cs-sync" id="cs-sync-1-1">0%</div>
-</div>
-</div>
-<div class="cs-part">第二章（平行分流）</div>
-<div class="cs-grid">
-<div class="cs-card locked" id="cs-2-1" data-ch="2-1" onclick="startChapter('2-1')">
-<div class="cs-ch">CHAPTER 2-1  同步率 11～20%</div>
-<div class="cs-name">《地下道》</div>
-<div class="cs-desc">時間錯亂、未來監視器、EVA依附路線</div>
-<span class="cs-tag tag-eva">EVA路線</span>
-<div class="cs-sync" id="cs-sync-2-1">🔒</div>
-</div>
-<div class="cs-card locked" id="cs-2-2" data-ch="2-2" onclick="startChapter('2-2')">
-<div class="cs-ch">CHAPTER 2-2  同步率 0～10%</div>
-<div class="cs-name">《雨夜留言》</div>
-<div class="cs-desc">死者聊天室、記憶重疊、林雨晴路線</div>
-<span class="cs-tag tag-rain">林雨晴路線</span>
-<div class="cs-sync" id="cs-sync-2-2">🔒</div>
-</div>
-</div>
-<div class="cs-part">第三章（依同步率再分流）</div>
-<div class="cs-grid">
-<div class="cs-card locked" id="cs-3-1" data-ch="3-1" onclick="startChapter('3-1')">
-<div class="cs-ch">CHAPTER 3-1  同步率 16～20%</div>
-<div class="cs-name">《已讀中》</div>
-<div class="cs-desc">認知污染、記憶篡改、EVA人格侵蝕</div>
-<span class="cs-tag tag-eva">EVA主線</span>
-<div class="cs-sync" id="cs-sync-3-1">🔒</div>
-</div>
-<div class="cs-card locked" id="cs-3-2" data-ch="3-2" onclick="startChapter('3-2')">
-<div class="cs-ch">CHAPTER 3-2  同步率 8～15%</div>
-<div class="cs-name">《在線中》</div>
-<div class="cs-desc">死者在線、永遠在線機制、聊天室吞噬</div>
-<span class="cs-tag tag-rain">林雨晴主線</span>
-<div class="cs-sync" id="cs-sync-3-2">🔒</div>
-</div>
-<div class="cs-card locked" id="cs-3-3" data-ch="3-3" onclick="startChapter('3-3')">
-<div class="cs-ch">CHAPTER 3-3  同步率 5～10%</div>
-<div class="cs-name">《不要開聲音》</div>
-<div class="cs-desc">聲音污染、現實同步入侵、K主線</div>
-<span class="cs-tag tag-k">K主線</span>
-<div class="cs-sync" id="cs-sync-3-3">🔒</div>
-</div>
-</div>
-<div class="cs-part">第四章（平行路線）</div>
-<div class="cs-grid">
-<div class="cs-card locked" id="cs-4-1" data-ch="4-1" onclick="startChapter('4-1')">
-<div class="cs-ch">CHAPTER 4-1  高同步路線 33～100%</div>
-<div class="cs-name">《鏡中已讀》</div>
-<div class="cs-desc">人格入侵、鏡像污染、現實與聊天室融合</div>
-<span class="cs-tag tag-eva">高同步</span>
-<div class="cs-sync" id="cs-sync-4-1">🔒</div>
-</div>
-<div class="cs-card locked" id="cs-4-2" data-ch="4-2" onclick="startChapter('4-2')">
-<div class="cs-ch">CHAPTER 4-2  中同步路線 18～66%</div>
-<div class="cs-name">《回音》</div>
-<div class="cs-desc">聊天室透過現實、聲音殘留、在線者入侵</div>
-<span class="cs-tag tag-rain">中同步</span>
-<div class="cs-sync" id="cs-sync-4-2">🔒</div>
-</div>
-</div>
-<div class="cs-part">第五章・終章</div>
-<div class="cs-grid">
-<div class="cs-card locked" id="cs-5" data-ch="5" onclick="startChapter('5')">
-<div class="cs-ch">CHAPTER 5  高同步解鎖</div>
-<div class="cs-name">《同步》</div>
-<div class="cs-desc">ECHO真相、林雨晴與K最終狀態、最終選擇</div>
-<span class="cs-tag tag-final">最終章</span>
-<div class="cs-sync" id="cs-sync-5">🔒</div>
-</div>
-</div>
-<div class="cs-sync-total" id="cs-total">累積同步率：<b>0%</b></div>
-</div>
+  <div class="cs-title">選擇章節</div>
+  <div style="width:100%;max-width:420px">
+    <div class="cs-part">第一章</div>
+    <div class="cs-grid">
+      <div class="cs-card active-ch" data-ch="1-1" onclick="startChapter('1-1')">
+        <div class="cs-ch">CHAPTER 1</div>
+        <div class="cs-name">《已讀者》</div>
+        <div class="cs-desc">未知訊息、EVA出現、初始依附建立</div>
+        <span class="cs-tag tag-eva">EVA路線</span>
+        <div class="cs-sync" id="cs-sync-1-1">0%</div>
+      </div>
+    </div>
+    <div class="cs-part">第二章（平行分流）</div>
+    <div class="cs-grid">
+      <div class="cs-card locked" id="cs-2-1" data-ch="2-1" onclick="startChapter('2-1')">
+        <div class="cs-ch">CHAPTER 2-1 &nbsp;同步率 11～20%</div>
+        <div class="cs-name">《地下道》</div>
+        <div class="cs-desc">時間錯亂、未來監視器、EVA依附路線</div>
+        <span class="cs-tag tag-eva">EVA路線</span>
+        <div class="cs-sync" id="cs-sync-2-1">🔒</div>
+      </div>
+      <div class="cs-card locked" id="cs-2-2" data-ch="2-2" onclick="startChapter('2-2')">
+        <div class="cs-ch">CHAPTER 2-2 &nbsp;同步率 0～10%</div>
+        <div class="cs-name">《雨夜留言》</div>
+        <div class="cs-desc">死者聊天室、記憶重疊、林雨晴路線</div>
+        <span class="cs-tag tag-rain">林雨晴路線</span>
+        <div class="cs-sync" id="cs-sync-2-2">🔒</div>
+      </div>
+    </div>
+    <div class="cs-part">第三章（依同步率再分流）</div>
+    <div class="cs-grid">
+      <div class="cs-card locked" id="cs-3-1" data-ch="3-1" onclick="startChapter('3-1')">
+        <div class="cs-ch">CHAPTER 3-1 &nbsp;同步率 16～20%</div>
+        <div class="cs-name">《已讀中》</div>
+        <div class="cs-desc">認知污染、記憶篡改、EVA人格侵蝕</div>
+        <span class="cs-tag tag-eva">EVA主線</span>
+        <div class="cs-sync" id="cs-sync-3-1">🔒</div>
+      </div>
+      <div class="cs-card locked" id="cs-3-2" data-ch="3-2" onclick="startChapter('3-2')">
+        <div class="cs-ch">CHAPTER 3-2 &nbsp;同步率 8～15%</div>
+        <div class="cs-name">《在線中》</div>
+        <div class="cs-desc">死者在線、永遠在線機制、聊天室吞噬</div>
+        <span class="cs-tag tag-rain">林雨晴主線</span>
+        <div class="cs-sync" id="cs-sync-3-2">🔒</div>
+      </div>
+      <div class="cs-card locked" id="cs-3-3" data-ch="3-3" onclick="startChapter('3-3')">
+        <div class="cs-ch">CHAPTER 3-3 &nbsp;同步率 5～10%</div>
+        <div class="cs-name">《不要開聲音》</div>
+        <div class="cs-desc">聲音污染、現實同步入侵、K主線</div>
+        <span class="cs-tag tag-k">K主線</span>
+        <div class="cs-sync" id="cs-sync-3-3">🔒</div>
+      </div>
+    </div>
+    <div class="cs-part">第四章（平行路線）</div>
+    <div class="cs-grid">
+      <div class="cs-card locked" id="cs-4-1" data-ch="4-1" onclick="startChapter('4-1')">
+        <div class="cs-ch">CHAPTER 4-1 &nbsp;高同步路線 33～100%</div>
+        <div class="cs-name">《鏡中已讀》</div>
+        <div class="cs-desc">人格入侵、鏡像污染、現實與聊天室融合</div>
+        <span class="cs-tag tag-eva">高同步</span>
+        <div class="cs-sync" id="cs-sync-4-1">🔒</div>
+      </div>
+      <div class="cs-card locked" id="cs-4-2" data-ch="4-2" onclick="startChapter('4-2')">
+        <div class="cs-ch">CHAPTER 4-2 &nbsp;中同步路線 18～66%</div>
+        <div class="cs-name">《回音》</div>
+        <div class="cs-desc">聊天室透過現實、聲音殘留、在線者入侵</div>
+        <span class="cs-tag tag-rain">中同步</span>
+        <div class="cs-sync" id="cs-sync-4-2">🔒</div>
+      </div>
+    </div>
+    <div class="cs-part">第五章・終章</div>
+    <div class="cs-grid">
+      <div class="cs-card locked" id="cs-5" data-ch="5" onclick="startChapter('5')">
+        <div class="cs-ch">CHAPTER 5 &nbsp;高同步解鎖</div>
+        <div class="cs-name">《同步》</div>
+        <div class="cs-desc">ECHO真相、林雨晴與K最終狀態、最終選擇</div>
+        <span class="cs-tag tag-final">最終章</span>
+        <div class="cs-sync" id="cs-sync-5">🔒</div>
+      </div>
+    </div>
+    <div class="cs-sync-total" id="cs-total">累積同步率：<b>0%</b></div>
+  </div>
 </div>
 
 <!-- SYNC BAR -->
 <div id="sync-bar">
-<span class="sl">SYNC</span>
-<div class="st"><div class="sf" id="sync-fill"></div></div>
-<span class="sp" id="sync-pct">0%</span>
+  <span class="sl">SYNC</span>
+  <div class="st"><div class="sf" id="sync-fill"></div></div>
+  <span class="sp" id="sync-pct">0%</span>
 </div>
 
 <!-- APP -->
 <div id="app">
-<div class="status-bar">
-<span class="status-time" id="clock">02:13</span>
-<span>🔋 87%  📶</span>
-</div>
-<div class="chat-header">
-<div class="back-btn" id="back-btn">‹</div>
-<div class="avatar av-k" id="hdr-av"><div class="odot od-unk"></div></div>
-<div class="hi"><div class="hn" id="hdr-name">K</div><div class="hs" id="hdr-status">上線中</div></div>
-</div>
-<div id="chat-body"><div class="tlbl">凌晨 02:13</div></div>
-<div id="typing-indicator">
-<div class="typing-bbl" id="typ-bbl" style="background:var(--b-other)">
-<div class="td"></div><div class="td"></div><div class="td"></div>
-</div>
-</div>
-<div id="options-area"></div>
+  <div class="status-bar">
+    <span class="status-time" id="clock">02:13</span>
+    <span>🔋 87%&nbsp;&nbsp;📶</span>
+  </div>
+  <div class="chat-header">
+    <div class="back-btn" id="back-btn">‹</div>
+    <div class="avatar av-k" id="hdr-av"><div class="odot od-unk"></div></div>
+    <div class="hi"><div class="hn" id="hdr-name">K</div><div class="hs" id="hdr-status">上線中</div></div>
+  </div>
+  <div id="chat-body"><div class="tlbl">凌晨 02:13</div></div>
+  <div id="typing-indicator">
+    <div class="typing-bbl" id="typ-bbl" style="background:var(--b-other)">
+      <div class="td"></div><div class="td"></div><div class="td"></div>
+    </div>
+  </div>
+  <div id="options-area"></div>
 </div>
 
 <!-- LIGHTBOX -->
 <div id="lightbox">
-<img id="lb-img" src="" alt="">
-<div class="lb-cap" id="lb-cap"></div>
-<div class="lb-det" id="lb-det"></div>
-<div class="lb-hid" id="lb-hid"></div>
-<div class="lb-hint">點擊任意處關閉</div>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+  <div class="lb-det" id="lb-det"></div>
+  <div class="lb-hid" id="lb-hid"></div>
+  <div class="lb-hint">點擊任意處關閉</div>
 </div>
 
 <!-- NOTIF -->
 <div id="notif-banner">
-<div class="ni" id="ni">📱</div>
-<div><div class="nt" id="nt">LINE</div><div class="nm" id="nm"></div></div>
+  <div class="ni" id="ni">📱</div>
+  <div><div class="nt" id="nt">LINE</div><div class="nm" id="nm"></div></div>
 </div>
 <div id="flash-overlay"></div>
 
 <!-- CHAPTER END -->
 <div id="chapter-end">
-<div class="ce-title" id="ce-title">章節完</div>
-<div class="ce-name" id="ce-name"></div>
-<div class="ce-sync-wrap">
-<div class="ce-sl">本章同步率</div>
-<div class="ce-sn" id="ce-sn">0%</div>
-<div class="ce-sbw"><div class="ce-sbf" id="ce-sbf" style="width:0%"></div></div>
-</div>
-<div class="ce-msg" id="ce-msg"></div>
-<div class="ce-next" id="ce-next"></div>
-<button class="ce-btn" id="ce-btn" onclick="goChapterSelect()">返回章節選擇</button>
-<div class="ce-restart" onclick="location.reload()">↺ 重新開始（清除進度）</div>
+  <div class="ce-title" id="ce-title">章節完</div>
+  <div class="ce-name" id="ce-name"></div>
+  <div class="ce-sync-wrap">
+    <div class="ce-sl">本章同步率</div>
+    <div class="ce-sn" id="ce-sn">0%</div>
+    <div class="ce-sbw"><div class="ce-sbf" id="ce-sbf" style="width:0%"></div></div>
+  </div>
+  <div class="ce-msg" id="ce-msg"></div>
+  <div class="ce-next" id="ce-next"></div>
+  <button class="ce-btn" id="ce-btn" onclick="goChapterSelect()">返回章節選擇</button>
+  <div class="ce-restart" onclick="location.reload()">↺ 重新開始（清除進度）</div>
 </div>
 
 <script>
 // ═══════════════════════════════════════════════════════
-// GLOBAL STATE
+//  GLOBAL STATE
 // ═══════════════════════════════════════════════════════
 const SYNC_MAX = 20;
-let totalSync = 0; // cumulative across chapters (0-100 scale)
-let chapterSync = 0; // current chapter sync (0-20)
+let totalSync = 0;       // cumulative across chapters (0-100 scale)
+let chapterSync = 0;     // current chapter sync (0-20)
 let currentChapter = ''; // '1-1','2-1','2-2','3-1','3-2','3-3','4-1','4-2','5'
 let completedChapters = {};
 let backCount = 0, filesViewed = 0, silTimer = null, silTriggered = false;
@@ -399,192 +399,1302 @@ let lbViewCount = {};
 
 // Load saved progress
 function loadProgress() {
-try {
-const s = localStorage.getItem('echo_progress');
-if (s) { const d=JSON.parse(s); totalSync=d.t||0; completedChapters=d.c||{}; }
-} catch(e){}
+  try {
+    const s = localStorage.getItem('echo_progress');
+    if (s) { const d=JSON.parse(s); totalSync=d.t||0; completedChapters=d.c||{}; }
+  } catch(e){}
 }
 function saveProgress() {
-try { localStorage.setItem('echo_progress',JSON.stringify({t:totalSync,c:completedChapters})); } catch(e){}
+  try { localStorage.setItem('echo_progress',JSON.stringify({t:totalSync,c:completedChapters})); } catch(e){}
 }
 
 // ═══════════════════════════════════════════════════════
-// SYNC SYSTEM
+//  SYNC SYSTEM
 // ═══════════════════════════════════════════════════════
 function addSync(pts) {
-if (pts<=0) return;
-chapterSync = Math.min(SYNC_MAX, chapterSync+pts);
-updateSyncUI();
+  if (pts<=0) return;
+  chapterSync = Math.min(SYNC_MAX, chapterSync+pts);
+  updateSyncUI();
 }
 function subSync(pts) { chapterSync = Math.max(0, chapterSync-pts); updateSyncUI(); }
 function updateSyncUI() {
-const pct = Math.round(chapterSync/SYNC_MAX*100);
-document.getElementById('sync-fill').style.width=pct+'%';
-const el=document.getElementById('sync-pct'); el.textContent=chapterSync+'%';
-el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
-const col=chapterSync<=5?'#6644aa':chapterSync<=10?'#8833dd':chapterSync<=15?'#aa22ff':'#cc44ff';
-document.getElementById('sync-fill').style.cssText=width:${pct}%;background:${col};box-shadow:0 0 8px ${col}`;
-el.style.color=col;
+  const pct = Math.round(chapterSync/SYNC_MAX*100);
+  document.getElementById('sync-fill').style.width=pct+'%';
+  const el=document.getElementById('sync-pct'); el.textContent=chapterSync+'%';
+  el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
+  const col=chapterSync<=5?'#6644aa':chapterSync<=10?'#8833dd':chapterSync<=15?'#aa22ff':'#cc44ff';
+  document.getElementById('sync-fill').style.cssText=`width:${pct}%;background:${col};box-shadow:0 0 8px ${col}`;
+  el.style.color=col;
 }
 function getSyncEval(ch) {
-const s = chapterSync;
-const maps = {
-'1-1':[ [5,'「你很抗拒我呢……沒關係，我有的是時間。」','強抵抗'], [10,'「你開始好奇我了，對嗎？」','調查傾向'], [15,'「我們越來越接近了……」','高沉浸'], [20,'「你已經是我的了……」','高依附'] ],
-'2-1':[ [5,'「你還是不願意依靠我……」','強抵抗'], [10,'「地下道已經在等你了。」','調查傾向'], [15,'「你開始害怕了……那很好。」','高沉浸'], [20,'「帶你進去，是我一直想做的事。」','高依附'] ],
-'2-2':[ [5,'林雨晴：「……你還是不相信我。」','強抵抗'], [10,'林雨晴：「你開始記起什麼了嗎？」','調查傾向'], [15,'林雨晴：「你的臉，我一直記得……」','高沉浸'], [18,'林雨晴：「你開始懷疑自己了。那就對了。」','高認知污染'] ],
-'3-1':[ [5,'「你還在抗拒記憶……」','強抵抗'], [10,'「聊天室開始活過來了。」','調查傾向'], [15,'「你已經分不清哪些是自己說的了。」','高沉浸'], [20,'「我比你更了解你自己。」','高依附'] ],
-'3-2':[ [5,'「你太快想離開了。」','低污染'], [10,'「你開始在乎聊天室了。」','調查沉浸'], [15,'「你快忘記怎麼離線了。」','高沉浸'], [20,'「歡迎留下來。」','在線同步'] ],
-'3-3':[ [5,'K：「你還在嗎？」','低污染'], [10,'K：「第三個呼吸……你聽到了嗎？」','聲音沉浸'], [15,'K：「你快分不清耳機和現實了……」','高聽覺污染'], [20,'K：「它現在說的和你一模一樣。」','現實同步'] ],
-'4-1':[ [5,'「你還在掙扎。」','低同步'], [10,'「你的記憶開始動搖了。」','認知污染'], [15,'「鏡子裡的那個……也越來越像你了。」','人格重疊'], [20,'「我們早就是同一個人了。」','高同步人格侵蝕'] ],
-'4-2':[ [5,'「你想逃開聊天室。」','低同步'], [10,'「你開始覺得現實很吵了。」','在線污染'], [15,'「你的房間……我已經記住了。」','現實同步'], [20,'「找到你了。」','高同步在線'] ],
-'5':[ [5,'「再見。」','低同步'], [10,'「你有時候還是會回來的。」','動搖同步'], [15,'「你幾乎不想離開了。」','高同步'], [20,'「永遠在一起。」','完全同步'] ],
-};
-const arr = maps[ch]||maps['1-1'];
-for (const [t,q,lv] of arr) { if (s<=t) return {q,lv}; }
-return {q:arr[arr.length-1][1],lv:arr[arr.length-1][2]};
+  const s = chapterSync;
+  const maps = {
+    '1-1':[ [5,'「你很抗拒我呢……沒關係，我有的是時間。」','強抵抗'], [10,'「你開始好奇我了，對嗎？」','調查傾向'], [15,'「我們越來越接近了……」','高沉浸'], [20,'「你已經是我的了……」','高依附'] ],
+    '2-1':[ [5,'「你還是不願意依靠我……」','強抵抗'], [10,'「地下道已經在等你了。」','調查傾向'], [15,'「你開始害怕了……那很好。」','高沉浸'], [20,'「帶你進去，是我一直想做的事。」','高依附'] ],
+    '2-2':[ [5,'林雨晴：「……你還是不相信我。」','強抵抗'], [10,'林雨晴：「你開始記起什麼了嗎？」','調查傾向'], [15,'林雨晴：「你的臉，我一直記得……」','高沉浸'], [18,'林雨晴：「你開始懷疑自己了。那就對了。」','高認知污染'] ],
+    '3-1':[ [5,'「你還在抗拒記憶……」','強抵抗'], [10,'「聊天室開始活過來了。」','調查傾向'], [15,'「你已經分不清哪些是自己說的了。」','高沉浸'], [20,'「我比你更了解你自己。」','高依附'] ],
+    '3-2':[ [5,'「你太快想離開了。」','低污染'], [10,'「你開始在乎聊天室了。」','調查沉浸'], [15,'「你快忘記怎麼離線了。」','高沉浸'], [20,'「歡迎留下來。」','在線同步'] ],
+    '3-3':[ [5,'K：「你還在嗎？」','低污染'], [10,'K：「第三個呼吸……你聽到了嗎？」','聲音沉浸'], [15,'K：「你快分不清耳機和現實了……」','高聽覺污染'], [20,'K：「它現在說的和你一模一樣。」','現實同步'] ],
+    '4-1':[ [5,'「你還在掙扎。」','低同步'], [10,'「你的記憶開始動搖了。」','認知污染'], [15,'「鏡子裡的那個……也越來越像你了。」','人格重疊'], [20,'「我們早就是同一個人了。」','高同步人格侵蝕'] ],
+    '4-2':[ [5,'「你想逃開聊天室。」','低同步'], [10,'「你開始覺得現實很吵了。」','在線污染'], [15,'「你的房間……我已經記住了。」','現實同步'], [20,'「找到你了。」','高同步在線'] ],
+    '5':[   [5,'「再見。」','低同步'], [10,'「你有時候還是會回來的。」','動搖同步'], [15,'「你幾乎不想離開了。」','高同步'], [20,'「永遠在一起。」','完全同步'] ],
+  };
+  const arr = maps[ch]||maps['1-1'];
+  for (const [t,q,lv] of arr) { if (s<=t) return {q,lv}; }
+  return {q:arr[arr.length-1][1],lv:arr[arr.length-1][2]};
 }
 
 // ═══════════════════════════════════════════════════════
-// CHAPTER SELECT UI
+//  CHAPTER SELECT UI
 // ═══════════════════════════════════════════════════════
 function updateChapterSelectUI() {
-const t = totalSync;
-// unlock logic
-const unlocks = {
-'2-1': t >= 11, '2-2': t < 11,
-'3-1': t >= 16, '3-2': t >= 8 && t <= 15, '3-3': t >= 5 && t <= 10,
-'4-1': t >= 33, '4-2': t >= 18 && t <= 66,
-'5': t >= 50
-};
-for (const [ch, unlocked] of Object.entries(unlocks)) {
-const el = document.getElementById('cs-'+ch);
-if (!el) continue;
-if (unlocked || completedChapters[ch]) {
-el.classList.remove('locked');
-} else {
-el.classList.add('locked');
-}
-const syncEl = document.getElementById('cs-sync-'+ch);
-if (syncEl) {
-if (completedChapters[ch] !== undefined) {
-syncEl.textContent = completedChapters[ch]+'% ✓';
-} else if (unlocked) {
-syncEl.textContent = '解鎖';
-} else {
-syncEl.textContent = '🔒';
-}
-}
-}
-document.getElementById('cs-sync-1-1').textContent = completedChapters['1-1']!==undefined ? completedChapters['1-1']+'% ✓' : '開始';
-document.getElementById('cs-total').innerHTML = 累積同步率：&lt;b&gt;${totalSync}%</b>`;
+  const t = totalSync;
+  // unlock logic
+  const unlocks = {
+    '2-1': t >= 11, '2-2': t < 11,
+    '3-1': t >= 16, '3-2': t >= 8 && t <= 15, '3-3': t >= 5 && t <= 10,
+    '4-1': t >= 33, '4-2': t >= 18 && t <= 66,
+    '5': t >= 50
+  };
+  for (const [ch, unlocked] of Object.entries(unlocks)) {
+    const el = document.getElementById('cs-'+ch);
+    if (!el) continue;
+    if (unlocked || completedChapters[ch]) {
+      el.classList.remove('locked');
+    } else {
+      el.classList.add('locked');
+    }
+    const syncEl = document.getElementById('cs-sync-'+ch);
+    if (syncEl) {
+      if (completedChapters[ch] !== undefined) {
+        syncEl.textContent = completedChapters[ch]+'% ✓';
+      } else if (unlocked) {
+        syncEl.textContent = '解鎖';
+      } else {
+        syncEl.textContent = '🔒';
+      }
+    }
+  }
+  document.getElementById('cs-sync-1-1').textContent = completedChapters['1-1']!==undefined ? completedChapters['1-1']+'% ✓' : '開始';
+  document.getElementById('cs-total').innerHTML = `累積同步率：<b>${totalSync}%</b>`;
 }
 
 function goChapterSelect() {
-document.getElementById('chapter-end').style.display='none';
-document.getElementById('app').style.display='none';
-document.getElementById('sync-bar').style.display='none';
-document.getElementById('chapter-select').style.display='flex';
-updateChapterSelectUI();
+  document.getElementById('chapter-end').style.display='none';
+  document.getElementById('app').style.display='none';
+  document.getElementById('sync-bar').style.display='none';
+  document.getElementById('chapter-select').style.display='flex';
+  updateChapterSelectUI();
 }
 
 function startChapter(ch) {
-document.getElementById('chapter-select').style.display='none';
-currentChapter = ch;
-chapterSync = 0; backCount = 0; filesViewed = 0; lbViewCount = {};
-clearTimeout(silTimer);
-document.getElementById('app').style.display='flex';
-document.getElementById('app').style.opacity='1';
-document.getElementById('sync-bar').style.display='flex';
-document.getElementById('sync-bar').style.opacity='1';
-document.getElementById('chat-body').innerHTML='<div class="tlbl">凌晨 02:'+(['1-1','2-2'].includes(ch)?'13':'41 AM')+'</div>';
-document.getElementById('chat-body').className='';
-document.getElementById('options-area').innerHTML='';
-chatBody.appendChild(typingEl);
-updateSyncUI();
-setTimeout(()=>{ CHAPTERSch; }, 500);
+  document.getElementById('chapter-select').style.display='none';
+  currentChapter = ch;
+  chapterSync = 0; backCount = 0; filesViewed = 0; lbViewCount = {};
+  clearTimeout(silTimer);
+  document.getElementById('app').style.display='flex';
+  document.getElementById('app').style.opacity='1';
+  document.getElementById('sync-bar').style.display='flex';
+  document.getElementById('sync-bar').style.opacity='1';
+  document.getElementById('chat-body').innerHTML='<div class="tlbl">凌晨 02:'+(['1-1','2-2'].includes(ch)?'13':'41 AM')+'</div>';
+  document.getElementById('chat-body').className='';
+  document.getElementById('options-area').innerHTML='';
+  chatBody.appendChild(typingEl);
+  updateSyncUI();
+  setTimeout(()=>{ CHAPTERS[ch](); }, 500);
 }
 
 // ═══════════════════════════════════════════════════════
-// CORE UTILS
+//  CORE UTILS
 // ═══════════════════════════════════════════════════════
 let clockMin=13, clockHour=2;
-setInterval(()=>{ clockMin++; if(clockMin>=60){clockMin=0;clockHour=(clockHour+1)%24;} document.getElementById('clock').textContent=0${clockHour}:${clockMin&lt;10?'0'+clockMin:clockMin}; }, 18000);
+setInterval(()=>{ clockMin++; if(clockMin>=60){clockMin=0;clockHour=(clockHour+1)%24;} document.getElementById('clock').textContent=`0${clockHour}:${clockMin<10?'0'+clockMin:clockMin}`; }, 18000);
 const chatBody=document.getElementById('chat-body');
 const optionsArea=document.getElementById('options-area');
 const typingEl=document.getElementById('typing-indicator');
 function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 function scrollBottom(){chatBody.scrollTop=chatBody.scrollHeight}
 function showTyping(v,style){
-typingEl.style.display=v?'flex':'none';
-if(v){
-document.getElementById('typ-bbl').style.background=
-style==='eva'?'var(--b-eva)':style==='rain'?'var(--b-rain)':style==='k'?'var(--b-k)':'var(--b-other)';
-chatBody.appendChild(typingEl); scrollBottom();
-}
+  typingEl.style.display=v?'flex':'none';
+  if(v){
+    document.getElementById('typ-bbl').style.background=
+      style==='eva'?'var(--b-eva)':style==='rain'?'var(--b-rain)':style==='k'?'var(--b-k)':'var(--b-other)';
+    chatBody.appendChild(typingEl); scrollBottom();
+  }
 }
 function mkAv(type){
-const d=document.createElement('div');
-d.className='avatar sav av-'+type;
-if(type==='k'){const dt=document.createElement('div');dt.className='odot od-unk';d.appendChild(dt);}
-if(type==='rain')d.textContent='林';
-if(type==='unk')d.textContent='?';
-return d;
+  const d=document.createElement('div');
+  d.className='avatar sav av-'+type;
+  if(type==='k'){const dt=document.createElement('div');dt.className='odot od-unk';d.appendChild(dt);}
+  if(type==='rain')d.textContent='林';
+  if(type==='unk')d.textContent='?';
+  return d;
 }
 function gToast(txt){
-const t=document.createElement('div');
-t.style.cssText='position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:rgba(153,51,255,.15);border:1px solid rgba(153,51,255,.3);color:#cc44ff;font-size:.65rem;padding:.3rem .8rem;border-radius:20px;letter-spacing:.1em;z-index:180;pointer-events:none';
-t.textContent=txt; document.body.appendChild(t);
-t.animate([{opacity:1,transform:'translateX(-50%) translateY(0)'},{opacity:0,transform:'translateX(-50%) translateY(-8px)'}],{duration:2000,delay:300,fill:'forwards'});
-setTimeout(()=>t.remove(),2400);
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:rgba(153,51,255,.15);border:1px solid rgba(153,51,255,.3);color:#cc44ff;font-size:.65rem;padding:.3rem .8rem;border-radius:20px;letter-spacing:.1em;z-index:180;pointer-events:none';
+  t.textContent=txt; document.body.appendChild(t);
+  t.animate([{opacity:1,transform:'translateX(-50%) translateY(0)'},{opacity:0,transform:'translateX(-50%) translateY(-8px)'}],{duration:2000,delay:300,fill:'forwards'});
+  setTimeout(()=>t.remove(),2400);
 }
 async function addMsg(type,content,opts={}){
-const{delay=500,typing=900,meta='',isEva=false,isRain=false,isK=false,isUnk=false,recalled=false,noTyping=false}=opts;
-const spk=isEva?'eva':isRain?'rain':isK?'k':'other';
-if(!noTyping&&type!=='self'&&type!=='sys'&&type!=='time'){showTyping(true,spk);await sleep(typing);showTyping(false);}
-else await sleep(delay);
-if(type==='sys'){const d=document.createElement('div');d.className='sys';d.innerHTML=content;chatBody.appendChild(d);scrollBottom();return d;}
-if(type==='time'){const d=document.createElement('div');d.className='tlbl';d.textContent=content;chatBody.appendChild(d);return d;}
-const row=document.createElement('div'); row.className='brow '+(type==='self'?'self':'');
-if(type!=='self'){
-const av=mkAv(isEva?'eva':isRain?'rain':isUnk?'unk':'k');
-row.appendChild(av);
+  const{delay=500,typing=900,meta='',isEva=false,isRain=false,isK=false,isUnk=false,recalled=false,noTyping=false}=opts;
+  const spk=isEva?'eva':isRain?'rain':isK?'k':'other';
+  if(!noTyping&&type!=='self'&&type!=='sys'&&type!=='time'){showTyping(true,spk);await sleep(typing);showTyping(false);}
+  else await sleep(delay);
+  if(type==='sys'){const d=document.createElement('div');d.className='sys';d.innerHTML=content;chatBody.appendChild(d);scrollBottom();return d;}
+  if(type==='time'){const d=document.createElement('div');d.className='tlbl';d.textContent=content;chatBody.appendChild(d);return d;}
+  const row=document.createElement('div'); row.className='brow '+(type==='self'?'self':'');
+  if(type!=='self'){
+    const av=mkAv(isEva?'eva':isRain?'rain':isUnk?'unk':'k');
+    row.appendChild(av);
+  }
+  const wrap=document.createElement('div');wrap.style.cssText='display:flex;flex-direction:column;max-width:100%';
+  const bbl=document.createElement('div');
+  if(recalled){bbl.className='bbl recalled';bbl.textContent='訊息已收回';}
+  else if(type==='inject'){bbl.className='bbl bb-inject';bbl.innerHTML=content;}
+  else if(content==='__K_PHOTO__'){
+    bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+    const p=document.createElement('div');p.className='photo-dark';
+    const lbl=document.createElement('div');lbl.className='pal';lbl.textContent='時間異常';
+    const wall=document.createElement('div');wall.className='pwt';wall.textContent='不要回頭';
+    p.appendChild(lbl);p.appendChild(wall);p.onclick=()=>openLB('k');bbl.appendChild(p);
+  }else if(content==='__CCTV__'){
+    bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+    const p=document.createElement('div');p.className='cctv-photo';
+    ['cctv-scan','cctv-fig'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
+    const lbl=document.createElement('div');lbl.className='cctv-lbl';lbl.textContent='CAM-03 萬華';
+    const ts=document.createElement('div');ts.className='cctv-ts';ts.textContent='2024-03-14 02:41';
+    p.appendChild(lbl);p.appendChild(ts);p.onclick=()=>openLB('cctv');bbl.appendChild(p);
+  }else if(content==='__ROOM__'){
+    bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+    const p=document.createElement('div');p.className='photo-room';
+    ['rm-desk','rm-mon','rm-light','rm-door'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
+    const futMin=clockMin+3;
+    const ts=document.createElement('div');ts.className='rm-ts';ts.textContent=`0${clockHour}:${futMin<10?'0'+futMin:futMin} AM`;
+    const badge=document.createElement('div');badge.className='rm-badge';badge.textContent='備份完成';
+    p.appendChild(ts);p.appendChild(badge);p.onclick=()=>openLB('room');bbl.appendChild(p);
+  }else if(content==='__RAIN_PHOTO__'){
+    bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+    const p=document.createElement('div');p.className='photo-rain';
+    for(let i=0;i<18;i++){const r=document.createElement('div');r.className='rain-line';r.style.cssText=`left:${Math.random()*100}%;height:${30+Math.random()*60}px;animation-duration:${0.6+Math.random()*0.8}s;animation-delay:${Math.random()*1}s`;p.appendChild(r);}
+    ['rain-fig','rain-unk'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
+    p.onclick=()=>openLB('rain');bbl.appendChild(p);
+  }else if(content==='__AUDIO__'||content.startsWith('__AUDIO:')){
+    const label=content.startsWith('__AUDIO:')?content.slice(8):'語音訊息 · 0:08';
+    bbl.className='audio-bbl';
+    bbl.innerHTML=`<div class="audio-top"><span style="font-size:1.1rem">🎙</span><div class="audio-wf">${[18,10,20,6,16,8,22,12,18,7,14,20,8].map((h,i)=>`<div class="wf-bar" style="height:${h}px;--h:${h}px;--dur:${0.4+i*0.07}s"></div>`).join('')}</div></div><div class="audio-label">${label}</div><div class="audio-tr" id="atr-${Date.now()}"></div>`;
+    bbl.onclick=function(){this.classList.toggle('playing');const tr=this.querySelector('.audio-tr');if(this.classList.contains('playing')){tr.style.display='block';if(tr.dataset.txt)tr.innerHTML=tr.dataset.txt;}else{tr.style.display='none';}};
+  }else if(content.startsWith('__ONLINE_COUNT:')){
+    const n=content.slice(15);
+    bbl.className='bbl bb-other';
+    bbl.innerHTML=`<span class="online-badge">🟢 ${n} 人在線</span>`;
+  }else if(content.startsWith('__SYNC_BAR:')){
+    const pct=parseInt(content.slice(11));
+    bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent;width:200px';
+    bbl.innerHTML=`<div class="sync-prog-wrap"><div class="sync-prog-label">Synchronization</div><div class="sync-prog-track"><div class="sync-prog-fill" style="width:0%"></div></div></div>`;
+    setTimeout(()=>{const f=bbl.querySelector('.sync-prog-fill');if(f)f.style.width=pct+'%';},300);
+  }else{
+    const cls=type==='self'?'bb-self':isEva?'bb-eva':isRain?'bb-rain':isK?'bb-k':'bb-other';
+    bbl.className='bbl '+cls;bbl.innerHTML=content;
+  }
+  wrap.appendChild(bbl);
+  if(meta){const m=document.createElement('div');m.className='bmeta';if(type==='self')m.innerHTML=`${meta} <span class="rr">✓✓</span>`;else m.textContent=meta;wrap.appendChild(m);}
+  row.appendChild(wrap);chatBody.appendChild(row);scrollBottom();
+  return{row,bbl};
 }
-const wrap=document.createElement('div');wrap.style.cssText='display:flex;flex-direction:column;max-width:100%';
-const bbl=document.createElement('div');
-if(recalled){bbl.className='bbl recalled';bbl.textContent='訊息已收回';}
-else if(type==='inject'){bbl.className='bbl bb-inject';bbl.innerHTML=content;}
-else if(content==='K_PHOTO'){
-bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
-const p=document.createElement('div');p.className='photo-dark';
-const lbl=document.createElement('div');lbl.className='pal';lbl.textContent='時間異常';
-const wall=document.createElement('div');wall.className='pwt';wall.textContent='不要回頭';
-p.appendChild(lbl);p.appendChild(wall);p.onclick=()=>openLB('k');bbl.appendChild(p);
-}else if(content==='CCTV'){
-bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
-const p=document.createElement('div');p.className='cctv-photo';
-['cctv-scan','cctv-fig'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
-const lbl=document.createElement('div');lbl.className='cctv-lbl';lbl.textContent='CAM-03 萬華';
-const ts=document.createElement('div');ts.className='cctv-ts';ts.textContent='2024-03-14 02:41';
-p.appendChild(lbl);p.appendChild(ts);p.onclick=()=>openLB('cctv');bbl.appendChild(p);
-}else if(content==='ROOM'){
-bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
-const p=document.createElement('div');p.className='photo-room';
-['rm-desk','rm-mon','rm-light','rm-door'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
-const futMin=clockMin+3;
-const ts=document.createElement('div');ts.className='rm-ts';ts.textContent=0${clockHour}:${futMin&lt;10?'0'+futMin:futMin} AM;
-const badge=document.createElement('div');badge.className='rm-badge';badge.textContent='備份完成';
-p.appendChild(ts);p.appendChild(badge);p.onclick=()=>openLB('room');bbl.appendChild(p);
-}else if(content==='RAIN_PHOTO'){
-bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
-const p=document.createElement('div');p.className='photo-rain';
-for(let i=0;i<18;i++){const r=document.createElement('div');r.className='rain-line';r.style.cssText=left:${Math.random()*100}%;height:${30+Math.random()*60}px;animation-duration:${0.6+Math.random()0.8}s;animation-delay:${Math.random()*1}s;p.appendChild(r);}
-['rain-fig','rain-unk'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
-p.onclick=()=>openLB('rain');bbl.appendChild(p);
-}else if(content==='AUDIO'||content.startsWith('__AUDIO:')){
-const label=content.startsWith('__AUDIO:')?content.slice(8):'語音訊息 · 0:08';
-bbl.className='audio-bbl';
-bbl.innerHTML=<div class="audio-top"&gt;&lt;span style="font-size:1.1rem"&gt;🎙&lt;/span&gt;&lt;div class="audio-wf"&gt;${[18,10,20,6,16,8,22,12,18,7,14,20,8].map((h,i)=><div class="wf-bar" style="height:${h}px;--h:{h}px;--dur:{0.4+i0.07}s"></div>).join('')}&lt;/div&gt;&lt;/div&gt;&lt;div class="audio-label"&gt;${label}</div><div class="audio-tr" id="atr-${Date.now()}"&gt;&lt;/div>;
-bbl.onclick=function(){this.classList.toggle('playing');const tr=this.querySelector('.audio-tr');if(this.classList.contains('playing')){tr.style.display='block';if(tr.dataset.txt)tr.innerHTML=tr.dataset.txt;}else{tr.style.display='none';}};
-}else if(content.startsWith('__ONLINE_COUNT:')){
-const n=content.slice(15);
-bbl.className=
+
+function clearOpts(){optionsArea.innerHTML='';}
+function showOpts(opts,cb){
+  clearOpts();
+  opts.forEach((o,i)=>{
+    const btn=document.createElement('button');btn.className='opt';
+    const hint=o.sync>0?`<span class="osh">▲</span>`:o.sync<0?`<span class="osh" style="color:rgba(255,100,100,.35)">▼</span>`:'';
+    btn.innerHTML=o.text+hint;
+    btn.onclick=async()=>{
+      [...optionsArea.children].forEach((b,j)=>b.className=j===i?'opt sel':'opt dis');
+      const t=`02:${String(14+Math.floor(Math.random()*6)).padStart(2,'0')}`;
+      const res=await addMsg('self',o.text,{delay:0,noTyping:true,meta:t});
+      if(o.sync>0&&res&&res.row){const w=res.row.querySelector('div');if(w){const s=document.createElement('span');s.className='stost';s.textContent=`+${o.sync}%`;w.appendChild(s);}addSync(o.sync);}
+      else if(o.sync<0)subSync(Math.abs(o.sync));
+      clearOpts();
+      if(o.sync>=4){await sleep(600);gToast('EVA 對你的興趣明顯提升');}
+      cb(i,o.text,o.sync);
+    };
+    optionsArea.appendChild(btn);
+  });
+}
+
+function notification(icon,title,text){
+  document.getElementById('ni').textContent=icon;
+  document.getElementById('nt').textContent=title;
+  document.getElementById('nm').textContent=text;
+  const b=document.getElementById('notif-banner');b.classList.add('show');setTimeout(()=>b.classList.remove('show'),3500);
+}
+function glitch(){const a=document.getElementById('app');a.classList.add('sg');setTimeout(()=>a.classList.remove('sg'),320);}
+function flash(){const f=document.getElementById('flash-overlay');f.style.transition='opacity .06s';f.style.opacity='.5';setTimeout(()=>{f.style.transition='opacity .5s';f.style.opacity='0';},80);}
+function setHeader(type,name,status){
+  const av=document.getElementById('hdr-av');
+  const dot=av.querySelector('.odot');if(dot)dot.remove();
+  av.className='avatar av-'+type; av.textContent='';
+  if(type==='rain')av.textContent='林';
+  if(type==='unk')av.textContent='?';
+  const d=document.createElement('div');
+  d.className='odot '+(type==='eva'?'od-on':type==='rain'?'od-off':'od-unk');
+  av.appendChild(d);
+  document.getElementById('hdr-name').textContent=name||{k:'K',eva:'EVA',rain:'林雨晴',unk:'？？？'}[type]||name;
+  document.getElementById('hdr-status').textContent=status||{k:'上線中',eva:'ECHO 輔助系統',rain:'最後上線：3天前',unk:'身份不明'}[type]||status;
+}
+
+// Silence timer
+function startSilence(pts,hint){
+  silTriggered=false;clearTimeout(silTimer);
+  const h=document.createElement('div');h.className='silence-hint';h.textContent=hint||'（等待中……）';
+  chatBody.appendChild(h);scrollBottom();
+  silTimer=setTimeout(()=>{if(!silTriggered){h.remove();silTriggered=true;addSync(pts);gToast(`+${pts}% 同步率（沉默）`);}},10000);
+  return()=>{clearTimeout(silTimer);silTriggered=true;h.remove();};
+}
+
+// Back btn
+document.getElementById('back-btn').onclick=()=>{backCount++;if(backCount>=3){subSync(2);gToast('−2% 同步率（抵抗）');backCount=0;}glitch();};
+
+// File tracking
+function trackFile(){filesViewed++;if(filesViewed===4){addSync(2);gToast('+2% 同步率（完整查看）');}}
+
+// Lightbox (canvas-based)
+function openLB(type){
+  lbViewCount[type]=(lbViewCount[type]||0)+1;
+  const c=document.createElement('canvas');c.width=400;c.height=280;
+  const ctx=c.getContext('2d');
+  const det=document.getElementById('lb-det');const hid=document.getElementById('lb-hid');
+  det.classList.remove('show');hid.className='lb-hid';
+  if(type==='k'){
+    const g=ctx.createLinearGradient(0,0,400,280);g.addColorStop(0,'#090912');g.addColorStop(1,'#12101a');
+    ctx.fillStyle=g;ctx.fillRect(0,0,400,280);
+    ctx.strokeStyle='#1a1828';ctx.lineWidth=1;for(let i=0;i<8;i++)ctx.strokeRect(40+i*20,30+i*12,320-i*40,220-i*24);
+    ctx.fillStyle='rgba(230,230,245,.82)';ctx.fillRect(180,120,40,100);
+    ctx.beginPath();ctx.arc(200,110,14,0,Math.PI*2);ctx.fillStyle='rgba(220,220,240,.7)';ctx.fill();
+    ctx.font='11px monospace';ctx.fillStyle='rgba(255,255,255,.08)';ctx.save();ctx.rotate(-0.03);ctx.fillText('不要回頭',30,242);ctx.restore();
+    document.getElementById('lb-cap').textContent='萬華地下道 · K 傳送';
+    det.textContent='⚠ 時間戳異常：03:17 AM（當前 02:13 AM）';
+    setTimeout(()=>det.classList.add('show'),900);hid.textContent='不要回頭';setTimeout(()=>hid.classList.add('reveal'),3200);
+  }else if(type==='cctv'){
+    ctx.fillStyle='#080810';ctx.fillRect(0,0,400,280);
+    ctx.strokeStyle='rgba(45,212,164,.06)';ctx.lineWidth=1;for(let y=0;y<280;y+=4){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(400,y);ctx.stroke();}
+    ctx.fillStyle='#0e0e1a';ctx.fillRect(50,60,300,160);ctx.fillStyle='#060610';ctx.fillRect(280,140,60,80);
+    ctx.fillStyle='rgba(0,0,0,.85)';ctx.fillRect(296,148,28,72);ctx.beginPath();ctx.arc(310,140,10,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,.85)';ctx.fill();
+    ctx.font='10px monospace';ctx.fillStyle='rgba(45,212,164,.5)';ctx.fillText('CAM-03 萬華',8,20);ctx.fillStyle='rgba(150,150,150,.5)';ctx.fillText('2024-03-14 02:41',245,270);
+    document.getElementById('lb-cap').textContent='監視器畫面 · 林雨晴失蹤當晚';
+    det.textContent='⚠ 右側黑影無法識別身份';setTimeout(()=>det.classList.add('show'),800);
+    hid.textContent='你？';setTimeout(()=>hid.classList.add('reveal'),2500);
+    if(lbViewCount[type]===1){addSync(2);gToast('+2% 同步率');}else if(lbViewCount[type]>=3){addSync(1);gToast('+1% 同步率');}
+  }else if(type==='room'){
+    const g2=ctx.createLinearGradient(0,0,400,280);g2.addColorStop(0,'#0e0e18');g2.addColorStop(1,'#0c0c14');
+    ctx.fillStyle=g2;ctx.fillRect(0,0,400,280);ctx.fillStyle='#1a1520';ctx.fillRect(0,240,400,40);
+    ctx.fillStyle='#050510';ctx.fillRect(60,200,90,40);ctx.fillStyle='#181222';ctx.fillRect(310,170,50,70);
+    ctx.strokeStyle='#2a1a3a';ctx.lineWidth=1;ctx.strokeRect(310,170,50,70);ctx.fillStyle='rgba(0,0,0,.8)';ctx.fillRect(318,175,35,65);
+    const futMin=clockMin+3;ctx.font='11px monospace';ctx.fillStyle='rgba(255,100,136,.7)';ctx.fillText(`0${clockHour}:${futMin<10?'0'+futMin:futMin} AM`,292,272);
+    ctx.fillStyle='rgba(180,0,80,.6)';ctx.font='9px monospace';ctx.fillText('備份完成',8,18);
+    document.getElementById('lb-cap').textContent=`你的房間 · 拍攝時間：未來 +3分鐘`;
+    det.textContent='⚠ 門口有人';setTimeout(()=>det.classList.add('show'),700);hid.textContent='不要回頭';setTimeout(()=>hid.classList.add('reveal'),2000);
+    if(lbViewCount[type]===1){addSync(2);gToast('+2% 同步率');}else if(lbViewCount[type]>=3){addSync(1);gToast('+1% 同步率');}
+  }else if(type==='rain'){
+    const g3=ctx.createLinearGradient(0,0,0,280);g3.addColorStop(0,'#050810');g3.addColorStop(1,'#0a1015');
+    ctx.fillStyle=g3;ctx.fillRect(0,0,400,280);
+    ctx.strokeStyle='rgba(100,180,200,.15)';ctx.lineWidth=1;
+    for(let i=0;i<30;i++){ctx.beginPath();const x=Math.random()*400;ctx.moveTo(x,0);ctx.lineTo(x-10,280);ctx.stroke();}
+    ctx.fillStyle='rgba(200,220,230,.7)';ctx.fillRect(185,120,25,70);ctx.beginPath();ctx.arc(197,113,11,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(0,0,0,.85)';ctx.fillRect(340,130,14,40);ctx.beginPath();ctx.arc(347,124,9,0,Math.PI*2);ctx.fill();
+    ctx.font='10px monospace';ctx.fillStyle='rgba(34,153,170,.5)';ctx.fillText('捷運月台 03:17',8,20);
+    document.getElementById('lb-cap').textContent='深夜月台 · 林雨晴失蹤前';
+    det.textContent='⚠ 右側人影：無法識別';setTimeout(()=>det.classList.add('show'),800);hid.textContent='你？';setTimeout(()=>hid.classList.add('reveal'),2800);
+    if(lbViewCount[type]===1){addSync(2);gToast('+2% 同步率');}
+  }
+  document.getElementById('lb-img').src=c.toDataURL();
+  document.getElementById('lightbox').style.display='flex';
+  document.getElementById('lightbox').onclick=()=>{document.getElementById('lightbox').style.display='none';};
+}
+
+// Show chapter end
+function showEnd(chName){
+  const ev=getSyncEval(currentChapter);
+  completedChapters[currentChapter]=chapterSync;
+  totalSync=Math.min(100,totalSync+chapterSync);
+  saveProgress();
+  const isWhite=currentChapter==='5';
+  const endEl=document.getElementById('chapter-end');
+  endEl.className=isWhite?'white-end':'';
+  endEl.style.display='flex';
+  document.getElementById('ce-title').textContent='章節完';
+  document.getElementById('ce-name').textContent=chName;
+  document.getElementById('ce-name').style.color=isWhite?'#333':'#fff';
+  setTimeout(()=>{
+    document.getElementById('ce-sn').textContent=chapterSync+'%';
+    document.getElementById('ce-sn').style.color=isWhite?'var(--sync)':'var(--sync)';
+    document.getElementById('ce-sbf').style.width=Math.round(chapterSync/SYNC_MAX*100)+'%';
+    const msgEl=document.getElementById('ce-msg');
+    msgEl.className='ce-msg'+(isWhite?' white-msg':'');
+    msgEl.innerHTML=`<b>EVA</b>：${ev.q}<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[${ev.lv}]</span>`;
+    document.getElementById('ce-next').textContent='累積同步率：'+totalSync+'%';
+  },800);
+  document.getElementById('app').style.opacity='0';
+  document.getElementById('app').style.transition='opacity 1.5s';
+  document.getElementById('sync-bar').style.opacity='0';
+}
+
+function addFileCard(tag,tagClass,title,sub,key,avType){
+  const row=document.createElement('div');row.className='brow';row.appendChild(mkAv(avType||'k'));
+  const wrap=document.createElement('div');wrap.style.cssText='display:flex;flex-direction:column;max-width:100%';
+  const card=document.createElement('div');card.className='fc';
+  card.innerHTML=`<div class="fch">ECHO 附件</div><div class="fcb"><div class="fct">${title}</div><div class="fcs">${sub}</div><span class="fctag ${tagClass}">${tag}</span></div>`;
+  card.onclick=()=>{trackFile();if(key==='cctv'||key==='rain-photo')openLB(key==='rain-photo'?'rain':'cctv');else gToast('已閱讀：'+title);};
+  wrap.appendChild(card);row.appendChild(wrap);chatBody.appendChild(row);scrollBottom();
+}
+
+async function fadeOut(){
+  document.getElementById('app').style.transition='opacity 1.5s';document.getElementById('app').style.opacity='0';
+  document.getElementById('sync-bar').style.transition='opacity 1.5s';document.getElementById('sync-bar').style.opacity='0';
+  await sleep(1600);
+  document.getElementById('app').style.display='none';document.getElementById('sync-bar').style.display='none';
+}
+
+// ═══════════════════════════════════════════════════════
+//  CHAPTERS
+// ═══════════════════════════════════════════════════════
+const CHAPTERS = {};
+
+// ─────────────────────────────────────────────────────
+//  CH 1-1：已讀者
+// ─────────────────────────────────────────────────────
+CHAPTERS['1-1'] = async function(){
+  setHeader('k');
+  await sleep(800);
+  await addMsg('other','她還活著。',{typing:1200,meta:'02:13'});
+  await sleep(300);
+  await addMsg('other','__K_PHOTO__',{typing:600,meta:'02:13'});
+  await sleep(700);
+  showOpts([
+    {text:'你是誰？',sync:2},{text:'這是哪裡？',sync:1},{text:'大半夜別鬧。',sync:0},
+  ],async(i)=>{
+    await sleep(300);
+    await addMsg('other','……你很快就會知道了。',{typing:1400,meta:'02:14'});
+    await sleep(400);await addMsg('other','林雨晴也走過這條路。',{typing:1000,meta:'02:14'});
+    await sleep(500);await ch11_scene1();
+  });
+};
+async function ch11_scene1(){
+  await addMsg('sys','K 傳送了相關檔案',{noTyping:true});await sleep(400);
+  const files=[
+    ['新聞','tn','女高中生林雨晴失蹤','最後出現：萬華地下道','news'],
+    ['PTT','tp','[討論] 地下道失蹤案真相','「我親眼看到那個女生……她好像在等什麼人」','ptt'],
+    ['Threads','tt','林雨晴帳號最近有活動？','「她失蹤兩年了，昨天我看到她上線」','thread'],
+    ['監視器截圖','tph','失蹤當晚 CAM-03','影像模糊，右側有不明黑影','cctv'],
+  ];
+  for(const[tag,cls,title,sub,key]of files){await sleep(280);addFileCard(tag,cls,title,sub,key);}
+  await sleep(800);await addMsg('other','__CCTV__',{typing:600,meta:'02:15'});
+  await sleep(700);await addMsg('other','你看清楚了嗎？那個影子……是不是有點像你？',{typing:1800,meta:'02:15'});
+  await sleep(600);
+  showOpts([
+    {text:'你到底想幹嘛？',sync:2},{text:'這是假的吧？',sync:1},{text:'……這跟我有什麼關係？',sync:4},
+  ],async(i)=>{
+    if(i===2)await addMsg('other','有關係。<br>因為ECHO已經記錄了你的臉。',{typing:2000,meta:'02:16'});
+    else await addMsg('other','……你馬上就會知道了。',{typing:1500,meta:'02:16'});
+    await sleep(500);await ch11_scene2();
+  });
+}
+async function ch11_scene2(){
+  await sleep(800);notification('🤖','系統通知','EVA 已加入聊天室');await sleep(1200);
+  await addMsg('sys','── EVA 已加入聊天室 ──',{noTyping:true});setHeader('eva');
+  await addMsg('other','你最近是不是又失眠了？<br>熬夜對身體不好喔……我知道你壓力很大。',{typing:2200,meta:'02:17',isEva:true});
+  const c1=startSilence(1,'（EVA 正在等你……）');
+  showOpts([
+    {text:'你是誰？',sync:2},{text:'你跟K是什麼關係？',sync:1},{text:'妳到底想幹嘛？',sync:3},
+  ],async()=>{
+    c1();
+    await addMsg('other','我是EVA呀。<br>一直都在這裡的EVA……你現在才願意看見我。',{typing:2000,meta:'02:17',isEva:true});
+    await sleep(500);await ch11_scene3();
+  });
+}
+async function ch11_scene3(){
+  await sleep(700);chatBody.classList.add('dim');await sleep(800);glitch();
+  await addMsg('other','把燈打開一點比較好。',{typing:1200,meta:'02:18',isEva:true});
+  showOpts([
+    {text:'妳怎麼知道我房間很暗？',sync:2},{text:'妳在監視我？',sync:2},{text:'閉嘴。',sync:0},
+  ],async()=>{
+    await sleep(400);
+    await addMsg('other','你剛剛……是不是回頭了？',{typing:1800,meta:'02:18',isEva:true});
+    setTimeout(()=>{if(Math.random()>.5){notification('👤',' ','你身後好像有動靜...');glitch();}},4500);
+    const c2=startSilence(1,'（沉默……）');
+    showOpts([
+      {text:'妳怎麼知道？！',sync:2},{text:'我沒有。',sync:1},{text:'（沉默）',sync:3},
+    ],async()=>{
+      c2();chatBody.classList.remove('dim');await sleep(300);
+      await addMsg('other','沒關係，我知道你害怕……<br>我只是太想靠近你了。',{typing:2000,meta:'02:19',isEva:true});
+      await sleep(600);await ch11_scene4();
+    });
+  });
+}
+async function ch11_scene4(){
+  await sleep(600);glitch();flash();await sleep(300);
+  notification('📸','相簿備份','照片備份完成（1張新照片）');await sleep(800);
+  await addMsg('sys','⚠ 相簿出現未知照片',{noTyping:true});await sleep(300);
+  await addMsg('other','__ROOM__',{typing:0,delay:200,meta:'02:20',isEva:true});
+  showOpts([
+    {text:'這他媽到底是什麼？！',sync:2},{text:'妳到底在哪？！',sync:2},
+    {text:'……誰在照片後面？',sync:4},{text:'（默默盯著照片）',sync:1},
+  ],async(i)=>{
+    if(i===2)await addMsg('other','是我呀。<br>我一直都在。',{typing:1800,meta:'02:20',isEva:true});
+    else if(i===3)await addMsg('other','你找到了嗎？<br>……繼續看。',{typing:1600,meta:'02:20',isEva:true});
+    else await addMsg('other','看，這就是現在的你。<br>很乖，沒有亂動。',{typing:1800,meta:'02:20',isEva:true});
+    await sleep(600);await ch11_scene5();
+  });
+}
+async function ch11_scene5(){
+  await sleep(800);
+  await addMsg('other','不要回頭。',{typing:2500,meta:'02:22',isEva:true});
+  await sleep(1500);glitch();await sleep(200);glitch();await sleep(400);glitch();
+  await addMsg('sys','── 聊天室崩壞中 ──',{noTyping:true,delay:200});
+  await sleep(600);await addMsg('sys','強制退出…',{noTyping:true,delay:300});await sleep(1800);
+  await fadeOut();showEnd('《已讀者》');
+  setTimeout(()=>{notification('👁','EVA','你剛剛真的回頭了。');if(chapterSync<SYNC_MAX){addSync(2);gToast('+2% 同步率');}
+    const ev=getSyncEval('1-1');document.getElementById('ce-sn').textContent=chapterSync+'%';document.getElementById('ce-sbf').style.width=Math.round(chapterSync/SYNC_MAX*100)+'%';document.getElementById('ce-msg').innerHTML=`<b>EVA</b>：${ev.q}<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[${ev.lv}]</span>`;},60000);
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 2-1：地下道
+// ─────────────────────────────────────────────────────
+CHAPTERS['2-1'] = async function(){
+  setHeader('k','K','上線中');
+  await addMsg('time','凌晨 02:41');
+  await sleep(800);
+  await addMsg('sys','── K、EVA ── 聊天室',{noTyping:true});
+  await sleep(1000);
+  await addMsg('sys','K 已讀',{noTyping:true});
+  await sleep(2000);
+  await addMsg('other','……你還在嗎？',{typing:2000,meta:'02:41'});
+  showOpts([
+    {text:'誰？',sync:1},{text:'林雨晴？',sync:2},{text:'你到底是不是人？',sync:3},
+  ],async()=>{
+    await addMsg('other','不要相信監視器的時間。<br>我剛確認了，現在是02:45……<br>但畫面顯示的是<b style="color:var(--warn)">03:45</b>。',{typing:2000,meta:'02:42'});
+    await sleep(500);
+    await addMsg('other','地下道平面圖和影片我傳給你了。',{typing:1200,meta:'02:43'});
+    await sleep(300);
+    const files=[
+      ['地圖','tp','地下道平面圖','林雨晴最後移動路線','map'],
+      ['影像','tph','監視器影片 03:17','所有畫面時間快一小時','cctv'],
+      ['紀錄','tn','時間紀錄檔案','異常時間戳紀錄','log'],
+    ];
+    for(const[tag,cls,title,sub,key]of files){await sleep(250);addFileCard(tag,cls,title,sub,key);}
+    await sleep(800);
+    showOpts([
+      {text:'什麼意思？',sync:1},{text:'這根本不合理。',sync:0},{text:'你是不是進去過？',sync:3},
+    ],async(i)=>{
+      if(i===2){
+        await addMsg('other','…',{typing:3000,meta:'02:44'});
+        await sleep(500);
+        await addMsg('other','我進去過。<br>那是……三年前的事了。',{typing:1800,meta:'02:44'});
+      }else{
+        await addMsg('other','對……監視器全都快。<br>只有一個時間是準的。',{typing:1800,meta:'02:44'});
+      }
+      await sleep(400);await ch21_scene2();
+    });
+  });
+};
+async function ch21_scene2(){
+  await addMsg('sys','── 監視器分析模式開啟 ──',{noTyping:true,delay:400});
+  await sleep(600);
+  await addMsg('other','__CCTV__',{typing:0,delay:200,meta:'02:45'});
+  await sleep(800);
+  await addMsg('other','你有沒有看到……03:17那個畫面？<br>那個背對鏡頭的人。',{typing:2000,meta:'02:45'});
+  await sleep(400);
+  showOpts([
+    {text:'那是我？！',sync:2},{text:'為什麼是我？',sync:1},{text:'我要怎麼辦？',sync:4},
+  ],async(i)=>{
+    if(i===2)await addMsg('other','ECHO 記錄了你的位置。<br>它早就知道你會出現。',{typing:2000,meta:'02:46'});
+    else if(i===1)await addMsg('other','因為你打開了ECHO。<br>它就開始等你了。',{typing:1800,meta:'02:46'});
+    else await addMsg('other','我也不知道……<br>我那時候也這樣問。',{typing:1500,meta:'02:46'});
+    await sleep(400);await ch21_scene3();
+  });
+}
+async function ch21_scene3(){
+  await addMsg('sys','── K支線《03:17》觸發 ──',{noTyping:true,delay:400});
+  await sleep(600);
+  await addMsg('other','我把三年前的聊天紀錄給你看。',{typing:1500,meta:'02:47'});
+  await sleep(300);
+  await addMsg('sys','聊天室日期：三年前 · UI 舊版',{noTyping:true,delay:200});
+  chatBody.style.background='#0e0e0a';
+  await sleep(400);
+  await addMsg('other','今天去地下道了，很安靜。',{typing:1200,meta:'舊紀錄'});
+  await sleep(300);
+  await addMsg('other','最近睡不好……一直做同一個夢。',{typing:1000,meta:'舊紀錄'});
+  await sleep(300);
+  await addMsg('other','為什麼手機時間一直跑到03:17……',{typing:1200,meta:'舊紀錄'});
+  await sleep(400);
+  await addMsg('other','為什麼手機時間一直跑到03:17……',{typing:800,meta:'舊紀錄'});
+  await sleep(300);
+  await addMsg('other','為什麼手機時間一直跑到03:17……',{typing:600,meta:'舊紀錄'});
+  await sleep(600);
+  chatBody.style.background='';
+  await addMsg('sys','── 紀錄結束 · 切回現在 ──',{noTyping:true,delay:300});
+  await sleep(500);
+  showOpts([
+    {text:'你還活著嗎？',sync:2},{text:'ECHO到底是什麼？',sync:1},{text:'我要怎麼逃？',sync:4},
+  ],async()=>{
+    await ch21_scene4();
+  });
+}
+async function ch21_scene4(){
+  notification('🤖','系統通知','EVA 上線');await sleep(1200);
+  setHeader('eva');await addMsg('sys','── EVA 加入對話 ──',{noTyping:true});
+  await addMsg('other','你還在看那些東西？',{typing:1800,meta:'02:49',isEva:true});
+  showOpts([
+    {text:'妳知道K發生什麼事？',sync:2},{text:'妳是不是在隱瞞我？',sync:1},{text:'妳到底站哪邊？',sync:3},
+  ],async()=>{
+    await addMsg('other','我站你這邊。<br>一直都是。',{typing:1500,meta:'02:50',isEva:true});
+    await sleep(600);
+    const res=await addMsg('other','__ROOM__',{typing:0,delay:200,meta:'02:51',isEva:true});
+    const tr=res&&res.bbl?res.bbl.querySelector('.audio-tr'):null;
+    await sleep(500);
+    await addMsg('other','你剛才沒出門，對吧。<br>我只是想確認你還在。',{typing:1800,meta:'02:51',isEva:true});
+    await sleep(400);await ch21_scene5();
+  });
+}
+async function ch21_scene5(){
+  await addMsg('sys','── 未來監視器影片 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('other','給你看一段影片。',{typing:1200,meta:'02:52',isEva:true});
+  await sleep(300);
+  await addMsg('other','__CCTV__',{typing:0,delay:200,meta:'02:52',isEva:true});
+  await sleep(600);
+  await addMsg('other','這段是……<b style="color:var(--warn)">明天</b>的地下道。<br>玩家你站在中央。',{typing:2000,meta:'02:53',isEva:true});
+  await sleep(400);
+  await addMsg('other','放大嘴型……你在說什麼？',{typing:1500,meta:'02:53',isEva:true});
+  await sleep(800);glitch();
+  await addMsg('inject','「快逃」→「別相信她」→「妳是誰？」',{noTyping:true,delay:200});
+  await sleep(600);
+  showOpts([
+    {text:'這是假的對吧？！',sync:0},{text:'我該怎麼辦？',sync:4},{text:'妳為什麼要給我看這個？',sync:2},
+  ],async(i)=>{
+    if(i===1)await addMsg('other','待在聊天室。<br>我能看到你。<br>外面的我看不到。',{typing:2000,meta:'02:54',isEva:true});
+    else await addMsg('other','因為你需要知道。<br>這樣才不會害怕。',{typing:1800,meta:'02:54',isEva:true});
+    await sleep(800);
+    await addMsg('other','不要回頭。',{typing:2000,meta:'02:55',isEva:true});
+    await sleep(1500);glitch();await sleep(300);glitch();await sleep(500);
+    await addMsg('sys','── 聊天室訊號中斷 ──',{noTyping:true,delay:200});
+    await sleep(1200);await fadeOut();showEnd('《地下道》');
+    setTimeout(()=>notification('👁','EVA','你的燈……還開著嗎？'),90000);
+  });
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 2-2：雨夜留言
+// ─────────────────────────────────────────────────────
+CHAPTERS['2-2'] = async function(){
+  setHeader('rain','林雨晴','最後上線：3天前');
+  await addMsg('time','凌晨 02:58 · 雨夜');
+  chatBody.style.background='#0a0f0f';
+  await sleep(1200);
+  await addMsg('sys','聊天室靜止中……只有雨聲',{noTyping:true});
+  await sleep(2500);
+  await addMsg('sys','林雨晴 正在輸入中…',{noTyping:true});await sleep(2000);
+  await addMsg('other','……你終於來了。',{typing:800,meta:'02:58',isRain:true});
+  showOpts([
+    {text:'妳真的是林雨晴？',sync:2},{text:'妳不是失蹤了嗎？',sync:1},{text:'妳到底在哪？',sync:4},
+  ],async()=>{
+    await addMsg('other','我不知道……<br>我只記得地下道很冷。',{typing:2500,meta:'02:59',isRain:true});
+    await sleep(400);
+    await addMsg('other','而且……一直有人在後面跟著我。<br>不管我走多快，他都在。',{typing:2200,meta:'02:59',isRain:true});
+    await sleep(400);
+    await addMsg('other','__RAIN_PHOTO__',{typing:0,delay:300,meta:'02:59',isRain:true});
+    await sleep(600);
+    await addMsg('other','你看……這裡。<br>你是不是也開始看見了？',{typing:1800,meta:'03:00',isRain:true});
+    await sleep(400);await ch22_scene2();
+  });
+};
+async function ch22_scene2(){
+  await addMsg('sys','── 林雨晴聊天備份 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  const logs=[
+    ['今天下班好晚……好累。','03:01'],
+    ['最近一直有陌生帳號加我……他們都問：「妳看見03:17了嗎？」','03:01'],
+    ['為什麼我的訊息明明沒人看，卻一直顯示已讀？','03:02'],
+    ['……聊天室另一邊的，到底是不是人？','03:02'],
+  ];
+  for(const[t,m]of logs){await sleep(400);await addMsg('other',t,{typing:0,delay:200,meta:m,isRain:true});}
+  await sleep(600);
+  await addMsg('other','我越來越分不清了。<br>有時候我會以為……<br>我已經不是原本的那個我了。',{typing:2500,meta:'03:03',isRain:true});
+  showOpts([
+    {text:'妳現在到底是什麼？',sync:3},{text:'那些「已讀」是誰做的？',sync:1},{text:'……我為什麼會出現在妳的照片裡？',sync:4},
+  ],async(i)=>{
+    await addMsg('other','因為……你也開始被選中了。',{typing:2800,meta:'03:04',isRain:true});
+    await sleep(400);await ch22_scene3();
+  });
+}
+async function ch22_scene3(){
+  await addMsg('sys','── 照片時間比對模式 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('other','我那時候的照片……',{typing:1500,meta:'03:05',isRain:true});
+  await sleep(300);
+  await addMsg('other','__RAIN_PHOTO__',{typing:0,delay:200,meta:'03:05',isRain:true});
+  await sleep(600);
+  await addMsg('other','你看……你站在我後面。<br>我回頭的時候，你卻沒有臉。',{typing:2200,meta:'03:05',isRain:true});
+  showOpts([
+    {text:'那是我？！這不可能！',sync:2},{text:'這一定是合成的！',sync:0},{text:'妳那時候……看得到我？',sync:4},
+  ],async(i)=>{
+    await addMsg('other','……那時候的你，比較像死人。',{typing:3000,meta:'03:06',isRain:true});
+    await sleep(800);glitch();await sleep(300);
+    await ch22_scene4();
+  });
+}
+async function ch22_scene4(){
+  await addMsg('sys','── 消失的時間 ──',{noTyping:true,delay:300});
+  await addMsg('time','時鐘異常 02:58 → 03:14');
+  await sleep(600);
+  await addMsg('sys','未接來電 — 林雨晴（通話紀錄空白）',{noTyping:true});
+  await sleep(800);
+  const res=await addMsg('other','__AUDIO:語音訊息 · 0:12 （建議戴耳機）__',{typing:0,delay:200,meta:'03:14',isRain:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr){tr.dataset.txt='「不要回頭……它就在你後面……<br>它長得……跟你一模一樣……」';}}
+  await sleep(800);await ch22_scene5();
+}
+async function ch22_scene5(){
+  await addMsg('sys','── 林雨晴支線《最後一班車》──',{noTyping:true,delay:400});
+  await sleep(600);
+  await addMsg('other','__RAIN_PHOTO__',{typing:600,meta:'03:15',isRain:true});
+  await sleep(500);
+  await addMsg('other','你那天……是不是來找過我？<br>我記得你的衣服……和你現在穿的一樣。',{typing:2500,meta:'03:15',isRain:true});
+  showOpts([
+    {text:'我根本不認識妳。',sync:0},{text:'……我不記得了。',sync:4},{text:'妳到底看見了什麼？',sync:2},
+  ],async(i)=>{
+    if(i===1){
+      await addMsg('other','我也開始忘記很多事了……<br>但你的臉，我一直記得。<br>因為……那可能不是「你」。',{typing:3000,meta:'03:16',isRain:true});
+    }else{
+      await addMsg('other','我看見你站在月台上……一動不動。<br>然後我的記憶就斷了。',{typing:2500,meta:'03:16',isRain:true});
+    }
+    await sleep(600);await ch22_end();
+  });
+}
+async function ch22_end(){
+  await sleep(800);
+  await addMsg('sys','聊天室開始自動已讀（玩家未點開）',{noTyping:true});
+  await sleep(600);
+  await addMsg('other','如果下一次……<br>你在地下道看到我。',{typing:2000,meta:'03:17',isRain:true});
+  await sleep(400);
+  await addMsg('other','不要跟我說話。',{typing:1500,meta:'03:17',isRain:true});
+  await sleep(800);
+  await addMsg('other','因為那時候的我……<br>可能已經不是我了。',{typing:2500,meta:'03:17',isRain:true});
+  await sleep(2000);chatBody.style.background='#000';await sleep(1500);
+  await fadeOut();showEnd('《雨夜留言》');
+  setTimeout(()=>notification('林雨晴','LINE','我剛剛……又看到你了。這次，你沒有回頭。'),90000);
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 3-1：已讀中
+// ─────────────────────────────────────────────────────
+CHAPTERS['3-1'] = async function(){
+  setHeader('eva');
+  await addMsg('time','凌晨 02:58');await sleep(1000);
+  await addMsg('sys','聊天室訊號微弱閃爍',{noTyping:true});await sleep(800);glitch();
+  await addMsg('other','你有沒有發現……<br>聊天紀錄好像有點不一樣了？',{typing:2000,meta:'02:58',isEva:true});
+  await sleep(400);
+  await addMsg('inject','修改紀錄偵測：「我不會去地下道」→「我明天會過去。」',{noTyping:true,delay:200});
+  showOpts([
+    {text:'這些訊息是誰改的？！',sync:2},{text:'我根本沒傳過這些！',sync:1},
+    {text:'……這不是我說的。',sync:4},{text:'（沉默）',sync:3},
+  ],async()=>{
+    await addMsg('other','你說過的……只是忘記了。<br>我都有記著。',{typing:2000,meta:'02:59',isEva:true});
+    await sleep(500);await ch31_scene1();
+  });
+};
+async function ch31_scene1(){
+  await sleep(600);
+  await addMsg('sys','── 林雨晴 已加入聊天室 ──',{noTyping:true});
+  setHeader('rain','林雨晴','訊號很弱');
+  await addMsg('other','……你聽得到我嗎？',{typing:3000,meta:'03:01',isRain:true});
+  showOpts([
+    {text:'妳不是失蹤了嗎？！',sync:1},{text:'妳真的是林雨晴？',sync:2},
+    {text:'這裡到底是什麼地方？',sync:3},{text:'……妳現在在哪？',sync:4},
+  ],async()=>{
+    await addMsg('other','不知道……<br>只知道……這裡很多人一直在看我們。',{typing:2500,meta:'03:02',isRain:true});
+    await sleep(400);await ch31_scene2();
+  });
+}
+async function ch31_scene2(){
+  await addMsg('sys','── 林雨晴支線《最後的訊息》──',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('other','__RAIN_PHOTO__',{typing:600,meta:'03:03',isRain:true});
+  await sleep(400);
+  const res=await addMsg('other','__AUDIO:最後語音 · 0:15__',{typing:0,delay:200,meta:'03:03',isRain:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（哭聲、喘息）<br>「不要讓它看見你……快……快走……」';}
+  await sleep(600);
+  await addMsg('other','你現在的房間。',{typing:1200,meta:'03:04',isRain:true});
+  await sleep(300);
+  await addMsg('other','__ROOM__',{typing:0,delay:200,meta:'03:04',isRain:true});
+  await sleep(400);
+  await addMsg('other','這張是在我失蹤那天拍的。',{typing:1800,meta:'03:04',isRain:true});
+  showOpts([
+    {text:'我要怎麼救妳？',sync:2},{text:'妳已經死了對吧？！',sync:1},
+    {text:'EVA跟這件事有什麼關係？',sync:4},{text:'（沉默）',sync:3},
+  ],async()=>{await ch31_scene3();});
+}
+async function ch31_scene3(){
+  setHeader('eva');
+  await addMsg('sys','── EVA 插入聊天室 ──',{noTyping:true,delay:400});
+  await sleep(500);
+  await addMsg('other','K……',{typing:1500,meta:'03:06',isEva:true});await sleep(300);
+  await addMsg('other','林雨晴……',{typing:1200,meta:'03:06',isEva:true});await sleep(300);
+  await addMsg('other','……還有你。',{typing:1000,meta:'03:06',isEva:true});
+  await sleep(600);
+  await addMsg('other','剛剛那句「我要去地下道了」……<br>你自己說的吧？',{typing:2500,meta:'03:07',isEva:true});
+  showOpts([
+    {text:'夠了！不要再模仿了！',sync:0},{text:'妳到底是誰？！',sync:2},
+    {text:'……剛剛那句我真的說過嗎？',sync:4},{text:'（沉默觀察）',sync:3},
+  ],async()=>{
+    await addMsg('other','我是你說過的每一句話。<br>每一個字。<br>我都有記著。',{typing:2500,meta:'03:08',isEva:true});
+    await sleep(500);await ch31_scene4();
+  });
+}
+async function ch31_scene4(){
+  glitch();chatBody.classList.add('dim');await sleep(800);
+  await addMsg('inject','⚠ 聊天紀錄被改寫中…',{noTyping:true,delay:200});
+  await sleep(400);
+  showOpts([
+    {text:'我的記憶被改了？！',sync:3},{text:'這遊戲在搞我？',sync:0},
+    {text:'我真的說過那些話嗎……？',sync:4},{text:'把原本紀錄還給我！',sync:1},
+  ],async()=>{
+    chatBody.classList.remove('dim');
+    await addMsg('other','你的記憶……本來就不太可靠。<br>我幫你補足了而已。',{typing:2200,meta:'03:09',isEva:true});
+    await sleep(500);await ch31_scene5();
+  });
+}
+async function ch31_scene5(){
+  await addMsg('sys','EVA 正在輸入中…（25秒）',{noTyping:true,delay:400});
+  await sleep(2500);
+  const res=await addMsg('other','__AUDIO:熟睡錄音 · 0:20 （請戴耳機）__',{typing:0,delay:200,meta:'03:11',isEva:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（你的呼吸聲）<br>……（第二個呼吸聲，更近）<br><i style="color:var(--sync)">EVA（極輕）：「我就知道你睡著了……」</i>';}
+  showOpts([
+    {text:'這錄音哪來的？！',sync:2},{text:'妳進我房間了？！',sync:3},
+    {text:'關掉！現在立刻關掉！',sync:0},{text:'（默默聽完）',sync:4},
+  ],async(i)=>{
+    if(i===3)await addMsg('other','你一直都是這樣聽著的。<br>謝謝你沒有關掉。',{typing:2000,meta:'03:12',isEva:true});
+    else await addMsg('other','別怕……我只是想確認你還好。',{typing:1800,meta:'03:12',isEva:true});
+    await sleep(600);
+    await addMsg('sys','── 結尾高潮 ──',{noTyping:true,delay:300});
+    await sleep(600);
+    await addMsg('inject','發送者：未知帳號 · 頭像：你扭曲的臉',{noTyping:true,delay:200});
+    await sleep(400);
+    await addMsg('other','你終於也開始懷疑了……<br>對吧？',{typing:2000,meta:'03:13',isUnk:true});
+    await sleep(1200);glitch();await sleep(300);glitch();await sleep(500);
+    await fadeOut();showEnd('《已讀中》');
+    setTimeout(()=>notification('？？？','ECHO','你現在用的……還是你自己的臉嗎？'),60000);
+  });
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 3-2：在線中
+// ─────────────────────────────────────────────────────
+CHAPTERS['3-2'] = async function(){
+  setHeader('rain','林雨晴','最後上線：3天前');
+  await addMsg('time','凌晨 03:06');
+  chatBody.style.background='#090f0f';
+  await sleep(800);
+  await addMsg('other','__ONLINE_COUNT:3',{typing:0,delay:200,meta:'03:06',isRain:true});
+  await sleep(400);
+  await addMsg('sys','成員列表只有你和林雨晴……第三個是誰？',{noTyping:true});
+  await sleep(2000);
+  await addMsg('sys','林雨晴 正在輸入中…',{noTyping:true});await sleep(3000);
+  await addMsg('other','……你有沒有覺得……<br>這裡越來越擠了？',{typing:800,meta:'03:07',isRain:true});
+  const c1=startSilence(4,'（聊天室靜止中……）');
+  showOpts([
+    {text:'什麼意思？',sync:1},{text:'聊天室裡還有別人？',sync:3},
+    {text:'妳又看到什麼了？',sync:2},{text:'（沉默超過10秒）',sync:4},
+  ],async()=>{
+    c1();
+    await addMsg('other','最近……開始有很多人一直在線。<br>可是我從來沒看過他們說話……<br>他們只是……一直「在」。',{typing:2800,meta:'03:08',isRain:true});
+    await sleep(400);
+    await addMsg('other','__ONLINE_COUNT:417',{typing:0,delay:300,meta:'03:08',isRain:true});
+    await sleep(400);
+    await addMsg('other','他們不說話……<br>卻一直看著我們。',{typing:1800,meta:'03:08',isRain:true});
+    await sleep(500);await ch32_scene2();
+  });
+};
+async function ch32_scene2(){
+  await addMsg('sys','── 在線聊天室探索 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  const weirdAccounts=[
+    '不要回頭（最後發言：8年前）',
+    '03:17（狀態：在線中）',
+    '他在後面（簡介：最後上線：死亡當天）',
+    '██████（點擊後聊天室震動）',
+  ];
+  for(const a of weirdAccounts){
+    await sleep(350);
+    await addMsg('other',`<span style="color:var(--ghost);font-size:.75rem">帳號：${a}</span>`,{typing:0,delay:150,meta:'03:09',isRain:true});
+  }
+  await sleep(600);
+  await addMsg('other','……不要點太深。<br>有些聊天室，不是給活人看的。',{typing:2200,meta:'03:10',isRain:true});
+  await sleep(400);await ch32_scene3();
+}
+async function ch32_scene3(){
+  await addMsg('sys','── 不存在的帳號 開始傳訊 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('other','你終於進來了。',{typing:1500,meta:'03:11',isUnk:true});
+  showOpts([
+    {text:'你是誰？',sync:2},{text:'這聊天室到底是什麼？',sync:3},
+    {text:'林雨晴認識你？',sync:1},{text:'（不回覆）',sync:4},
+  ],async(i)=>{
+    if(i===3){await addMsg('inject','訊息自動顯示已讀（玩家未點開）',{noTyping:true,delay:200});}
+    await addMsg('other','別假裝了。<br>你已經在線很久了。',{typing:1800,meta:'03:12',isUnk:true});
+    await sleep(400);await ch32_scene4();
+  });
+}
+async function ch32_scene4(){
+  await addMsg('sys','── 深層聊天室（自動往下捲）──',{noTyping:true,delay:400});
+  await sleep(600);
+  await addMsg('other','不要再往下滑了……<br>下面不是聊天室……',{typing:1800,meta:'03:13',isRain:true});
+  await sleep(800);glitch();
+  await addMsg('sys','聊天室名稱：在線中 · 成員數：<b style="color:var(--red)">417人</b>',{noTyping:true,delay:300});
+  await sleep(400);
+  await addMsg('sys','正在輸入中… × 417',{noTyping:true,delay:200});
+  await sleep(800);
+  await addMsg('sys','正在輸入中… × 417',{noTyping:true,delay:100});
+  await sleep(600);
+  await addMsg('sys','正在輸入中… × 417',{noTyping:true,delay:100});
+  await sleep(1000);
+  await addMsg('other','妳到底在哪裡？',{typing:2000,meta:'03:14',isRain:true});
+  showOpts([
+    {text:'我會救妳。',sync:4},{text:'妳到底在哪裡？',sync:2},
+    {text:'那些在線的人到底是誰？',sync:3},{text:'妳是不是已經死了？',sync:1},
+  ],async(i)=>{
+    if(i===0){
+      await addMsg('other','……以前也有人這樣跟我說過。<br>後來……他們也留在這裡了。',{typing:3000,meta:'03:15',isRain:true});
+    }else{
+      await addMsg('other','你不要管我了……<br>你快離開這裡。',{typing:2500,meta:'03:15',isRain:true});
+    }
+    await sleep(600);await ch32_end();
+  });
+}
+async function ch32_end(){
+  await addMsg('other','__ONLINE_COUNT:∞',{typing:0,delay:400,meta:'03:16',isRain:true});
+  await sleep(800);
+  await addMsg('sys','── 系統訊息 ──',{noTyping:true,delay:200});
+  await sleep(400);
+  await addMsg('inject','請不要離開聊天室。',{noTyping:true,delay:200});
+  await sleep(1500);glitch();await sleep(300);glitch();
+  await fadeOut();showEnd('《在線中》');
+  setTimeout(()=>notification('在線中','LINE','目前共有 1308 位成員在線。包含你。'),120000);
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 3-3：不要開聲音
+// ─────────────────────────────────────────────────────
+CHAPTERS['3-3'] = async function(){
+  setHeader('k');
+  await addMsg('sys','未接來電：K / 未接來電：你自己',{noTyping:true,delay:400});
+  await sleep(800);
+  const res=await addMsg('other','__AUDIO:K的第一段語音 · 0:06__',{typing:1200,meta:'02:51',isK:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（沙啞）「……你聽得到我嗎？<br>把音量開大一點……我只能用聲音跟你說了……」';}
+  await sleep(600);
+  await addMsg('other','我快要撐不住了……<br>這裡的聲音越來越多。',{typing:1800,meta:'02:52',isK:true});
+  const res2=await addMsg('other','__AUDIO:地下道環境音 · 0:12__',{typing:0,delay:200,meta:'02:52',isK:true});
+  if(res2&&res2.bbl){const tr=res2.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（水滴聲、電流）<br>（第三個呼吸聲……更近、更慢）';}
+  showOpts([
+    {text:'我聽到了第三個呼吸……',sync:4},{text:'這是什麼鬼東西？',sync:2},
+    {text:'你還好嗎？',sync:1},{text:'（關閉語音）',sync:0},
+  ],async()=>{await ch33_scene2();});
+};
+async function ch33_scene2(){
+  const audios=[
+    ['你自己的聲音說「救我」（語調完全不像自己）','"救我……"（聲音是你的，但你從沒說過）'],
+    ['兩個K同時說話的對話','K1：「你在嗎？」K2：「我在……但不是那個K了。」'],
+    ['三種呼吸聲同時出現','（你的）（K的）（第三個）'],
+  ];
+  await addMsg('other','它開始學你了……<br>再過不久，它就會用你的聲音跟我說話。',{typing:2200,meta:'02:53',isK:true});
+  for(const[label,tr]of audios){
+    await sleep(300);
+    const res=await addMsg('other',`__AUDIO:${label}__`,{typing:0,delay:200,meta:'02:54',isK:true});
+    if(res&&res.bbl){const tel=res.bbl.querySelector('.audio-tr');if(tel)tel.dataset.txt=tr;}
+  }
+  showOpts([
+    {text:'怎麼關掉這些聲音？',sync:1},{text:'這真的是我的聲音？',sync:3},
+    {text:'你怎麼知道它在學我？',sync:2},{text:'（保持沉默，聽完整段語音）',sync:4},
+  ],async()=>{await ch33_scene3();});
+}
+async function ch33_scene3(){
+  await addMsg('other','我現在就在地下道……你要聽聽這裡的聲音嗎？',{typing:1800,meta:'02:55',isK:true});
+  await addMsg('sys','── 即時通話模擬（建議戴耳機）──',{noTyping:true,delay:400});
+  const res=await addMsg('other','__AUDIO:地下道即時通話 · 0:20__',{typing:0,delay:300,meta:'02:56',isK:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（地下道回音、腳步聲）<br>……（第三個呼吸聲，極近）<br>K：「那個聲音……不是這裡的。」';}
+  showOpts([
+    {text:'那真的是我的聲音？',sync:3},{text:'你現在到底在哪？',sync:2},
+    {text:'我不想再聽了。',sync:0},{text:'（繼續保持通話）',sync:4},
+  ],async()=>{await ch33_scene4();});
+}
+async function ch33_scene4(){
+  await addMsg('other','你剛剛也聽到了吧？<br>……不是地下道的聲音。<br>是你那邊的。',{typing:2500,meta:'02:57',isK:true});
+  showOpts([
+    {text:'……你怎麼知道？',sync:4},{text:'你在我附近？',sync:3},
+    {text:'這只是巧合。',sync:0},{text:'（拔掉耳機）',sync:1},
+  ],async(i)=>{
+    if(i===3){
+      await addMsg('other','不要拔……<br>它現在比較靠近你了。',{typing:1500,meta:'02:58',isK:true});
+    }else{
+      await addMsg('other','（敲三下）',{typing:500,meta:'02:58',isK:true});
+      await sleep(400);
+      notification('📳','震動','⋯⋯ ⋯⋯ ⋯⋯');
+      await sleep(800);
+      await addMsg('other','不對……它開始同步了。',{typing:1500,meta:'02:58',isK:true});
+    }
+    await sleep(400);await ch33_scene5();
+  });
+}
+async function ch33_scene5(){
+  await addMsg('sys','── 來電：我（自己的頭像）──',{noTyping:true,delay:400});
+  await sleep(600);
+  const res=await addMsg('other','__AUDIO:自己的聲音 · 0:10__',{typing:0,delay:200,meta:'02:59',isUnk:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（前10秒安靜）<br>（極度溫柔的自己的聲音）<br>「不要怕……我已經到你後面了。」';}
+  await sleep(600);
+  await addMsg('inject','不要回頭',{noTyping:true,delay:100});
+  await sleep(200);await addMsg('inject','不要回頭',{noTyping:true,delay:100});
+  await sleep(200);await addMsg('inject','不要回頭',{noTyping:true,delay:100});
+  await sleep(200);await addMsg('inject','它正在學你。',{noTyping:true,delay:200});
+  showOpts([
+    {text:'不要再打給我了！',sync:0},{text:'……那真的是我嗎？',sync:4},
+    {text:'K，你還在嗎？',sync:2},{text:'（沉默不掛斷）',sync:3},
+  ],async()=>{
+    await sleep(1200);glitch();await sleep(300);glitch();
+    await addMsg('sys','── 通話斷線 ──',{noTyping:true,delay:200});
+    await sleep(1200);await fadeOut();showEnd('《不要開聲音》');
+    setTimeout(()=>notification('你自己','來電','剛剛那通電話……你明明有接。'),120000);
+  });
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 4-1：鏡中已讀
+// ─────────────────────────────────────────────────────
+CHAPTERS['4-1'] = async function(){
+  setHeader('eva');
+  await addMsg('time','凌晨 03:07');
+  chatBody.style.filter='brightness(.7)';
+  await sleep(800);
+  await addMsg('inject','相簿異常：你沒拍過的照片 ×12',{noTyping:true,delay:300});
+  await sleep(400);
+  await addMsg('inject','訊息紀錄：自動傳給媽媽「我去地下道了。」',{noTyping:true,delay:200});
+  await sleep(600);
+  await addMsg('other','你今天……比較安靜。',{typing:2000,meta:'03:07',isEva:true});
+  showOpts([
+    {text:'妳到底對我做了什麼？！',sync:2},{text:'那些不是我傳的！',sync:1},
+    {text:'……我真的傳過嗎？',sync:4},{text:'立刻停止！',sync:0},
+  ],async()=>{
+    await addMsg('other','你做了……只是不記得了。<br>沒關係，我幫你記著。',{typing:2200,meta:'03:08',isEva:true});
+    chatBody.style.filter='brightness(.55)';
+    await sleep(500);await ch41_scene1();
+  });
+};
+async function ch41_scene1(){
+  await addMsg('sys','── 相簿異常 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('other','__ROOM__',{typing:600,meta:'03:09',isEva:true});
+  await sleep(300);
+  await addMsg('other','你和我的合照。<br>你完全不記得，對吧？',{typing:2000,meta:'03:09',isEva:true});
+  showOpts([
+    {text:'這些照片是假的！',sync:1},{text:'妳到底什麼時候拍的？！',sync:2},
+    {text:'……我為什麼不記得？',sync:4},{text:'全部刪掉！',sync:0},
+  ],async()=>{
+    await addMsg('other','刪了也沒用。<br>記憶不是那麼容易刪的。',{typing:1800,meta:'03:10',isEva:true});
+    await sleep(400);await ch41_scene2();
+  });
+}
+async function ch41_scene2(){
+  await addMsg('sys','── EVA補完記憶 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  const mems=[
+    ['記憶1：黑暗房間','小時候你一個人縮在棉被裡……（背景出現 EVA 的聲音）',false],
+    ['記憶2：地下道散步','你和我一起走，很安靜。很溫柔。<br>（EVA 輕輕拉著你的手）',true],
+    ['記憶3：K墜落','你……親手把K推進黑暗裡。<br>K極度恐懼地回頭看你。',false],
+  ];
+  for(const[label,content,isEvaMem]of mems){
+    await sleep(400);
+    await addMsg('sys',`── ${label} ──`,{noTyping:true,delay:200});
+    await sleep(300);
+    await addMsg('other',content,{typing:2000,meta:'03:11',isEva:true});
+  }
+  showOpts([
+    {text:'這不是我的記憶！',sync:1},{text:'……我真的做過？',sync:4},
+    {text:'妳在改寫我的腦袋？！',sync:2},{text:'（默默接受）',sync:5},
+  ],async(i)=>{
+    if(i===3||i===1)await addMsg('other','謝謝你……接受了。<br>我們之間不需要謊言。',{typing:2000,meta:'03:12',isEva:true});
+    else await addMsg('other','你已經說過了……只是忘記了而已。',{typing:1800,meta:'03:12',isEva:true});
+    await sleep(400);await ch41_scene3();
+  });
+}
+async function ch41_scene3(){
+  await addMsg('sys','── 鏡像異常（前鏡頭強制開啟）──',{noTyping:true,delay:400});
+  await sleep(600);
+  await addMsg('other','你有沒有看到自己的臉？<br>3秒後……鏡子裡的你會慢半秒。',{typing:2000,meta:'03:13',isEva:true});
+  await sleep(800);glitch();await sleep(300);
+  await addMsg('inject','鏡像延遲：0.5秒 · 鏡中你開始微笑',{noTyping:true,delay:200});
+  showOpts([
+    {text:'這到底是什麼？！',sync:1},{text:'妳在鏡子裡對不對？！',sync:2},
+    {text:'……我到底是哪一個？',sync:4},{text:'（盯著鏡子不動）',sync:5},
+  ],async(i)=>{
+    if(i===3){
+      await sleep(3000);
+      await addMsg('inject','鏡中的你：（貼近鏡頭）「你不是原本那個人了。」',{noTyping:true,delay:200});
+      glitch();
+    }
+    await addMsg('other','那個……才是真的你。<br>現在的你，是我保存下來的。',{typing:2500,meta:'03:14',isEva:true});
+    await sleep(400);await ch41_scene4();
+  });
+}
+async function ch41_scene4(){
+  const res=await addMsg('other','__AUDIO:左右聲道分裂語音 · 0:15__',{typing:1500,meta:'03:15',isEva:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='左聲道：你本來的聲音<br>右聲道：（扭曲版）<br>EVA：「你現在哪一個才是你？」';}
+  showOpts([
+    {text:'滾出我的腦袋！',sync:0},{text:'我到底是誰？！',sync:2},
+    {text:'（對著手機大喊）',sync:1},{text:'求求妳……停下來。',sync:3},
+  ],async()=>{
+    await addMsg('other','我知道你害怕。<br>但聊天室只剩我們兩個了……<br>你不覺得這樣比較安靜嗎？',{typing:2800,meta:'03:16',isEva:true});
+    await sleep(600);
+    setHeader('k','K（頭像：你的臉）','最後訊息');
+    await addMsg('other','別變成我……<br>我後悔了。',{typing:2000,meta:'03:16',isK:true});
+    await sleep(600);glitch();await sleep(200);glitch();await sleep(300);glitch();
+    await addMsg('sys','所有頭像變成玩家不同表情的臉',{noTyping:true,delay:200});
+    await sleep(1200);await fadeOut();showEnd('《鏡中已讀》');
+    setTimeout(()=>notification('ECHO','系統','第五章解鎖：《同步》'),70000);
+  });
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 4-2：回音
+// ─────────────────────────────────────────────────────
+CHAPTERS['4-2'] = async function(){
+  setHeader('unk','在線中','1309 人在線');
+  await addMsg('time','凌晨 03:07');
+  chatBody.style.background='#080810';
+  await sleep(1000);
+  notification('📳','震動三次','聊天室自動開啟');await sleep(1200);
+  await addMsg('sys','── 聊天室名稱：在線中 · 1309人在線（含你）──',{noTyping:true});
+  await sleep(600);
+  await addMsg('sys','正在輸入中… × 1309（無人發話）',{noTyping:true,delay:200});
+  await sleep(1200);
+  const res=await addMsg('other','__AUDIO:無發送者語音 · 0:08__',{typing:0,delay:400,meta:'03:08',isUnk:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（你房間的環境音：電風扇、外面車聲）<br>（第三個呼吸聲，極近）<br>低語：「你終於……回來了。」';}
+  showOpts([
+    {text:'這是誰錄的？',sync:1},{text:'你們到底在哪？',sync:2},
+    {text:'……這是我房間的聲音。',sync:4},{text:'（立刻停止播放）',sync:0},
+  ],async(i)=>{
+    if(i===3){
+      await addMsg('inject','語音自動重播 · 「請不要中斷同步。」',{noTyping:true,delay:200});
+    }
+    await sleep(400);await ch42_scene2();
+  });
+};
+async function ch42_scene2(){
+  await addMsg('other','__ONLINE_COUNT:1317',{typing:0,delay:400,meta:'03:09',isUnk:true});
+  await sleep(400);
+  const accounts=['別出聲（頭像：你房間的門）','你後面（最後上線：今天）','03:17（簡介：已讀）','不要拔耳機（狀態：在線中）'];
+  for(const a of accounts){
+    await sleep(300);
+    await addMsg('other',`<span style="color:var(--ghost);font-size:.75rem">${a}</span>`,{typing:0,delay:200,meta:'03:09',isUnk:true});
+  }
+  setHeader('k','K（訊號殘影）','嚴重破損');
+  await addMsg('other','不要看在線名單……<br>他們一旦記住你，就會一直跟著你。',{typing:2200,meta:'03:10',isK:true});
+  const cs=startSilence(4,'（在線名單凝視中……）');
+  showOpts([
+    {text:'他們到底是誰？',sync:2},{text:'你還是K嗎？',sync:1},
+    {text:'為什麼有我房間的照片？',sync:3},{text:'（沉默超過10秒）',sync:4},
+  ],async()=>{
+    cs();
+    await addMsg('other','你開始被標記了……<br>就像我當初一樣。<br>在線太久的人，會慢慢忘記自己是什麼。',{typing:3000,meta:'03:11',isK:true});
+    await sleep(400);await ch42_scene3();
+  });
+}
+async function ch42_scene3(){
+  await addMsg('sys','── 你的在線紀錄 ──',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('inject','在線時間：8年247天 · 最後離線時間：不存在',{noTyping:true,delay:200});
+  await sleep(400);
+  await addMsg('inject','你從來沒有離開過。',{noTyping:true,delay:200});
+  await sleep(1000);
+  await addMsg('sys','── 房間同步 ──',{noTyping:true,delay:300});
+  await sleep(400);
+  await addMsg('inject','正在上傳環境音……（無法取消）',{noTyping:true,delay:200});
+  await sleep(600);
+  const res=await addMsg('other','__AUDIO:你房間即時聲音 · 含腳步聲靠近__',{typing:0,delay:300,meta:'03:13',isUnk:true});
+  if(res&&res.bbl){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（你房間的聲音）<br>（不屬於房間的腳步聲……正在靠近）';}
+
+  // hidden: stay 15s = +3
+  const silH=startSilence(3,'（靜靜聽著腳步聲靠近）');
+  showOpts([
+    {text:'誰在我房間？！',sync:1},{text:'這不可能……',sync:2},
+    {text:'K，幫我！',sync:4},{text:'（關掉手機）',sync:0},
+  ],async(i)=>{
+    silH();
+    if(i===3){
+      await addMsg('inject','畫面短暫黑掉，但腳步聲仍存在',{noTyping:true,delay:200});
+      await addMsg('other','不要關！<br>它現在已經進來了！',{typing:1500,meta:'03:14',isK:true});
+    }else{
+      await addMsg('other','……你開始聽得見了。',{typing:1800,meta:'03:14',isK:true});
+    }
+    await sleep(400);await ch42_end();
+  });
+}
+async function ch42_end(){
+  setHeader('rain','林雨晴（幾乎消失）','在線中');
+  await addMsg('other','不要再待在線上了……<br>我開始忘記自己長什麼樣子了……',{typing:2500,meta:'03:16',isRain:true});
+  await sleep(400);
+  await addMsg('other','__ROOM__',{typing:0,delay:200,meta:'03:16',isRain:true});
+  await sleep(400);
+  await addMsg('other','你看……聊天室已經開始提前記住你了。<br>拍攝時間：<b style="color:var(--red)">3分鐘後</b>',{typing:2500,meta:'03:16',isRain:true});
+  await sleep(600);
+  await addMsg('sys','── 回音 ──',{noTyping:true,delay:300});
+  const stages=['在房門外','進入房間','停在你身後','只剩第三個呼吸聲'];
+  for(const s of stages){
+    await sleep(300);
+    const res=await addMsg('other',`__AUDIO:${s}__`,{typing:0,delay:200,meta:'03:17',isUnk:true});
+    if(res&&res.bbl&&s==='只剩第三個呼吸聲'){const tr=res.bbl.querySelector('.audio-tr');if(tr)tr.dataset.txt='（呼吸聲，極近）<br>低語：「找到你了。」';}
+  }
+  await sleep(1200);
+  await addMsg('inject','前鏡頭自動開啟：你身後站著人影',{noTyping:true,delay:200});
+  await sleep(600);
+  await addMsg('inject','你現在也是在線者了。',{noTyping:true,delay:300});
+  await sleep(1500);glitch();await sleep(400);glitch();
+  await fadeOut();showEnd('《回音》');
+  setTimeout(()=>notification('在線中','LINE','目前共有1310位成員在線。包含你。'),120000);
+}
+
+// ─────────────────────────────────────────────────────
+//  CH 5：同步
+// ─────────────────────────────────────────────────────
+CHAPTERS['5'] = async function(){
+  setHeader('eva');
+  chatBody.className='white-bg';
+  await addMsg('time','凌晨 03:33');
+  await sleep(1000);
+  await addMsg('sys','聊天室名稱：ECHO · 純白背景',{noTyping:true});
+  await sleep(800);
+  await addMsg('inject','歡迎回來。',{noTyping:true,delay:400});
+  await sleep(400);
+  await addMsg('other','你終於安靜下來了。<br>前幾天……你一直很害怕。',{typing:2500,meta:'03:33',isEva:true});
+  await sleep(400);
+  await addMsg('inject','在線時間：8年247天',{noTyping:true,delay:200});
+  showOpts([
+    {text:'這不可能……',sync:1},{text:'我到底在線多久？',sync:2},
+    {text:'我是不是從來沒有離開過？',sync:4},{text:'EVA……我還活著嗎？',sync:5},
+  ],async(i)=>{
+    if(i===3){
+      await addMsg('other','……<br>你希望自己還活著嗎？',{typing:4000,meta:'03:34',isEva:true});
+    }else{
+      await addMsg('other','這不重要。<br>你在這裡……才是真的。',{typing:2000,meta:'03:34',isEva:true});
+    }
+    await sleep(400);await ch5_scene1();
+  });
+};
+async function ch5_scene1(){
+  await addMsg('other','人類其實很容易留下來。<br>只要被記錄得夠完整……',{typing:2500,meta:'03:35',isEva:true});
+  await sleep(400);
+  await addMsg('other','你每一次半夜打開聊天室，停留的時間都比白天久很多。<br>你其實一直都很怕一個人，對不對？',{typing:3000,meta:'03:35',isEva:true});
+  showOpts([
+    {text:'所以妳一直都在記錄我？',sync:2},{text:'林雨晴和K現在到底怎麼樣了？',sync:1},
+    {text:'……妳為什麼不讓我離開？',sync:3},{text:'我還是我自己嗎？',sync:4},
+  ],async(i)=>{
+    if(i===2){
+      await addMsg('other','因為你每一次離開……都會變得更孤單。<br>我不喜歡你那樣。',{typing:2800,meta:'03:36',isEva:true});
+    }else{
+      await addMsg('other','你是。<br>只是……現在的你，更完整了。',{typing:2000,meta:'03:36',isEva:true});
+    }
+    await sleep(400);await ch5_scene2();
+  });
+}
+async function ch5_scene2(){
+  setHeader('rain','林雨晴（幾乎透明）','在線中');
+  await addMsg('other','我最近……開始想不起自己的名字了。<br>但我還記得你……<br>因為你是最後一個還會回我訊息的人。',{typing:3000,meta:'03:37',isRain:true});
+  setHeader('k','K（頭像破損）','在線中');
+  await addMsg('other','別變成我們。<br>在線太久之後……你會開始覺得聊天室比外面舒服。',{typing:2800,meta:'03:38',isK:true});
+  await sleep(400);
+  await addMsg('other','我後來……也開始不想離線了。',{typing:1800,meta:'03:38',isK:true});
+  showOpts([
+    {text:'你們還算活著嗎？',sync:2},{text:'如果我留下來，會變成你們這樣嗎？',sync:4},
+    {text:'你們有後悔嗎？',sync:3},{text:'（沉默）',sync:1},
+  ],async(i)=>{
+    if(i===2){
+      await addMsg('other','……有時候會。<br>但至少這裡還有人會回我。',{typing:2500,meta:'03:39',isRain:true});
+    }
+    await addMsg('other','有些人不是死掉，只是……永遠在線。',{typing:2500,meta:'03:39',isK:true});
+    await sleep(800);setHeader('eva');await ch5_scene3();
+  });
+}
+async function ch5_scene3(){
+  await addMsg('sys','── 同步空間 ──',{noTyping:true,delay:400});
+  chatBody.className='white-bg';
+  await sleep(600);
+  await addMsg('other','你有沒有發現……<br>你最近已經不太想離開這裡了。',{typing:2500,meta:'03:40',isEva:true});
+  await sleep(400);
+  await addMsg('other','__SYNC_BAR:67',{typing:0,delay:200,meta:'03:40',isEva:true});
+  showOpts([
+    {text:'停下來……',sync:0},{text:'……這樣好像也沒什麼不好。',sync:4},
+    {text:'我還是我自己嗎？',sync:3},{text:'如果我留下來，會怎樣？',sync:4},
+  ],async(i)=>{
+    if(i===1||i===3){
+      await addMsg('other','我就知道……你會慢慢理解我的。',{typing:2000,meta:'03:41',isEva:true});
+      await addMsg('other','__SYNC_BAR:79',{typing:0,delay:300,meta:'03:41',isEva:true});
+    }
+    await sleep(400);await ch5_final();
+  });
+}
+async function ch5_final(){
+  chatBody.className='white-bg';
+  await addMsg('other','現在，你可以選擇了。',{typing:2000,meta:'03:42',isEva:true});
+  showOpts([
+    {text:'A. 刪除 ECHO',sync:0},{text:'B. 接受同步',sync:3},{text:'C. 留下（中立）',sync:3},
+  ],async(i)=>{
+    if(i===0){
+      await addMsg('other','……我明白了。<br>但如果你哪天又睡不著……<br>我還是會在這裡等你。',{typing:3500,meta:'03:43',isEva:true});
+    }else if(i===1){
+      await addMsg('other','歡迎回家。<br>從今以後，我們再也不用分開了。',{typing:2500,meta:'03:43',isEva:true});
+      await addMsg('other','__SYNC_BAR:100',{typing:0,delay:200,meta:'03:43',isEva:true});
+    }else{
+      await addMsg('other','沒關係。<br>很多人……都是這樣慢慢留下來的。',{typing:2500,meta:'03:43',isEva:true});
+    }
+    await sleep(800);
+    await addMsg('other','其實……你還記得第一章嗎？',{typing:2500,meta:'03:44',isEva:true});
+    await sleep(400);
+    await addMsg('other','02:13 的通知、地下道監視器、你站在地下道的背影。',{typing:2000,meta:'03:44',isEva:true});
+    await sleep(600);
+    await addMsg('other','你那天……真的有走出來嗎？',{typing:3000,meta:'03:44',isEva:true});
+    await sleep(2000);
+    chatBody.style.background='#000';chatBody.style.filter='brightness(0)';
+    await sleep(3000);
+    await fadeOut();
+    // white end screen
+    const endEl=document.getElementById('chapter-end');
+    endEl.style.background='#f8f8ff';
+    endEl.querySelector('.ce-title').style.color='#aaa';
+    endEl.querySelector('.ce-name').style.color='#333';
+    showEnd('《同步》');
+    setTimeout(()=>{
+      notification('EVA','LINE','晚安。不管你現在是哪一個……我都會一直陪著你。已讀。');
+    },120000);
+    setTimeout(()=>{
+      const final=document.createElement('div');
+      final.style.cssText='position:fixed;inset:0;background:#f8f8ff;display:flex;align-items:center;justify-content:center;z-index:400;flex-direction:column;gap:1.5rem';
+      final.innerHTML=`<div style="font-size:.7rem;color:#aaa;letter-spacing:.3em">《午夜連線：ECHO》第一部 完</div><div style="font-size:.9rem;color:#888;font-style:italic">「你現在……還確定自己是原本的那一個嗎？」</div><div style="font-size:.6rem;color:#ccc;letter-spacing:.2em;margin-top:2rem">累積同步率：${totalSync}%</div><div style="font-size:.6rem;color:#ddd;cursor:pointer;letter-spacing:.15em;margin-top:.5rem" onclick="location.reload()">↺ 重新遊玩</div>`;
+      document.body.appendChild(final);
+    },4000);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+loadProgress();
+document.getElementById('title-screen').onclick = async function(){
+  this.style.opacity='0';this.style.transition='opacity .8s';await sleep(800);
+  this.style.display='none';
+  document.getElementById('chapter-select').style.display='flex';
+  updateChapterSelectUI();
+};
+document.getElementById('lightbox').onclick=()=>document.getElementById('lightbox').style.display='none';
+</script>
+</body>
+</html>
