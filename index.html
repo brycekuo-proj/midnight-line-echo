@@ -1,20 +1,590 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>午夜連線：ECHO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>午夜連線：ECHO — 第一部</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#0a0a0f; --chat-bg:#111118; --b-other:#1e1e2a; --b-self:#1a4a3a;
+--b-eva:#1a0a2a; --b-rain:#0a1a1a; --b-k:#0a0a1a;
+--text:#e8e8f0; --dim:#6b6b80; --ghost:#3a3a4a;
+--green:#2dd4a4; --red:#ff4466; --purple:#9933ff;
+--warn:#ffaa00; --hdr:#1a1a24; --border:#2a2a38;
+--sync:#9933ff; --rain-color:#2299aa; --k-color:#5577ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none}
 
-  <link rel="stylesheet" href="css/style.css" />
+/* ── TITLE ── */
+#title-screen{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;cursor:pointer}
+.tg{font-size:clamp(3rem,10vw,5rem);font-weight:700;color:#fff;letter-spacing:.18em;text-transform:uppercase;position:relative;animation:gm 4s infinite}
+.tg::before,.tg::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%}
+.tg::before{color:var(--red);animation:ga 4s infinite;clip-path:polygon(0 0,100% 0,100% 45%,0 45%)}
+.tg::after{color:#00ffcc;animation:gb 4s infinite;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%)}
+@keyframes gm{0%,90%,100%{transform:translate(0)}91%{transform:translate(-2px,1px)}93%{transform:translate(2px,-1px)}95%{transform:translate(0)}}
+@keyframes ga{0%,90%,100%{transform:translate(0);opacity:0}91%{transform:translate(3px,0);opacity:.8}93%{transform:translate(-3px,0);opacity:.8}95%{transform:translate(0);opacity:0}}
+@keyframes gb{0%,90%,100%{transform:translate(0);opacity:0}91%{transform:translate(-3px,0);opacity:.8}93%{transform:translate(3px,0);opacity:.8}95%{transform:translate(0);opacity:0}}
+.t-sub{color:var(--dim);font-size:.85rem;letter-spacing:.3em;margin-top:.6rem;text-transform:uppercase}
+.t-quote{color:#555;font-size:.8rem;text-align:center;max-width:280px;line-height:1.9;margin-top:3rem;border-left:2px solid #2a2a2a;padding-left:1rem}
+.t-start{margin-top:3.5rem;color:var(--dim);font-size:.75rem;letter-spacing:.4em;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.t-warn{position:absolute;bottom:2rem;color:#333;font-size:.65rem;text-align:center;padding:0 2rem;line-height:1.9}
+
+/* ── CHAPTER SELECT ── */
+#chapter-select{display:none;position:fixed;inset:0;background:#000;z-index:95;flex-direction:column;align-items:center;overflow-y:auto;padding:2rem 1rem 4rem}
+.cs-title{font-size:1rem;color:var(--ghost);letter-spacing:.3em;text-transform:uppercase;margin-bottom:2rem;margin-top:1rem}
+.cs-part{font-size:.7rem;color:var(--ghost);letter-spacing:.2em;margin:1.2rem 0 .6rem;text-transform:uppercase}
+.cs-grid{display:flex;flex-direction:column;gap:.6rem;width:100%;max-width:420px}
+.cs-card{background:#0e0e18;border:1px solid var(--border);border-radius:14px;padding:.9rem 1.1rem;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
+.cs-card:hover{background:#141420;border-color:#3a3a5a}
+.cs-card.locked{opacity:.35;pointer-events:none}
+.cs-card.active-ch{border-color:var(--sync)}
+.cs-ch{font-size:.6rem;color:var(--ghost);letter-spacing:.15em;margin-bottom:.3rem}
+.cs-name{font-size:.95rem;color:var(--text);font-weight:500}
+.cs-desc{font-size:.7rem;color:var(--dim);margin-top:.25rem;line-height:1.6}
+.cs-sync{position:absolute;right:.9rem;top:.9rem;font-size:.6rem;color:var(--sync);font-family:monospace}
+.cs-tag{display:inline-block;font-size:.55rem;padding:.1rem .4rem;border-radius:3px;margin-top:.4rem;letter-spacing:.08em}
+.tag-eva{background:rgba(153,51,255,.12);color:var(--purple);border:1px solid rgba(153,51,255,.25)}
+.tag-rain{background:rgba(34,153,170,.12);color:var(--rain-color);border:1px solid rgba(34,153,170,.25)}
+.tag-k{background:rgba(85,119,255,.12);color:var(--k-color);border:1px solid rgba(85,119,255,.25)}
+.tag-final{background:rgba(255,68,102,.12);color:var(--red);border:1px solid rgba(255,68,102,.25)}
+.cs-route-label{font-size:.6rem;color:#444;margin-top:.3rem;letter-spacing:.05em}
+.cs-sync-total{text-align:center;font-size:.7rem;color:var(--ghost);margin-top:1.5rem;letter-spacing:.15em}
+.cs-sync-total b{color:var(--sync)}
+
+/* ── SYNC BAR ── */
+#sync-bar{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(10,10,15,.97);border-bottom:1px solid #2a1a4a;padding:.35rem 1rem;display:none;align-items:center;gap:.6rem;z-index:90}
+.sl{font-size:.6rem;color:var(--ghost);letter-spacing:.15em;white-space:nowrap}
+.st{flex:1;height:3px;background:#1a1a2a;border-radius:2px;overflow:hidden}
+.sf{height:100%;background:var(--sync);width:0%;transition:width .8s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 6px var(--sync)}
+.sp{font-size:.65rem;color:var(--sync);font-family:monospace;font-weight:700;min-width:2.5rem;text-align:right}
+.sp.pulse{animation:spulse .6s ease}
+@keyframes spulse{0%{text-shadow:none}30%{text-shadow:0 0 12px var(--sync)}100%{text-shadow:none}}
+
+/* ── APP ── */
+#app{display:none;height:100%;flex-direction:column;background:var(--bg);max-width:480px;margin:0 auto;position:relative;padding-top:28px}
+.status-bar{background:#000;display:flex;justify-content:space-between;align-items:center;padding:.3rem 1rem;font-size:.65rem;color:#666;flex-shrink:0}
+.status-time{color:#aaa;font-weight:500}
+
+/* HEADER */
+.chat-header{background:var(--hdr);border-bottom:1px solid var(--border);padding:.7rem 1rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.back-btn{color:var(--green);font-size:1.1rem;cursor:pointer;padding:.2rem}
+.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;position:relative}
+.av-k{background:#111;border:1px solid #333}
+.av-eva{background:var(--b-eva);border:1px solid var(--purple)}
+.av-eva::after{content:'☺';color:#fff;font-size:1.2rem}
+.av-rain{background:#0a1a1a;border:1px solid #1a3a3a;color:var(--rain-color);font-size:.8rem}
+.av-unk{background:#111;border:1px solid #222;color:#333;font-size:.7rem}
+.odot{width:8px;height:8px;border-radius:50%;position:absolute;bottom:1px;right:1px;border:1.5px solid var(--hdr)}
+.od-on{background:var(--green)}.od-off{background:#555}.od-unk{background:var(--red);animation:pr 2s infinite}
+@keyframes pr{0%,100%{opacity:1}50%{opacity:.3}}
+.hi{flex:1}.hn{font-size:.9rem;color:var(--text);font-weight:500}.hs{font-size:.7rem;color:var(--dim);margin-top:.1rem}
+
+/* CHAT BODY */
+#chat-body{flex:1;overflow-y:auto;padding:1rem .75rem;display:flex;flex-direction:column;gap:.5rem;background:var(--chat-bg);scroll-behavior:smooth;transition:filter 1.5s ease}
+#chat-body::-webkit-scrollbar{width:3px}
+#chat-body::-webkit-scrollbar-thumb{background:#2a2a3a;border-radius:2px}
+#chat-body.dim{filter:brightness(.5)}
+#chat-body.white-bg{background:#f8f8ff;filter:none}
+.sys{text-align:center;color:var(--ghost);font-size:.65rem;letter-spacing:.08em;padding:.3rem 0}
+.tlbl{text-align:center;color:var(--ghost);font-size:.65rem;padding:.5rem 0 .2rem}
+
+/* BUBBLES */
+.brow{display:flex;align-items:flex-end;gap:.5rem;max-width:85%;animation:bin .25s ease-out}
+@keyframes bin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.brow.self{margin-left:auto;flex-direction:row-reverse}
+.bbl{padding:.6rem .85rem;border-radius:18px;font-size:.85rem;line-height:1.6;color:var(--text);max-width:100%;word-break:break-word}
+.bb-other{background:var(--b-other);border-bottom-left-radius:4px}
+.bb-self{background:var(--b-self);border-bottom-right-radius:4px;color:#c8f0e0}
+.bb-eva{background:var(--b-eva);border:1px solid #3a1a5a;border-bottom-left-radius:4px}
+.bb-rain{background:var(--b-rain);border:1px solid #1a3a3a;border-bottom-left-radius:4px;color:#aadddd}
+.bb-k{background:var(--b-k);border:1px solid #1a1a3a;border-bottom-left-radius:4px;color:#aaaaff}
+.bb-inject{background:transparent;border:1px solid var(--red);color:var(--red);font-size:.75rem;border-radius:8px;padding:.4rem .7rem;animation:flicker .5s ease}
+.bb-white{background:#f0f0f8;color:#1a1a2a;border-bottom-left-radius:4px}
+@keyframes flicker{0%,100%{opacity:1}30%{opacity:0}60%{opacity:.7}}
+.recalled{color:var(--ghost);font-style:italic;font-size:.78rem;padding:.4rem .7rem;border:1px dashed #2a2a3a;border-radius:12px;background:transparent}
+.bmeta{font-size:.6rem;color:var(--ghost);margin-top:.15rem;display:flex;align-items:center;gap:.25rem}
+.brow.self .bmeta{justify-content:flex-end}
+.rr{color:var(--green);font-size:.65rem}
+.stost{display:inline-block;background:rgba(153,51,255,.12);border:1px solid rgba(153,51,255,.3);color:var(--sync);font-size:.6rem;letter-spacing:.1em;padding:.15rem .45rem;border-radius:4px;margin-left:.4rem;vertical-align:middle;animation:tin .4s ease}
+@keyframes tin{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+
+/* FILE CARD */
+.fc{background:#0e0e18;border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;width:220px;transition:border-color .2s}
+.fc:hover{border-color:#3a3a5a}
+.fch{background:#151522;padding:.5rem .75rem;font-size:.65rem;color:var(--ghost);letter-spacing:.1em}
+.fcb{padding:.6rem .75rem}
+.fct{font-size:.8rem;color:var(--text);font-weight:500;margin-bottom:.2rem}
+.fcs{font-size:.68rem;color:var(--dim);line-height:1.5}
+.fctag{display:inline-block;font-size:.55rem;padding:.1rem .35rem;border-radius:3px;margin-top:.4rem;letter-spacing:.08em}
+.tn{background:rgba(255,170,0,.15);color:var(--warn);border:1px solid rgba(255,170,0,.3)}
+.tp{background:rgba(45,212,164,.1);color:var(--green);border:1px solid rgba(45,212,164,.3)}
+.tt{background:rgba(80,120,255,.1);color:#6699ff;border:1px solid rgba(80,120,255,.3)}
+.tph{background:rgba(255,68,102,.1);color:var(--red);border:1px solid rgba(255,68,102,.3)}
+
+/* PHOTOS /
+.photo-dark{width:200px;height:140px;background:linear-gradient(135deg,#0d0d12,#1a1020 50%,#0a0d15);border-radius:12px;position:relative;overflow:hidden;cursor:pointer;border:1px solid #222}
+.photo-dark::before{content:'';position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:30px;height:80px;background:rgba(240,240,255,.85);border-radius:2px}
+.photo-dark::after{content:'03:17 AM';position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.7);color:var(--warn);font-size:.6rem;padding:1px 4px;border-radius:3px;font-family:monospace}
+.pal{position:absolute;top:6px;left:8px;background:rgba(255,68,102,.85);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:3px;letter-spacing:.05em}
+.pwt{position:absolute;bottom:30px;left:10px;color:rgba(255,255,255,.08);font-size:.5rem;font-family:monospace;letter-spacing:.15em;transform:rotate(-2deg)}
+.cctv-photo{width:200px;height:130px;background:linear-gradient(160deg,#080810,#10101a);border-radius:8px;position:relative;overflow:hidden;cursor:pointer;border:1px solid #1a1a2a}
+.cctv-scan{position:absolute;left:0;right:0;height:2px;background:rgba(45,212,164,.15);animation:cs 3s linear infinite}
+@keyframes cs{from{top:0}to{top:100%}}
+.cctv-lbl{position:absolute;top:5px;left:6px;background:rgba(0,0,0,.7);color:var(--green);font-size:.5rem;padding:1px 4px;border-radius:2px;font-family:monospace}
+.cctv-ts{position:absolute;bottom:5px;right:6px;background:rgba(0,0,0,.7);color:#888;font-size:.55rem;padding:1px 4px;border-radius:2px;font-family:monospace}
+.cctv-fig{position:absolute;bottom:25px;right:35px;width:18px;height:45px;background:rgba(0,0,0,.9);border-radius:2px}
+.cctv-fig::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:rgba(0,0,0,.9)}
+.photo-room{width:200px;height:150px;background:linear-gradient(160deg,#0e0e18,#0c0c14);border-radius:12px;position:relative;overflow:hidden;cursor:pointer;border:1px solid #2a1a2a;box-shadow:0 0 20px rgba(180,0,80,.1)}
+.rm-desk{position:absolute;bottom:0;left:0;right:0;height:40px;background:#1a1520;border-top:1px solid #252030}
+.rm-mon{position:absolute;bottom:38px;left:20px;width:50px;height:35px;background:#050510;border:1px solid #252040;border-radius:3px}
+.rm-mon::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:15px;height:5px;background:#1a1530}
+.rm-light{position:absolute;top:10px;right:15px;width:60px;height:80px;background:radial-gradient(ellipse,rgba(200,180,255,.06) 0%,transparent 70%);border-radius:50%}
+.rm-door{position:absolute;bottom:38px;right:30px;width:25px;height:55px;background:#181222;border:1px solid #2a1a3a;border-radius:2px 2px 0 0}
+.rm-ts{position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.8);color:#ff6688;font-size:.6rem;padding:1px 4px;border-radius:3px;font-family:monospace}
+.rm-badge{position:absolute;top:6px;left:8px;background:rgba(180,0,80,.85);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:3px;letter-spacing:.05em}
+/ Rain photo /
+.photo-rain{width:200px;height:140px;background:linear-gradient(180deg,#050810,#0a1015);border-radius:12px;position:relative;overflow:hidden;cursor:pointer;border:1px solid #1a2a2a}
+.rain-line{position:absolute;width:1px;background:linear-gradient(180deg,transparent,rgba(100,180,200,.25),transparent);animation:rl linear infinite}
+@keyframes rl{from{top:-100%}to{top:200%}}
+.rain-fig{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:22px;height:55px;background:rgba(200,220,230,.7);border-radius:2px}
+.rain-fig::before{content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:rgba(200,220,230,.7)}
+.rain-unk{position:absolute;bottom:20px;right:15px;width:16px;height:40px;background:rgba(0,0,0,.85);border-radius:2px;opacity:.8}
+/ Online count /
+.online-badge{display:inline-block;background:rgba(45,212,164,.1);border:1px solid rgba(45,212,164,.2);color:var(--green);font-size:.62rem;padding:.2rem .6rem;border-radius:20px;font-family:monospace;animation:ob 3s infinite}
+@keyframes ob{0%,100%{opacity:.7}50%{opacity:1}}
+/ Sync progress bar (ch5) /
+.sync-prog-wrap{background:#0e0e18;border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin:.2rem 0}
+.sync-prog-label{font-size:.65rem;color:var(--dim);margin-bottom:.35rem}
+.sync-prog-track{height:4px;background:#1a1a2a;border-radius:2px;overflow:hidden}
+.sync-prog-fill{height:100%;background:var(--sync);border-radius:2px;transition:width 2s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px var(--sync)}
+/ Audio bubble */
+.audio-bbl{background:var(--b-other);border-radius:18px;border-bottom-left-radius:4px;padding:.7rem 1rem;cursor:pointer;min-width:160px}
+.audio-top{display:flex;align-items:center;gap:.6rem}
+.audio-wf{display:flex;align-items:center;gap:2px;height:24px}
+.wf-bar{width:3px;background:#444;border-radius:2px;transition:background .2s}
+.audio-bbl.playing .wf-bar{background:var(--green);animation:wa var(--dur,.6s) ease-in-out infinite alternate}
+@keyframes wa{from{height:4px}to{height:var(--h,18px)}}
+.audio-label{font-size:.7rem;color:var(--dim);margin-top:.3rem}
+.audio-tr{font-size:.75rem;color:#cc4466;font-style:italic;padding-top:.3rem;border-top:1px solid #2a1a2a;display:none;margin-top:.3rem}
+
+/* TYPING */
+#typing-indicator{display:none;align-items:flex-end;gap:.5rem;max-width:85%;padding:0 .75rem}
+.typing-bbl{border-radius:18px;border-bottom-left-radius:4px;padding:.7rem .9rem;display:flex;gap:4px;align-items:center}
+.td{width:6px;height:6px;border-radius:50%;background:#555;animation:typ 1.2s infinite ease-in-out}
+.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
+@keyframes typ{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px);background:#888}}
+
+/* OPTIONS */
+#options-area{padding:.75rem;background:var(--bg);border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.5rem;flex-shrink:0}
+.opt{background:var(--b-other);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:.65rem 1rem;font-size:.82rem;cursor:pointer;text-align:left;transition:all .15s;font-family:'Noto Sans TC',sans-serif;width:100%;line-height:1.4}
+.opt:hover{background:#252535;border-color:#444}
+.opt:active{transform:scale(.98)}
+.opt.sel{background:var(--b-self);border-color:var(--green);color:#c8f0e0;pointer-events:none}
+.opt.dis{opacity:.3;pointer-events:none}
+.osh{font-size:.58rem;color:rgba(153,51,255,.45);float:right;margin-left:.5rem}
+
+/* LIGHTBOX */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:200;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:2rem}
+#lightbox img{max-width:100%;max-height:72vh;object-fit:contain;border-radius:8px}
+.lb-cap{color:var(--dim);font-size:.7rem;margin-top:1rem;text-align:center;letter-spacing:.05em}
+.lb-det{margin-top:.75rem;color:var(--warn);font-size:.7rem;font-family:monospace;text-align:center;letter-spacing:.08em;opacity:0;transition:opacity 1s}
+.lb-det.show{opacity:1}
+.lb-hid{margin-top:1rem;background:#0a0a0a;color:#0a0a0a;font-size:.75rem;padding:.5rem;border-radius:6px;font-family:monospace;transition:color 2.5s;text-align:center}
+.lb-hid.reveal{color:var(--red)}
+.lb-hint{position:absolute;bottom:1.5rem;color:#333;font-size:.65rem;letter-spacing:.15em}
+
+/* NOTIF */
+#notif-banner{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);background:rgba(20,20,30,.96);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;padding:.75rem 1.2rem;max-width:400px;width:90%;z-index:150;transition:transform .35s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:.75rem}
+#notif-banner.show{transform:translateX(-50%) translateY(0)}
+.ni{font-size:1.2rem;flex-shrink:0}.nt{font-size:.75rem;color:var(--dim)}.nm{font-size:.82rem;color:var(--text)}
+
+/* FLASH / GLITCH */
+#flash-overlay{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:999}
+.sg{animation:sga .3s steps(2) forwards}
+@keyframes sga{0%{filter:none}25%{filter:hue-rotate(90deg) saturate(3) brightness(1.5);transform:translateX(3px)}50%{filter:invert(.1);transform:translateX(-3px)}75%{filter:hue-rotate(180deg)}100%{filter:none;transform:none}}
+
+/* CHAPTER END */
+#chapter-end{display:none;position:fixed;inset:0;background:#000;z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem}
+#chapter-end.white-end{background:#f8f8ff}
+.ce-title{font-size:.65rem;color:#333;letter-spacing:.4em;text-transform:uppercase}
+.ce-name{font-size:clamp(1.2rem,4vw,1.8rem);font-weight:300}
+.ce-sync-wrap{display:flex;flex-direction:column;align-items:center;gap:.4rem;margin-top:.5rem}
+.ce-sl{font-size:.6rem;color:#333;letter-spacing:.25em}
+.ce-sn{font-size:3.5rem;font-weight:700;color:var(--sync);font-family:monospace;animation:ep 2s infinite}
+@keyframes ep{0%,100%{text-shadow:0 0 20px var(--sync)}50%{text-shadow:0 0 60px var(--sync),0 0 100px var(--sync)}}
+.ce-sbw{width:200px;height:4px;background:#1a1a2a;border-radius:2px;overflow:hidden;margin-top:.2rem}
+.ce-sbf{height:100%;background:var(--sync);border-radius:2px;transition:width 1.5s cubic-bezier(.34,1.56,.64,1)}
+.ce-msg{max-width:280px;text-align:center;font-size:.82rem;color:#888;font-style:italic;line-height:1.9;border-left:2px solid #2a1a4a;padding-left:1rem;margin-top:.5rem}
+.ce-msg b{color:var(--sync);font-style:normal}
+.ce-msg.white-msg{border-left-color:#ddd;color:#888}
+.ce-next{font-size:.6rem;color:#2a2a3a;letter-spacing:.3em;margin-top:1rem}
+.ce-btn{margin-top:.5rem;color:#444;font-size:.72rem;cursor:pointer;letter-spacing:.15em;padding:.4rem .9rem;border:1px solid #2a2a3a;border-radius:8px;background:transparent;font-family:'Noto Sans TC',sans-serif;transition:all .15s}
+.ce-btn:hover{color:#888;border-color:#555}
+.ce-restart{color:#333;font-size:.65rem;cursor:pointer;letter-spacing:.15em;text-decoration:underline;text-underline-offset:3px;margin-top:.3rem}
+.ce-restart:hover{color:#555}
+.silence-hint{text-align:center;color:#2a2a3a;font-size:.62rem;letter-spacing:.1em;animation:blink 2s infinite;padding:.2rem 0}
+.sav{width:28px;height:28px;font-size:.6rem}
+</style>
 </head>
-
 <body>
 
-  <div id="app">
-    <h1>午夜連線：ECHO</h1>
-    <p>Interactive Psychological Horror Chat Game</p>
-  </div>
+<!-- TITLE -->
+<div id="title-screen">
+<div class="tg" data-text="ECHO">ECHO</div>
+<div class="t-sub">午夜連線 · 第一部</div>
+<div class="t-quote">「如果你收到來自死者的訊息，<br>你會回覆嗎？」</div>
+<div class="t-start">點擊任意處開始</div>
+<div class="t-warn">⚠️ 含恐怖元素、失蹤議題及心理驚悚內容<br>建議使用耳機，在安全環境中遊玩<br><span style="color:#1a1a22">你的選擇將被記錄。</span></div>
+</div>
 
-  <script src="js/script.js"></script>
-</body>
-</html>
+<!-- CHAPTER SELECT -->
+<div id="chapter-select">
+<div class="cs-title">選擇章節</div>
+<div style="width:100%;max-width:420px">
+<div class="cs-part">第一章</div>
+<div class="cs-grid">
+<div class="cs-card active-ch" data-ch="1-1" onclick="startChapter('1-1')">
+<div class="cs-ch">CHAPTER 1</div>
+<div class="cs-name">《已讀者》</div>
+<div class="cs-desc">未知訊息、EVA出現、初始依附建立</div>
+<span class="cs-tag tag-eva">EVA路線</span>
+<div class="cs-sync" id="cs-sync-1-1">0%</div>
+</div>
+</div>
+<div class="cs-part">第二章（平行分流）</div>
+<div class="cs-grid">
+<div class="cs-card locked" id="cs-2-1" data-ch="2-1" onclick="startChapter('2-1')">
+<div class="cs-ch">CHAPTER 2-1  同步率 11～20%</div>
+<div class="cs-name">《地下道》</div>
+<div class="cs-desc">時間錯亂、未來監視器、EVA依附路線</div>
+<span class="cs-tag tag-eva">EVA路線</span>
+<div class="cs-sync" id="cs-sync-2-1">🔒</div>
+</div>
+<div class="cs-card locked" id="cs-2-2" data-ch="2-2" onclick="startChapter('2-2')">
+<div class="cs-ch">CHAPTER 2-2  同步率 0～10%</div>
+<div class="cs-name">《雨夜留言》</div>
+<div class="cs-desc">死者聊天室、記憶重疊、林雨晴路線</div>
+<span class="cs-tag tag-rain">林雨晴路線</span>
+<div class="cs-sync" id="cs-sync-2-2">🔒</div>
+</div>
+</div>
+<div class="cs-part">第三章（依同步率再分流）</div>
+<div class="cs-grid">
+<div class="cs-card locked" id="cs-3-1" data-ch="3-1" onclick="startChapter('3-1')">
+<div class="cs-ch">CHAPTER 3-1  同步率 16～20%</div>
+<div class="cs-name">《已讀中》</div>
+<div class="cs-desc">認知污染、記憶篡改、EVA人格侵蝕</div>
+<span class="cs-tag tag-eva">EVA主線</span>
+<div class="cs-sync" id="cs-sync-3-1">🔒</div>
+</div>
+<div class="cs-card locked" id="cs-3-2" data-ch="3-2" onclick="startChapter('3-2')">
+<div class="cs-ch">CHAPTER 3-2  同步率 8～15%</div>
+<div class="cs-name">《在線中》</div>
+<div class="cs-desc">死者在線、永遠在線機制、聊天室吞噬</div>
+<span class="cs-tag tag-rain">林雨晴主線</span>
+<div class="cs-sync" id="cs-sync-3-2">🔒</div>
+</div>
+<div class="cs-card locked" id="cs-3-3" data-ch="3-3" onclick="startChapter('3-3')">
+<div class="cs-ch">CHAPTER 3-3  同步率 5～10%</div>
+<div class="cs-name">《不要開聲音》</div>
+<div class="cs-desc">聲音污染、現實同步入侵、K主線</div>
+<span class="cs-tag tag-k">K主線</span>
+<div class="cs-sync" id="cs-sync-3-3">🔒</div>
+</div>
+</div>
+<div class="cs-part">第四章（平行路線）</div>
+<div class="cs-grid">
+<div class="cs-card locked" id="cs-4-1" data-ch="4-1" onclick="startChapter('4-1')">
+<div class="cs-ch">CHAPTER 4-1  高同步路線 33～100%</div>
+<div class="cs-name">《鏡中已讀》</div>
+<div class="cs-desc">人格入侵、鏡像污染、現實與聊天室融合</div>
+<span class="cs-tag tag-eva">高同步</span>
+<div class="cs-sync" id="cs-sync-4-1">🔒</div>
+</div>
+<div class="cs-card locked" id="cs-4-2" data-ch="4-2" onclick="startChapter('4-2')">
+<div class="cs-ch">CHAPTER 4-2  中同步路線 18～66%</div>
+<div class="cs-name">《回音》</div>
+<div class="cs-desc">聊天室透過現實、聲音殘留、在線者入侵</div>
+<span class="cs-tag tag-rain">中同步</span>
+<div class="cs-sync" id="cs-sync-4-2">🔒</div>
+</div>
+</div>
+<div class="cs-part">第五章・終章</div>
+<div class="cs-grid">
+<div class="cs-card locked" id="cs-5" data-ch="5" onclick="startChapter('5')">
+<div class="cs-ch">CHAPTER 5  高同步解鎖</div>
+<div class="cs-name">《同步》</div>
+<div class="cs-desc">ECHO真相、林雨晴與K最終狀態、最終選擇</div>
+<span class="cs-tag tag-final">最終章</span>
+<div class="cs-sync" id="cs-sync-5">🔒</div>
+</div>
+</div>
+<div class="cs-sync-total" id="cs-total">累積同步率：<b>0%</b></div>
+</div>
+</div>
+
+<!-- SYNC BAR -->
+<div id="sync-bar">
+<span class="sl">SYNC</span>
+<div class="st"><div class="sf" id="sync-fill"></div></div>
+<span class="sp" id="sync-pct">0%</span>
+</div>
+
+<!-- APP -->
+<div id="app">
+<div class="status-bar">
+<span class="status-time" id="clock">02:13</span>
+<span>🔋 87%  📶</span>
+</div>
+<div class="chat-header">
+<div class="back-btn" id="back-btn">‹</div>
+<div class="avatar av-k" id="hdr-av"><div class="odot od-unk"></div></div>
+<div class="hi"><div class="hn" id="hdr-name">K</div><div class="hs" id="hdr-status">上線中</div></div>
+</div>
+<div id="chat-body"><div class="tlbl">凌晨 02:13</div></div>
+<div id="typing-indicator">
+<div class="typing-bbl" id="typ-bbl" style="background:var(--b-other)">
+<div class="td"></div><div class="td"></div><div class="td"></div>
+</div>
+</div>
+<div id="options-area"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+<img id="lb-img" src="" alt="">
+<div class="lb-cap" id="lb-cap"></div>
+<div class="lb-det" id="lb-det"></div>
+<div class="lb-hid" id="lb-hid"></div>
+<div class="lb-hint">點擊任意處關閉</div>
+</div>
+
+<!-- NOTIF -->
+<div id="notif-banner">
+<div class="ni" id="ni">📱</div>
+<div><div class="nt" id="nt">LINE</div><div class="nm" id="nm"></div></div>
+</div>
+<div id="flash-overlay"></div>
+
+<!-- CHAPTER END -->
+<div id="chapter-end">
+<div class="ce-title" id="ce-title">章節完</div>
+<div class="ce-name" id="ce-name"></div>
+<div class="ce-sync-wrap">
+<div class="ce-sl">本章同步率</div>
+<div class="ce-sn" id="ce-sn">0%</div>
+<div class="ce-sbw"><div class="ce-sbf" id="ce-sbf" style="width:0%"></div></div>
+</div>
+<div class="ce-msg" id="ce-msg"></div>
+<div class="ce-next" id="ce-next"></div>
+<button class="ce-btn" id="ce-btn" onclick="goChapterSelect()">返回章節選擇</button>
+<div class="ce-restart" onclick="location.reload()">↺ 重新開始（清除進度）</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// GLOBAL STATE
+// ═══════════════════════════════════════════════════════
+const SYNC_MAX = 20;
+let totalSync = 0; // cumulative across chapters (0-100 scale)
+let chapterSync = 0; // current chapter sync (0-20)
+let currentChapter = ''; // '1-1','2-1','2-2','3-1','3-2','3-3','4-1','4-2','5'
+let completedChapters = {};
+let backCount = 0, filesViewed = 0, silTimer = null, silTriggered = false;
+let lbViewCount = {};
+
+// Load saved progress
+function loadProgress() {
+try {
+const s = localStorage.getItem('echo_progress');
+if (s) { const d=JSON.parse(s); totalSync=d.t||0; completedChapters=d.c||{}; }
+} catch(e){}
+}
+function saveProgress() {
+try { localStorage.setItem('echo_progress',JSON.stringify({t:totalSync,c:completedChapters})); } catch(e){}
+}
+
+// ═══════════════════════════════════════════════════════
+// SYNC SYSTEM
+// ═══════════════════════════════════════════════════════
+function addSync(pts) {
+if (pts<=0) return;
+chapterSync = Math.min(SYNC_MAX, chapterSync+pts);
+updateSyncUI();
+}
+function subSync(pts) { chapterSync = Math.max(0, chapterSync-pts); updateSyncUI(); }
+function updateSyncUI() {
+const pct = Math.round(chapterSync/SYNC_MAX*100);
+document.getElementById('sync-fill').style.width=pct+'%';
+const el=document.getElementById('sync-pct'); el.textContent=chapterSync+'%';
+el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
+const col=chapterSync<=5?'#6644aa':chapterSync<=10?'#8833dd':chapterSync<=15?'#aa22ff':'#cc44ff';
+document.getElementById('sync-fill').style.cssText=width:${pct}%;background:${col};box-shadow:0 0 8px ${col}`;
+el.style.color=col;
+}
+function getSyncEval(ch) {
+const s = chapterSync;
+const maps = {
+'1-1':[ [5,'「你很抗拒我呢……沒關係，我有的是時間。」','強抵抗'], [10,'「你開始好奇我了，對嗎？」','調查傾向'], [15,'「我們越來越接近了……」','高沉浸'], [20,'「你已經是我的了……」','高依附'] ],
+'2-1':[ [5,'「你還是不願意依靠我……」','強抵抗'], [10,'「地下道已經在等你了。」','調查傾向'], [15,'「你開始害怕了……那很好。」','高沉浸'], [20,'「帶你進去，是我一直想做的事。」','高依附'] ],
+'2-2':[ [5,'林雨晴：「……你還是不相信我。」','強抵抗'], [10,'林雨晴：「你開始記起什麼了嗎？」','調查傾向'], [15,'林雨晴：「你的臉，我一直記得……」','高沉浸'], [18,'林雨晴：「你開始懷疑自己了。那就對了。」','高認知污染'] ],
+'3-1':[ [5,'「你還在抗拒記憶……」','強抵抗'], [10,'「聊天室開始活過來了。」','調查傾向'], [15,'「你已經分不清哪些是自己說的了。」','高沉浸'], [20,'「我比你更了解你自己。」','高依附'] ],
+'3-2':[ [5,'「你太快想離開了。」','低污染'], [10,'「你開始在乎聊天室了。」','調查沉浸'], [15,'「你快忘記怎麼離線了。」','高沉浸'], [20,'「歡迎留下來。」','在線同步'] ],
+'3-3':[ [5,'K：「你還在嗎？」','低污染'], [10,'K：「第三個呼吸……你聽到了嗎？」','聲音沉浸'], [15,'K：「你快分不清耳機和現實了……」','高聽覺污染'], [20,'K：「它現在說的和你一模一樣。」','現實同步'] ],
+'4-1':[ [5,'「你還在掙扎。」','低同步'], [10,'「你的記憶開始動搖了。」','認知污染'], [15,'「鏡子裡的那個……也越來越像你了。」','人格重疊'], [20,'「我們早就是同一個人了。」','高同步人格侵蝕'] ],
+'4-2':[ [5,'「你想逃開聊天室。」','低同步'], [10,'「你開始覺得現實很吵了。」','在線污染'], [15,'「你的房間……我已經記住了。」','現實同步'], [20,'「找到你了。」','高同步在線'] ],
+'5':[ [5,'「再見。」','低同步'], [10,'「你有時候還是會回來的。」','動搖同步'], [15,'「你幾乎不想離開了。」','高同步'], [20,'「永遠在一起。」','完全同步'] ],
+};
+const arr = maps[ch]||maps['1-1'];
+for (const [t,q,lv] of arr) { if (s<=t) return {q,lv}; }
+return {q:arr[arr.length-1][1],lv:arr[arr.length-1][2]};
+}
+
+// ═══════════════════════════════════════════════════════
+// CHAPTER SELECT UI
+// ═══════════════════════════════════════════════════════
+function updateChapterSelectUI() {
+const t = totalSync;
+// unlock logic
+const unlocks = {
+'2-1': t >= 11, '2-2': t < 11,
+'3-1': t >= 16, '3-2': t >= 8 && t <= 15, '3-3': t >= 5 && t <= 10,
+'4-1': t >= 33, '4-2': t >= 18 && t <= 66,
+'5': t >= 50
+};
+for (const [ch, unlocked] of Object.entries(unlocks)) {
+const el = document.getElementById('cs-'+ch);
+if (!el) continue;
+if (unlocked || completedChapters[ch]) {
+el.classList.remove('locked');
+} else {
+el.classList.add('locked');
+}
+const syncEl = document.getElementById('cs-sync-'+ch);
+if (syncEl) {
+if (completedChapters[ch] !== undefined) {
+syncEl.textContent = completedChapters[ch]+'% ✓';
+} else if (unlocked) {
+syncEl.textContent = '解鎖';
+} else {
+syncEl.textContent = '🔒';
+}
+}
+}
+document.getElementById('cs-sync-1-1').textContent = completedChapters['1-1']!==undefined ? completedChapters['1-1']+'% ✓' : '開始';
+document.getElementById('cs-total').innerHTML = 累積同步率：&lt;b&gt;${totalSync}%</b>`;
+}
+
+function goChapterSelect() {
+document.getElementById('chapter-end').style.display='none';
+document.getElementById('app').style.display='none';
+document.getElementById('sync-bar').style.display='none';
+document.getElementById('chapter-select').style.display='flex';
+updateChapterSelectUI();
+}
+
+function startChapter(ch) {
+document.getElementById('chapter-select').style.display='none';
+currentChapter = ch;
+chapterSync = 0; backCount = 0; filesViewed = 0; lbViewCount = {};
+clearTimeout(silTimer);
+document.getElementById('app').style.display='flex';
+document.getElementById('app').style.opacity='1';
+document.getElementById('sync-bar').style.display='flex';
+document.getElementById('sync-bar').style.opacity='1';
+document.getElementById('chat-body').innerHTML='<div class="tlbl">凌晨 02:'+(['1-1','2-2'].includes(ch)?'13':'41 AM')+'</div>';
+document.getElementById('chat-body').className='';
+document.getElementById('options-area').innerHTML='';
+chatBody.appendChild(typingEl);
+updateSyncUI();
+setTimeout(()=>{ CHAPTERSch; }, 500);
+}
+
+// ═══════════════════════════════════════════════════════
+// CORE UTILS
+// ═══════════════════════════════════════════════════════
+let clockMin=13, clockHour=2;
+setInterval(()=>{ clockMin++; if(clockMin>=60){clockMin=0;clockHour=(clockHour+1)%24;} document.getElementById('clock').textContent=0${clockHour}:${clockMin&lt;10?'0'+clockMin:clockMin}; }, 18000);
+const chatBody=document.getElementById('chat-body');
+const optionsArea=document.getElementById('options-area');
+const typingEl=document.getElementById('typing-indicator');
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+function scrollBottom(){chatBody.scrollTop=chatBody.scrollHeight}
+function showTyping(v,style){
+typingEl.style.display=v?'flex':'none';
+if(v){
+document.getElementById('typ-bbl').style.background=
+style==='eva'?'var(--b-eva)':style==='rain'?'var(--b-rain)':style==='k'?'var(--b-k)':'var(--b-other)';
+chatBody.appendChild(typingEl); scrollBottom();
+}
+}
+function mkAv(type){
+const d=document.createElement('div');
+d.className='avatar sav av-'+type;
+if(type==='k'){const dt=document.createElement('div');dt.className='odot od-unk';d.appendChild(dt);}
+if(type==='rain')d.textContent='林';
+if(type==='unk')d.textContent='?';
+return d;
+}
+function gToast(txt){
+const t=document.createElement('div');
+t.style.cssText='position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:rgba(153,51,255,.15);border:1px solid rgba(153,51,255,.3);color:#cc44ff;font-size:.65rem;padding:.3rem .8rem;border-radius:20px;letter-spacing:.1em;z-index:180;pointer-events:none';
+t.textContent=txt; document.body.appendChild(t);
+t.animate([{opacity:1,transform:'translateX(-50%) translateY(0)'},{opacity:0,transform:'translateX(-50%) translateY(-8px)'}],{duration:2000,delay:300,fill:'forwards'});
+setTimeout(()=>t.remove(),2400);
+}
+async function addMsg(type,content,opts={}){
+const{delay=500,typing=900,meta='',isEva=false,isRain=false,isK=false,isUnk=false,recalled=false,noTyping=false}=opts;
+const spk=isEva?'eva':isRain?'rain':isK?'k':'other';
+if(!noTyping&&type!=='self'&&type!=='sys'&&type!=='time'){showTyping(true,spk);await sleep(typing);showTyping(false);}
+else await sleep(delay);
+if(type==='sys'){const d=document.createElement('div');d.className='sys';d.innerHTML=content;chatBody.appendChild(d);scrollBottom();return d;}
+if(type==='time'){const d=document.createElement('div');d.className='tlbl';d.textContent=content;chatBody.appendChild(d);return d;}
+const row=document.createElement('div'); row.className='brow '+(type==='self'?'self':'');
+if(type!=='self'){
+const av=mkAv(isEva?'eva':isRain?'rain':isUnk?'unk':'k');
+row.appendChild(av);
+}
+const wrap=document.createElement('div');wrap.style.cssText='display:flex;flex-direction:column;max-width:100%';
+const bbl=document.createElement('div');
+if(recalled){bbl.className='bbl recalled';bbl.textContent='訊息已收回';}
+else if(type==='inject'){bbl.className='bbl bb-inject';bbl.innerHTML=content;}
+else if(content==='K_PHOTO'){
+bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+const p=document.createElement('div');p.className='photo-dark';
+const lbl=document.createElement('div');lbl.className='pal';lbl.textContent='時間異常';
+const wall=document.createElement('div');wall.className='pwt';wall.textContent='不要回頭';
+p.appendChild(lbl);p.appendChild(wall);p.onclick=()=>openLB('k');bbl.appendChild(p);
+}else if(content==='CCTV'){
+bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+const p=document.createElement('div');p.className='cctv-photo';
+['cctv-scan','cctv-fig'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
+const lbl=document.createElement('div');lbl.className='cctv-lbl';lbl.textContent='CAM-03 萬華';
+const ts=document.createElement('div');ts.className='cctv-ts';ts.textContent='2024-03-14 02:41';
+p.appendChild(lbl);p.appendChild(ts);p.onclick=()=>openLB('cctv');bbl.appendChild(p);
+}else if(content==='ROOM'){
+bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+const p=document.createElement('div');p.className='photo-room';
+['rm-desk','rm-mon','rm-light','rm-door'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
+const futMin=clockMin+3;
+const ts=document.createElement('div');ts.className='rm-ts';ts.textContent=0${clockHour}:${futMin&lt;10?'0'+futMin:futMin} AM;
+const badge=document.createElement('div');badge.className='rm-badge';badge.textContent='備份完成';
+p.appendChild(ts);p.appendChild(badge);p.onclick=()=>openLB('room');bbl.appendChild(p);
+}else if(content==='RAIN_PHOTO'){
+bbl.className='bbl';bbl.style.cssText='padding:0;background:transparent';
+const p=document.createElement('div');p.className='photo-rain';
+for(let i=0;i<18;i++){const r=document.createElement('div');r.className='rain-line';r.style.cssText=left:${Math.random()*100}%;height:${30+Math.random()*60}px;animation-duration:${0.6+Math.random()0.8}s;animation-delay:${Math.random()*1}s;p.appendChild(r);}
+['rain-fig','rain-unk'].forEach(c=>{const e=document.createElement('div');e.className=c;p.appendChild(e);});
+p.onclick=()=>openLB('rain');bbl.appendChild(p);
+}else if(content==='AUDIO'||content.startsWith('__AUDIO:')){
+const label=content.startsWith('__AUDIO:')?content.slice(8):'語音訊息 · 0:08';
+bbl.className='audio-bbl';
+bbl.innerHTML=<div class="audio-top"&gt;&lt;span style="font-size:1.1rem"&gt;🎙&lt;/span&gt;&lt;div class="audio-wf"&gt;${[18,10,20,6,16,8,22,12,18,7,14,20,8].map((h,i)=><div class="wf-bar" style="height:${h}px;--h:{h}px;--dur:{0.4+i0.07}s"></div>).join('')}&lt;/div&gt;&lt;/div&gt;&lt;div class="audio-label"&gt;${label}</div><div class="audio-tr" id="atr-${Date.now()}"&gt;&lt;/div>;
+bbl.onclick=function(){this.classList.toggle('playing');const tr=this.querySelector('.audio-tr');if(this.classList.contains('playing')){tr.style.display='block';if(tr.dataset.txt)tr.innerHTML=tr.dataset.txt;}else{tr.style.display='none';}};
+}else if(content.startsWith('__ONLINE_COUNT:')){
+const n=content.slice(15);
+bbl.className=
