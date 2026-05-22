@@ -450,15 +450,31 @@ function startSilence(pts, hint) {
 // ═══════════════════════════════════════════════════════
 //  LIGHTBOX
 // ═══════════════════════════════════════════════════════
-function openLB(type) {
+function openLB(type, extraSrc, extraCaption) {
   lbViewCount[type] = (lbViewCount[type] || 0) + 1;
   const lbEl = document.getElementById('lightbox');
   const imgEl = document.getElementById('lb-img');
   const det = document.getElementById('lb-det');
   const hid = document.getElementById('lb-hid');
   det.classList.remove('show');
+  det.style.color = '';
   hid.className = 'lb-hid';
+  hid.style.cssText = '';
   imgEl.style.cssText = 'max-width:100%;max-height:72vh;object-fit:contain;border-radius:8px';
+
+  if (type === 'doc') {
+    imgEl.src = extraSrc;
+    document.getElementById('lb-cap').textContent = extraCaption || 'ECHO 附件';
+    det.textContent = '⚠ 點擊任意處關閉';
+    setTimeout(() => det.classList.add('show'), 500);
+    // threads special hidden text
+    if (extraSrc && extraSrc.includes('threads')) {
+      hid.textContent = '她不是失蹤，她只是還在線上。';
+      setTimeout(() => hid.classList.add('reveal'), 4000);
+    }
+    lbEl.style.display = 'flex';
+    return;
+  }
 
   if (type === 'k') {
     // 第二次以後看到有人版，製造「她出現了」效果
@@ -539,7 +555,15 @@ function addFileCard(tag, tagClass, title, sub, key, avType) {
   const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;max-width:100%';
   const card = document.createElement('div'); card.className = 'fc';
   card.innerHTML = '<div class="fch">ECHO 附件</div><div class="fcb"><div class="fct">' + title + '</div><div class="fcs">' + sub + '</div><span class="fctag ' + tagClass + '">' + tag + '</span></div>';
-  card.onclick = () => { trackFile(); if (key === 'cctv' || key === 'rain-photo') openLB(key === 'rain-photo' ? 'rain' : 'cctv'); else gToast('已閱讀：' + title); };
+  // doc image keys open lightbox with real image
+  const docImgMap = { news: 'img/docs/news.jpg', ptt: 'img/docs/ptt.jpg', thread: 'img/docs/threads.jpg' };
+  card.onclick = () => {
+    trackFile();
+    if (key === 'cctv') { openLB('cctv'); }
+    else if (key === 'rain-photo') { openLB('rain'); }
+    else if (docImgMap[key]) { openLB('doc', docImgMap[key], title); }
+    else { gToast('已閱讀：' + title); }
+  };
   wrap.appendChild(card); row.appendChild(wrap); chatBody.appendChild(row); scrollBottom();
 }
 
