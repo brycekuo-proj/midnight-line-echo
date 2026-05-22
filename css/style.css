@@ -67,7 +67,7 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;position:relative}
 .av-k{background:#111;border:1px solid #333}
 .av-eva{background:var(--b-eva);border:1px solid var(--purple)}
-.av-eva::after{content:'☺';color:#fff;font-size:1.2rem}
+.av-eva:not(:has(img))::after{content:'☺';color:#fff;font-size:1.2rem}
 .av-rain{background:#0a1a1a;border:1px solid #1a3a3a;color:var(--rain-color);font-size:.8rem}
 .av-unk{background:#111;border:1px solid #222;color:#333;font-size:.7rem}
 .odot{width:8px;height:8px;border-radius:50%;position:absolute;bottom:1px;right:1px;border:1.5px solid var(--hdr)}
