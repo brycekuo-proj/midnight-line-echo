@@ -91,22 +91,28 @@ function showTyping(v, style) {
 function mkAv(type) {
   const d = document.createElement('div');
   d.className = 'avatar sav av-' + type;
+  if (type === 'unk') { d.textContent = '?'; return d; }
   const img = document.createElement('img');
-  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;display:block';
   if (type === 'eva') {
     img.src = 'img/eva/eva_normal.jpg';
     img.id = 'av-img-eva-' + Date.now();
+    img.onerror = () => { d.classList.add('no-img'); img.remove(); };
   } else if (type === 'rain') {
     img.src = 'img/rain/rain_normal.jpg';
+    img.onerror = () => img.remove();
   } else if (type === 'k') {
     img.src = 'img/k/k_normal.jpg';
     img.id = 'av-img-k-' + Date.now();
-    const dot = document.createElement('div'); dot.className = 'odot od-unk'; d.appendChild(dot);
-  } else if (type === 'unk') {
-    d.textContent = '?';
-    return d;
+    img.onerror = () => img.remove();
   }
-  if (type !== 'unk') d.appendChild(img);
+  d.appendChild(img);
+  // K online dot — after img so it overlays correctly
+  if (type === 'k') {
+    const dot = document.createElement('div');
+    dot.className = 'odot od-unk';
+    d.appendChild(dot);
+  }
   return d;
 }
 
@@ -159,7 +165,8 @@ function setHeader(type, name, status) {
     const img = document.createElement('img');
     img.src = imgSrcs[type];
     img.id = 'hdr-av-img';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;display:block';
+    img.onerror = () => { av.classList.add('no-img'); img.remove(); };
     av.appendChild(img);
   } else {
     av.textContent = '?';
