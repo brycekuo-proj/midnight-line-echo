@@ -593,6 +593,33 @@ function showEnd(chName) {
   completedChapters[currentChapter] = chapterSync;
   totalSync = Math.min(100, totalSync + chapterSync);
   saveProgress();
+
+  // ── 第四章結束後依同步率分流 ──
+  const isCh4 = currentChapter === '4-1' || currentChapter === '4-2';
+  if (isCh4) {
+    if (totalSync <= 33) {
+      // 路線一：假結局《離線》— 延遲 2 秒後直接進入
+      document.getElementById('chapter-end').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('app').style.opacity = '1';
+        document.getElementById('app').style.display = 'flex';
+        document.getElementById('sync-bar').style.display = 'flex';
+        document.getElementById('sync-bar').style.opacity = '1';
+        chatBody.innerHTML = '';
+        chatBody.appendChild(typingEl);
+        currentChapter = 'end_normal';
+        chapterSync = 0;
+        if (window.CHAPTERS && window.CHAPTERS['end_normal']) {
+          window.CHAPTERS['end_normal']();
+        }
+      }, 2000);
+      return;
+    }
+    // 路線二（34～66%）：循環在線 — 章節選擇畫面加提示（第五章尚未實裝）
+    // 路線三（67～100%）：直接解鎖第五章《同步》
+    // 以上路線在章節結算畫面顯示提示，引導玩家
+  }
+
   const isWhite = currentChapter === '5';
   const endEl = document.getElementById('chapter-end');
   endEl.className = isWhite ? 'white-end' : '';
@@ -600,12 +627,21 @@ function showEnd(chName) {
   document.getElementById('ce-title').textContent = '章節完';
   document.getElementById('ce-name').textContent = chName;
   document.getElementById('ce-name').style.color = isWhite ? '#333' : '#fff';
+
+  // 第四章結算畫面顯示下一步路線提示
+  let routeHint = '';
+  if (isCh4) {
+    if (totalSync <= 33)      routeHint = ''; // 已被上面攔截
+    else if (totalSync <= 66) routeHint = '<div style="font-size:.65rem;color:#2299aa;letter-spacing:.1em;margin-top:.8rem">→ 路線二：《循環在線》<br>同步率 34～66%</div>';
+    else                      routeHint = '<div style="font-size:.65rem;color:#9933ff;letter-spacing:.1em;margin-top:.8rem">→ 路線三：第五章《同步》已解鎖<br>同步率 ' + totalSync + '%</div>';
+  }
+
   setTimeout(() => {
     document.getElementById('ce-sn').textContent = chapterSync + '%';
     document.getElementById('ce-sbf').style.width = Math.round(chapterSync / SYNC_MAX * 100) + '%';
     const msgEl = document.getElementById('ce-msg');
     msgEl.className = 'ce-msg' + (isWhite ? ' white-msg' : '');
-    msgEl.innerHTML = '<b>EVA</b>：' + ev.q + '<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[' + ev.lv + ']</span>';
+    msgEl.innerHTML = '<b>EVA</b>：' + ev.q + '<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[' + ev.lv + ']</span>' + routeHint;
     document.getElementById('ce-next').textContent = '累積同步率：' + totalSync + '%';
   }, 800);
 }
