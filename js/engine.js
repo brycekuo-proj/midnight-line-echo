@@ -598,7 +598,7 @@ function showEnd(chName) {
   const isCh4 = currentChapter === '4-1' || currentChapter === '4-2';
   if (isCh4) {
     if (totalSync <= 33) {
-      // 路線一：假結局《離線》— 延遲 2 秒後直接進入
+      // 路線一：假結局《離線》
       document.getElementById('chapter-end').style.display = 'none';
       setTimeout(() => {
         document.getElementById('app').style.opacity = '1';
@@ -609,15 +609,26 @@ function showEnd(chName) {
         chatBody.appendChild(typingEl);
         currentChapter = 'end_normal';
         chapterSync = 0;
-        if (window.CHAPTERS && window.CHAPTERS['end_normal']) {
-          window.CHAPTERS['end_normal']();
-        }
+        if (window.CHAPTERS && window.CHAPTERS['end_normal']) window.CHAPTERS['end_normal']();
       }, 2000);
       return;
     }
-    // 路線二（34～66%）：循環在線 — 章節選擇畫面加提示（第五章尚未實裝）
-    // 路線三（67～100%）：直接解鎖第五章《同步》
-    // 以上路線在章節結算畫面顯示提示，引導玩家
+    if (totalSync >= 67) {
+      // 路線三：直接進入第五章
+      document.getElementById('chapter-end').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('app').style.opacity = '1';
+        document.getElementById('app').style.display = 'flex';
+        document.getElementById('sync-bar').style.display = 'flex';
+        document.getElementById('sync-bar').style.opacity = '1';
+        chatBody.innerHTML = '';
+        chatBody.appendChild(typingEl);
+        currentChapter = '5';
+        chapterSync = 0;
+        if (window.CHAPTERS && window.CHAPTERS['5']) window.CHAPTERS['5']();
+      }, 2000);
+      return;
+    }
   }
 
   const isWhite = currentChapter === '5';
