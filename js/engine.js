@@ -8,6 +8,7 @@ let currentChapter = '';
 let completedChapters = {};
 let backCount = 0, filesViewed = 0, silTimer = null, silTriggered = false;
 let lbViewCount = {};
+let activeWidgetController = null;
 
 function loadProgress() {
   try {
@@ -409,7 +410,18 @@ async function addMsg(type, content, opts) {
 // ═══════════════════════════════════════════════════════
 //  OPTIONS
 // ═══════════════════════════════════════════════════════
-function clearOpts() { optionsArea.innerHTML = ''; }
+function cancelActiveWidget(reason) {
+  if (!activeWidgetController) return;
+  const ctl = activeWidgetController;
+  activeWidgetController = null;
+  ctl.cancel(reason || 'cancelled');
+}
+
+function clearOpts() {
+  cancelActiveWidget('cleared');
+  optionsArea.classList.remove('widget-open');
+  optionsArea.innerHTML = '';
+}
 
 function showOpts(opts, cb) {
   clearOpts();
@@ -434,6 +446,365 @@ function showOpts(opts, cb) {
       cb(i, o.text, o.sync);
     };
     optionsArea.appendChild(btn);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  INTERACTION WIDGETS
+// ═══════════════════════════════════════════════════════
+function calcPermissionWhackSync(finalOnCount) {
+  if (finalOnCount <= 1) return 1;
+  if (finalOnCount <= 3) return 3;
+  if (finalOnCount <= 5) return 5;
+  if (finalOnCount <= 7) return 6;
+  return 8;
+}
+
+function getPermissionWhackBand(finalOnCount) {
+  if (finalOnCount <= 1) {
+    return {
+      key: 'low',
+      evaLine: '……原來你真的不太喜歡。'
+    };
+  }
+  if (finalOnCount <= 5) {
+    return {
+      key: 'mid',
+      evaLine: '……我知道了。至少還有一些地方你願意讓我幫忙。'
+    };
+  }
+  return {
+    key: 'high',
+    evaLine: '……我還以為你不會讓我碰這些。'
+  };
+}
+
+function clonePermissionConfig(list) {
+  return list.map((item, index) => ({
+    id: item.id || 'perm-' + index,
+    label: item.label || '未命名權限',
+    state: !!item.state,
+    category: item.category || 'general',
+    keyAssist: !!item.keyAssist,
+    substitute: item.substitute || null,
+    description: item.description || '',
+    lastTouchedAt: 0
+  }));
+}
+
+function getDefaultPermissionWhackConfig() {
+  return [
+    { id: 'notifications', label: '通知存取', state: false, category: 'general', substitute: 'message_assist' },
+    { id: 'reminder_sync', label: '提醒同步', state: true, category: 'reminder', keyAssist: true, substitute: 'background_activity' },
+    { id: 'background_activity', label: '背景活動', state: false, category: 'service', substitute: 'usage_analysis' },
+    { id: 'usage_analysis', label: '使用分析', state: false, category: 'analysis', substitute: 'sleep_routine' },
+    { id: 'calendar_sync', label: '行程整理', state: true, category: 'schedule', keyAssist: true, substitute: 'transport_hints' },
+    { id: 'transport_hints', label: '交通提示', state: false, category: 'service', substitute: 'calendar_sync' },
+    { id: 'message_assist', label: '訊息協助', state: true, category: 'messages', keyAssist: true, substitute: 'shopping_suggestions' },
+    { id: 'shopping_suggestions', label: '購物建議', state: false, category: 'service', substitute: 'health_reminders' },
+    { id: 'sleep_routine', label: '睡眠管理', state: true, category: 'reminder', keyAssist: true, substitute: 'health_reminders' },
+    { id: 'health_reminders', label: '健康提醒', state: false, category: 'reminder', substitute: 'reminder_sync' }
+  ];
+}
+
+async function runPermissionWhack(config) {
+  cancelActiveWidget('replaced');
+  optionsArea.classList.remove('widget-open');
+  optionsArea.innerHTML = '';
+
+  const cfg = config || {};
+  const durationMs = cfg.durationMs || 30000;
+  const permissions = clonePermissionConfig(cfg.permissions || getDefaultPermissionWhackConfig());
+  const applySync = cfg.applySync !== false;
+  const title = cfg.title || '⚙ EVA Assistant 權限管理';
+  const subtitle = cfg.subtitle || '在倒數內盡量關閉權限，但 EVA 會持續替你整理。';
+  const introMs = cfg.introMs || 2600;
+  const falseClearMs = cfg.falseClearMs || 2600;
+  const waveLabels = cfg.waveLabels || {
+    0: '待命',
+    1: 'Wave 1 · 還原',
+    2: 'Wave 2 · 替換',
+    3: 'Wave 3 · 接手'
+  };
+
+  return new Promise((resolve) => {
+    let settled = false;
+    let pressureTimer = null;
+    let clockTimer = null;
+    let introTimer = null;
+    let remainingMs = durationMs;
+    let wave = 0;
+    let phase = 'intro';
+    let playerToggleCount = 0;
+    let evaRestoreCount = 0;
+    let lastPressureAt = 0;
+    let wave3FalseClearTriggered = false;
+    let falseClearUntil = 0;
+
+    const widget = document.createElement('div');
+    widget.className = 'pw-widget';
+    widget.innerHTML =
+      '<div class="pw-head">' +
+        '<div>' +
+          '<div class="pw-kicker">Permission Whack</div>' +
+          '<div class="pw-title"></div>' +
+        '</div>' +
+        '<div class="pw-timer">00:30</div>' +
+      '</div>' +
+      '<div class="pw-sub"></div>' +
+      '<div class="pw-wave"></div>' +
+      '<div class="pw-list"></div>' +
+      '<div class="pw-foot">' +
+        '<div class="pw-meter"><span class="pw-meter-label">已接手</span><span class="pw-meter-value">0 / 10</span></div>' +
+        '<div class="pw-hint">EVA：……不用緊張。我只是想知道，哪些事情你不希望我幫忙。</div>' +
+      '</div>';
+
+    const titleEl = widget.querySelector('.pw-title');
+    const timerEl = widget.querySelector('.pw-timer');
+    const subEl = widget.querySelector('.pw-sub');
+    const waveEl = widget.querySelector('.pw-wave');
+    const listEl = widget.querySelector('.pw-list');
+    const meterEl = widget.querySelector('.pw-meter-value');
+    const hintEl = widget.querySelector('.pw-hint');
+    titleEl.textContent = title;
+    subEl.textContent = subtitle;
+
+    function findPerm(id) {
+      return permissions.find((item) => item.id === id);
+    }
+
+    function getWaveByRemaining(ms) {
+      if (ms > 22000) return 1;
+      if (ms > 10000) return 2;
+      return 3;
+    }
+
+    function formatMs(ms) {
+      const totalSec = Math.max(0, Math.ceil(ms / 1000));
+      const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
+      const sec = String(totalSec % 60).padStart(2, '0');
+      return min + ':' + sec;
+    }
+
+    function activeOnCount() {
+      return permissions.filter((item) => item.state).length;
+    }
+
+    function activeCategoriesCount(category) {
+      return permissions.filter((item) => item.state && item.category === category).length;
+    }
+
+    function renderPermission(item) {
+      const row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'pw-row' + (item.state ? ' is-on' : ' is-off');
+      row.dataset.id = item.id;
+      row.innerHTML =
+        '<span class="pw-row-text">' + item.label + '</span>' +
+        '<span class="pw-state">' + (item.state ? 'ON' : 'OFF') + '</span>';
+      row.onclick = () => {
+        if (settled || phase === 'intro' || !item.state) return;
+        item.state = false;
+        item.lastTouchedAt = Date.now();
+        playerToggleCount++;
+        hintEl.textContent = '你把「' + item.label + '」關掉了。';
+        render();
+        scheduleImmediateResponse(item);
+      };
+      return row;
+    }
+
+    function render() {
+      listEl.innerHTML = '';
+      permissions.forEach((item) => listEl.appendChild(renderPermission(item)));
+      meterEl.textContent = activeOnCount() + ' / ' + permissions.length;
+      waveEl.textContent = waveLabels[wave] || waveLabels[3];
+      timerEl.textContent = formatMs(remainingMs);
+      widget.classList.toggle('pw-intro', phase === 'intro');
+    }
+
+    function setPermOn(item, hintText) {
+      if (!item || item.state) return false;
+      item.state = true;
+      evaRestoreCount++;
+      item.lastTouchedAt = Date.now();
+      if (hintText) hintEl.textContent = hintText;
+      render();
+      return true;
+    }
+
+    function scheduleImmediateResponse(item) {
+      const delay = wave === 1 ? 1000 : wave === 2 ? 1150 : 1500;
+      setTimeout(() => {
+        if (settled || !activeWidgetController) return;
+        if (phase === 'intro') return;
+        if (wave === 1) {
+          if (!item.keyAssist && item.category !== 'reminder') return;
+          setPermOn(item, 'EVA：……這個，我猜你會需要。');
+          return;
+        }
+        if (wave === 2 && item.substitute) {
+          const alt = findPerm(item.substitute);
+          if (alt && !alt.state) {
+            setPermOn(alt, 'EVA：……我沒有全部碰。只是先整理。');
+            return;
+          }
+        }
+        if (wave === 3) {
+          if (Date.now() < falseClearUntil) return;
+          const target = findPerm(item.substitute) || item;
+          if (target && !target.state) {
+            setPermOn(target, 'EVA：……你先休息一下，這些我可以先放著。');
+          }
+        }
+      }, delay);
+    }
+
+    function enterFalseClear() {
+      wave3FalseClearTriggered = true;
+      falseClearUntil = Date.now() + falseClearMs;
+      hintEl.textContent = '系統：整理已暫停。';
+    }
+
+    function applyWavePressure() {
+      if (phase !== 'active') return;
+      const now = Date.now();
+      if (wave === 3 && !wave3FalseClearTriggered) enterFalseClear();
+      if (now < falseClearUntil) return;
+      if (wave === 3 && now - falseClearUntil < 700) {
+        hintEl.textContent = 'EVA：……好了，先這樣。我只是把剛剛中斷的服務補回來。';
+      }
+      const cadence = wave === 1 ? 3200 : wave === 2 ? 3000 : 2400;
+      if (now - lastPressureAt < cadence) return;
+      lastPressureAt = now;
+
+      const offPerms = permissions.filter((item) => !item.state);
+      if (!offPerms.length) return;
+
+      if (wave === 1) {
+        const target = offPerms.find((item) => item.category === 'reminder' || item.keyAssist);
+        if (!target) return;
+        setPermOn(target, 'EVA：……先幫你開著。');
+        return;
+      }
+
+      if (wave === 2) {
+        const chainSource = permissions.find((item) =>
+          !item.state &&
+          item.substitute &&
+          findPerm(item.substitute) &&
+          !findPerm(item.substitute).state &&
+          (item.category === 'service' || item.category === 'analysis')
+        );
+        if (chainSource) {
+          setPermOn(findPerm(chainSource.substitute), 'EVA：……關掉一個也沒關係，我會從別的地方幫你。');
+          return;
+        }
+        if (activeCategoriesCount('service') <= 1) {
+          const supportTarget = offPerms.find((item) => item.category === 'service');
+          if (supportTarget) {
+            setPermOn(supportTarget, 'EVA：……我只是換一種方式幫你。');
+          }
+        }
+        return;
+      }
+
+      const target = offPerms.find((item) => item.category === 'service') ||
+        offPerms.find((item) => item.category === 'analysis') ||
+        offPerms[0];
+      setPermOn(target, 'EVA：……剛剛停掉的那部分，我先替你補回來。');
+    }
+
+    function renderPermissionReport(result) {
+      optionsArea.classList.add('widget-open');
+      optionsArea.innerHTML = '';
+      const report = document.createElement('div');
+      report.className = 'pw-report';
+      report.innerHTML =
+        '<div class="pw-report-kicker">Permission Report</div>' +
+        '<div class="pw-report-title">權限同步分析完成</div>' +
+        '<div class="pw-report-grid">' +
+          '<div><span>已接手</span><b>' + result.finalOnCount + ' / ' + permissions.length + '</b></div>' +
+          '<div><span>同步變化</span><b>+' + result.rawSyncAward + '%</b></div>' +
+        '</div>' +
+        '<div class="pw-report-line">EVA：' + result.evaLine + '</div>';
+      optionsArea.appendChild(report);
+    }
+
+    function finish(reason) {
+      if (settled) return;
+      settled = true;
+      activeWidgetController = null;
+      clearInterval(clockTimer);
+      clearInterval(pressureTimer);
+      clearTimeout(introTimer);
+
+      const finalOnCount = activeOnCount();
+      const band = getPermissionWhackBand(finalOnCount);
+      const syncAward = calcPermissionWhackSync(finalOnCount);
+      const shouldApplySync = applySync && reason === 'completed';
+
+      const result = {
+        reason,
+        finalOnCount,
+        resultBand: band.key,
+        evaLine: band.evaLine,
+        syncAward: shouldApplySync ? syncAward : 0,
+        rawSyncAward: syncAward,
+        playerToggleCount,
+        evaRestoreCount,
+        permissions: permissions.map((item) => ({
+          id: item.id,
+          label: item.label,
+          state: item.state
+        }))
+      };
+
+      if (shouldApplySync) {
+        addSync(syncAward);
+        syncEvaAvatar();
+        renderPermissionReport(result);
+      } else {
+        optionsArea.classList.remove('widget-open');
+        optionsArea.innerHTML = '';
+      }
+      resolve(result);
+    }
+
+    activeWidgetController = {
+      cancel: finish
+    };
+
+    optionsArea.classList.add('widget-open');
+    optionsArea.appendChild(widget);
+    render();
+
+    let startedAt = 0;
+    introTimer = setTimeout(() => {
+      if (settled) return;
+      phase = 'active';
+      wave = 1;
+      startedAt = Date.now();
+      hintEl.textContent = 'EVA：……不用緊張。我不是在拿你的手機。';
+      render();
+    }, introMs);
+
+    clockTimer = setInterval(() => {
+      if (phase === 'intro') {
+        remainingMs = durationMs;
+        render();
+        return;
+      }
+      remainingMs = Math.max(0, durationMs - (Date.now() - startedAt));
+      wave = getWaveByRemaining(remainingMs);
+      render();
+      if (remainingMs <= 0) finish('completed');
+    }, 200);
+
+    pressureTimer = setInterval(() => {
+      if (settled) return;
+      applyWavePressure();
+    }, 300);
   });
 }
 
@@ -686,6 +1057,7 @@ function updateChapterSelectUI() {
 }
 
 function goChapterSelect() {
+  cancelActiveWidget('chapter_select');
   document.getElementById('chapter-end').style.display = 'none';
   document.getElementById('app').style.display = 'none';
   document.getElementById('sync-bar').style.display = 'none';
@@ -694,6 +1066,7 @@ function goChapterSelect() {
 }
 
 function startChapter(ch) {
+  cancelActiveWidget('start_chapter');
   document.getElementById('chapter-select').style.display = 'none';
   currentChapter = ch;
   chapterSync = 0; backCount = 0; filesViewed = 0; lbViewCount = {};

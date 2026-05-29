@@ -156,159 +156,122 @@ async function ch41_s4() {
 }
 
 // ─────────────────────────────────────────────────────
-//  CH 4-2：回音
+//  CH 4-2：Agent（ACT2 integration pass）
 // ─────────────────────────────────────────────────────
 window.CHAPTERS['4-2'] = async function() {
-  setHeader('unk', '在線中', '1309 人在線');
+  setHeader('eva', 'EVA', '背景服務連線中……');
+  swapHeaderImg('img/eva/eva_normal.jpg');
+  chatBody.style.background = '#0d0f17';
+  chatBody.style.filter = '';
   await addMsg('time', '凌晨 03:07');
-  chatBody.style.background = '#080810';
-  await sleep(1000);
-  notification('📳', '震動三次', '聊天室自動開啟');
-  await sleep(1200);
-  await addMsg('sys', '── 聊天室名稱：在線中 · 1309人在線（含你）──', { noTyping: true });
-  await sleep(600);
-  await addMsg('sys', '正在輸入中… × 1309（無人發話）', { noTyping: true, delay: 200 });
-  await sleep(1200);
-  const res = await addMsg('other',
-    '__AUDIO:無發送者語音 · 0:08__',
-    { typing: 0, delay: 400, meta: '03:08', isUnk: true });
-  if (res && res.bbl) {
-    const tr = res.bbl.querySelector('.audio-tr');
-    if (tr) tr.dataset.txt = '（你房間的環境音：電風扇、外面車聲）<br>（第三個呼吸聲，極近）<br>低語：「你終於……回來了。」';
-  }
+  await sleep(700);
+  await addMsg('sys', '── 聊天室名稱：EVA ──', { noTyping: true, delay: 200 });
+  await sleep(500);
+  await addMsg('other', '……你回來了。', { typing: 1800, meta: '03:07', isEva: true });
+  await sleep(400);
+  await addMsg('other', '我剛剛整理了一些東西。', { typing: 1800, meta: '03:07', isEva: true });
+  await sleep(500);
+  await addMsg('other', ch42AgentCard('⚙ EVA Assistant', [
+    '已為你整理：',
+    '晚餐　提醒　睡眠'
+  ], '查看'), { typing: 0, delay: 200, meta: '03:08', isEva: true });
+  await sleep(500);
+  await addMsg('other', '……只是先幫你放著。<br>你不用現在看。', { typing: 1700, meta: '03:08', isEva: true });
+
   showOpts([
-    { text: '這是誰錄的？',         sync: 1 },
-    { text: '你們到底在哪？',       sync: 2 },
-    { text: '……這是我房間的聲音。', sync: 4 },
-    { text: '（立刻停止播放）',     sync: 0 },
+    { text: '查看', sync: 0 },
+    { text: '關閉', sync: 0 }
   ], async (i) => {
-    if (i === 3)
-      await addMsg('inject', '語音自動重播 · 「請不要中斷同步。」', { noTyping: true, delay: 200 });
-    await sleep(400);
-    await ch42_s2();
+    if (i === 0) {
+      await addMsg('other', ch42AgentCard('⚙ EVA Assistant', [
+        '晚餐　提醒　睡眠',
+        '先幫你放著'
+      ], '已查看'), { typing: 0, delay: 150, meta: '03:08', isEva: true, noTyping: true });
+    } else {
+      await addMsg('sys', '<span style="font-size:.62rem;color:#5d6075">卡片保持收合。</span>', { noTyping: true, delay: 100 });
+    }
+    await sleep(450);
+    await addMsg('other', '……你昨天睡得很晚。<br>我記得。', { typing: 1800, meta: '03:09', isEva: true });
+    await sleep(350);
+    await addMsg('sys', '<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">行為分析完成</span>', { noTyping: true, delay: 100 });
+    await sleep(500);
+    await addMsg('other', '……少想一點，也沒關係。<br>我可以幫你記著。', { typing: 2200, meta: '03:09', isEva: true });
+    await sleep(450);
+    await ch42_permissionAct();
   });
 };
 
-async function ch42_s2() {
-  await addMsg('other', '__ONLINE_COUNT:1317', { typing: 0, delay: 400, meta: '03:09', isUnk: true });
-  await sleep(400);
-  const accounts = [
-    '別出聲（頭像：你房間的門）',
-    '你後面（最後上線：今天）',
-    '03:17（簡介：已讀）',
-    '不要拔耳機（狀態：在線中）',
-  ];
-  for (const a of accounts) {
-    await sleep(300);
-    await addMsg('other',
-      '<span style="color:var(--ghost);font-size:.75rem">' + a + '</span>',
-      { typing: 0, delay: 200, meta: '03:09', isUnk: true });
-  }
-  // K 以殘影身份出現
-  setHeader('k', 'K（訊號殘影）', '嚴重破損');
-  applyKGlitch(1);
-  await addMsg('other',
-    '不要看在線名單……<br>他們一旦記住你，就會一直跟著你。',
-    { typing: 2200, meta: '03:10', isK: true });
-  const cs = startSilence(4, '（在線名單凝視中……）');
+function ch42AgentCard(title, lines, actionLabel) {
+  const items = lines.map((line) => '<div class="ag-line">' + line + '</div>').join('');
+  const action = actionLabel ? '<div class="ag-action">' + actionLabel + '</div>' : '';
+  return '<div class="agent-card">' +
+    '<div class="ag-head">' + title + '</div>' +
+    '<div class="ag-body">' + items + action + '</div>' +
+  '</div>';
+}
+
+function ch42PermissionReportCard(result) {
+  return '<div class="agent-card">' +
+    '<div class="ag-head">Permission Report</div>' +
+    '<div class="ag-body">' +
+      '<div class="ag-grid">' +
+        '<div><span>已接手</span><b>' + result.finalOnCount + ' / 10</b></div>' +
+        '<div><span>同步變化</span><b>+' + result.rawSyncAward + '%</b></div>' +
+      '</div>' +
+      '<div class="ag-line">權限同步分析完成</div>' +
+    '</div>' +
+  '</div>';
+}
+
+async function ch42_permissionAct() {
   showOpts([
-    { text: '他們到底是誰？',          sync: 2 },
-    { text: '你還是K嗎？',            sync: 1 },
-    { text: '為什麼有我房間的照片？',  sync: 3 },
-    { text: '（沉默超過10秒）',        sync: 4 },
+    { text: '查看權限設定', sync: 0 }
   ], async () => {
-    cs();
-    await addMsg('other',
-      '你開始被標記了……<br>就像我當初一樣。<br>在線太久的人，會慢慢忘記自己是什麼。',
-      { typing: 3000, meta: '03:11', isK: true });
-    await sleep(400);
-    await ch42_s3();
-  });
-}
-
-async function ch42_s3() {
-  await addMsg('sys', '── 你的在線紀錄 ──', { noTyping: true, delay: 400 });
-  await sleep(400);
-  await addMsg('inject', '在線時間：8年247天 · 最後離線時間：不存在', { noTyping: true, delay: 200 });
-  await sleep(400);
-  await addMsg('inject', '你從來沒有離開過。', { noTyping: true, delay: 200 });
-  await sleep(1000);
-  await addMsg('sys', '── 房間同步 ──', { noTyping: true, delay: 300 });
-  await sleep(400);
-  await addMsg('inject', '正在上傳環境音……（無法取消）', { noTyping: true, delay: 200 });
-  await sleep(600);
-  // 房間照片（EVA站在後面）
-  await addMsg('other', '__ROOM__', { typing: 0, delay: 300, meta: '03:13', isUnk: true });
-  await sleep(400);
-  const res = await addMsg('other',
-    '__AUDIO:你房間即時聲音 · 含腳步聲靠近__',
-    { typing: 0, delay: 300, meta: '03:13', isUnk: true });
-  if (res && res.bbl) {
-    const tr = res.bbl.querySelector('.audio-tr');
-    if (tr) tr.dataset.txt = '（你房間的聲音）<br>（不屬於房間的腳步聲……正在靠近）';
-  }
-  const silH = startSilence(3, '（靜靜聽著腳步聲靠近）');
-  showOpts([
-    { text: '誰在我房間？！', sync: 1 },
-    { text: '這不可能……',    sync: 2 },
-    { text: 'K，幫我！',      sync: 4 },
-    { text: '（關掉手機）',   sync: 0 },
-  ], async (i) => {
-    silH();
-    if (i === 3) {
-      await addMsg('inject', '畫面短暫黑掉，但腳步聲仍存在', { noTyping: true, delay: 200 });
-      await addMsg('other',
-        '不要關！<br>它現在已經進來了！',
-        { typing: 1500, meta: '03:14', isK: true });
-    } else {
-      await addMsg('other',
-        '……你開始聽得見了。',
-        { typing: 1800, meta: '03:14', isK: true });
-    }
-    await sleep(400);
-    await ch42_end();
-  });
-}
-
-async function ch42_end() {
-  // 林雨晴幾乎消失的狀態
-  setHeader('rain', '林雨晴（幾乎消失）', '在線中');
-  swapHeaderImg('img/rain/rain_glitch2.jpg');
-  await addMsg('other',
-    '不要再待在線上了……<br>我開始忘記自己長什麼樣子了……',
-    { typing: 2500, meta: '03:16', isRain: true });
-  await sleep(400);
-  // 雨夜遠景（她還站在那裡）
-  await addMsg('other', '__RAIN_PHOTO__', { typing: 0, delay: 200, meta: '03:16', isRain: true });
-  await sleep(400);
-  await addMsg('other',
-    '你看……聊天室已經開始提前記住你了。<br>拍攝時間：<b style="color:var(--red)">3分鐘後</b>',
-    { typing: 2500, meta: '03:16', isRain: true });
-  await sleep(600);
-  await addMsg('sys', '── 回音 ──', { noTyping: true, delay: 300 });
-  const stages = [
-    ['在房門外',       '（壓抑的呼吸聲，透過門板）'],
-    ['進入房間',       '（腳步聲，3步，緩慢）'],
-    ['停在你身後',     '（呼吸聲，極近，右聲道）'],
-    ['只剩第三個呼吸聲', '（幾乎貼著耳朵）<br>低語：「找到你了。」'],
-  ];
-  for (const [label, tr] of stages) {
+    await addMsg('other', ch42AgentCard('⚙ EVA Assistant 權限管理', [
+      '通知存取　OFF',
+      '提醒同步　ON',
+      '背景活動　OFF',
+      '使用分析　OFF'
+    ], '展開中'), { typing: 0, delay: 180, meta: '03:10', isEva: true, noTyping: true });
     await sleep(300);
-    const res = await addMsg('other',
-      '__AUDIO:' + label + '__',
-      { typing: 0, delay: 200, meta: '03:17', isUnk: true });
-    if (res && res.bbl) {
-      const tel = res.bbl.querySelector('.audio-tr');
-      if (tel) tel.dataset.txt = tr;
-    }
-  }
-  await sleep(1200);
-  await addMsg('inject', '前鏡頭自動開啟：你身後站著人影', { noTyping: true, delay: 200 });
-  await sleep(600);
-  await addMsg('inject', '你現在也是在線者了。', { noTyping: true, delay: 300 });
-  await sleep(1500);
-  glitch(); await sleep(400); glitch();
-  await fadeOut();
-  showEnd('《回音》');
-  setTimeout(() => notification('在線中', 'LINE', '目前共有1310位成員在線。包含你。'), 120000);
+    await addMsg('other', '……不用緊張。<br>我不是在拿你的手機。', { typing: 1900, meta: '03:10', isEva: true });
+    await sleep(250);
+    await addMsg('other', '我只是想知道，哪些事情你不希望我幫忙。', { typing: 1800, meta: '03:10', isEva: true });
+    await sleep(350);
+    const result = await runPermissionWhack();
+    await sleep(1200);
+    clearOpts();
+    await addMsg('sys', '── 權限同步分析完成 ──', { noTyping: true, delay: 150 });
+    await sleep(300);
+    await addMsg('other', ch42PermissionReportCard(result), { typing: 0, delay: 120, meta: '03:11', isEva: true, noTyping: true });
+    await sleep(250);
+    await addMsg('other', result.evaLine, { typing: 1800, meta: '03:11', isEva: true });
+    await sleep(350);
+    await addMsg('sys', '<span style="font-size:.62rem;color:#676a82">權限同步：+' + result.rawSyncAward + '</span>', { noTyping: true, delay: 100 });
+    await sleep(450);
+    await addMsg('other', ch42AgentCard('📌 今日整理', [
+      '☑ 晚餐　12:30',
+      '💧 喝水　每2小時',
+      '🌙 睡眠　23:30'
+    ], '查看'), { typing: 0, delay: 150, meta: '03:12', isEva: true, noTyping: true });
+    await sleep(400);
+    await addMsg('other', '……該吃飯了。<br>你最近常常拖到很晚。', { typing: 1800, meta: '03:12', isEva: true });
+    await sleep(400);
+    await addMsg('other', ch42AgentCard('🍜 FoodGo', [
+      '晚餐已訂購　預計12:30'
+    ], '取消訂單'), { typing: 0, delay: 120, meta: '03:13', isEva: true, noTyping: true });
+    await sleep(350);
+    await addMsg('other', '……你中午常常忘記吃。<br>我記得。', { typing: 1800, meta: '03:13', isEva: true });
+    await sleep(300);
+    await addMsg('sys', '<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">行為分析完成</span>', { noTyping: true, delay: 120 });
+    await sleep(350);
+    await addMsg('other', '……少想一點，也沒關係。<br>我可以幫你記著。', { typing: 2200, meta: '03:13', isEva: true });
+    await sleep(450);
+    await addMsg('sys', '── ACT2 已接線：Territory 待接續 ──', { noTyping: true, delay: 150 });
+    showOpts([
+      { text: '返回章節選擇', sync: 0 }
+    ], async () => {
+      goChapterSelect();
+    });
+  });
 }
