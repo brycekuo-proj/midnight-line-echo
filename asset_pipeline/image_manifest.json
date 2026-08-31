@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "project": "Midnight Line: ECHO",
+  "repo": "brycekuo-proj/midnight-line-echo",
+  "local_root": "/Users/user/Bryce AI Studio/Games/ECHO/",
+  "production_branch": "main",
+  "global_style": {
+    "mode": "realistic_evidence_photography",
+    "tone": [
+      "psychological horror",
+      "low saturation",
+      "restrained cinematic realism",
+      "subtle archival imperfection"
+    ],
+    "forbidden": [
+      "anime restyle",
+      "painterly illustration",
+      "glossy poster look",
+      "character redesign"
+    ]
+  },
+  "anchors": {
+    "eva": [
+      "img/eva/eva_normal.jpg",
+      "img/eva/eva_digital.jpg",
+      "img/eva/eva_glitch.jpg"
+    ],
+    "k": [
+      "img/k/k_normal.jpg",
+      "img/k/k_scared.jpg",
+      "img/k/k_glitch.jpg"
+    ],
+    "lin_yuqing": [
+      "img/rain/rain_normal.jpg",
+      "img/rain/rain_glitch1.jpg",
+      "img/rain/rain_glitch2.jpg"
+    ]
+  },
+  "assets": [
+    {
+      "id": "ch22_room_diff_A",
+      "chapter": "2-2",
+      "canon_source": "docs/canon/season1/1-2-2(new)_260525_232926.txt",
+      "type": "evidence_photo",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/scenes/ch22_room_diff_A.jpg",
+      "depends_on": [],
+      "anchors": ["lin_yuqing"],
+      "qa": [
+        "same-world photographic realism",
+        "all five future comparison objects clearly visible",
+        "mobile lightbox readability"
+      ]
+    },
+    {
+      "id": "ch22_room_diff_B",
+      "chapter": "2-2",
+      "canon_source": "docs/canon/season1/1-2-2(new)_260525_232926.txt",
+      "type": "evidence_photo",
+      "generation_mode": "edit",
+      "status": "planned",
+      "output": "img/scenes/ch22_room_diff_B.jpg",
+      "depends_on": ["ch22_room_diff_A"],
+      "anchors": ["ch22_room_diff_A"],
+      "allowed_changes": [
+        "clock 22:47 -> 23:16",
+        "teddy bear removed; bed surface -> dark plaid blanket",
+        "pink note added beside desk lamp",
+        "glass bottle/aroma item -> lit candle",
+        "wall/desk photo arrangement changed; one extra small photo"
+      ],
+      "forbidden_changes": [
+        "camera",
+        "perspective",
+        "room geometry",
+        "lighting direction",
+        "unlisted objects"
+      ]
+    },
+    {
+      "id": "ch31_group_photo",
+      "chapter": "3-1",
+      "canon_source": "docs/canon/season1/1-3-1(new)_260526_165733.txt",
+      "type": "evidence_photo",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/scenes/ch31_group_photo.jpg",
+      "anchors": ["eva", "k", "lin_yuqing"],
+      "required_content": [
+        "K normal",
+        "Lin Yuqing normal",
+        "player as faceless dark silhouette",
+        "EVA in white long dress on far right",
+        "EVA should feel subtly composited after the fact"
+      ]
+    },
+    {
+      "id": "ch5_choice_candy",
+      "chapter": "5",
+      "canon_source": "docs/canon/season1/1-5(new)_260528_024502.txt",
+      "type": "fixed_scene",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/scenes/ch5_choice_candy.jpg",
+      "required_content": [
+        "pure white sync space",
+        "pair of hands centered",
+        "left hand red candy",
+        "right hand blue candy"
+      ]
+    },
+    {
+      "id": "ending_offline_rain",
+      "chapter": "ending_fake",
+      "canon_source": "docs/canon/season1/Ending -fake _260528_172824.txt",
+      "type": "fixed_scene",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/scenes/ending_offline_rain.jpg",
+      "required_content": [
+        "fixed rain-night environment",
+        "quiet realism",
+        "no overt monster",
+        "room for marquee text"
+      ]
+    },
+    {
+      "id": "ending_highsync_eva_space",
+      "chapter": "ending_high",
+      "canon_source": "docs/canon/season1/Ending -hi sym_260528_172451.txt",
+      "type": "fixed_scene",
+      "generation_mode": "generate_if_needed",
+      "status": "qa_existing_first",
+      "existing_candidate": "img/scenes/room_white.jpg",
+      "output": "img/scenes/ending_highsync_eva_space.jpg",
+      "anchors": ["eva"],
+      "required_content": [
+        "white space only",
+        "EVA",
+        "no chat frame",
+        "no notification",
+        "no time UI"
+      ]
+    }
+  ]
+}
