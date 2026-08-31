@@ -1,3 +1,5 @@
 .DS_Store
 __pycache__/
 *.pyc
+.venv-imagegen/
+asset_pipeline/source/generated/
