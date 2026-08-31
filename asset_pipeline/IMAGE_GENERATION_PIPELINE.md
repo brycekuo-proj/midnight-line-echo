@@ -28,8 +28,17 @@ CH2-2 B is always `edit`; independent regeneration is forbidden.
 
 ## Output handling
 
-Canonical output root:
+Canonical scene/evidence output root:
 `img/scenes/`
+
+Canonical mini-game GUI output root:
+`img/ui/`
+
+Mini-game rule:
+- every chapter mini-game must have dedicated graphical assets
+- generated GUI assets support, but never replace, HTML/CSS/JS interaction
+- avoid baking localized text, counters, scores or dynamic values into reusable GUI images whenever DOM rendering is possible
+- shared states should be exported as transparent overlays or reusable components when practical
 
 Temporary reviews:
 `asset_pipeline/qa/`

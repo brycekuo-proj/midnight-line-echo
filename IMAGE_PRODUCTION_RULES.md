@@ -110,6 +110,34 @@ Sync rule:
 Do not overwrite an approved MASTER during experimentation.
 Use `_v1`, `_v2`, etc. during review, then promote the chosen file to the canonical filename.
 
+## Rule 4 — All chapter mini-games must be graphical
+
+Every chapter mini-game in ECHO must be presented through a graphical user interface and must have dedicated visual assets.
+
+Final-production requirements:
+- text-only interaction is not sufficient
+- plain button lists are not sufficient as the final mini-game presentation
+- every mini-game must have a chapter-specific graphical layout
+- every mini-game must include dedicated image / GUI assets
+- the interaction itself must remain real HTML/CSS/JS logic
+- generated images support the UI and must not replace the whole mini-game with a dead screenshot
+- mini-game visuals must follow the same ECHO art direction and mobile-first readability rules
+
+Required mini-game asset roles may include:
+- base background / panel
+- interactive tiles, cards, nodes or markers
+- state variants
+- overlay / hint / warning visuals
+- result / completion visuals
+
+Canonical GUI output root:
+`img/ui/`
+
+Mini-game production is complete only when both graphical assets and interactive behavior are integrated and QA-approved.
+
+The full mini-game visual matrix and production order are defined in:
+`MINIGAME_UI_ASSET_PLAN.md`
+
 ## Initial canonical new-image queue
 
 1. `ch22_room_diff_A.jpg` — CH2-2 room MASTER

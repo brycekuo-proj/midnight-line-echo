@@ -1,24 +1,32 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "project": "Midnight Line: ECHO",
   "repo": "brycekuo-proj/midnight-line-echo",
   "local_root": "/Users/user/Bryce AI Studio/Games/ECHO/",
   "production_branch": "main",
   "global_style": {
-    "mode": "realistic_evidence_photography",
+    "mode": "realistic_evidence_photography_plus_gui",
     "tone": [
       "psychological horror",
       "low saturation",
       "restrained cinematic realism",
-      "subtle archival imperfection"
+      "subtle archival imperfection",
+      "dark digital interface"
     ],
     "forbidden": [
       "anime restyle",
       "painterly illustration",
       "glossy poster look",
-      "character redesign"
+      "character redesign",
+      "bright casual-game UI"
     ]
   },
+  "asset_types": [
+    "evidence_photo",
+    "fixed_scene",
+    "character_scene",
+    "minigame_ui"
+  ],
   "anchors": {
     "eva": [
       "img/eva/eva_normal.jpg",
@@ -142,6 +150,478 @@
         "no notification",
         "no time UI"
       ]
+    },
+
+    {
+      "id": "mg_ch21_map_base",
+      "chapter": "2-1",
+      "type": "minigame_ui",
+      "minigame": "underground_map",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch21_map_base.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch21_map_markers",
+      "chapter": "2-1",
+      "type": "minigame_ui",
+      "minigame": "underground_map",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch21_map_markers.png",
+      "ui_role": "marker_sheet"
+    },
+    {
+      "id": "mg_ch21_map_panel",
+      "chapter": "2-1",
+      "type": "minigame_ui",
+      "minigame": "underground_map",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch21_map_panel.png",
+      "ui_role": "info_panel"
+    },
+
+    {
+      "id": "mg_ch22_spotdiff_frame",
+      "chapter": "2-2",
+      "type": "minigame_ui",
+      "minigame": "spot_the_difference",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch22_spotdiff_frame.png",
+      "ui_role": "frame"
+    },
+    {
+      "id": "mg_ch22_spotdiff_marker",
+      "chapter": "2-2",
+      "type": "minigame_ui",
+      "minigame": "spot_the_difference",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch22_spotdiff_marker.png",
+      "ui_role": "state_marker"
+    },
+    {
+      "id": "mg_ch22_spotdiff_complete",
+      "chapter": "2-2",
+      "type": "minigame_ui",
+      "minigame": "spot_the_difference",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch22_spotdiff_complete.png",
+      "ui_role": "result_panel"
+    },
+
+    {
+      "id": "mg_ch31_memory_board",
+      "chapter": "3-1",
+      "type": "minigame_ui",
+      "minigame": "memory_repair",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch31_memory_board.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch31_memory_card",
+      "chapter": "3-1",
+      "type": "minigame_ui",
+      "minigame": "memory_repair",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch31_memory_card.png",
+      "ui_role": "interactive_card"
+    },
+    {
+      "id": "mg_ch31_memory_slot",
+      "chapter": "3-1",
+      "type": "minigame_ui",
+      "minigame": "memory_repair",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch31_memory_slot.png",
+      "ui_role": "drop_slot"
+    },
+    {
+      "id": "mg_ch31_memory_complete",
+      "chapter": "3-1",
+      "type": "minigame_ui",
+      "minigame": "memory_repair",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch31_memory_complete.png",
+      "ui_role": "result_panel"
+    },
+
+    {
+      "id": "mg_ch32_ssd_panel",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "ssd_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch32_ssd_panel.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch32_ssd_card",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "ssd_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch32_ssd_card.png",
+      "ui_role": "interactive_card"
+    },
+    {
+      "id": "mg_ch32_ssd_label",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "ssd_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch32_ssd_label.png",
+      "ui_role": "label_strip"
+    },
+    {
+      "id": "mg_ch32_ssd_detail",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "ssd_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch32_ssd_detail.png",
+      "ui_role": "detail_panel"
+    },
+
+    {
+      "id": "mg_ch33_audio_panel",
+      "chapter": "3-3",
+      "type": "minigame_ui",
+      "minigame": "audio_verification",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch33_audio_panel.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch33_waveframe",
+      "chapter": "3-3",
+      "type": "minigame_ui",
+      "minigame": "audio_verification",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch33_waveframe.png",
+      "ui_role": "waveform_frame"
+    },
+    {
+      "id": "mg_ch33_audio_button",
+      "chapter": "3-3",
+      "type": "minigame_ui",
+      "minigame": "audio_verification",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch33_audio_button.png",
+      "ui_role": "control_button"
+    },
+    {
+      "id": "mg_ch33_audio_result",
+      "chapter": "3-3",
+      "type": "minigame_ui",
+      "minigame": "audio_verification",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch33_audio_result.png",
+      "ui_role": "result_panel"
+    },
+
+    {
+      "id": "mg_ch41_mirror_board",
+      "chapter": "4-1",
+      "type": "minigame_ui",
+      "minigame": "mirror_fragment",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch41_mirror_board.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch41_mirror_fragment",
+      "chapter": "4-1",
+      "type": "minigame_ui",
+      "minigame": "mirror_fragment",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch41_mirror_fragment.png",
+      "ui_role": "fragment_tile"
+    },
+    {
+      "id": "mg_ch41_mirror_lock_overlay",
+      "chapter": "4-1",
+      "type": "minigame_ui",
+      "minigame": "mirror_lock",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch41_mirror_lock_overlay.png",
+      "ui_role": "overlay"
+    },
+    {
+      "id": "mg_ch41_mirror_screenshot",
+      "chapter": "4-1",
+      "type": "minigame_ui",
+      "minigame": "mirror_lock",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch41_mirror_screenshot.png",
+      "ui_role": "evidence_visual"
+    },
+
+    {
+      "id": "mg_ch42_permission_panel",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "permission_whack",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_permission_panel.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch42_permission_card",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "permission_whack",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_permission_card.png",
+      "ui_role": "interactive_card"
+    },
+    {
+      "id": "mg_ch42_permission_badge",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "permission_whack",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_permission_badge.png",
+      "ui_role": "state_badge"
+    },
+    {
+      "id": "mg_ch42_permission_result",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "permission_whack",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_permission_result.png",
+      "ui_role": "result_panel"
+    },
+
+    {
+      "id": "mg_ch42_territory_board",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "territory",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_territory_board.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch42_territory_cell_idle",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "territory",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_territory_cell_idle.png",
+      "ui_role": "state_idle"
+    },
+    {
+      "id": "mg_ch42_territory_cell_agent",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "territory",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_territory_cell_agent.png",
+      "ui_role": "state_agent"
+    },
+    {
+      "id": "mg_ch42_territory_cell_player",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "territory",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_territory_cell_player.png",
+      "ui_role": "state_player"
+    },
+    {
+      "id": "mg_ch42_territory_timer",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "territory",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_territory_timer.png",
+      "ui_role": "timer"
+    },
+    {
+      "id": "mg_ch42_territory_result",
+      "chapter": "4-2",
+      "type": "minigame_ui",
+      "minigame": "territory",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch42_territory_result.png",
+      "ui_role": "result_panel"
+    },
+
+    {
+      "id": "mg_ch5_archive_panel",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "evidence_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_archive_panel.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch5_archive_card",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "evidence_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_archive_card.png",
+      "ui_role": "file_card"
+    },
+    {
+      "id": "mg_ch5_archive_thumbframe",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "evidence_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_archive_thumbframe.png",
+      "ui_role": "thumbnail_frame"
+    },
+    {
+      "id": "mg_ch5_archive_detail",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "evidence_archive",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_archive_detail.png",
+      "ui_role": "detail_panel"
+    },
+
+    {
+      "id": "mg_ch5_linkboard_base",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "link_board",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_linkboard_base.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch5_linkboard_echo_node",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "link_board",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_linkboard_echo_node.png",
+      "ui_role": "main_node"
+    },
+    {
+      "id": "mg_ch5_linkboard_evidence_node",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "link_board",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_linkboard_evidence_node.png",
+      "ui_role": "child_node"
+    },
+    {
+      "id": "mg_ch5_linkboard_connection_glow",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "link_board",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_linkboard_connection_glow.png",
+      "ui_role": "connection_state"
+    },
+    {
+      "id": "mg_ch5_linkboard_complete",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "link_board",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_linkboard_complete.png",
+      "ui_role": "result_panel"
+    },
+
+    {
+      "id": "mg_ch5_residual_bg",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "residual_voices",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_residual_bg.png",
+      "ui_role": "base_background"
+    },
+    {
+      "id": "mg_ch5_residual_bubble",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "residual_voices",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_residual_bubble.png",
+      "ui_role": "message_bubble"
+    },
+    {
+      "id": "mg_ch5_residual_overlay",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "residual_voices",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_residual_overlay.png",
+      "ui_role": "overlay"
+    },
+
+    {
+      "id": "mg_ch5_choice_highlight",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "choice_candy",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_choice_highlight.png",
+      "ui_role": "selection_highlight"
+    },
+    {
+      "id": "mg_ch5_choice_result",
+      "chapter": "5",
+      "type": "minigame_ui",
+      "minigame": "choice_candy",
+      "generation_mode": "generate",
+      "status": "planned",
+      "output": "img/ui/mg_ch5_choice_result.png",
+      "ui_role": "result_panel"
     }
   ]
 }
