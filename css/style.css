@@ -327,7 +327,9 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
    GRAPHICAL MINI-GAMES
    Generated art is presentation; DOM remains interactive.
    ═══════════════════════════════════════════════════════ */
-.echo-mg{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(8,10,16,.94),rgba(5,6,10,.98)),var(--mg-art);background-size:cover;background-position:center;border:1px solid #2a3142;border-radius:16px;padding:.8rem;box-shadow:0 -12px 34px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:.65rem}
+.echo-mg{position:relative;width:100%;overflow:hidden;background:linear-gradient(180deg,rgba(8,10,16,.94),rgba(5,6,10,.98)),var(--mg-art);background-size:cover;background-position:center;border:1px solid #2a3142;border-radius:16px;padding:.8rem;box-shadow:0 -12px 34px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:.65rem}
+.echo-mg-chat-row{width:100%;max-width:100%;flex:0 0 auto;scroll-margin-top:.25rem}
+.echo-mg-chat{width:100%;max-width:100%}
 .echo-mg:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(120,90,180,.08),transparent 42%);pointer-events:none}
 .echo-mg>*{position:relative;z-index:1}
 .echo-mg-head{display:flex;justify-content:space-between;gap:.75rem;align-items:flex-start}
