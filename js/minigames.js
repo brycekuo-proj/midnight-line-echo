@@ -200,12 +200,14 @@ function runSpotDifference() {
     let settled = false;
     const found = new Set();
     const hitButtons = new Map();
+    // Positions measured from the approved 1536×1024 A/B pair.
+    // A and B are already geometrically aligned, so both panels share the same coordinates.
     const hotspots = [
-      { id: 'clock',  label: '時鐘時間',   x: 26, y: 21, radius: 9,  reaction: '那天我回家很晚……可是我不記得，中間那段時間發生了什麼。' },
-      { id: 'bed',    label: '床鋪變化',   x: 48, y: 62, radius: 20, reaction: '我其實不太會弄亂床。除非……那天真的很累。' },
-      { id: 'note',   label: '粉紅便條',   x: 71, y: 44, radius: 10, reaction: '我有時候會留紙條，怕自己忘記事情。' },
-      { id: 'aroma',  label: '右側物件',   x: 84, y: 67, radius: 11, reaction: '我不太喜歡房間太暗。尤其下雨的晚上。' },
-      { id: 'photos', label: '照片配置',   x: 61, y: 24, radius: 14, reaction: '我不太喜歡拍自己。可是有些照片……我又捨不得丟。' }
+      { id: 'photos', label: '照片配置',   x: 58.6, y: 26.3, hitW: 74, hitH: 54, reaction: '我不太喜歡拍自己。可是有些照片……我又捨不得丟。' },
+      { id: 'clock',  label: '時鐘時間',   x: 68.5, y: 54.7, hitW: 28, hitH: 22, reaction: '那天我回家很晚……可是我不記得，中間那段時間發生了什麼。' },
+      { id: 'note',   label: '粉紅便條',   x: 80.5, y: 57.5, hitW: 26, hitH: 24, reaction: '我有時候會留紙條，怕自己忘記事情。' },
+      { id: 'aroma',  label: '右側物件',   x: 88.7, y: 58.6, hitW: 26, hitH: 52, reaction: '我不太喜歡房間太暗。尤其下雨的晚上。' },
+      { id: 'bed',    label: '床鋪變化',   x: 24.6, y: 78.6, hitW: 96, hitH: 70, reaction: '我其實不太會弄亂床。除非……那天真的很累。' }
     ];
 
     const root = echoMiniGameShell('CH2-2 · SPOT THE DIFFERENCE', '房間照片比對', '上下兩張照片中共有 5 個差異。直接比對並點擊任一張照片的差異位置。', ECHO_MG_ASSETS.ch22.frame);
@@ -251,21 +253,8 @@ function runSpotDifference() {
 
       const stage = document.createElement('div');
       stage.className = 'echo-mg-stage spot-stage';
-      stage.appendChild(echoArtImg(ECHO_MG_ASSETS.ch22.a, 'echo-mg-stage-img spot-master', '房間照片 ' + kind.toUpperCase()));
-
-      // B uses A as the stable scene base and only reveals the five approved B difference regions.
-      // This avoids unrelated drift from the generated B while keeping both photos visible together.
-      if (kind === 'b') {
-        hotspots.forEach((h) => {
-          const layer = echoArtImg(ECHO_MG_ASSETS.ch22.b, 'echo-mg-stage-img spot-variant-layer is-visible', '房間照片 B 差異區域');
-          layer.style.clipPath = 'circle(' + h.radius + '% at ' + h.x + '% ' + h.y + '%)';
-          layer.style.webkitClipPath = layer.style.clipPath;
-          const softMask = 'radial-gradient(circle at ' + h.x + '% ' + h.y + '%, #000 0 ' + Math.max(1, h.radius - 2) + '%, rgba(0,0,0,.9) ' + Math.max(1, h.radius - 1) + '%, transparent ' + (h.radius + 1) + '%)';
-          layer.style.maskImage = softMask;
-          layer.style.webkitMaskImage = softMask;
-          stage.appendChild(layer);
-        });
-      }
+      const src = kind === 'b' ? ECHO_MG_ASSETS.ch22.b : ECHO_MG_ASSETS.ch22.a;
+      stage.appendChild(echoArtImg(src, 'echo-mg-stage-img spot-master', '房間照片 ' + kind.toUpperCase()));
 
       hotspots.forEach((h) => {
         const hit = document.createElement('button');
@@ -273,6 +262,8 @@ function runSpotDifference() {
         hit.className = 'spot-hotspot';
         hit.style.left = h.x + '%';
         hit.style.top = h.y + '%';
+        hit.style.setProperty('--spot-w', h.hitW + 'px');
+        hit.style.setProperty('--spot-h', h.hitH + 'px');
         hit.setAttribute('aria-label', kind.toUpperCase() + ' 圖差異：' + h.label);
         hit.onclick = () => markFound(h);
         stage.appendChild(hit);
