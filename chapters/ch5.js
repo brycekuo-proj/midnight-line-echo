@@ -1,7 +1,7 @@
 window.CHAPTERS = window.CHAPTERS || {};
 
 // ─────────────────────────────────────────────────────
-//  CH 5：同步  — 觸發條件：totalSync ≥ 67%
+//  CH 5：ECHO  — 觸發條件：totalSync ≥ 67%
 //  路線三：真結局線
 //  包含：中同步結局（66～85%）與高同步結局（86～100%）
 // ─────────────────────────────────────────────────────
@@ -47,6 +47,15 @@ window.CHAPTERS['5'] = async function() {
 };
 
 async function ch5_s1() {
+  await addMsg('sys', '── ECHO 證據檔案庫 ──', { noTyping: true, delay: 250 });
+  await sleep(300);
+  const evidenceResult = await runEvidenceArchive();
+  if (evidenceResult && evidenceResult.completed) {
+    addSync(2);
+    gToast('+2% 同步率（證據檔案庫）');
+    await addMsg('sys', '已重新確認 ' + evidenceResult.viewed + ' 份關鍵證據', { noTyping: true, delay: 180 });
+  }
+  await sleep(350);
   // EVA 說出 ECHO 的真相
   await addMsg('other',
     '人類其實很容易留下來。<br>只要被記錄得夠完整……',
@@ -93,6 +102,13 @@ async function ch5_s2() {
   await addMsg('other',
     '我後來……也開始不想離線了。',
     { typing: 1800, meta: '03:38', isK: true });
+  await sleep(350);
+  const residualResult = await runResidualVoices();
+  if (residualResult && residualResult.completed) {
+    addSync(2);
+    gToast('+2% 同步率（殘留訊息）');
+    await addMsg('sys', '殘留人格回聲已讀取：' + residualResult.opened + ' / 3', { noTyping: true, delay: 180 });
+  }
 
   showOpts([
     { text: '你們還算活著嗎？',                  sync: 2 },
@@ -126,6 +142,22 @@ async function ch5_s3() {
 
   // 白色房間照片
   await addMsg('other', '__ROOM_WHITE__', { typing: 0, delay: 200, meta: '03:40', isEva: true });
+  await sleep(350);
+
+  const linkResult = await runEchoLinkBoard();
+  if (linkResult && linkResult.completed) {
+    addSync(3);
+    gToast('+3% 同步率（ECHO 關聯完成）');
+    await addMsg('sys', 'ECHO 關聯圖：4 / 4 證據節點已連接', { noTyping: true, delay: 180 });
+  }
+  await sleep(300);
+  const candyResult = await runChoiceCandy();
+  if (candyResult && candyResult.completed) {
+    const candyAward = candyResult.choice === 'blue' ? 3 : 1;
+    addSync(candyAward);
+    gToast('+' + candyAward + '% 同步率（同步糖果）');
+    await addMsg('sys', candyResult.choice === 'blue' ? '藍色糖果：接受同步傾向' : '紅色糖果：現實保留傾向', { noTyping: true, delay: 180 });
+  }
   await sleep(400);
 
   // 同步率進度條
@@ -275,7 +307,7 @@ function showEnd5(choice) {
     // 不應到達這裡（低同步已由 showEnd 攔截），但保底處理
     endEl.style.display = 'flex';
     document.getElementById('ce-title').textContent = '第一部 完';
-    document.getElementById('ce-name').textContent = '《同步》';
+    document.getElementById('ce-name').textContent = '《ECHO》';
     setTimeout(() => {
       document.getElementById('ce-sn').textContent = totalSync + '%';
       document.getElementById('ce-sbf').style.width = totalSync + '%';

@@ -101,6 +101,14 @@ async function ch41_s3() {
     { typing: 2000, meta: '03:13', isEva: true });
   await sleep(800); glitch(); await sleep(300);
   await addMsg('inject', '鏡像延遲：0.5秒 · 鏡中你開始微笑', { noTyping: true, delay: 200 });
+  await sleep(300);
+  const mirrorResult = await runMirrorFragment();
+  if (mirrorResult && mirrorResult.completed) {
+    const mirrorAward = mirrorResult.choice === 'accept' ? 4 : 2;
+    addSync(mirrorAward);
+    gToast('+' + mirrorAward + '% 同步率（Mirror Fragment）');
+    await addMsg('sys', 'Mirror Lock：' + (mirrorResult.choice === 'accept' ? '鏡像已接受' : '原始身份暫時鎖定'), { noTyping: true, delay: 180 });
+  }
   showOpts([
     { text: '這到底是什麼？！',    sync: 1 },
     { text: '妳在鏡子裡對不對？！', sync: 2 },
@@ -151,7 +159,7 @@ async function ch41_s4() {
     await sleep(1200);
     await fadeOut();
     showEnd('《鏡中已讀》');
-    setTimeout(() => notification('ECHO', '系統', '第五章解鎖：《同步》'), 70000);
+    setTimeout(() => notification('ECHO', '系統', '第五章解鎖：《ECHO》'), 70000);
   });
 }
 
@@ -388,7 +396,7 @@ async function ch42_act3() {
     await addMsg('other', '……好。<br>我先不替你決定。', { typing: 1700, meta: '03:14', isEva: true });
   }
   await sleep(360);
-  await addMsg('sys', '── ACT2 已接線：Territory 待接續 ──', { noTyping: true, delay: 120 });
+  await addMsg('sys', '── Agent 管理區域已解鎖 ──', { noTyping: true, delay: 120 });
 }
 
 function ch42BuildTerritoryCells() {

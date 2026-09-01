@@ -1015,7 +1015,7 @@ function showEnd(chName) {
   if (isCh4) {
     if (totalSync <= 33)      routeHint = ''; // 已被上面攔截
     else if (totalSync <= 66) routeHint = '<div style="font-size:.65rem;color:#2299aa;letter-spacing:.1em;margin-top:.8rem">→ 路線二：《循環在線》<br>同步率 34～66%</div>';
-    else                      routeHint = '<div style="font-size:.65rem;color:#9933ff;letter-spacing:.1em;margin-top:.8rem">→ 路線三：第五章《同步》已解鎖<br>同步率 ' + totalSync + '%</div>';
+    else                      routeHint = '<div style="font-size:.65rem;color:#9933ff;letter-spacing:.1em;margin-top:.8rem">→ 路線三：第五章《ECHO》已解鎖<br>同步率 ' + totalSync + '%</div>';
   }
 
   setTimeout(() => {

@@ -38,7 +38,7 @@ async function ch21_caseSetup() {
 }
 
 async function ch21_investigation() {
-  const result = await runCh21MapInvestigation();
+  const result = await runGraphicMapInvestigation();
   await sleep(650);
   if (result && result.graffitiFound) {
     await addMsg('other', '……我上次看的時候沒有這個。', { typing: 2200, meta: '02:47' });
@@ -352,6 +352,13 @@ async function ch22_s3() {
   await sleep(400);
   await addMsg('other', '我那時候的照片……', { typing: 1500, meta: '03:05', isRain: true });
   await sleep(300);
+  const diffResult = await runSpotDifference();
+  if (diffResult && diffResult.completed) {
+    addSync(3);
+    gToast('+3% 同步率（找出 5 個時間差異）');
+    await addMsg('sys', '房間照片比對完成：5 / 5 差異已標記', { noTyping: true, delay: 220 });
+  }
+  await sleep(350);
   // 傳真實監視器圖（林雨晴回頭版），配 rain 頭像
   const row = document.createElement('div'); row.className = 'brow';
   row.appendChild(mkAv('rain'));

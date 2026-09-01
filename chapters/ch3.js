@@ -115,6 +115,13 @@ async function ch31_s4() {
   await sleep(800);
   await addMsg('inject', '⚠ 聊天紀錄被改寫中…', { noTyping: true, delay: 200 });
   await sleep(400);
+  const repairResult = await runMemoryRepair();
+  if (repairResult && repairResult.completed) {
+    addSync(repairResult.mistakes === 0 ? 4 : 3);
+    gToast('+' + (repairResult.mistakes === 0 ? 4 : 3) + '% 同步率（記憶修復）');
+    await addMsg('sys', '受損聊天紀錄已重新排序', { noTyping: true, delay: 180 });
+  }
+  await sleep(300);
   showOpts([
     { text: '我的記憶被改了？！',      sync: 3 },
     { text: '這遊戲在搞我？',          sync: 0 },
@@ -223,6 +230,13 @@ async function ch32_s2() {
     await addMsg('other',
       '<span style="color:var(--ghost);font-size:.75rem">帳號：' + a + '</span>',
       { typing: 0, delay: 150, meta: '03:09', isRain: true });
+  }
+  await sleep(350);
+  const archiveResult = await runSsdArchive();
+  if (archiveResult && archiveResult.completed) {
+    addSync(2);
+    gToast('+2% 同步率（人格儲存庫）');
+    await addMsg('sys', '人格儲存庫：已檢查 ' + archiveResult.viewed + ' 筆異常紀錄', { noTyping: true, delay: 180 });
   }
   await sleep(600);
   await addMsg('other',
@@ -355,6 +369,14 @@ async function ch33_s2() {
       const tel = res.bbl.querySelector('.audio-tr');
       if (tel) tel.dataset.txt = tr;
     }
+  }
+  await sleep(350);
+  const verifyResult = await runAudioVerification();
+  if (verifyResult && verifyResult.completed) {
+    const award = verifyResult.correct >= 2 ? 3 : 1;
+    addSync(award);
+    gToast('+' + award + '% 同步率（聲音驗證）');
+    await addMsg('sys', '聲紋驗證：' + verifyResult.correct + ' / ' + verifyResult.total + ' 判定一致', { noTyping: true, delay: 180 });
   }
   showOpts([
     { text: '怎麼關掉這些聲音？',      sync: 1 },
