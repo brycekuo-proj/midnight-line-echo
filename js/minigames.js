@@ -5,9 +5,9 @@
 
 const ECHO_MG_ASSETS = Object.freeze({
   ch21: {
-    base: 'img/ui/mg_ch21_map_base.png',
-    markers: 'img/ui/mg_ch21_map_markers.png',
-    panel: 'img/ui/mg_ch21_map_panel.png'
+    base: 'img/ui/mg_ch21_map_base.png?v=20260901-10',
+    markers: 'img/ui/mg_ch21_map_markers.png?v=20260901-10',
+    panel: 'img/ui/mg_ch21_map_panel.png?v=20260901-10'
   },
   ch22: {
     a: 'img/scenes/ch22_room_diff_A.jpg',
