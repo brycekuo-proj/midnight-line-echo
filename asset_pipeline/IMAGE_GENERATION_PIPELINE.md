@@ -58,6 +58,33 @@ When Image Generation returns an approved image:
 9. Set status `approved_synced`.
 10. Only then modify chapter code to reference the canonical path.
 
+## Resumable queue automation
+
+The production queue is controlled by `run_generation_queue.py`.
+
+Default backend is `desktop`, which prepares `desktop_generation_queue.json` for ChatGPT Desktop built-in image generation and does **not** use an external API key.
+
+Typical workflow:
+
+1. Reconcile candidates already saved locally:
+   `python3 asset_pipeline/run_generation_queue.py --reconcile-only`
+2. Preview the next jobs without changing generation state:
+   `python3 asset_pipeline/run_generation_queue.py --dry-run --batch-size 5`
+3. Prepare a Desktop batch:
+   `python3 asset_pipeline/run_generation_queue.py --backend desktop --batch-size 5`
+4. Desktop worker follows `DESKTOP_IMAGE_WORKER.md` and saves each original PNG to the queue job's `save_output_as` path.
+5. After every saved image, rerun `--reconcile-only`. This is the checkpoint that makes interrupted sessions resumable.
+6. Human/visual QA changes a candidate to `approved` with `update_manifest_status.py`.
+7. `promote_approved_assets.py` promotes only approved candidates using the existing importer.
+
+The optional `--backend api` path explicitly invokes `generate_openai_image.py` and therefore requires local OpenAI API credentials. Never use it unless the user intentionally chooses API generation.
+
+Queue/checkpoint files:
+- `asset_pipeline/desktop_generation_queue.json`
+- `asset_pipeline/pipeline_checkpoint.json`
+
+Generation and QA remain separate. `queued` or `generated` never means approved.
+
 ## QA gates
 
 ### Character consistency

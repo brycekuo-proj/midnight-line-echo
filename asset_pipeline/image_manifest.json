@@ -51,15 +51,22 @@
       "canon_source": "docs/canon/season1/1-2-2(new)_260525_232926.txt",
       "type": "evidence_photo",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/scenes/ch22_room_diff_A.jpg",
       "depends_on": [],
-      "anchors": ["lin_yuqing"],
+      "anchors": [
+        "lin_yuqing"
+      ],
       "qa": [
         "same-world photographic realism",
         "all five future comparison objects clearly visible",
         "mobile lightbox readability"
-      ]
+      ],
+      "source_temp": "asset_pipeline/source/generated/ch22_room_diff_A_v1.png",
+      "version": 1,
+      "attempts": 1,
+      "last_generated_at": "2026-09-01T01:35:23+08:00",
+      "last_error": null
     },
     {
       "id": "ch22_room_diff_B",
@@ -67,10 +74,14 @@
       "canon_source": "docs/canon/season1/1-2-2(new)_260525_232926.txt",
       "type": "evidence_photo",
       "generation_mode": "edit",
-      "status": "planned",
+      "status": "generated",
       "output": "img/scenes/ch22_room_diff_B.jpg",
-      "depends_on": ["ch22_room_diff_A"],
-      "anchors": ["ch22_room_diff_A"],
+      "depends_on": [
+        "ch22_room_diff_A"
+      ],
+      "anchors": [
+        "ch22_room_diff_A"
+      ],
       "allowed_changes": [
         "clock 22:47 -> 23:16",
         "teddy bear removed; bed surface -> dark plaid blanket",
@@ -84,7 +95,12 @@
         "room geometry",
         "lighting direction",
         "unlisted objects"
-      ]
+      ],
+      "source_temp": "asset_pipeline/source/generated/ch22_room_diff_B_v1.png",
+      "version": 1,
+      "attempts": 1,
+      "last_generated_at": "2026-09-01T02:12:30+08:00",
+      "last_error": null
     },
     {
       "id": "ch31_group_photo",
@@ -94,7 +110,11 @@
       "generation_mode": "generate",
       "status": "planned",
       "output": "img/scenes/ch31_group_photo.jpg",
-      "anchors": ["eva", "k", "lin_yuqing"],
+      "anchors": [
+        "eva",
+        "k",
+        "lin_yuqing"
+      ],
       "required_content": [
         "K normal",
         "Lin Yuqing normal",
@@ -142,7 +162,9 @@
       "status": "qa_existing_first",
       "existing_candidate": "img/scenes/room_white.jpg",
       "output": "img/scenes/ending_highsync_eva_space.jpg",
-      "anchors": ["eva"],
+      "anchors": [
+        "eva"
+      ],
       "required_content": [
         "white space only",
         "EVA",
@@ -151,7 +173,6 @@
         "no time UI"
       ]
     },
-
     {
       "id": "mg_ch21_map_base",
       "chapter": "2-1",
@@ -182,16 +203,20 @@
       "output": "img/ui/mg_ch21_map_panel.png",
       "ui_role": "info_panel"
     },
-
     {
       "id": "mg_ch22_spotdiff_frame",
       "chapter": "2-2",
       "type": "minigame_ui",
       "minigame": "spot_the_difference",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/ui/mg_ch22_spotdiff_frame.png",
-      "ui_role": "frame"
+      "ui_role": "frame",
+      "source_temp": "asset_pipeline/source/generated/mg_ch22_spotdiff_frame_v1.png",
+      "version": 1,
+      "attempts": 1,
+      "last_generated_at": "2026-09-01T02:13:50+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch22_spotdiff_marker",
@@ -199,9 +224,14 @@
       "type": "minigame_ui",
       "minigame": "spot_the_difference",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/ui/mg_ch22_spotdiff_marker.png",
-      "ui_role": "state_marker"
+      "ui_role": "state_marker",
+      "source_temp": "asset_pipeline/source/generated/mg_ch22_spotdiff_marker_v1.png",
+      "version": 1,
+      "attempts": 1,
+      "last_generated_at": "2026-09-01T02:15:07+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch22_spotdiff_complete",
@@ -209,11 +239,15 @@
       "type": "minigame_ui",
       "minigame": "spot_the_difference",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/ui/mg_ch22_spotdiff_complete.png",
-      "ui_role": "result_panel"
+      "ui_role": "result_panel",
+      "source_temp": "asset_pipeline/source/generated/mg_ch22_spotdiff_complete_v3.png",
+      "version": 3,
+      "attempts": 3,
+      "last_generated_at": "2026-09-01T02:18:32+08:00",
+      "last_error": null
     },
-
     {
       "id": "mg_ch31_memory_board",
       "chapter": "3-1",
@@ -254,7 +288,6 @@
       "output": "img/ui/mg_ch31_memory_complete.png",
       "ui_role": "result_panel"
     },
-
     {
       "id": "mg_ch32_ssd_panel",
       "chapter": "3-2",
@@ -295,7 +328,6 @@
       "output": "img/ui/mg_ch32_ssd_detail.png",
       "ui_role": "detail_panel"
     },
-
     {
       "id": "mg_ch33_audio_panel",
       "chapter": "3-3",
@@ -336,7 +368,6 @@
       "output": "img/ui/mg_ch33_audio_result.png",
       "ui_role": "result_panel"
     },
-
     {
       "id": "mg_ch41_mirror_board",
       "chapter": "4-1",
@@ -377,16 +408,19 @@
       "output": "img/ui/mg_ch41_mirror_screenshot.png",
       "ui_role": "evidence_visual"
     },
-
     {
       "id": "mg_ch42_permission_panel",
       "chapter": "4-2",
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_permission_panel.png",
-      "ui_role": "base_background"
+      "ui_role": "base_background",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_permission_card",
@@ -394,9 +428,13 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_permission_card.png",
-      "ui_role": "interactive_card"
+      "ui_role": "interactive_card",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_permission_badge",
@@ -404,9 +442,13 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_permission_badge.png",
-      "ui_role": "state_badge"
+      "ui_role": "state_badge",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_permission_result",
@@ -414,20 +456,28 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_permission_result.png",
-      "ui_role": "result_panel"
+      "ui_role": "result_panel",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
-
     {
       "id": "mg_ch42_territory_board",
       "chapter": "4-2",
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/ui/mg_ch42_territory_board.png",
-      "ui_role": "base_background"
+      "ui_role": "base_background",
+      "source_temp": "asset_pipeline/source/generated/mg_ch42_territory_board_v1.png",
+      "version": 1,
+      "attempts": 1,
+      "last_generated_at": "2026-09-01T02:20:01+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_territory_cell_idle",
@@ -435,9 +485,14 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/ui/mg_ch42_territory_cell_idle.png",
-      "ui_role": "state_idle"
+      "ui_role": "state_idle",
+      "source_temp": "asset_pipeline/source/generated/mg_ch42_territory_cell_idle_v1.png",
+      "version": 1,
+      "attempts": 1,
+      "last_generated_at": "2026-09-01T02:21:17+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_territory_cell_agent",
@@ -445,9 +500,14 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "generated",
       "output": "img/ui/mg_ch42_territory_cell_agent.png",
-      "ui_role": "state_agent"
+      "ui_role": "state_agent",
+      "source_temp": "asset_pipeline/source/generated/mg_ch42_territory_cell_agent_v2.png",
+      "version": 2,
+      "attempts": 2,
+      "last_generated_at": "2026-09-01T02:24:31+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_territory_cell_player",
@@ -455,9 +515,13 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_territory_cell_player.png",
-      "ui_role": "state_player"
+      "ui_role": "state_player",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_territory_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_territory_timer",
@@ -465,9 +529,13 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_territory_timer.png",
-      "ui_role": "timer"
+      "ui_role": "timer",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_territory_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
     {
       "id": "mg_ch42_territory_result",
@@ -475,11 +543,14 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "planned",
+      "status": "queued",
       "output": "img/ui/mg_ch42_territory_result.png",
-      "ui_role": "result_panel"
+      "ui_role": "result_panel",
+      "prompt_file": "asset_pipeline/prompts/mg_ch42_territory_ui.md",
+      "queued_version": 1,
+      "queued_at": "2026-09-01T14:02:04+08:00",
+      "last_error": null
     },
-
     {
       "id": "mg_ch5_archive_panel",
       "chapter": "5",
@@ -520,7 +591,6 @@
       "output": "img/ui/mg_ch5_archive_detail.png",
       "ui_role": "detail_panel"
     },
-
     {
       "id": "mg_ch5_linkboard_base",
       "chapter": "5",
@@ -571,7 +641,6 @@
       "output": "img/ui/mg_ch5_linkboard_complete.png",
       "ui_role": "result_panel"
     },
-
     {
       "id": "mg_ch5_residual_bg",
       "chapter": "5",
@@ -602,7 +671,6 @@
       "output": "img/ui/mg_ch5_residual_overlay.png",
       "ui_role": "overlay"
     },
-
     {
       "id": "mg_ch5_choice_highlight",
       "chapter": "5",

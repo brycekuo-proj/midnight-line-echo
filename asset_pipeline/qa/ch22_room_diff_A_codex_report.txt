@@ -1,0 +1,13 @@
+已完成 `ch22_room_diff_A` 第一張正式候選 MASTER，使用本次 Codex session 的內建 image generation，未使用外部 API key。
+
+- 檔案：[ch22_room_diff_A_v1.png](</Users/user/Bryce AI Studio/Games/ECHO/asset_pipeline/source/generated/ch22_room_diff_A_v1.png>)
+- Dimensions：`1536 × 1024`
+- File size：`2,171,582 bytes`（約 `2.07 MiB`）
+- SHA-256：`f7f781bca1c7d959385dc9aa7e4da5ce8794e7bd28d294aa7ac54704a8d15ccd`
+- 驗證：PNG 完整且與內建生成原檔 byte-identical
+
+候選自檢 PASS：`22:47` 清楚正確、淺色床與 teddy bear、桌燈及預留桌面、右側玻璃香氛瓶、穩定照片排列、雨夜寫實攝影感與固定橫幅視角皆符合規格。
+
+最終 prompt 以 [ch22_room_diff_A.md](</Users/user/Bryce AI Studio/Games/ECHO/asset_pipeline/prompts/ch22_room_diff_A.md>) 為核心，補強真實手機證物攝影、3:2 medium-wide 固定鏡位、五個差異區域分離，以及禁止人物、額外線索、UI、插畫與 placeholder。
+
+未覆蓋 canonical、未 promote、未修改 manifest、未 commit 或 push。

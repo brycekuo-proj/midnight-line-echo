@@ -54,3 +54,7 @@ A compact result panel shell with space for player territory count, Agent territ
 ## Implementation lock
 
 The 25 cells, click handling, waves, countdown, scoring and winner logic remain HTML/CSS/JS. Images provide the visual board and state layers only.
+
+## Target-selection rule
+
+When a generation job names one asset ID, generate only that requested asset from the sections above, not the whole kit in one image. Preserve the same visual language across all six outputs.
