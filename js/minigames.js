@@ -82,7 +82,7 @@ function echoMiniGameShell(kicker, title, subtitle, art) {
   root.querySelector('.echo-mg-kicker').textContent = kicker;
   root.querySelector('.echo-mg-title').textContent = title;
   root.querySelector('.echo-mg-sub').textContent = subtitle;
-  if (art) root.style.setProperty('--mg-art', 'url("' + art + '")');
+  if (art) root.style.setProperty('--mg-art', 'url("' + new URL(art, document.baseURI).href + '")');
   return root;
 }
 
