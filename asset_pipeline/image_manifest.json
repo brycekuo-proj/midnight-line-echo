@@ -51,7 +51,7 @@
       "canon_source": "docs/canon/season1/1-2-2(new)_260525_232926.txt",
       "type": "evidence_photo",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/scenes/ch22_room_diff_A.jpg",
       "depends_on": [],
       "anchors": [
@@ -66,7 +66,16 @@
       "version": 1,
       "attempts": 1,
       "last_generated_at": "2026-09-01T01:35:23+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/ch22_room_diff_A.png",
+      "source_sha256": "f7f781bca1c7d959385dc9aa7e4da5ce8794e7bd28d294aa7ac54704a8d15ccd",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/scenes/ch22_room_diff_A.jpg",
+      "github_path": "img/scenes/ch22_room_diff_A.jpg",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "b422e9114702c9ae851da28145c689e7815b942beef0ecf3a0992cb14ec0e377"
     },
     {
       "id": "ch22_room_diff_B",
@@ -74,7 +83,7 @@
       "canon_source": "docs/canon/season1/1-2-2(new)_260525_232926.txt",
       "type": "evidence_photo",
       "generation_mode": "edit",
-      "status": "generated",
+      "status": "approved",
       "output": "img/scenes/ch22_room_diff_B.jpg",
       "depends_on": [
         "ch22_room_diff_A"
@@ -100,7 +109,16 @@
       "version": 1,
       "attempts": 1,
       "last_generated_at": "2026-09-01T02:12:30+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/ch22_room_diff_B.png",
+      "source_sha256": "895e300be0c21ea1aa1df76a01cc5a138886111da73afffe47787360734a7dfa",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/scenes/ch22_room_diff_B.jpg",
+      "github_path": "img/scenes/ch22_room_diff_B.jpg",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "55be37e0ae1e142085387fe6ed6e47026d4bea8749012070e88ba4b9221bee5f"
     },
     {
       "id": "ch31_group_photo",
@@ -108,7 +126,7 @@
       "canon_source": "docs/canon/season1/1-3-1(new)_260526_165733.txt",
       "type": "evidence_photo",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/scenes/ch31_group_photo.jpg",
       "anchors": [
         "eva",
@@ -130,7 +148,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:11:05+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:11:05+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/ch31_group_photo.png",
+      "source_sha256": "190b8d040241ef008c91f3b57b46fbc5dfb1b2456f68f78a2a0e1e682149c555",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/scenes/ch31_group_photo.jpg",
+      "github_path": "img/scenes/ch31_group_photo.jpg",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "sha256": "68504d358debf6cc0e256140991b9f0380b98bd1d7558b614a1474416ff5195a"
     },
     {
       "id": "ch5_choice_candy",
@@ -138,7 +165,7 @@
       "canon_source": "docs/canon/season1/1-5(new)_260528_024502.txt",
       "type": "fixed_scene",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/scenes/ch5_choice_candy.jpg",
       "required_content": [
         "pure white sync space",
@@ -154,7 +181,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:11:41+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:11:41+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/ch5_choice_candy.png",
+      "source_sha256": "97bc52ac3969677a6e5f346b8e460b13506479515c95533238e768d6ae26a101",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/scenes/ch5_choice_candy.jpg",
+      "github_path": "img/scenes/ch5_choice_candy.jpg",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "a33c976e3f2c83b264b5e02e7f69a7ed6e72730187436cb125bf0d3a3cf074f1"
     },
     {
       "id": "ending_offline_rain",
@@ -162,7 +198,7 @@
       "canon_source": "docs/canon/season1/Ending -fake _260528_172824.txt",
       "type": "fixed_scene",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/scenes/ending_offline_rain.jpg",
       "required_content": [
         "fixed rain-night environment",
@@ -178,7 +214,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:12:23+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:12:23+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/ending_offline_rain.png",
+      "source_sha256": "89e39df9c4412c3d40dae6126582fa35a195f2c006f7761623d64f4892a2f991",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/scenes/ending_offline_rain.jpg",
+      "github_path": "img/scenes/ending_offline_rain.jpg",
+      "dimensions": {
+        "width": 862,
+        "height": 1824
+      },
+      "sha256": "1e3c4ec3c2a7decf93c19d69a3391daf1c872bfd64011a8548b118ca5b944f5f"
     },
     {
       "id": "ending_highsync_eva_space",
@@ -206,7 +251,7 @@
       "type": "minigame_ui",
       "minigame": "underground_map",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch21_map_base.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -217,7 +262,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:13:49+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:13:49+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch21_map_base.png",
+      "source_sha256": "dca3b7744472b425ba737a3c598e47529085852703c85ca0bc1702630b640770",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch21_map_base.png",
+      "github_path": "img/ui/mg_ch21_map_base.png",
+      "dimensions": {
+        "width": 864,
+        "height": 1821
+      },
+      "sha256": "dca3b7744472b425ba737a3c598e47529085852703c85ca0bc1702630b640770"
     },
     {
       "id": "mg_ch21_map_markers",
@@ -225,7 +279,7 @@
       "type": "minigame_ui",
       "minigame": "underground_map",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch21_map_markers.png",
       "ui_role": "marker_sheet",
       "attempts": 1,
@@ -236,7 +290,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:14:49+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:14:49+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch21_map_markers.png",
+      "source_sha256": "2b733d6d81b51a3862a1ddd6089b71949fd8f20ce4b9019934aaaa6815a270c6",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch21_map_markers.png",
+      "github_path": "img/ui/mg_ch21_map_markers.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 768
+      },
+      "sha256": "2b733d6d81b51a3862a1ddd6089b71949fd8f20ce4b9019934aaaa6815a270c6"
     },
     {
       "id": "mg_ch21_map_panel",
@@ -244,7 +307,7 @@
       "type": "minigame_ui",
       "minigame": "underground_map",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch21_map_panel.png",
       "ui_role": "info_panel",
       "attempts": 1,
@@ -255,7 +318,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:15:55+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:15:55+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch21_map_panel.png",
+      "source_sha256": "4dcf16fa9d173071b5d76824b74ce94f264f71af68b4f22e0936077e73c8e17e",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch21_map_panel.png",
+      "github_path": "img/ui/mg_ch21_map_panel.png",
+      "dimensions": {
+        "width": 1184,
+        "height": 1328
+      },
+      "sha256": "4dcf16fa9d173071b5d76824b74ce94f264f71af68b4f22e0936077e73c8e17e"
     },
     {
       "id": "mg_ch22_spotdiff_frame",
@@ -263,14 +335,23 @@
       "type": "minigame_ui",
       "minigame": "spot_the_difference",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch22_spotdiff_frame.png",
       "ui_role": "frame",
       "source_temp": "asset_pipeline/source/generated/mg_ch22_spotdiff_frame_v1.png",
       "version": 1,
       "attempts": 1,
       "last_generated_at": "2026-09-01T02:13:50+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch22_spotdiff_frame.png",
+      "source_sha256": "ee3e25739df0ecc343018eae11c7a3a2cf874c20b34e3b7ab039ce92103fea48",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch22_spotdiff_frame.png",
+      "github_path": "img/ui/mg_ch22_spotdiff_frame.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "ee3e25739df0ecc343018eae11c7a3a2cf874c20b34e3b7ab039ce92103fea48"
     },
     {
       "id": "mg_ch22_spotdiff_marker",
@@ -278,14 +359,23 @@
       "type": "minigame_ui",
       "minigame": "spot_the_difference",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch22_spotdiff_marker.png",
       "ui_role": "state_marker",
       "source_temp": "asset_pipeline/source/generated/mg_ch22_spotdiff_marker_v1.png",
       "version": 1,
       "attempts": 1,
       "last_generated_at": "2026-09-01T02:15:07+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch22_spotdiff_marker.png",
+      "source_sha256": "1c534d0672c00c470ffefcae91c82db75b75771e7707d4ee0dbfc8c786cb68f3",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch22_spotdiff_marker.png",
+      "github_path": "img/ui/mg_ch22_spotdiff_marker.png",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sha256": "1c534d0672c00c470ffefcae91c82db75b75771e7707d4ee0dbfc8c786cb68f3"
     },
     {
       "id": "mg_ch22_spotdiff_complete",
@@ -293,14 +383,23 @@
       "type": "minigame_ui",
       "minigame": "spot_the_difference",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch22_spotdiff_complete.png",
       "ui_role": "result_panel",
       "source_temp": "asset_pipeline/source/generated/mg_ch22_spotdiff_complete_v3.png",
       "version": 3,
       "attempts": 3,
       "last_generated_at": "2026-09-01T02:18:32+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch22_spotdiff_complete.png",
+      "source_sha256": "6779c0b776d566506cd2e1420071ca47609ab6b95e5d26d723800c936b3cd770",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch22_spotdiff_complete.png",
+      "github_path": "img/ui/mg_ch22_spotdiff_complete.png",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "sha256": "6779c0b776d566506cd2e1420071ca47609ab6b95e5d26d723800c936b3cd770"
     },
     {
       "id": "mg_ch31_memory_board",
@@ -308,7 +407,7 @@
       "type": "minigame_ui",
       "minigame": "memory_repair",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch31_memory_board.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -319,7 +418,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:17:35+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:17:35+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch31_memory_board.png",
+      "source_sha256": "e2cdcaea84abe145dbd5e2c1296eead34485c468ee08446a6eeef8149cd2b077",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch31_memory_board.png",
+      "github_path": "img/ui/mg_ch31_memory_board.png",
+      "dimensions": {
+        "width": 853,
+        "height": 1844
+      },
+      "sha256": "e2cdcaea84abe145dbd5e2c1296eead34485c468ee08446a6eeef8149cd2b077"
     },
     {
       "id": "mg_ch31_memory_card",
@@ -327,7 +435,7 @@
       "type": "minigame_ui",
       "minigame": "memory_repair",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch31_memory_card.png",
       "ui_role": "interactive_card",
       "attempts": 1,
@@ -338,7 +446,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:18:33+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:18:33+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch31_memory_card.png",
+      "source_sha256": "d6e1de2dad20da104b5145003193c44c2cbdc87ac6c145d55edeea36eb1be7a8",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch31_memory_card.png",
+      "github_path": "img/ui/mg_ch31_memory_card.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "sha256": "d6e1de2dad20da104b5145003193c44c2cbdc87ac6c145d55edeea36eb1be7a8"
     },
     {
       "id": "mg_ch31_memory_slot",
@@ -346,7 +463,7 @@
       "type": "minigame_ui",
       "minigame": "memory_repair",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch31_memory_slot.png",
       "ui_role": "drop_slot",
       "attempts": 1,
@@ -357,7 +474,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:19:32+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:19:32+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch31_memory_slot.png",
+      "source_sha256": "0bb85e62d43fdf32eab485bd2a9b02e238d0d2db0252a9b045b17fb74d2146bf",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch31_memory_slot.png",
+      "github_path": "img/ui/mg_ch31_memory_slot.png",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "sha256": "0bb85e62d43fdf32eab485bd2a9b02e238d0d2db0252a9b045b17fb74d2146bf"
     },
     {
       "id": "mg_ch31_memory_complete",
@@ -365,7 +491,7 @@
       "type": "minigame_ui",
       "minigame": "memory_repair",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch31_memory_complete.png",
       "ui_role": "result_panel",
       "attempts": 1,
@@ -376,7 +502,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:20:39+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:20:39+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch31_memory_complete.png",
+      "source_sha256": "700dc17141834a424569d3af236c8ca2402d8168f6ec3c6fab4b00c9f845bab4",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch31_memory_complete.png",
+      "github_path": "img/ui/mg_ch31_memory_complete.png",
+      "dimensions": {
+        "width": 1214,
+        "height": 1295
+      },
+      "sha256": "700dc17141834a424569d3af236c8ca2402d8168f6ec3c6fab4b00c9f845bab4"
     },
     {
       "id": "mg_ch32_ssd_panel",
@@ -384,7 +519,7 @@
       "type": "minigame_ui",
       "minigame": "ssd_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch32_ssd_panel.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -395,7 +530,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:21:28+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:21:28+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch32_ssd_panel.png",
+      "source_sha256": "fdf33aef3c71a6c3fafcbe33c79f93299be7c81b93d08258af44ed4fadba863b",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch32_ssd_panel.png",
+      "github_path": "img/ui/mg_ch32_ssd_panel.png",
+      "dimensions": {
+        "width": 860,
+        "height": 1828
+      },
+      "sha256": "fdf33aef3c71a6c3fafcbe33c79f93299be7c81b93d08258af44ed4fadba863b"
     },
     {
       "id": "mg_ch32_ssd_card",
@@ -403,7 +547,7 @@
       "type": "minigame_ui",
       "minigame": "ssd_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch32_ssd_card.png",
       "ui_role": "interactive_card",
       "attempts": 1,
@@ -414,7 +558,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:23:32+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:23:32+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch32_ssd_card.png",
+      "source_sha256": "0ce0a73b98c9c84a951349cba176e9c8d62c53d98a2c20c57663822814ff3ba8",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch32_ssd_card.png",
+      "github_path": "img/ui/mg_ch32_ssd_card.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "0ce0a73b98c9c84a951349cba176e9c8d62c53d98a2c20c57663822814ff3ba8"
     },
     {
       "id": "mg_ch32_ssd_label",
@@ -422,7 +575,7 @@
       "type": "minigame_ui",
       "minigame": "ssd_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch32_ssd_label.png",
       "ui_role": "label_strip",
       "attempts": 1,
@@ -433,7 +586,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:24:16+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:24:16+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch32_ssd_label.png",
+      "source_sha256": "a1c198abd3c441b1046d13684e9471fe7d96f42a3ff980045f0352e3542c7677",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch32_ssd_label.png",
+      "github_path": "img/ui/mg_ch32_ssd_label.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 768
+      },
+      "sha256": "a1c198abd3c441b1046d13684e9471fe7d96f42a3ff980045f0352e3542c7677"
     },
     {
       "id": "mg_ch32_ssd_detail",
@@ -441,7 +603,7 @@
       "type": "minigame_ui",
       "minigame": "ssd_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch32_ssd_detail.png",
       "ui_role": "detail_panel",
       "attempts": 1,
@@ -452,7 +614,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:26:17+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:26:17+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch32_ssd_detail.png",
+      "source_sha256": "44905d1d19720ceaa28fd65070be8590fb211f516eb5b00391552f1de74bdc4c",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch32_ssd_detail.png",
+      "github_path": "img/ui/mg_ch32_ssd_detail.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "44905d1d19720ceaa28fd65070be8590fb211f516eb5b00391552f1de74bdc4c"
     },
     {
       "id": "mg_ch33_audio_panel",
@@ -460,7 +631,7 @@
       "type": "minigame_ui",
       "minigame": "audio_verification",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch33_audio_panel.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -471,7 +642,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:27:05+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:27:05+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch33_audio_panel.png",
+      "source_sha256": "692a2732c2cd796d86a9b137743ed0a1a29b1743c65cf8682d3666b1bda2d0b8",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch33_audio_panel.png",
+      "github_path": "img/ui/mg_ch33_audio_panel.png",
+      "dimensions": {
+        "width": 864,
+        "height": 1821
+      },
+      "sha256": "692a2732c2cd796d86a9b137743ed0a1a29b1743c65cf8682d3666b1bda2d0b8"
     },
     {
       "id": "mg_ch33_waveframe",
@@ -479,7 +659,7 @@
       "type": "minigame_ui",
       "minigame": "audio_verification",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch33_waveframe.png",
       "ui_role": "waveform_frame",
       "attempts": 1,
@@ -490,7 +670,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:28:05+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:28:05+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch33_waveframe.png",
+      "source_sha256": "664329ae01cba70fb7166c4a8ad93f0006380ae86b185d79e4bf9bb20a8f5c53",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch33_waveframe.png",
+      "github_path": "img/ui/mg_ch33_waveframe.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 768
+      },
+      "sha256": "664329ae01cba70fb7166c4a8ad93f0006380ae86b185d79e4bf9bb20a8f5c53"
     },
     {
       "id": "mg_ch33_audio_button",
@@ -498,7 +687,7 @@
       "type": "minigame_ui",
       "minigame": "audio_verification",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch33_audio_button.png",
       "ui_role": "control_button",
       "attempts": 1,
@@ -509,7 +698,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:29:16+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:29:16+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch33_audio_button.png",
+      "source_sha256": "b041d896b310ba5de1a3a97b18ae67bae6fde4773c6c84ef1d11cb0e97ebe3f2",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch33_audio_button.png",
+      "github_path": "img/ui/mg_ch33_audio_button.png",
+      "dimensions": {
+        "width": 1278,
+        "height": 1230
+      },
+      "sha256": "b041d896b310ba5de1a3a97b18ae67bae6fde4773c6c84ef1d11cb0e97ebe3f2"
     },
     {
       "id": "mg_ch33_audio_result",
@@ -517,7 +715,7 @@
       "type": "minigame_ui",
       "minigame": "audio_verification",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch33_audio_result.png",
       "ui_role": "result_panel",
       "attempts": 1,
@@ -528,7 +726,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:30:40+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:30:40+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch33_audio_result.png",
+      "source_sha256": "accce0904f459cef3b545c391c1a8ab43b020569de3ff0db8a1d15991deab262",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch33_audio_result.png",
+      "github_path": "img/ui/mg_ch33_audio_result.png",
+      "dimensions": {
+        "width": 1224,
+        "height": 1285
+      },
+      "sha256": "accce0904f459cef3b545c391c1a8ab43b020569de3ff0db8a1d15991deab262"
     },
     {
       "id": "mg_ch41_mirror_board",
@@ -536,7 +743,7 @@
       "type": "minigame_ui",
       "minigame": "mirror_fragment",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch41_mirror_board.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -547,7 +754,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:31:33+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:31:33+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch41_mirror_board.png",
+      "source_sha256": "d95be66274e43d97d88a81583c33ba7eb9605956f9fade9dd4c7250d52a72c80",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch41_mirror_board.png",
+      "github_path": "img/ui/mg_ch41_mirror_board.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "d95be66274e43d97d88a81583c33ba7eb9605956f9fade9dd4c7250d52a72c80"
     },
     {
       "id": "mg_ch41_mirror_fragment",
@@ -555,7 +771,7 @@
       "type": "minigame_ui",
       "minigame": "mirror_fragment",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch41_mirror_fragment.png",
       "ui_role": "fragment_tile",
       "attempts": 1,
@@ -566,7 +782,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:32:45+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:32:45+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch41_mirror_fragment.png",
+      "source_sha256": "91aa1c1f8d71955de072d4e011d114e20b0a0c191f8577375b52047c55fdebeb",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch41_mirror_fragment.png",
+      "github_path": "img/ui/mg_ch41_mirror_fragment.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "91aa1c1f8d71955de072d4e011d114e20b0a0c191f8577375b52047c55fdebeb"
     },
     {
       "id": "mg_ch41_mirror_lock_overlay",
@@ -574,7 +799,7 @@
       "type": "minigame_ui",
       "minigame": "mirror_lock",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch41_mirror_lock_overlay.png",
       "ui_role": "overlay",
       "attempts": 1,
@@ -585,7 +810,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:34:08+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:34:08+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch41_mirror_lock_overlay.png",
+      "source_sha256": "12e45fe55e5060c43da26895149e384baa8c08dc81355aa4574955ec77b73bb2",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch41_mirror_lock_overlay.png",
+      "github_path": "img/ui/mg_ch41_mirror_lock_overlay.png",
+      "dimensions": {
+        "width": 940,
+        "height": 1672
+      },
+      "sha256": "12e45fe55e5060c43da26895149e384baa8c08dc81355aa4574955ec77b73bb2"
     },
     {
       "id": "mg_ch41_mirror_screenshot",
@@ -593,7 +827,7 @@
       "type": "minigame_ui",
       "minigame": "mirror_lock",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch41_mirror_screenshot.png",
       "ui_role": "evidence_visual",
       "attempts": 1,
@@ -604,7 +838,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:34:57+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:34:57+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch41_mirror_screenshot.png",
+      "source_sha256": "654958e80d48bd129af23343ce3754706c9abe44fa94429f6cb81639d9a4ff56",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch41_mirror_screenshot.png",
+      "github_path": "img/ui/mg_ch41_mirror_screenshot.png",
+      "dimensions": {
+        "width": 863,
+        "height": 1822
+      },
+      "sha256": "654958e80d48bd129af23343ce3754706c9abe44fa94429f6cb81639d9a4ff56"
     },
     {
       "id": "mg_ch42_permission_panel",
@@ -612,7 +855,7 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_permission_panel.png",
       "ui_role": "base_background",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
@@ -626,7 +869,16 @@
       "telegram_last_attempt_at": "2026-09-01T14:57:15+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T14:57:15+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_permission_panel.png",
+      "source_sha256": "ac437b005b7f39aed74d650b474ec7795caf1bc47a58a85505fb48b8b3af2d16",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_permission_panel.png",
+      "github_path": "img/ui/mg_ch42_permission_panel.png",
+      "dimensions": {
+        "width": 852,
+        "height": 1847
+      },
+      "sha256": "ac437b005b7f39aed74d650b474ec7795caf1bc47a58a85505fb48b8b3af2d16"
     },
     {
       "id": "mg_ch42_permission_card",
@@ -634,7 +886,7 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_permission_card.png",
       "ui_role": "interactive_card",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
@@ -648,7 +900,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:00:45+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:00:45+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_permission_card.png",
+      "source_sha256": "cf59cd2a7481dc0fa7205c311baa3d78cbd6883a39b1d641a6dec29bf30b8428",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_permission_card.png",
+      "github_path": "img/ui/mg_ch42_permission_card.png",
+      "dimensions": {
+        "width": 2079,
+        "height": 756
+      },
+      "sha256": "cf59cd2a7481dc0fa7205c311baa3d78cbd6883a39b1d641a6dec29bf30b8428"
     },
     {
       "id": "mg_ch42_permission_badge",
@@ -656,7 +917,7 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_permission_badge.png",
       "ui_role": "state_badge",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
@@ -670,7 +931,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:02:37+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:02:37+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_permission_badge.png",
+      "source_sha256": "4f6fad7378cee7e6c6506055c291f037ac4b73ab5286f3d0e67e2a5b070083a0",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_permission_badge.png",
+      "github_path": "img/ui/mg_ch42_permission_badge.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "4f6fad7378cee7e6c6506055c291f037ac4b73ab5286f3d0e67e2a5b070083a0"
     },
     {
       "id": "mg_ch42_permission_result",
@@ -678,7 +948,7 @@
       "type": "minigame_ui",
       "minigame": "permission_whack",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_permission_result.png",
       "ui_role": "result_panel",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_permission_ui.md",
@@ -692,7 +962,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:03:20+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:03:20+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_permission_result.png",
+      "source_sha256": "5b0ef68f1b4dcbdd198acdfc4ffbe630e4691539db1c705f46a624ff34955522",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_permission_result.png",
+      "github_path": "img/ui/mg_ch42_permission_result.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "5b0ef68f1b4dcbdd198acdfc4ffbe630e4691539db1c705f46a624ff34955522"
     },
     {
       "id": "mg_ch42_territory_board",
@@ -700,14 +979,23 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_territory_board.png",
       "ui_role": "base_background",
       "source_temp": "asset_pipeline/source/generated/mg_ch42_territory_board_v1.png",
       "version": 1,
       "attempts": 1,
       "last_generated_at": "2026-09-01T02:20:01+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_territory_board.png",
+      "source_sha256": "afb9292f127fd93dff7691301f83fe6ecfe19f37101d3f7b6dcdc6de21bd0874",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_territory_board.png",
+      "github_path": "img/ui/mg_ch42_territory_board.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "afb9292f127fd93dff7691301f83fe6ecfe19f37101d3f7b6dcdc6de21bd0874"
     },
     {
       "id": "mg_ch42_territory_cell_idle",
@@ -715,14 +1003,23 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_territory_cell_idle.png",
       "ui_role": "state_idle",
       "source_temp": "asset_pipeline/source/generated/mg_ch42_territory_cell_idle_v1.png",
       "version": 1,
       "attempts": 1,
       "last_generated_at": "2026-09-01T02:21:17+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_territory_cell_idle.png",
+      "source_sha256": "a044cc2b58f98b1e671104df018808394e10f6b7e35b0a25293152b30ed894f0",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_territory_cell_idle.png",
+      "github_path": "img/ui/mg_ch42_territory_cell_idle.png",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sha256": "a044cc2b58f98b1e671104df018808394e10f6b7e35b0a25293152b30ed894f0"
     },
     {
       "id": "mg_ch42_territory_cell_agent",
@@ -730,14 +1027,23 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_territory_cell_agent.png",
       "ui_role": "state_agent",
       "source_temp": "asset_pipeline/source/generated/mg_ch42_territory_cell_agent_v2.png",
       "version": 2,
       "attempts": 2,
       "last_generated_at": "2026-09-01T02:24:31+08:00",
-      "last_error": null
+      "last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_territory_cell_agent.png",
+      "source_sha256": "7bdf623fb5d22398b81a123b776811ea3c984eb590ec6fcac5ba603125db5df8",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_territory_cell_agent.png",
+      "github_path": "img/ui/mg_ch42_territory_cell_agent.png",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sha256": "7bdf623fb5d22398b81a123b776811ea3c984eb590ec6fcac5ba603125db5df8"
     },
     {
       "id": "mg_ch42_territory_cell_player",
@@ -745,7 +1051,7 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_territory_cell_player.png",
       "ui_role": "state_player",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_territory_ui.md",
@@ -759,7 +1065,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:04:30+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:04:30+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_territory_cell_player.png",
+      "source_sha256": "2721ec26e1ce68caa8fd228615e8be4f1810e252f96ea9413fa845a075a6d2e2",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_territory_cell_player.png",
+      "github_path": "img/ui/mg_ch42_territory_cell_player.png",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sha256": "2721ec26e1ce68caa8fd228615e8be4f1810e252f96ea9413fa845a075a6d2e2"
     },
     {
       "id": "mg_ch42_territory_timer",
@@ -767,7 +1082,7 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_territory_timer.png",
       "ui_role": "timer",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_territory_ui.md",
@@ -781,7 +1096,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:05:26+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:05:26+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_territory_timer.png",
+      "source_sha256": "0401ddb720d9315d305ef02bb9223ea175bac75a54e1bdb1f26e6464a6420c6c",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_territory_timer.png",
+      "github_path": "img/ui/mg_ch42_territory_timer.png",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "sha256": "0401ddb720d9315d305ef02bb9223ea175bac75a54e1bdb1f26e6464a6420c6c"
     },
     {
       "id": "mg_ch42_territory_result",
@@ -789,7 +1113,7 @@
       "type": "minigame_ui",
       "minigame": "territory",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch42_territory_result.png",
       "ui_role": "result_panel",
       "prompt_file": "asset_pipeline/prompts/mg_ch42_territory_ui.md",
@@ -803,7 +1127,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:06:41+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:06:41+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch42_territory_result.png",
+      "source_sha256": "5f43b2b1e7aab00166843c437070ec84f6d2e58ba965a09c533fb68d73a11b98",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch42_territory_result.png",
+      "github_path": "img/ui/mg_ch42_territory_result.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "5f43b2b1e7aab00166843c437070ec84f6d2e58ba965a09c533fb68d73a11b98"
     },
     {
       "id": "mg_ch5_archive_panel",
@@ -811,7 +1144,7 @@
       "type": "minigame_ui",
       "minigame": "evidence_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_archive_panel.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -822,7 +1155,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:35:58+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:35:58+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_archive_panel.png",
+      "source_sha256": "c19abc07518950b203dc9916a073a4e5991d56cd21de9f770f8ec3145bc7865b",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_archive_panel.png",
+      "github_path": "img/ui/mg_ch5_archive_panel.png",
+      "dimensions": {
+        "width": 853,
+        "height": 1844
+      },
+      "sha256": "c19abc07518950b203dc9916a073a4e5991d56cd21de9f770f8ec3145bc7865b"
     },
     {
       "id": "mg_ch5_archive_card",
@@ -830,7 +1172,7 @@
       "type": "minigame_ui",
       "minigame": "evidence_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_archive_card.png",
       "ui_role": "file_card",
       "attempts": 1,
@@ -841,7 +1183,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:37:07+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:37:07+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_archive_card.png",
+      "source_sha256": "a12451b6a075311616b23a9bdc9f728bbc3537ab82fbc97316f51e1da1aa6723",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_archive_card.png",
+      "github_path": "img/ui/mg_ch5_archive_card.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "a12451b6a075311616b23a9bdc9f728bbc3537ab82fbc97316f51e1da1aa6723"
     },
     {
       "id": "mg_ch5_archive_thumbframe",
@@ -849,7 +1200,7 @@
       "type": "minigame_ui",
       "minigame": "evidence_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_archive_thumbframe.png",
       "ui_role": "thumbnail_frame",
       "attempts": 1,
@@ -860,7 +1211,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:38:08+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:38:08+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_archive_thumbframe.png",
+      "source_sha256": "27f1004930aa7deaf5b8bb9e8c17e61c47c2c69b1d94423b099813db3f99173d",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_archive_thumbframe.png",
+      "github_path": "img/ui/mg_ch5_archive_thumbframe.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "27f1004930aa7deaf5b8bb9e8c17e61c47c2c69b1d94423b099813db3f99173d"
     },
     {
       "id": "mg_ch5_archive_detail",
@@ -868,7 +1228,7 @@
       "type": "minigame_ui",
       "minigame": "evidence_archive",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_archive_detail.png",
       "ui_role": "detail_panel",
       "attempts": 1,
@@ -879,7 +1239,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:39:17+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:39:17+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_archive_detail.png",
+      "source_sha256": "d467fee4f5a50fb579d21339a00dba9fb5fb55c5e9f8d172366b61f440461ebe",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_archive_detail.png",
+      "github_path": "img/ui/mg_ch5_archive_detail.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "d467fee4f5a50fb579d21339a00dba9fb5fb55c5e9f8d172366b61f440461ebe"
     },
     {
       "id": "mg_ch5_linkboard_base",
@@ -887,7 +1256,7 @@
       "type": "minigame_ui",
       "minigame": "link_board",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_linkboard_base.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -898,7 +1267,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:40:16+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:40:16+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_linkboard_base.png",
+      "source_sha256": "c32fa64ed42132c799a3ff0dbbce9a9654d57d29ad1495457743ae029dd0d253",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_linkboard_base.png",
+      "github_path": "img/ui/mg_ch5_linkboard_base.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "c32fa64ed42132c799a3ff0dbbce9a9654d57d29ad1495457743ae029dd0d253"
     },
     {
       "id": "mg_ch5_linkboard_echo_node",
@@ -906,7 +1284,7 @@
       "type": "minigame_ui",
       "minigame": "link_board",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_linkboard_echo_node.png",
       "ui_role": "main_node",
       "attempts": 1,
@@ -917,7 +1295,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:41:38+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:41:38+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_linkboard_echo_node.png",
+      "source_sha256": "bc3ba84c94f8c71b7a70f81adcf0add2ae4abcb301c0966834ffc290c31594ea",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_linkboard_echo_node.png",
+      "github_path": "img/ui/mg_ch5_linkboard_echo_node.png",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sha256": "bc3ba84c94f8c71b7a70f81adcf0add2ae4abcb301c0966834ffc290c31594ea"
     },
     {
       "id": "mg_ch5_linkboard_evidence_node",
@@ -925,7 +1312,7 @@
       "type": "minigame_ui",
       "minigame": "link_board",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_linkboard_evidence_node.png",
       "ui_role": "child_node",
       "attempts": 1,
@@ -936,7 +1323,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:42:52+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:42:52+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_linkboard_evidence_node.png",
+      "source_sha256": "dfa0a72a448effa5bd3e6ded965d1759d2a3fa06c47812b6cb2798ae5aa4c0c0",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_linkboard_evidence_node.png",
+      "github_path": "img/ui/mg_ch5_linkboard_evidence_node.png",
+      "dimensions": {
+        "width": 1239,
+        "height": 1270
+      },
+      "sha256": "dfa0a72a448effa5bd3e6ded965d1759d2a3fa06c47812b6cb2798ae5aa4c0c0"
     },
     {
       "id": "mg_ch5_linkboard_connection_glow",
@@ -944,7 +1340,7 @@
       "type": "minigame_ui",
       "minigame": "link_board",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_linkboard_connection_glow.png",
       "ui_role": "connection_state",
       "attempts": 1,
@@ -955,7 +1351,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:44:03+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:44:03+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_linkboard_connection_glow.png",
+      "source_sha256": "935c68a3d13d029b2dafdf4357c2d34c1cc540fa64d9f2a4247e6b6d7f4cedad",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_linkboard_connection_glow.png",
+      "github_path": "img/ui/mg_ch5_linkboard_connection_glow.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 940
+      },
+      "sha256": "935c68a3d13d029b2dafdf4357c2d34c1cc540fa64d9f2a4247e6b6d7f4cedad"
     },
     {
       "id": "mg_ch5_linkboard_complete",
@@ -963,7 +1368,7 @@
       "type": "minigame_ui",
       "minigame": "link_board",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_linkboard_complete.png",
       "ui_role": "result_panel",
       "attempts": 1,
@@ -974,7 +1379,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:45:12+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:45:12+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_linkboard_complete.png",
+      "source_sha256": "c3b66a260cdfe8879c72fd9d68ee2930efe21cc5c02fc9e1ae7e3d68ddbe7b06",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_linkboard_complete.png",
+      "github_path": "img/ui/mg_ch5_linkboard_complete.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "c3b66a260cdfe8879c72fd9d68ee2930efe21cc5c02fc9e1ae7e3d68ddbe7b06"
     },
     {
       "id": "mg_ch5_residual_bg",
@@ -982,7 +1396,7 @@
       "type": "minigame_ui",
       "minigame": "residual_voices",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_residual_bg.png",
       "ui_role": "base_background",
       "attempts": 1,
@@ -993,7 +1407,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:46:02+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:46:02+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_residual_bg.png",
+      "source_sha256": "c317744385a2aacb011758dc6d63ba9c736adf5bb3603a2bfd875edc271a725b",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_residual_bg.png",
+      "github_path": "img/ui/mg_ch5_residual_bg.png",
+      "dimensions": {
+        "width": 853,
+        "height": 1844
+      },
+      "sha256": "c317744385a2aacb011758dc6d63ba9c736adf5bb3603a2bfd875edc271a725b"
     },
     {
       "id": "mg_ch5_residual_bubble",
@@ -1001,7 +1424,7 @@
       "type": "minigame_ui",
       "minigame": "residual_voices",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_residual_bubble.png",
       "ui_role": "message_bubble",
       "attempts": 1,
@@ -1012,7 +1435,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:47:10+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:47:10+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_residual_bubble.png",
+      "source_sha256": "5c06a1b5267954d54e5783fdd902bd6ce4fd10c7ad560a5af06fa151806feca9",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_residual_bubble.png",
+      "github_path": "img/ui/mg_ch5_residual_bubble.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "sha256": "5c06a1b5267954d54e5783fdd902bd6ce4fd10c7ad560a5af06fa151806feca9"
     },
     {
       "id": "mg_ch5_residual_overlay",
@@ -1020,7 +1452,7 @@
       "type": "minigame_ui",
       "minigame": "residual_voices",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_residual_overlay.png",
       "ui_role": "overlay",
       "attempts": 1,
@@ -1031,7 +1463,16 @@
       "telegram_last_attempt_at": "2026-09-01T15:48:15+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T15:48:15+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_residual_overlay.png",
+      "source_sha256": "1a28a914f4cc20a851ce4700a9fd4eb2cbb85068efe61112b375c24f3913835c",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_residual_overlay.png",
+      "github_path": "img/ui/mg_ch5_residual_overlay.png",
+      "dimensions": {
+        "width": 853,
+        "height": 1844
+      },
+      "sha256": "1a28a914f4cc20a851ce4700a9fd4eb2cbb85068efe61112b375c24f3913835c"
     },
     {
       "id": "mg_ch5_choice_highlight",
@@ -1039,7 +1480,7 @@
       "type": "minigame_ui",
       "minigame": "choice_candy",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_choice_highlight.png",
       "ui_role": "selection_highlight",
       "attempts": 1,
@@ -1050,7 +1491,16 @@
       "telegram_last_attempt_at": "2026-09-01T16:54:53+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T16:54:53+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_choice_highlight.png",
+      "source_sha256": "3f276df9e0a4d8c5a718ec3ade964f0570fd5a27e318a1cf55c8a4f7a03a3bcc",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_choice_highlight.png",
+      "github_path": "img/ui/mg_ch5_choice_highlight.png",
+      "dimensions": {
+        "width": 1224,
+        "height": 1285
+      },
+      "sha256": "3f276df9e0a4d8c5a718ec3ade964f0570fd5a27e318a1cf55c8a4f7a03a3bcc"
     },
     {
       "id": "mg_ch5_choice_result",
@@ -1058,7 +1508,7 @@
       "type": "minigame_ui",
       "minigame": "choice_candy",
       "generation_mode": "generate",
-      "status": "generated",
+      "status": "approved",
       "output": "img/ui/mg_ch5_choice_result.png",
       "ui_role": "result_panel",
       "prompt_file": "asset_pipeline/prompts/mg_ch5_choice_ui.md",
@@ -1072,7 +1522,16 @@
       "telegram_last_attempt_at": "2026-09-01T16:59:34+08:00",
       "telegram_reported": true,
       "telegram_reported_at": "2026-09-01T16:59:34+08:00",
-      "telegram_last_error": null
+      "telegram_last_error": null,
+      "source_path": "asset_pipeline/source/mg_ch5_choice_result.png",
+      "source_sha256": "da3240dd832bca16e34c79eba8d31fd371d117f5c2b965f245d571be1e03a205",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/mg_ch5_choice_result.png",
+      "github_path": "img/ui/mg_ch5_choice_result.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "da3240dd832bca16e34c79eba8d31fd371d117f5c2b965f245d571be1e03a205"
     }
   ]
 }
