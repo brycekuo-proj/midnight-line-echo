@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>午夜連線：ECHO — 第一部</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=20260901-2">
 </head>
 <body>
 
@@ -14,16 +14,8 @@
   <div class="t-sub">午夜連線 · 第一部</div>
   <div class="t-quote">「如果你收到來自死者的訊息，<br>你會回覆嗎？」</div>
   <div class="mode-choice" aria-label="選擇遊戲模式">
-    <button class="mode-card mode-player" type="button" onclick="chooseGameMode('player', event)">
-      <span class="mode-kicker">PLAYER BUILD</span>
-      <strong>玩家版</strong>
-      <span>依遊戲進度與分流條件逐章解鎖；受限章節不可進入。</span>
-    </button>
-    <button class="mode-card mode-engineer" type="button" onclick="chooseGameMode('engineer', event)">
-      <span class="mode-kicker">ENGINEERING BUILD</span>
-      <strong>工程版</strong>
-      <span>測試用途；所有已實作章節直接開放，不寫入玩家進度。</span>
-    </button>
+    <button class="mode-card mode-player" type="button" onclick="chooseGameMode('player')">玩家版</button>
+    <button class="mode-card mode-engineer" type="button" onclick="chooseGameMode('engineer')">工程版</button>
   </div>
   <div class="t-warn">
     ⚠️ 含恐怖元素、失蹤議題及心理驚悚內容<br>
@@ -200,14 +192,14 @@
 
 <!-- ── SCRIPTS ── -->
 <!-- Engine 必須最先載入 -->
-<script src="js/engine.js"></script>
-<script src="js/minigames.js"></script>
-<script src="chapters/ch1-1.js"></script>
-<script src="chapters/ch2.js"></script>
-<script src="chapters/ch3.js"></script>
-<script src="chapters/ch4.js"></script>
-<script src="chapters/ch_end_normal.js"></script>
-<script src="chapters/ch5.js"></script>
+<script src="js/engine.js?v=20260901-2"></script>
+<script src="js/minigames.js?v=20260901-2"></script>
+<script src="chapters/ch1-1.js?v=20260901-2"></script>
+<script src="chapters/ch2.js?v=20260901-2"></script>
+<script src="chapters/ch3.js?v=20260901-2"></script>
+<script src="chapters/ch4.js?v=20260901-2"></script>
+<script src="chapters/ch_end_normal.js?v=20260901-2"></script>
+<script src="chapters/ch5.js?v=20260901-2"></script>
 
 <script>
   // ── 初始化 ──
