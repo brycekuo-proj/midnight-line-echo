@@ -21,6 +21,7 @@ import sys
 from urllib import error, parse, request
 
 DEFAULT_CHAT_ID = "1571185855"
+LOCKED_CHAT_ID = "1571185855"
 DEFAULT_KEYCHAIN_SERVICE = "telegram-bot-token"
 API_BASE = "https://api.telegram.org"
 
@@ -122,6 +123,9 @@ def main() -> None:
     ap.add_argument("--keychain-service", default=DEFAULT_KEYCHAIN_SERVICE)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+
+    if str(args.chat_id) != LOCKED_CHAT_ID:
+        fail(f"recipient locked: only Telegram chat ID {LOCKED_CHAT_ID} is allowed")
 
     photo = Path(args.photo).expanduser().resolve() if args.photo else None
     if photo and not photo.is_file():
