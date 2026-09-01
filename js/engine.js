@@ -6,18 +6,29 @@ let totalSync = 0;
 let chapterSync = 0;
 let currentChapter = '';
 let completedChapters = {};
+let echoMode = null; // 'player' | 'engineer'; must be chosen on the landing screen.
 let backCount = 0, filesViewed = 0, silTimer = null, silTriggered = false;
 let lbViewCount = {};
 let activeWidgetController = null;
 
 function loadProgress() {
+  totalSync = 0;
+  completedChapters = {};
   try {
     const s = localStorage.getItem('echo_progress');
     if (s) { const d = JSON.parse(s); totalSync = d.t || 0; completedChapters = d.c || {}; }
   } catch(e) {}
 }
 function saveProgress() {
+  if (echoMode !== 'player') return;
   try { localStorage.setItem('echo_progress', JSON.stringify({ t: totalSync, c: completedChapters })); } catch(e) {}
+}
+
+function resetPlayerProgress() {
+  if (echoMode === 'player') {
+    try { localStorage.removeItem('echo_progress'); } catch(e) {}
+  }
+  location.reload();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1029,31 +1040,114 @@ function showEnd(chName) {
 }
 
 // ═══════════════════════════════════════════════════════
-//  CHAPTER SELECT UI
+//  BUILD MODE + CHAPTER SELECT UI
 // ═══════════════════════════════════════════════════════
-function updateChapterSelectUI() {
+const ECHO_CHAPTER_IDS = ['1-1', '2-1', '2-2', '3-1', '3-2', '3-3', '4-1', '4-2', '5'];
+
+function getPlayerUnlocks() {
   const t = totalSync;
-  const unlocks = {
-    '2-1': t >= 11, '2-2': t < 11,
-    '3-1': t >= 16, '3-2': t >= 8 && t <= 15, '3-3': t >= 5 && t <= 10,
-    '4-1': t >= 33, '4-2': t >= 18 && t <= 66,
-    '5': t >= 50
+  const ch1Done = completedChapters['1-1'] !== undefined;
+  const ch2Done = completedChapters['2-1'] !== undefined || completedChapters['2-2'] !== undefined;
+  const ch3Done = completedChapters['3-1'] !== undefined || completedChapters['3-2'] !== undefined || completedChapters['3-3'] !== undefined;
+  const ch4Done = completedChapters['4-1'] !== undefined || completedChapters['4-2'] !== undefined;
+  return {
+    '1-1': true,
+    '2-1': ch1Done && !ch2Done && t >= 11,
+    '2-2': ch1Done && !ch2Done && t < 11,
+    '3-1': ch2Done && !ch3Done && t >= 16,
+    '3-2': ch2Done && !ch3Done && t >= 8 && t <= 15,
+    '3-3': ch2Done && !ch3Done && t >= 5 && t <= 10,
+    '4-1': ch3Done && !ch4Done && t >= 33,
+    '4-2': ch3Done && !ch4Done && t >= 18 && t <= 66,
+    '5': ch4Done && t >= 50
   };
-  for (const [ch, unlocked] of Object.entries(unlocks)) {
-    const el = document.getElementById('cs-' + ch);
-    if (!el) continue;
-    el.classList.toggle('locked', !(unlocked || completedChapters[ch] !== undefined));
-    const syncEl = document.getElementById('cs-sync-' + ch);
-    if (syncEl) {
-      if (completedChapters[ch] !== undefined) syncEl.textContent = completedChapters[ch] + '% ✓';
-      else if (unlocked) syncEl.textContent = '解鎖';
-      else syncEl.textContent = '🔒';
-    }
+}
+
+function isChapterUnlocked(ch) {
+  if (!ECHO_CHAPTER_IDS.includes(ch)) return false;
+  if (echoMode === 'engineer') return !!(window.CHAPTERS && window.CHAPTERS[ch]);
+  if (echoMode !== 'player') return false;
+  const unlocks = getPlayerUnlocks();
+  return !!unlocks[ch] || completedChapters[ch] !== undefined;
+}
+
+async function chooseGameMode(mode, event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  if (mode !== 'player' && mode !== 'engineer') return;
+
+  echoMode = mode;
+  chapterSync = 0;
+  currentChapter = '';
+  if (mode === 'player') {
+    loadProgress();
+  } else {
+    totalSync = 0;
+    completedChapters = {};
   }
-  const s11 = document.getElementById('cs-sync-1-1');
-  if (s11) s11.textContent = completedChapters['1-1'] !== undefined ? completedChapters['1-1'] + '% ✓' : '開始';
+
+  const title = document.getElementById('title-screen');
+  title.style.opacity = '0';
+  title.style.transition = 'opacity .45s';
+  await sleep(450);
+  title.style.display = 'none';
+  title.style.opacity = '1';
+  document.getElementById('chapter-select').style.display = 'flex';
+  updateChapterSelectUI();
+}
+
+function returnToModeSelect() {
+  cancelActiveWidget('mode_select');
+  document.getElementById('chapter-select').style.display = 'none';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('sync-bar').style.display = 'none';
+  document.getElementById('chapter-end').style.display = 'none';
+  const title = document.getElementById('title-screen');
+  title.style.display = 'flex';
+  title.style.opacity = '1';
+  echoMode = null;
+  currentChapter = '';
+  chapterSync = 0;
+}
+
+function updateChapterSelectUI() {
+  const playerUnlocks = getPlayerUnlocks();
+  const engineering = echoMode === 'engineer';
+
+  ECHO_CHAPTER_IDS.forEach((ch) => {
+    const el = document.getElementById('cs-' + ch);
+    if (!el) return;
+    const unlocked = engineering ? !!(window.CHAPTERS && window.CHAPTERS[ch]) : isChapterUnlocked(ch);
+    el.classList.toggle('locked', !unlocked);
+    el.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
+    el.title = unlocked ? '' : '此章節尚未解鎖';
+
+    const syncEl = document.getElementById('cs-sync-' + ch);
+    if (!syncEl) return;
+    if (engineering) syncEl.textContent = 'TEST';
+    else if (completedChapters[ch] !== undefined) syncEl.textContent = completedChapters[ch] + '% ✓';
+    else if (ch === '1-1') syncEl.textContent = '開始';
+    else if (playerUnlocks[ch]) syncEl.textContent = '解鎖';
+    else syncEl.textContent = '🔒';
+  });
+
+  const badge = document.getElementById('cs-mode-badge');
+  const note = document.getElementById('cs-mode-note');
+  if (badge) {
+    badge.textContent = engineering ? 'ENGINEERING' : 'PLAYER';
+    badge.className = 'cs-mode-badge ' + (engineering ? 'engineer' : 'player');
+  }
+  if (note) {
+    note.textContent = engineering
+      ? '工程版：所有已實作章節全開；測試結果不會寫入玩家存檔。'
+      : '玩家版：依累積同步率、路線條件與已完成進度解鎖；鎖定章節不可直接進入。';
+  }
+
   const tot = document.getElementById('cs-total');
-  if (tot) tot.innerHTML = '累積同步率：<b>' + totalSync + '%</b>';
+  if (tot) {
+    tot.innerHTML = engineering
+      ? '工程測試模式 · <b>全章節開放</b>'
+      : '累積同步率：<b>' + totalSync + '%</b>';
+  }
 }
 
 function goChapterSelect() {
@@ -1066,6 +1160,10 @@ function goChapterSelect() {
 }
 
 function startChapter(ch) {
+  if (!isChapterUnlocked(ch)) {
+    if (echoMode === 'player') gToast('🔒 此章節尚未解鎖');
+    return false;
+  }
   cancelActiveWidget('start_chapter');
   document.getElementById('chapter-select').style.display = 'none';
   currentChapter = ch;

@@ -13,7 +13,18 @@
   <div class="tg" data-text="ECHO">ECHO</div>
   <div class="t-sub">午夜連線 · 第一部</div>
   <div class="t-quote">「如果你收到來自死者的訊息，<br>你會回覆嗎？」</div>
-  <div class="t-start">點擊任意處開始</div>
+  <div class="mode-choice" aria-label="選擇遊戲模式">
+    <button class="mode-card mode-player" type="button" onclick="chooseGameMode('player', event)">
+      <span class="mode-kicker">PLAYER BUILD</span>
+      <strong>玩家版</strong>
+      <span>依遊戲進度與分流條件逐章解鎖；受限章節不可進入。</span>
+    </button>
+    <button class="mode-card mode-engineer" type="button" onclick="chooseGameMode('engineer', event)">
+      <span class="mode-kicker">ENGINEERING BUILD</span>
+      <strong>工程版</strong>
+      <span>測試用途；所有已實作章節直接開放，不寫入玩家進度。</span>
+    </button>
+  </div>
   <div class="t-warn">
     ⚠️ 含恐怖元素、失蹤議題及心理驚悚內容<br>
     建議使用耳機，在安全環境中遊玩<br>
@@ -23,7 +34,12 @@
 
 <!-- ── CHAPTER SELECT ── -->
 <div id="chapter-select">
+  <div class="cs-modebar">
+    <button type="button" class="cs-mode-back" onclick="returnToModeSelect()">‹ 返回模式選擇</button>
+    <span class="cs-mode-badge" id="cs-mode-badge">PLAYER</span>
+  </div>
   <div class="cs-title">選擇章節</div>
+  <div class="cs-mode-note" id="cs-mode-note"></div>
   <div style="width:100%;max-width:420px">
 
     <div class="cs-part">第一章</div>
@@ -179,7 +195,7 @@
   <div class="ce-msg" id="ce-msg"></div>
   <div class="ce-next" id="ce-next"></div>
   <button class="ce-btn" onclick="goChapterSelect()">返回章節選擇</button>
-  <div class="ce-restart" onclick="location.reload()">↺ 重新開始（清除進度）</div>
+  <div class="ce-restart" onclick="resetPlayerProgress()">↺ 重新開始（清除玩家進度）</div>
 </div>
 
 <!-- ── SCRIPTS ── -->
@@ -195,16 +211,7 @@
 
 <script>
   // ── 初始化 ──
-  loadProgress();
-
-  document.getElementById('title-screen').onclick = async function () {
-    this.style.opacity = '0';
-    this.style.transition = 'opacity .8s';
-    await sleep(800);
-    this.style.display = 'none';
-    document.getElementById('chapter-select').style.display = 'flex';
-    updateChapterSelectUI();
-  };
+  // 首頁先選擇玩家版或工程版；玩家進度只會在玩家版讀寫。
 
   document.getElementById('lightbox').onclick = function () {
     this.style.display = 'none';
