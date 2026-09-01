@@ -199,9 +199,8 @@ function runGraphicMapInvestigation() {
 function runSpotDifference() {
   return new Promise((resolve) => {
     let settled = false;
-    let mode = 'a';
-    let hasCompared = false;
     const found = new Set();
+    const hitButtons = new Map();
     const hotspots = [
       { id: 'clock',  label: '時鐘時間',   x: 26, y: 21, radius: 9,  reaction: '那天我回家很晚……可是我不記得，中間那段時間發生了什麼。' },
       { id: 'bed',    label: '床鋪變化',   x: 48, y: 62, radius: 20, reaction: '我其實不太會弄亂床。除非……那天真的很累。' },
@@ -210,82 +209,89 @@ function runSpotDifference() {
       { id: 'photos', label: '照片配置',   x: 61, y: 24, radius: 14, reaction: '我不太喜歡拍自己。可是有些照片……我又捨不得丟。' }
     ];
 
-    const root = echoMiniGameShell('CH2-2 · SPOT THE DIFFERENCE', '房間照片比對', 'A / B 兩張照片中共有 5 個差異。切換照片並點出差異位置。', ECHO_MG_ASSETS.ch22.frame);
+    const root = echoMiniGameShell('CH2-2 · SPOT THE DIFFERENCE', '房間照片比對', '上下兩張照片中共有 5 個差異。直接比對並點擊任一張照片的差異位置。', ECHO_MG_ASSETS.ch22.frame);
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
-    const switcher = document.createElement('div');
-    switcher.className = 'echo-mg-switch';
-    switcher.innerHTML = '<button type="button" data-mode="a" class="is-active">A · 22:47</button><button type="button" data-mode="b">B · 23:16</button>';
-
-    const stage = document.createElement('div');
-    stage.className = 'echo-mg-stage spot-stage';
-
-    // A is the immutable MASTER. The generated B image drifted outside the five canon regions,
-    // so B is rendered as five clipped patches over A instead of swapping the whole photograph.
-    // This keeps the game visually stable and guarantees exactly five comparison regions.
-    const base = echoArtImg(ECHO_MG_ASSETS.ch22.a, 'echo-mg-stage-img spot-master', '房間照片 A');
-    stage.appendChild(base);
-
-    const variantLayers = [];
-    hotspots.forEach((h) => {
-      const layer = echoArtImg(ECHO_MG_ASSETS.ch22.b, 'echo-mg-stage-img spot-variant-layer', '房間照片 B 差異區域');
-      layer.style.clipPath = 'circle(' + h.radius + '% at ' + h.x + '% ' + h.y + '%)';
-      layer.style.webkitClipPath = layer.style.clipPath;
-      const softMask = 'radial-gradient(circle at ' + h.x + '% ' + h.y + '%, #000 0 ' + Math.max(1, h.radius - 2) + '%, rgba(0,0,0,.9) ' + Math.max(1, h.radius - 1) + '%, transparent ' + (h.radius + 1) + '%)';
-      layer.style.maskImage = softMask;
-      layer.style.webkitMaskImage = softMask;
-      stage.appendChild(layer);
-      variantLayers.push(layer);
-    });
+    const pair = document.createElement('div');
+    pair.className = 'spot-pair';
 
     const counter = document.createElement('div');
     counter.className = 'echo-mg-note';
-    counter.textContent = '已找到 0 / 5 · 先切換 A / B 比對';
+    counter.textContent = '已找到 0 / 5 · 上下比對後直接點擊差異';
     const reaction = document.createElement('div');
     reaction.className = 'echo-mg-note spot-reaction';
     reaction.textContent = '林雨晴：我整理東西的時候……發現這兩張照片好像不太一樣。';
 
-    function setMode(next) {
-      mode = next === 'b' ? 'b' : 'a';
-      if (mode === 'b') hasCompared = true;
-      variantLayers.forEach((layer) => layer.classList.toggle('is-visible', mode === 'b'));
-      switcher.querySelectorAll('button').forEach((b) => b.classList.toggle('is-active', b.dataset.mode === mode));
+    function markFound(h) {
+      if (settled || found.has(h.id)) return;
+      found.add(h.id);
+      const markerUrl = 'url("' + new URL(ECHO_MG_ASSETS.ch22.marker, document.baseURI).href + '")';
+      (hitButtons.get(h.id) || []).forEach((hit) => {
+        hit.classList.add('is-found');
+        hit.style.setProperty('--marker-art', markerUrl);
+      });
+      counter.textContent = '已找到 ' + found.size + ' / 5 · ' + h.label;
+      reaction.textContent = '林雨晴：' + h.reaction;
+
+      if (found.size === 5) {
+        settled = true;
+        const lowerStage = pair.querySelector('.spot-panel-b .spot-stage');
+        const complete = echoArtImg(ECHO_MG_ASSETS.ch22.complete, 'echo-mg-complete-art spot-complete-art', '比對完成');
+        if (lowerStage) lowerStage.appendChild(complete);
+        setTimeout(() => echoFinishMiniGame(resolve, { found: 5, completed: true }), 950);
+      }
     }
 
-    switcher.querySelectorAll('button').forEach((b) => b.onclick = () => setMode(b.dataset.mode));
+    function makePanel(kind, label) {
+      const panel = document.createElement('div');
+      panel.className = 'spot-panel spot-panel-' + kind;
 
-    hotspots.forEach((h) => {
-      const hit = document.createElement('button');
-      hit.type = 'button';
-      hit.className = 'spot-hotspot';
-      hit.style.left = h.x + '%';
-      hit.style.top = h.y + '%';
-      hit.setAttribute('aria-label', '差異：' + h.label);
-      hit.onclick = () => {
-        if (settled || found.has(h.id)) return;
-        if (!hasCompared) {
-          counter.textContent = '先切換到 B 照片，再標記差異';
-          return;
-        }
-        found.add(h.id);
-        hit.classList.add('is-found');
-        hit.style.setProperty('--marker-art', 'url("' + new URL(ECHO_MG_ASSETS.ch22.marker, document.baseURI).href + '")');
-        counter.textContent = '已找到 ' + found.size + ' / 5 · ' + h.label;
-        reaction.textContent = '林雨晴：' + h.reaction;
-        if (found.size === 5) {
-          settled = true;
-          const complete = echoArtImg(ECHO_MG_ASSETS.ch22.complete, 'echo-mg-complete-art spot-complete-art', '比對完成');
-          stage.appendChild(complete);
-          setTimeout(() => echoFinishMiniGame(resolve, { found: 5, completed: true }), 950);
-        }
-      };
-      stage.appendChild(hit);
-    });
+      const title = document.createElement('div');
+      title.className = 'spot-photo-label';
+      title.textContent = label;
 
-    body.appendChild(switcher);
-    body.appendChild(stage);
+      const stage = document.createElement('div');
+      stage.className = 'echo-mg-stage spot-stage';
+      stage.appendChild(echoArtImg(ECHO_MG_ASSETS.ch22.a, 'echo-mg-stage-img spot-master', '房間照片 ' + kind.toUpperCase()));
+
+      // B uses A as the stable scene base and only reveals the five approved B difference regions.
+      // This avoids unrelated drift from the generated B while keeping both photos visible together.
+      if (kind === 'b') {
+        hotspots.forEach((h) => {
+          const layer = echoArtImg(ECHO_MG_ASSETS.ch22.b, 'echo-mg-stage-img spot-variant-layer is-visible', '房間照片 B 差異區域');
+          layer.style.clipPath = 'circle(' + h.radius + '% at ' + h.x + '% ' + h.y + '%)';
+          layer.style.webkitClipPath = layer.style.clipPath;
+          const softMask = 'radial-gradient(circle at ' + h.x + '% ' + h.y + '%, #000 0 ' + Math.max(1, h.radius - 2) + '%, rgba(0,0,0,.9) ' + Math.max(1, h.radius - 1) + '%, transparent ' + (h.radius + 1) + '%)';
+          layer.style.maskImage = softMask;
+          layer.style.webkitMaskImage = softMask;
+          stage.appendChild(layer);
+        });
+      }
+
+      hotspots.forEach((h) => {
+        const hit = document.createElement('button');
+        hit.type = 'button';
+        hit.className = 'spot-hotspot';
+        hit.style.left = h.x + '%';
+        hit.style.top = h.y + '%';
+        hit.setAttribute('aria-label', kind.toUpperCase() + ' 圖差異：' + h.label);
+        hit.onclick = () => markFound(h);
+        stage.appendChild(hit);
+        if (!hitButtons.has(h.id)) hitButtons.set(h.id, []);
+        hitButtons.get(h.id).push(hit);
+      });
+
+      panel.appendChild(title);
+      panel.appendChild(stage);
+      return panel;
+    }
+
+    pair.appendChild(makePanel('a', 'A · 22:47'));
+    pair.appendChild(makePanel('b', 'B · 23:16'));
+    body.appendChild(pair);
     foot.appendChild(counter);
     foot.appendChild(reaction);
+
     echoMountMiniGame(root, () => {
       if (settled) return;
       settled = true;

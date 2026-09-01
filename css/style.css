@@ -355,10 +355,13 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .map-hotspot.is-viewed{border-color:rgba(85,220,170,.62);color:#a8f0d7}
 .map-hotspot.is-clue{border-color:rgba(255,170,60,.85);color:#ffc26b;box-shadow:0 0 18px rgba(255,150,40,.22)}
 
+.spot-pair{display:flex;flex-direction:column;gap:.65rem}
+.spot-panel{display:flex;flex-direction:column;gap:.3rem}
+.spot-photo-label{font-size:.62rem;color:#c7cedd;letter-spacing:.08em;padding-left:.15rem}
 .echo-mg-stage.spot-stage{aspect-ratio:3/2;min-height:0;background:#05070a}
 .spot-stage .echo-mg-stage-img{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:cover}
 .spot-master{z-index:1}
-.spot-variant-layer{z-index:2;opacity:0;pointer-events:none;transition:opacity .12s ease}
+.spot-variant-layer{z-index:2;opacity:0;pointer-events:none}
 .spot-variant-layer.is-visible{opacity:1}
 .spot-hotspot{position:absolute;z-index:4;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;border:1px solid transparent;background:rgba(0,0,0,.01);appearance:none;touch-action:manipulation}
 .spot-hotspot.is-found{border-color:#f0c66d;background:var(--marker-art),rgba(240,198,109,.13);background-size:cover;box-shadow:0 0 0 4px rgba(240,198,109,.12),0 0 16px rgba(240,198,109,.28)}
