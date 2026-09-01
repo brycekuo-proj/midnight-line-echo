@@ -5,3 +5,4 @@ __pycache__/
 asset_pipeline/source/generated/
 asset_pipeline/desktop_generation_queue.json
 asset_pipeline/pipeline_checkpoint.json
+asset_pipeline/local_telegram_config.json

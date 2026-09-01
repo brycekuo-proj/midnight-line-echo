@@ -34,6 +34,8 @@ DESKTOP_QUEUE_PATH = PIPELINE_DIR / "desktop_generation_queue.json"
 PROMPT_DIR = PIPELINE_DIR / "prompts"
 GENERATED_DIR = PIPELINE_DIR / "source" / "generated"
 GENERATOR = PIPELINE_DIR / "generate_openai_image.py"
+TELEGRAM_SENDER = PIPELINE_DIR / "send_telegram_update.py"
+TELEGRAM_CONFIG_PATH = PIPELINE_DIR / "local_telegram_config.json"
 
 GENERATABLE_STATUSES = {"planned", "queued", "retry_pending", "blocked_dependency", "blocked_prompt"}
 DEPENDENCY_READY = {"approved", "approved_synced", "integrated"}
@@ -90,6 +92,94 @@ def load_checkpoint() -> dict[str, Any]:
     if not isinstance(base.get("batch"), dict):
         base["batch"] = default_checkpoint()["batch"]
     return base
+
+
+def parse_iso(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def load_telegram_config() -> dict[str, Any] | None:
+    if not TELEGRAM_CONFIG_PATH.is_file():
+        return None
+    try:
+        data = load_json(TELEGRAM_CONFIG_PATH)
+    except SystemExit:
+        return None
+    if not data.get("enabled", False):
+        return None
+    return data
+
+
+def telegram_caption(asset: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            "[ECHO] image generated",
+            f"asset: {asset.get('id', '-')}",
+            f"version: v{asset.get('version', '-')}",
+            f"status: {asset.get('status', '-')}",
+            f"output: {asset.get('source_temp', '-')}",
+            f"time: {asset.get('last_generated_at', '-')}",
+        ]
+    )
+
+
+def notify_pending_telegram(manifest: dict[str, Any]) -> tuple[int, int, bool]:
+    """Send newly generated candidates to Telegram once.
+
+    Returns (sent, failed, manifest_changed). Pre-integration candidates older than
+    config.enabled_at are ignored so enabling reporting never floods historical files.
+    """
+    config = load_telegram_config()
+    if not config:
+        return 0, 0, False
+    enabled_at = parse_iso(str(config.get("enabled_at", "")))
+    chat_id = str(config.get("chat_id", "1571185855"))
+    sent = failed = 0
+    changed = False
+    for asset in manifest.get("assets", []):
+        if str(asset.get("status")) != "generated":
+            continue
+        if asset.get("telegram_reported") is True:
+            continue
+        generated_at = parse_iso(str(asset.get("last_generated_at", "")))
+        if enabled_at and generated_at and generated_at < enabled_at:
+            continue
+        source_temp = asset.get("source_temp")
+        if not source_temp:
+            continue
+        photo = (REPO_ROOT / str(source_temp)).resolve()
+        if not photo.is_file():
+            continue
+        cmd = [
+            sys.executable,
+            str(TELEGRAM_SENDER),
+            "--chat-id", chat_id,
+            "--photo", str(photo),
+            "--caption", telegram_caption(asset),
+            "--message", f"[ECHO] generated {asset.get('id')} v{asset.get('version')}",
+        ]
+        proc = subprocess.run(cmd, cwd=str(REPO_ROOT), text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        asset["telegram_last_attempt_at"] = now_iso()
+        changed = True
+        send_lines = {line.strip() for line in proc.stdout.splitlines()}
+        photo_delivered = proc.returncode == 0 and "TG_SEND=PASS" in send_lines
+        if photo_delivered:
+            asset["telegram_reported"] = True
+            asset["telegram_reported_at"] = now_iso()
+            asset["telegram_last_error"] = None
+            sent += 1
+            print(f"TG_REPORTED={asset.get('id')}:v{asset.get('version')}")
+        else:
+            asset["telegram_reported"] = False
+            asset["telegram_last_error"] = (proc.stderr.strip() or proc.stdout.strip() or f"exit {proc.returncode}")[-2000:]
+            failed += 1
+            print(f"TG_REPORT_FAILED={asset.get('id')}", file=sys.stderr)
+    return sent, failed, changed
 
 
 def asset_map(manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -254,6 +344,14 @@ def main() -> None:
     if reconciled:
         save_json_atomic(MANIFEST_PATH, manifest)
     print(f"RECONCILED={reconciled}")
+
+    tg_sent = tg_failed = 0
+    if not args.dry_run:
+        tg_sent, tg_failed, tg_changed = notify_pending_telegram(manifest)
+        if tg_changed:
+            save_json_atomic(MANIFEST_PATH, manifest)
+        print(f"TG_SENT={tg_sent}")
+        print(f"TG_FAILED={tg_failed}")
 
     if args.reconcile_only:
         print("STATUS=reconcile_complete")
@@ -422,6 +520,10 @@ def main() -> None:
                 checkpoint["last_result"] = "generated"
                 print(f"GENERATED={asset_id}:{expected.relative_to(REPO_ROOT)}")
         save_json_atomic(MANIFEST_PATH, manifest)
+        if asset.get("status") == "generated":
+            _tg_sent, _tg_failed, tg_changed = notify_pending_telegram(manifest)
+            if tg_changed:
+                save_json_atomic(MANIFEST_PATH, manifest)
         save_json_atomic(CHECKPOINT_PATH, checkpoint)
 
     checkpoint["last_run_finished_at"] = now_iso()

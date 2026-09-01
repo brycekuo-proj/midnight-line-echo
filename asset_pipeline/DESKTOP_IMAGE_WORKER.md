@@ -16,8 +16,10 @@ Purpose: process `asset_pipeline/desktop_generation_queue.json` with ChatGPT Des
 10. After every successful save, run:
    `python3 asset_pipeline/run_generation_queue.py --reconcile-only`
    so the manifest records the completed candidate immediately.
-11. If one job fails, record the failure, leave other successfully saved candidates intact, and continue only when safe. Never delete earlier candidates.
-12. Do not promote, commit, push, or modify chapter code during generation. QA and promotion are separate stages.
+11. Reconcile also sends that newly generated image to the configured Telegram chat as a status report. The local config is `asset_pipeline/local_telegram_config.json`; the current chat ID is `1571185855`. Pre-integration historical candidates are not backfilled automatically.
+12. Telegram delivery is best-effort and must never delete or invalidate a successfully generated candidate. If delivery fails, the candidate stays `generated`, `telegram_reported=false`, and the next reconcile retries it.
+13. If one image-generation job fails, record the failure, leave other successfully saved candidates intact, and continue only when safe. Never delete earlier candidates.
+14. Do not promote, commit, push, or modify chapter code during generation. QA and promotion are separate stages.
 
 ## Resume rule
 
