@@ -87,6 +87,55 @@ const chatBody = document.getElementById('chat-body');
 const optionsArea = document.getElementById('options-area');
 const typingEl = document.getElementById('typing-indicator');
 
+function ensureMiniGameOverlay() {
+  let overlay = document.getElementById('minigame-overlay');
+  if (overlay) return overlay;
+  overlay = document.createElement('div');
+  overlay.id = 'minigame-overlay';
+  overlay.innerHTML = '<div class="minigame-overlay-backdrop"></div><div class="minigame-overlay-frame"></div>';
+  document.getElementById('app').appendChild(overlay);
+  return overlay;
+}
+
+function openMiniGameOverlay(node, cancel) {
+  cancelActiveWidget('replaced');
+  optionsArea.classList.remove('widget-open');
+  optionsArea.innerHTML = '';
+
+  const overlay = ensureMiniGameOverlay();
+  const frame = overlay.querySelector('.minigame-overlay-frame');
+  const savedScrollTop = chatBody.scrollTop;
+  frame.innerHTML = '';
+  frame.appendChild(node);
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
+
+  const controller = {
+    mountTarget: 'overlay',
+    node,
+    overlay,
+    close: () => {
+      frame.innerHTML = '';
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      requestAnimationFrame(() => { chatBody.scrollTop = savedScrollTop; });
+    },
+    cancel: (reason) => {
+      controller.close();
+      if (typeof cancel === 'function') cancel(reason);
+    }
+  };
+  activeWidgetController = controller;
+  return controller;
+}
+
+function closeMiniGameOverlay(controller) {
+  const ctl = controller || activeWidgetController;
+  if (!ctl || ctl.mountTarget !== 'overlay') return;
+  if (activeWidgetController === ctl) activeWidgetController = null;
+  if (typeof ctl.close === 'function') ctl.close();
+}
+
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function scrollBottom() { chatBody.scrollTop = chatBody.scrollHeight; }
 
@@ -730,26 +779,12 @@ async function runPermissionWhack(config) {
       setPermOn(target, 'EVA：……剛剛停掉的那部分，我先替你補回來。');
     }
 
-    function renderPermissionReport(result) {
-      optionsArea.classList.add('widget-open');
-      optionsArea.innerHTML = '';
-      const report = document.createElement('div');
-      report.className = 'pw-report';
-      report.innerHTML =
-        '<div class="pw-report-kicker">Permission Report</div>' +
-        '<div class="pw-report-title">權限同步分析完成</div>' +
-        '<div class="pw-report-grid">' +
-          '<div><span>已接手</span><b>' + result.finalOnCount + ' / ' + permissions.length + '</b></div>' +
-          '<div><span>同步變化</span><b>+' + result.rawSyncAward + '%</b></div>' +
-        '</div>' +
-        '<div class="pw-report-line">EVA：' + result.evaLine + '</div>';
-      optionsArea.appendChild(report);
-    }
-
     function finish(reason) {
       if (settled) return;
       settled = true;
-      activeWidgetController = null;
+      const controller = activeWidgetController;
+      if (controller && controller.mountTarget === 'overlay') closeMiniGameOverlay(controller);
+      else activeWidgetController = null;
       clearInterval(clockTimer);
       clearInterval(pressureTimer);
       clearTimeout(introTimer);
@@ -778,20 +813,13 @@ async function runPermissionWhack(config) {
       if (shouldApplySync) {
         addSync(syncAward);
         syncEvaAvatar();
-        renderPermissionReport(result);
-      } else {
-        optionsArea.classList.remove('widget-open');
-        optionsArea.innerHTML = '';
       }
+      optionsArea.classList.remove('widget-open');
+      optionsArea.innerHTML = '';
       resolve(result);
     }
 
-    activeWidgetController = {
-      cancel: finish
-    };
-
-    optionsArea.classList.add('widget-open');
-    optionsArea.appendChild(widget);
+    openMiniGameOverlay(widget, finish);
     render();
 
     let startedAt = 0;

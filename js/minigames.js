@@ -86,59 +86,19 @@ function echoMiniGameShell(kicker, title, subtitle, art) {
   return root;
 }
 
-function echoMountMiniGame(root, cancel, opts) {
-  cancelActiveWidget('replaced');
-  const o = opts || {};
-  const target = o.target || 'options';
-
-  if (target === 'chat') {
-    optionsArea.classList.remove('widget-open');
-    optionsArea.innerHTML = '';
-
-    const row = document.createElement('div');
-    row.className = 'echo-mg-chat-row';
-    root.classList.add('echo-mg-chat');
-    row.appendChild(root);
-    chatBody.appendChild(row);
-
-    activeWidgetController = {
-      mountTarget: 'chat',
-      node: row,
-      cancel: (reason) => {
-        row.remove();
-        if (typeof cancel === 'function') cancel(reason);
-      }
-    };
-
-    requestAnimationFrame(() => {
-      const chatRect = chatBody.getBoundingClientRect();
-      const rowRect = row.getBoundingClientRect();
-      const targetTop = chatBody.scrollTop + rowRect.top - chatRect.top;
-      const previousScrollBehavior = chatBody.style.scrollBehavior;
-      chatBody.style.scrollBehavior = 'auto';
-      chatBody.scrollTop = Math.max(0, targetTop);
-      chatBody.style.scrollBehavior = previousScrollBehavior;
-    });
-    return;
-  }
-
-  optionsArea.innerHTML = '';
-  optionsArea.classList.add('widget-open');
-  optionsArea.appendChild(root);
-  activeWidgetController = { cancel, mountTarget: 'options', node: root };
+function echoMountMiniGame(root, cancel) {
+  openMiniGameOverlay(root, cancel);
 }
 
 function echoFinishMiniGame(resolve, result, opts) {
   const o = opts || {};
   const controller = activeWidgetController;
-  activeWidgetController = null;
-  if (!o.keepVisible) {
-    if (controller && controller.mountTarget === 'chat') {
-      if (controller.node) controller.node.remove();
-    } else {
-      optionsArea.classList.remove('widget-open');
-      optionsArea.innerHTML = '';
-    }
+  if (!o.keepVisible && controller && controller.mountTarget === 'overlay') {
+    closeMiniGameOverlay(controller);
+  } else if (!o.keepVisible) {
+    activeWidgetController = null;
+    optionsArea.classList.remove('widget-open');
+    optionsArea.innerHTML = '';
   }
   resolve(result);
 }
@@ -231,7 +191,7 @@ function runGraphicMapInvestigation() {
       if (settled) return;
       settled = true;
       echoFinishMiniGame(resolve, { graffitiFound, viewed, cancelled: true });
-    }, { target: 'chat' });
+    });
   });
 }
 

@@ -597,7 +597,9 @@ async function ch42RunTerritory(config) {
     function finish(reason) {
       if (settled) return;
       settled = true;
-      activeWidgetController = null;
+      const controller = activeWidgetController;
+      if (controller && controller.mountTarget === 'overlay') closeMiniGameOverlay(controller);
+      else activeWidgetController = null;
       clearInterval(clockTimer);
       clearInterval(evaTimer);
 
@@ -624,19 +626,6 @@ async function ch42RunTerritory(config) {
       if (shouldApplySync) {
         addSync(syncAward);
         syncEvaAvatar();
-        optionsArea.classList.add('widget-open');
-        const report = document.createElement('div');
-        report.className = 'tr-report';
-        report.innerHTML =
-          '<div class="tr-report-kicker">Agent Territory</div>' +
-          '<div class="tr-report-title">代理同步分析完成</div>' +
-          '<div class="tr-report-grid">' +
-            '<div><span>EVA 接手</span><b>' + result.evaControlledCount + ' / 25</b></div>' +
-            '<div><span>自己保留</span><b>' + result.playerControlledCount + ' / 25</b></div>' +
-            '<div><span>同步變化</span><b>+' + result.rawSyncAward + '%</b></div>' +
-          '</div>' +
-          '<div class="tr-report-line">EVA：' + result.evaLine + '</div>';
-        optionsArea.appendChild(report);
       }
 
       resolve(result);
@@ -654,9 +643,7 @@ async function ch42RunTerritory(config) {
       setOwner(selected.id, 'eva', 'EVA：……好。這一塊我替你記著。');
     };
 
-    activeWidgetController = { cancel: finish };
-    optionsArea.classList.add('widget-open');
-    optionsArea.appendChild(widget);
+    openMiniGameOverlay(widget, finish);
     render();
 
     clockTimer = setInterval(() => {
