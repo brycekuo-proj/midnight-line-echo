@@ -287,194 +287,111 @@ async function addCh21PlayerCctvCard() {
 
 // ─────────────────────────────────────────────────────
 //  CH 2-2：雨夜留言
+//  Canon: docs/canon/season1/1-2-2(new)_260525_232926.txt
 // ─────────────────────────────────────────────────────
 window.CHAPTERS['2-2'] = async function() {
   setHeader('rain', '林雨晴', '最後上線：3天前');
+  chatBody.style.background = '#0a0f12';
   await addMsg('time', '凌晨 02:58 · 雨夜');
-  chatBody.style.background = '#0a0f0f';
-  await sleep(1200);
-  await addMsg('sys', '聊天室靜止中……只有雨聲', { noTyping: true });
-  await sleep(2500);
-  // 林雨晴「正在輸入」假系統提示
-  await addMsg('sys', '林雨晴 正在輸入中…', { noTyping: true });
-  await sleep(2200);
-  await addMsg('other', '……你終於來了。', { typing: 800, meta: '02:58', isRain: true });
+  await sleep(700);
+  await addMsg('other', '……你今天，也聽得到雨聲嗎？', { typing: 1400, meta: '02:58', isRain: true });
+  await sleep(650);
+  await addMsg('other', '我整理了一些東西……<br>你可以自己看。', { typing: 1800, meta: '02:59', isRain: true });
+
   showOpts([
-    { text: '妳真的是林雨晴？', sync: 2 },
-    { text: '妳不是失蹤了嗎？', sync: 1 },
-    { text: '妳到底在哪？',     sync: 4 },
+    { text: '你是誰？', sync: 1 },
+    { text: '這是什麼聊天室？', sync: 1 },
+    { text: '……你還好嗎？', sync: 4 },
   ], async () => {
-    await addMsg('other', '我不知道……<br>我只記得地下道很冷。', { typing: 2500, meta: '02:59', isRain: true });
-    await sleep(400);
-    await addMsg('other',
-      '而且……一直有人在後面跟著我。<br>不管我走多快，他都在。',
-      { typing: 2200, meta: '02:59', isRain: true });
-    await sleep(400);
-    // 第一張照片：雨夜遠景
-    await addMsg('other', '__RAIN_PHOTO__', { typing: 0, delay: 300, meta: '02:59', isRain: true });
-    await sleep(600);
-    await addMsg('other', '你看……這裡。<br>你是不是也開始看見了？', { typing: 1800, meta: '03:00', isRain: true });
-    await sleep(400);
-    await ch22_s2();
+    await ch22_roomTrace();
   });
 };
 
-async function ch22_s2() {
-  await addMsg('sys', '── 林雨晴聊天備份 ──', { noTyping: true, delay: 400 });
-  await sleep(400);
-  const logs = [
-    ['今天下班好晚……好累。', '03:01'],
-    ['最近一直有陌生帳號加我……他們都問：「妳看見03:17了嗎？」', '03:01'],
-    ['為什麼我的訊息明明沒人看，卻一直顯示已讀？', '03:02'],
-    ['……聊天室另一邊的，到底是不是人？', '03:02'],
-  ];
-  for (const [t, m] of logs) {
-    await sleep(420);
-    await addMsg('other', t, { typing: 0, delay: 200, meta: m, isRain: true });
-  }
-  await sleep(600);
-  await addMsg('other',
-    '我越來越分不清了。<br>有時候我會以為……<br>我已經不是原本的那個我了。',
-    { typing: 2500, meta: '03:03', isRain: true });
-  showOpts([
-    { text: '妳現在到底是什麼？',          sync: 3 },
-    { text: '那些「已讀」是誰做的？',       sync: 1 },
-    { text: '……我為什麼會出現在妳的照片裡？', sync: 4 },
-  ], async () => {
-    await addMsg('other', '因為……你也開始被選中了。', { typing: 2800, meta: '03:04', isRain: true });
-    await sleep(400);
-    await ch22_s3();
-  });
-}
+async function ch22_roomTrace() {
+  await addMsg('sys', '【林雨晴房間紀錄】 已解鎖', { noTyping: true, delay: 350 });
+  await sleep(450);
+  await addMsg('other', '我整理東西的時候……<br>發現這兩張照片好像不太一樣。', { typing: 1800, meta: '03:01', isRain: true });
+  await addMsg('sys', '請找出兩張照片中的 5 處不同處<br>點擊差異處進行標記', { noTyping: true, delay: 300 });
 
-async function ch22_s3() {
-  await addMsg('sys', '── 照片時間比對 ──', { noTyping: true, delay: 400 });
-  await sleep(400);
-  await addMsg('other', '我那時候的照片……', { typing: 1500, meta: '03:05', isRain: true });
-  await sleep(300);
   const diffResult = await runSpotDifference();
-  if (diffResult && diffResult.completed) {
-    addSync(3);
-    gToast('+3% 同步率（找出 5 個時間差異）');
-    await addMsg('sys', '房間照片比對完成：5 / 5 差異已標記', { noTyping: true, delay: 220 });
-  }
-  await sleep(350);
-  // 傳真實監視器圖（林雨晴回頭版），配 rain 頭像
-  const row = document.createElement('div'); row.className = 'brow';
-  row.appendChild(mkAv('rain'));
-  const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;max-width:100%';
-  const bbl = document.createElement('div'); bbl.className = 'bbl'; bbl.style.cssText = 'padding:0;background:transparent';
-  const p = document.createElement('div');
-  p.style.cssText = 'position:relative;width:220px;cursor:pointer;border-radius:8px;overflow:hidden;border:1px solid #1a2a2a';
-  const img = document.createElement('img');
-  img.src = 'img/scenes/tunnel_cctv.jpg';
-  img.style.cssText = 'width:100%;display:block;filter:brightness(.75) saturate(.4) contrast(1.1)';
-  const scan = document.createElement('div'); scan.className = 'cctv-scan';
-  const ts = document.createElement('div');
-  ts.style.cssText = 'position:absolute;bottom:5px;right:6px;background:rgba(0,0,0,.7);color:#888;font-size:.55rem;padding:1px 4px;border-radius:2px;font-family:monospace';
-  ts.textContent = '2024/06/02  03:17:23';
-  p.appendChild(img); p.appendChild(scan); p.appendChild(ts);
-  p.onclick = () => openLB('cctv');
-  bbl.appendChild(p);
-  const meta = document.createElement('div'); meta.className = 'bmeta'; meta.textContent = '03:05';
-  wrap.appendChild(bbl); wrap.appendChild(meta); row.appendChild(wrap);
-  chatBody.appendChild(row); scrollBottom();
+  if (!diffResult || !diffResult.completed) return;
 
-  await sleep(600);
-  await addMsg('other',
-    '你看……你站在我後面。<br>我回頭的時候，你卻沒有臉。',
-    { typing: 2200, meta: '03:05', isRain: true });
-  showOpts([
-    { text: '那是我？！這不可能！', sync: 2 },
-    { text: '這一定是合成的！',     sync: 0 },
-    { text: '妳那時候……看得到我？', sync: 4 },
-  ], async () => {
-    await addMsg('other', '……那時候的你，比較像死人。', { typing: 3000, meta: '03:06', isRain: true });
-    await sleep(800);
-    glitch();
-    // 林雨晴頭像切換成 glitch1
-    swapHeaderImg('img/rain/rain_glitch1.jpg');
-    await sleep(300);
-    await ch22_s4();
-  });
-}
-
-async function ch22_s4() {
-  await addMsg('sys', '── 消失的時間 ──', { noTyping: true, delay: 300 });
-  await addMsg('time', '時鐘異常 02:58 → 03:14');
-  await sleep(600);
-  await addMsg('sys', '未接來電 — 林雨晴（通話紀錄空白）', { noTyping: true });
-  await sleep(800);
-  const res = await addMsg('other',
-    '__AUDIO:語音訊息 · 0:12 （建議戴耳機）__',
-    { typing: 0, delay: 200, meta: '03:14', isRain: true });
-  if (res && res.bbl) {
-    const tr = res.bbl.querySelector('.audio-tr');
-    if (tr) tr.dataset.txt = '「不要回頭……它就在你後面……<br>它長得……跟你一模一樣……」';
-  }
-  await sleep(800);
-  await ch22_s5();
-}
-
-async function ch22_s5() {
-  await addMsg('sys', '── 林雨晴支線《最後一班車》──', { noTyping: true, delay: 400 });
-  await sleep(600);
-  // 傳地下道驚恐自拍（rain_tunnel）
-  const row = document.createElement('div'); row.className = 'brow';
-  row.appendChild(mkAv('rain'));
-  const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;max-width:100%';
-  const bbl = document.createElement('div'); bbl.className = 'bbl'; bbl.style.cssText = 'padding:0;background:transparent';
-  const p = document.createElement('div');
-  p.style.cssText = 'position:relative;width:220px;cursor:pointer;border-radius:12px;overflow:hidden;border:1px solid #1a2a2a';
-  const img = document.createElement('img');
-  img.src = 'img/rain/rain_tunnel.jpg';
-  img.style.cssText = 'width:100%;display:block;filter:brightness(.72)';
-  p.appendChild(img);
-  p.onclick = () => openLB('rain_tunnel');
-  bbl.appendChild(p);
-  const meta = document.createElement('div'); meta.className = 'bmeta'; meta.textContent = '03:15';
-  wrap.appendChild(bbl); wrap.appendChild(meta); row.appendChild(wrap);
-  chatBody.appendChild(row); scrollBottom();
-
+  addSync(3);
+  gToast('+3% 同步率（完整調查房間紀錄）');
+  await addMsg('sys', '差異確認完成', { noTyping: true, delay: 250 });
+  await sleep(700);
+  await addMsg('other', '……奇怪。<br>我不記得，房間那天是這樣。', { typing: 2000, meta: '03:07', isRain: true });
   await sleep(500);
-  await addMsg('other',
-    '你那天……是不是來找過我？<br>我記得你的衣服……和你現在穿的一樣。',
-    { typing: 2500, meta: '03:15', isRain: true });
+  await addMsg('other', '好像……<br>有些東西不是我放的。', { typing: 1800, meta: '03:07', isRain: true });
+  await ch22_empathy();
+}
+
+async function ch22_empathy() {
+  await sleep(700);
+  await addMsg('sys', '── 理解與共鳴 ──', { noTyping: true, delay: 250 });
+  await addMsg('other', '我最討厭別人問我「最近好嗎」。<br>因為我總是不知道怎麼回答……', { typing: 2200, meta: '03:09', isRain: true });
+
   showOpts([
-    { text: '我根本不認識妳。',    sync: 0 },
-    { text: '……我不記得了。',     sync: 4 },
-    { text: '妳到底看見了什麼？',  sync: 2 },
-  ], async (i) => {
-    if (i === 1) {
-      await addMsg('other',
-        '我也開始忘記很多事了……<br>但你的臉，我一直記得。<br>因為……那可能不是「你」。',
-        { typing: 3000, meta: '03:16', isRain: true });
-    } else {
-      await addMsg('other',
-        '我看見你站在月台上……一動不動。<br>然後我的記憶就斷了。',
-        { typing: 2500, meta: '03:16', isRain: true });
-    }
+    { text: '我還好。', sync: 1 },
+    { text: '我也不喜歡。', sync: 4 },
+    { text: '繼續說吧。', sync: 3 },
+  ], async () => {
+    await addMsg('other', '你呢？你也討厭被這樣問嗎？', { typing: 1800, meta: '03:10', isRain: true });
     await sleep(600);
-    await ch22_end();
+    await addMsg('sys', '✓✓ 已讀狀態異常：聊天室內出現未開啟的已讀紀錄', { noTyping: true, delay: 250 });
+    await ch22_boundaryBlur();
   });
+}
+
+async function ch22_boundaryBlur() {
+  await sleep(650);
+  await addMsg('sys', '── 界線開始模糊 ──', { noTyping: true, delay: 250 });
+  await addMsg('other', '我最後一天……其實在調查一個很大的案子。<br>我好像看到了不該看的東西……', { typing: 2400, meta: '03:12', isRain: true });
+  await sleep(650);
+
+  // Canon requires a fake player message in the later half of this act.
+  await addMsg('self', '……我已經看見了。', { delay: 120, noTyping: true, meta: '03:13' });
+  await sleep(300);
+  await addMsg('sys', '⚠ 訊息來源異常：這則訊息不是由你送出', { noTyping: true, delay: 180 });
+  glitch();
+  await sleep(450);
+  await addMsg('other', '你看……連你的訊息都開始變了。<br>你有沒有發現？', { typing: 1900, meta: '03:13', isRain: true });
+
+  showOpts([
+    { text: '我根本沒發過這句！', sync: 2 },
+    { text: '這是怎麼回事？', sync: 3 },
+    { text: '……妳繼續說。', sync: 4 },
+  ], async () => {
+    await ch22_climax();
+  });
+}
+
+async function ch22_climax() {
+  await sleep(650);
+  await addMsg('sys', '── 地下道照片 ──', { noTyping: true, delay: 250 });
+  await addMsg('other', '你那天……是不是來找過我？<br>我記得你的衣服……和你現在穿的一樣。', { typing: 2400, meta: '03:15', isRain: true });
+  await sleep(450);
+  await addMsg('other', '__CCTV__', { typing: 0, delay: 250, meta: '03:15', isRain: true });
+  await sleep(650);
+  await addMsg('other', '那時候的你……站在我後面。<br>我回頭的時候，你卻沒有臉。', { typing: 2300, meta: '03:16', isRain: true });
+  await sleep(700);
+  await addMsg('other', '我好怕……<br>我怕下一次站在我後面的你……<br>已經不是你了。', { typing: 2400, meta: '03:16', isRain: true });
+  await ch22_end();
 }
 
 async function ch22_end() {
-  await sleep(800);
-  await addMsg('sys', '聊天室開始自動已讀（玩家未點開）', { noTyping: true });
-  await sleep(600);
-  await addMsg('other', '如果下一次……<br>你在地下道看到我。', { typing: 2000, meta: '03:17', isRain: true });
-  await sleep(400);
+  await sleep(900);
+  await addMsg('sys', '✓✓　✓✓　✓✓　✓✓　聊天室出現大量已讀標記', { noTyping: true, delay: 250 });
+  await sleep(650);
+  await addMsg('other', '如果下一次……<br>你在地下道看到我。', { typing: 1800, meta: '03:17', isRain: true });
+  await sleep(450);
   await addMsg('other', '不要跟我說話。', { typing: 1500, meta: '03:17', isRain: true });
-  await sleep(800);
-  // 頭像換成 glitch2（最終消融狀態）
+  await sleep(2200);
   swapHeaderImg('img/rain/rain_glitch2.jpg');
-  await addMsg('other',
-    '因為那時候的我……<br>可能已經不是我了。',
-    { typing: 2500, meta: '03:17', isRain: true });
-  await sleep(2000);
+  await addMsg('other', '因為那時候的我……<br>可能已經不是我了。', { typing: 2200, meta: '03:17', isRain: true });
+  await sleep(3200);
   chatBody.style.background = '#000';
-  await sleep(1500);
+  await sleep(1200);
   await fadeOut();
   showEnd('《雨夜留言》');
   setTimeout(() => notification('林雨晴', 'LINE', '我剛剛……又看到你了。這次，你沒有回頭。'), 90000);

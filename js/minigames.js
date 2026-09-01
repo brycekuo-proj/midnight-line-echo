@@ -200,13 +200,14 @@ function runSpotDifference() {
   return new Promise((resolve) => {
     let settled = false;
     let mode = 'a';
+    let hasCompared = false;
     const found = new Set();
     const hotspots = [
-      { id: 'clock', x: 26, y: 21 },
-      { id: 'bed', x: 48, y: 62 },
-      { id: 'note', x: 71, y: 44 },
-      { id: 'aroma', x: 84, y: 67 },
-      { id: 'photos', x: 61, y: 24 }
+      { id: 'clock',  label: '時鐘時間',   x: 26, y: 21, radius: 9,  reaction: '那天我回家很晚……可是我不記得，中間那段時間發生了什麼。' },
+      { id: 'bed',    label: '床鋪變化',   x: 48, y: 62, radius: 20, reaction: '我其實不太會弄亂床。除非……那天真的很累。' },
+      { id: 'note',   label: '粉紅便條',   x: 71, y: 44, radius: 10, reaction: '我有時候會留紙條，怕自己忘記事情。' },
+      { id: 'aroma',  label: '右側物件',   x: 84, y: 67, radius: 11, reaction: '我不太喜歡房間太暗。尤其下雨的晚上。' },
+      { id: 'photos', label: '照片配置',   x: 61, y: 24, radius: 14, reaction: '我不太喜歡拍自己。可是有些照片……我又捨不得丟。' }
     ];
 
     const root = echoMiniGameShell('CH2-2 · SPOT THE DIFFERENCE', '房間照片比對', 'A / B 兩張照片中共有 5 個差異。切換照片並點出差異位置。', ECHO_MG_ASSETS.ch22.frame);
@@ -215,17 +216,39 @@ function runSpotDifference() {
     const switcher = document.createElement('div');
     switcher.className = 'echo-mg-switch';
     switcher.innerHTML = '<button type="button" data-mode="a" class="is-active">A · 22:47</button><button type="button" data-mode="b">B · 23:16</button>';
+
     const stage = document.createElement('div');
     stage.className = 'echo-mg-stage spot-stage';
-    const img = echoArtImg(ECHO_MG_ASSETS.ch22.a, 'echo-mg-stage-img', '房間比對照片');
-    stage.appendChild(img);
+
+    // A is the immutable MASTER. The generated B image drifted outside the five canon regions,
+    // so B is rendered as five clipped patches over A instead of swapping the whole photograph.
+    // This keeps the game visually stable and guarantees exactly five comparison regions.
+    const base = echoArtImg(ECHO_MG_ASSETS.ch22.a, 'echo-mg-stage-img spot-master', '房間照片 A');
+    stage.appendChild(base);
+
+    const variantLayers = [];
+    hotspots.forEach((h) => {
+      const layer = echoArtImg(ECHO_MG_ASSETS.ch22.b, 'echo-mg-stage-img spot-variant-layer', '房間照片 B 差異區域');
+      layer.style.clipPath = 'circle(' + h.radius + '% at ' + h.x + '% ' + h.y + '%)';
+      layer.style.webkitClipPath = layer.style.clipPath;
+      const softMask = 'radial-gradient(circle at ' + h.x + '% ' + h.y + '%, #000 0 ' + Math.max(1, h.radius - 2) + '%, rgba(0,0,0,.9) ' + Math.max(1, h.radius - 1) + '%, transparent ' + (h.radius + 1) + '%)';
+      layer.style.maskImage = softMask;
+      layer.style.webkitMaskImage = softMask;
+      stage.appendChild(layer);
+      variantLayers.push(layer);
+    });
+
     const counter = document.createElement('div');
     counter.className = 'echo-mg-note';
-    counter.textContent = '已找到 0 / 5';
+    counter.textContent = '已找到 0 / 5 · 先切換 A / B 比對';
+    const reaction = document.createElement('div');
+    reaction.className = 'echo-mg-note spot-reaction';
+    reaction.textContent = '林雨晴：我整理東西的時候……發現這兩張照片好像不太一樣。';
 
     function setMode(next) {
-      mode = next;
-      img.src = mode === 'a' ? ECHO_MG_ASSETS.ch22.a : ECHO_MG_ASSETS.ch22.b;
+      mode = next === 'b' ? 'b' : 'a';
+      if (mode === 'b') hasCompared = true;
+      variantLayers.forEach((layer) => layer.classList.toggle('is-visible', mode === 'b'));
       switcher.querySelectorAll('button').forEach((b) => b.classList.toggle('is-active', b.dataset.mode === mode));
     }
 
@@ -237,18 +260,23 @@ function runSpotDifference() {
       hit.className = 'spot-hotspot';
       hit.style.left = h.x + '%';
       hit.style.top = h.y + '%';
-      hit.setAttribute('aria-label', '差異位置');
+      hit.setAttribute('aria-label', '差異：' + h.label);
       hit.onclick = () => {
         if (settled || found.has(h.id)) return;
+        if (!hasCompared) {
+          counter.textContent = '先切換到 B 照片，再標記差異';
+          return;
+        }
         found.add(h.id);
         hit.classList.add('is-found');
-        hit.style.setProperty('--marker-art', 'url("' + ECHO_MG_ASSETS.ch22.marker + '")');
-        counter.textContent = '已找到 ' + found.size + ' / 5';
+        hit.style.setProperty('--marker-art', 'url("' + new URL(ECHO_MG_ASSETS.ch22.marker, document.baseURI).href + '")');
+        counter.textContent = '已找到 ' + found.size + ' / 5 · ' + h.label;
+        reaction.textContent = '林雨晴：' + h.reaction;
         if (found.size === 5) {
           settled = true;
-          const complete = echoArtImg(ECHO_MG_ASSETS.ch22.complete, 'echo-mg-complete-art', '比對完成');
+          const complete = echoArtImg(ECHO_MG_ASSETS.ch22.complete, 'echo-mg-complete-art spot-complete-art', '比對完成');
           stage.appendChild(complete);
-          setTimeout(() => echoFinishMiniGame(resolve, { found: 5, completed: true }), 850);
+          setTimeout(() => echoFinishMiniGame(resolve, { found: 5, completed: true }), 950);
         }
       };
       stage.appendChild(hit);
@@ -257,6 +285,7 @@ function runSpotDifference() {
     body.appendChild(switcher);
     body.appendChild(stage);
     foot.appendChild(counter);
+    foot.appendChild(reaction);
     echoMountMiniGame(root, () => {
       if (settled) return;
       settled = true;

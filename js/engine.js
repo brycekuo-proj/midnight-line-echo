@@ -59,7 +59,7 @@ function getSyncEval(ch) {
   const maps = {
     '1-1': [[5,'「你很抗拒我呢……沒關係，我有的是時間。」','強抵抗'],[10,'「你開始好奇我了，對嗎？」','調查傾向'],[15,'「我們越來越接近了……」','高沉浸'],[20,'「你已經是我的了……」','高依附']],
     '2-1': [[5,'「你還是不願意依靠我……」','強抵抗'],[10,'「地下道已經在等你了。」','調查傾向'],[15,'「你開始害怕了……那很好。」','高沉浸'],[20,'「帶你進去，是我一直想做的事。」','高依附']],
-    '2-2': [[5,'林雨晴：「……你還是不相信我。」','強抵抗'],[10,'林雨晴：「你開始記起什麼了嗎？」','調查傾向'],[15,'林雨晴：「你的臉，我一直記得……」','高沉浸'],[18,'林雨晴：「你開始懷疑自己了。那就對了。」','高認知污染']],
+    '2-2': [[5,'「……你還是不相信我。」','強抵抗'],[10,'「你開始記起什麼了嗎？」','調查傾向'],[15,'「你的臉，我一直記得……」','高沉浸'],[18,'「你開始懷疑自己了。那就對了。」','高認知污染']],
     '3-1': [[5,'「你還在抗拒記憶……」','強抵抗'],[10,'「聊天室開始活過來了。」','調查傾向'],[15,'「你已經分不清哪些是自己說的了。」','高沉浸'],[20,'「我比你更了解你自己。」','高依附']],
     '3-2': [[5,'「你太快想離開了。」','低污染'],[10,'「你開始在乎聊天室了。」','調查沉浸'],[15,'「你快忘記怎麼離線了。」','高沉浸'],[20,'「歡迎留下來。」','在線同步']],
     '3-3': [[5,'K：「你還在嗎？」','低污染'],[10,'K：「第三個呼吸……你聽到了嗎？」','聲音沉浸'],[15,'K：「你快分不清耳機和現實了……」','高聽覺污染'],[20,'K：「它現在說的和你一模一樣。」','現實同步']],
@@ -453,7 +453,11 @@ function showOpts(opts, cb) {
         subSync(Math.abs(o.sync));
       }
       clearOpts();
-      if (o.sync >= 4) { await sleep(600); gToast('EVA 對你的興趣明顯提升'); }
+      if (o.sync >= 4) {
+        await sleep(600);
+        const responseSource = ['2-2', '3-2'].includes(currentChapter) ? '林雨晴' : currentChapter === '3-3' ? 'K' : 'EVA';
+        gToast(responseSource + ' 對你的回應明顯提升');
+      }
       cb(i, o.text, o.sync);
     };
     optionsArea.appendChild(btn);
@@ -1034,7 +1038,8 @@ function showEnd(chName) {
     document.getElementById('ce-sbf').style.width = Math.round(chapterSync / SYNC_MAX * 100) + '%';
     const msgEl = document.getElementById('ce-msg');
     msgEl.className = 'ce-msg' + (isWhite ? ' white-msg' : '');
-    msgEl.innerHTML = '<b>EVA</b>：' + ev.q + '<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[' + ev.lv + ']</span>' + routeHint;
+    const evalSpeaker = ['2-2', '3-2'].includes(currentChapter) ? '林雨晴' : currentChapter === '3-3' ? 'K' : 'EVA';
+    msgEl.innerHTML = '<b>' + evalSpeaker + '</b>：' + ev.q + '<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[' + ev.lv + ']</span>' + routeHint;
     document.getElementById('ce-next').textContent = '累積同步率：' + totalSync + '%';
   }, 800);
 }
@@ -1173,7 +1178,8 @@ function startChapter(ch) {
   const sb = document.getElementById('sync-bar');
   app.style.display = 'flex'; app.style.opacity = '1';
   sb.style.display = 'flex'; sb.style.opacity = '1';
-  chatBody.innerHTML = '<div class="tlbl">凌晨 02:' + (['1-1', '2-2'].includes(ch) ? '13' : '41') + '</div>';
+  const chapterStartMinute = ch === '1-1' ? '13' : ch === '2-2' ? '58' : '41';
+  chatBody.innerHTML = '<div class="tlbl">凌晨 02:' + chapterStartMinute + '</div>';
   chatBody.className = '';
   chatBody.style.background = '';
   chatBody.style.filter = '';
