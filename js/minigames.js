@@ -7,7 +7,9 @@ const ECHO_MG_ASSETS = Object.freeze({
   ch21: {
     base: 'img/ui/mg_ch21_map_base.png?v=20260901-10',
     markers: 'img/ui/mg_ch21_map_markers.png?v=20260901-10',
-    panel: 'img/ui/mg_ch21_map_panel.png?v=20260901-10'
+    panel: 'img/ui/mg_ch21_map_panel.png?v=20260901-10',
+    static: 'img/ui/mg_ch21_cctv_static.png?v=20260902-1',
+    cctv: 'img/scenes/tunnel_cctv.jpg?v=20260902-1'
   },
   ch22: {
     a: 'img/scenes/ch22_room_diff_A.jpg',
@@ -120,11 +122,11 @@ function runGraphicMapInvestigation() {
     let graffitiFound = false;
     const viewed = {};
     const points = [
-      { id: 'entrance', label: 'A入口', x: 20, y: 72, note: '入口動線正常。雨水積在階梯下方。' },
-      { id: 'exit', label: 'B出口', x: 79, y: 22, note: '出口沒有異常通行紀錄。' },
-      { id: 'camera', label: 'CAM 07', x: 63, y: 48, note: '監視器拍得到最後畫面，但 03:17 後訊號中斷。' },
-      { id: 'blind', label: '死角', x: 39, y: 33, note: '這個位置被柱體遮蔽，監視器拍不到。' },
-      { id: 'graffiti', label: '塗鴉牆', x: 48, y: 78, note: '牆面有一段模糊字樣。再點一次放大。' }
+      { id: 'entrance', label: 'A入口', x: 20, y: 72, thumb: 'static', note: '入口動線正常。雨水積在階梯下方。' },
+      { id: 'exit', label: 'B出口', x: 79, y: 22, thumb: 'static', note: '出口沒有異常通行紀錄。' },
+      { id: 'camera', label: 'CAM 07', x: 63, y: 48, thumb: 'cctv', note: '監視器拍得到最後畫面，但 03:17 後訊號中斷。' },
+      { id: 'blind', label: '死角', x: 39, y: 33, thumb: 'static', note: '這個位置被柱體遮蔽，監視器拍不到。' },
+      { id: 'graffiti', label: '塗鴉牆', x: 48, y: 78, thumb: 'static', note: '牆面有一段模糊字樣。再點一次放大。' }
     ];
 
     const root = echoMiniGameShell('CH2-1 · UNDERGROUND MAP', '萬華地下道調查', '點擊圖上節點調查。塗鴉牆需要二次確認。', ECHO_MG_ASSETS.ch21.panel);
@@ -149,7 +151,8 @@ function runGraphicMapInvestigation() {
     const calloutThumb = callout.querySelector('.map-callout-thumb');
     const calloutTitle = callout.querySelector('.map-callout-title');
     const calloutCopy = callout.querySelector('.map-callout-copy');
-    const mapPreviewUrl = new URL(ECHO_MG_ASSETS.ch21.base, document.baseURI).href;
+    const staticPreviewUrl = new URL(ECHO_MG_ASSETS.ch21.static, document.baseURI).href;
+    const cctvPreviewUrl = new URL(ECHO_MG_ASSETS.ch21.cctv, document.baseURI).href;
 
     function showMapCallout(point, copyText, isAlert) {
       const left = Math.max(30, Math.min(70, point.x));
@@ -161,8 +164,10 @@ function runGraphicMapInvestigation() {
       callout.style.top = point.y + '%';
       calloutTitle.textContent = point.label;
       calloutCopy.textContent = copyText || point.note;
-      calloutThumb.style.backgroundImage = 'url("' + mapPreviewUrl + '")';
-      calloutThumb.style.backgroundPosition = point.x + '% ' + point.y + '%';
+      const previewUrl = point.thumb === 'cctv' ? cctvPreviewUrl : staticPreviewUrl;
+      calloutThumb.style.backgroundImage = 'url("' + previewUrl + '")';
+      calloutThumb.style.backgroundSize = 'cover';
+      calloutThumb.style.backgroundPosition = 'center';
       callout.classList.add('is-visible');
     }
 
