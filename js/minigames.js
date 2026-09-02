@@ -134,6 +134,38 @@ function runGraphicMapInvestigation() {
     stage.className = 'echo-mg-stage map-stage';
     stage.appendChild(echoArtImg(ECHO_MG_ASSETS.ch21.base, 'echo-mg-stage-img', '地下道地圖'));
     stage.appendChild(echoArtImg(ECHO_MG_ASSETS.ch21.markers, 'echo-mg-marker-sheet', '地圖標記素材'));
+
+    const callout = document.createElement('div');
+    callout.className = 'map-callout';
+    callout.setAttribute('aria-live', 'polite');
+    callout.innerHTML =
+      '<div class="map-callout-thumb" aria-hidden="true"></div>' +
+      '<div class="map-callout-body">' +
+        '<div class="map-callout-title"></div>' +
+        '<div class="map-callout-copy"></div>' +
+      '</div>';
+    stage.appendChild(callout);
+
+    const calloutThumb = callout.querySelector('.map-callout-thumb');
+    const calloutTitle = callout.querySelector('.map-callout-title');
+    const calloutCopy = callout.querySelector('.map-callout-copy');
+    const mapPreviewUrl = new URL(ECHO_MG_ASSETS.ch21.base, document.baseURI).href;
+
+    function showMapCallout(point, copyText, isAlert) {
+      const left = Math.max(30, Math.min(70, point.x));
+      const showBelow = point.y < 55;
+      callout.classList.remove('above', 'below', 'is-alert');
+      callout.classList.add(showBelow ? 'below' : 'above');
+      if (isAlert) callout.classList.add('is-alert');
+      callout.style.left = left + '%';
+      callout.style.top = point.y + '%';
+      calloutTitle.textContent = point.label;
+      calloutCopy.textContent = copyText || point.note;
+      calloutThumb.style.backgroundImage = 'url("' + mapPreviewUrl + '")';
+      calloutThumb.style.backgroundPosition = point.x + '% ' + point.y + '%';
+      callout.classList.add('is-visible');
+    }
+
     const note = document.createElement('div');
     note.className = 'echo-mg-note';
     note.textContent = '選擇一個調查點位。';
@@ -158,17 +190,21 @@ function runGraphicMapInvestigation() {
         if (p.id === 'graffiti') {
           graffitiStage++;
           if (graffitiStage >= 2 && !graffitiFound) {
+            const clueText = '放大結果：牆上有模糊字樣「LYQ……」';
             graffitiFound = true;
             btn.classList.add('is-clue');
-            note.textContent = '放大結果：牆上有模糊字樣「LYQ……」';
+            note.textContent = clueText;
+            showMapCallout(p, clueText, true);
             addSync(3);
             gToast('+3% 同步率（塗鴉牆異常）');
           } else {
             note.textContent = p.note;
+            showMapCallout(p, p.note, false);
           }
           return;
         }
         note.textContent = p.note;
+        showMapCallout(p, p.note, false);
         if (!normalAwarded) {
           normalAwarded = true;
           addSync(2);
