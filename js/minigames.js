@@ -207,10 +207,12 @@ function runSpotDifference() {
       { id: 'clock',  label: '時鐘時間',   x: 68.5, y: 54.7, hitW: 28, hitH: 22, reaction: '那天我回家很晚……可是我不記得，中間那段時間發生了什麼。' },
       { id: 'note',   label: '粉紅便條',   x: 80.5, y: 57.5, hitW: 26, hitH: 24, reaction: '我有時候會留紙條，怕自己忘記事情。' },
       { id: 'aroma',  label: '右側物件',   x: 88.7, y: 58.6, hitW: 26, hitH: 52, reaction: '我不太喜歡房間太暗。尤其下雨的晚上。' },
-      { id: 'bed',    label: '床鋪變化',   x: 24.6, y: 78.6, hitW: 96, hitH: 70, reaction: '我其實不太會弄亂床。除非……那天真的很累。' }
+      { id: 'teddy',  label: '小熊消失',   x: 45.2, y: 60.5, hitW: 46, hitH: 44, reaction: '那隻熊我一直放在床上。它不應該突然不見。' },
+      { id: 'bed',    label: '床單／毯子變化', x: 24.6, y: 78.6, hitW: 86, hitH: 58, reaction: '我其實不太會弄亂床。除非……那天真的很累。' }
     ];
+    const totalDifferences = hotspots.length;
 
-    const root = echoMiniGameShell('CH2-2 · SPOT THE DIFFERENCE', '房間照片比對', '上下兩張照片中共有 5 個差異。直接比對並點擊任一張照片的差異位置。', ECHO_MG_ASSETS.ch22.frame);
+    const root = echoMiniGameShell('CH2-2 · SPOT THE DIFFERENCE', '房間照片比對', '上下兩張照片有多處不同。請把所有明顯差異都圈出來。', ECHO_MG_ASSETS.ch22.frame);
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
     const pair = document.createElement('div');
@@ -218,7 +220,7 @@ function runSpotDifference() {
 
     const counter = document.createElement('div');
     counter.className = 'echo-mg-note';
-    counter.textContent = '已找到 0 / 5 · 上下比對後直接點擊差異';
+    counter.textContent = '已找到 0 / ' + totalDifferences + ' · 上下比對後直接點擊差異';
     const reaction = document.createElement('div');
     reaction.className = 'echo-mg-note spot-reaction';
     reaction.textContent = '林雨晴：我整理東西的時候……發現這兩張照片好像不太一樣。';
@@ -231,15 +233,15 @@ function runSpotDifference() {
         hit.classList.add('is-found');
         hit.style.setProperty('--marker-art', markerUrl);
       });
-      counter.textContent = '已找到 ' + found.size + ' / 5 · ' + h.label;
+      counter.textContent = '已找到 ' + found.size + ' / ' + totalDifferences + ' · ' + h.label;
       reaction.textContent = '林雨晴：' + h.reaction;
 
-      if (found.size === 5) {
+      if (found.size === totalDifferences) {
         settled = true;
         const lowerStage = pair.querySelector('.spot-panel-b .spot-stage');
         const complete = echoArtImg(ECHO_MG_ASSETS.ch22.complete, 'echo-mg-complete-art spot-complete-art', '比對完成');
         if (lowerStage) lowerStage.appendChild(complete);
-        setTimeout(() => echoFinishMiniGame(resolve, { found: 5, completed: true }), 950);
+        setTimeout(() => echoFinishMiniGame(resolve, { found: totalDifferences, completed: true }), 950);
       }
     }
 

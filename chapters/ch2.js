@@ -311,7 +311,7 @@ async function ch22_roomTrace() {
   await addMsg('sys', '【林雨晴房間紀錄】 已解鎖', { noTyping: true, delay: 350 });
   await sleep(450);
   await addMsg('other', '我整理東西的時候……<br>發現這兩張照片好像不太一樣。', { typing: 1800, meta: '03:01', isRain: true });
-  await addMsg('sys', '請找出兩張照片中的 5 處不同處<br>點擊差異處進行標記', { noTyping: true, delay: 300 });
+  await addMsg('sys', '請找出兩張照片中所有明顯不同處<br>點擊差異處進行標記', { noTyping: true, delay: 300 });
 
   const diffResult = await runSpotDifference();
   if (!diffResult || !diffResult.completed) return;
