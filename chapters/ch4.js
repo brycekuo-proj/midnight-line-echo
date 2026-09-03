@@ -137,6 +137,7 @@ async function ch41_s4() {
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
     if (tr) tr.dataset.txt = '左聲道：你本來的聲音（困惑、害怕）<br>右聲道：（扭曲版，空洞平靜）<br>EVA：「你現在哪一個才是你？」';
+    res.bbl.dataset.audioSrc = 'assets/audio/story/ch4-1/ch41_split_stereo.mp3';
   }
   showOpts([
     { text: '滾出我的腦袋！',   sync: 0 },

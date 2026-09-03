@@ -11,6 +11,7 @@ let echoMode = null; // 'player' | 'engineer'; must be chosen on the landing scr
 let backCount = 0, filesViewed = 0, silTimer = null, silTriggered = false;
 let lbViewCount = {};
 let activeWidgetController = null;
+let activeStoryAudio = null;
 
 function loadProgress() {
   totalSync = 0;
@@ -145,6 +146,14 @@ function closeMiniGameOverlay(controller) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function scrollBottom() { chatBody.scrollTop = chatBody.scrollHeight; }
+
+function stopStoryAudio() {
+  if (!activeStoryAudio) return;
+  activeStoryAudio.player.pause();
+  activeStoryAudio.player.currentTime = 0;
+  if (activeStoryAudio.bubble) activeStoryAudio.bubble.classList.remove('playing');
+  activeStoryAudio = null;
+}
 
 function showTyping(v, style) {
   typingEl.style.display = v ? 'flex' : 'none';
@@ -435,11 +444,43 @@ async function addMsg(type, content, opts) {
     const bars = heights.map((h, i) => '<div class="wf-bar" style="height:' + h + 'px;--h:' + h + 'px;--dur:' + (0.4 + i * 0.07) + 's"></div>').join('');
     bbl.innerHTML = '<div class="audio-top"><span style="font-size:1.1rem">🎙</span><div class="audio-wf">' + bars + '</div></div><div class="audio-label">' + label + '</div><div class="audio-tr"></div>';
     bbl.onclick = function() {
-      this.classList.toggle('playing');
+      const willPlay = !this.classList.contains('playing');
+
+      if (activeStoryAudio) {
+        activeStoryAudio.player.pause();
+        activeStoryAudio.player.currentTime = 0;
+        if (activeStoryAudio.bubble && activeStoryAudio.bubble !== this) {
+          activeStoryAudio.bubble.classList.remove('playing');
+          const oldTr = activeStoryAudio.bubble.querySelector('.audio-tr');
+          if (oldTr) oldTr.style.display = 'none';
+        }
+        activeStoryAudio = null;
+      }
+
+      this.classList.toggle('playing', willPlay);
       const tr = this.querySelector('.audio-tr');
-      if (this.classList.contains('playing')) {
+      if (willPlay) {
         tr.style.display = 'block';
         if (tr.dataset.txt) tr.innerHTML = tr.dataset.txt;
+        if (this.dataset.audioSrc) {
+          const player = new Audio(new URL(this.dataset.audioSrc, document.baseURI).href);
+          player.preload = 'auto';
+          activeStoryAudio = { player, bubble: this };
+          player.onended = () => {
+            if (activeStoryAudio && activeStoryAudio.player === player) activeStoryAudio = null;
+            this.classList.remove('playing');
+          };
+          player.onerror = () => {
+            if (activeStoryAudio && activeStoryAudio.player === player) activeStoryAudio = null;
+            this.classList.remove('playing');
+            gToast('音訊載入失敗');
+          };
+          player.play().catch(() => {
+            if (activeStoryAudio && activeStoryAudio.player === player) activeStoryAudio = null;
+            this.classList.remove('playing');
+            gToast('請再點一次播放語音');
+          });
+        }
       } else {
         tr.style.display = 'none';
       }
@@ -1001,6 +1042,7 @@ function trackFile() {
 }
 
 async function fadeOut() {
+  stopStoryAudio();
   const app = document.getElementById('app');
   const sb = document.getElementById('sync-bar');
   app.style.transition = 'opacity 1.5s'; app.style.opacity = '0';
@@ -1141,6 +1183,7 @@ async function chooseGameMode(mode, event) {
 }
 
 function returnToModeSelect() {
+  stopStoryAudio();
   cancelActiveWidget('mode_select');
   document.getElementById('chapter-select').style.display = 'none';
   document.getElementById('app').style.display = 'none';
@@ -1196,6 +1239,7 @@ function updateChapterSelectUI() {
 }
 
 function goChapterSelect() {
+  stopStoryAudio();
   cancelActiveWidget('chapter_select');
   document.getElementById('chapter-end').style.display = 'none';
   document.getElementById('app').style.display = 'none';
@@ -1205,6 +1249,7 @@ function goChapterSelect() {
 }
 
 function startChapter(ch) {
+  stopStoryAudio();
   if (!isChapterUnlocked(ch)) {
     if (echoMode === 'player') gToast('🔒 此章節尚未解鎖');
     return false;

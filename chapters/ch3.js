@@ -63,6 +63,7 @@ async function ch31_s2() {
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
     if (tr) tr.dataset.txt = '（哭聲、喘息）<br>「不要讓它看見你……快……快走……」';
+    res.bbl.dataset.audioSrc = 'assets/audio/story/ch3-1/ch31_last_voice.mp3';
   }
   await sleep(600);
   await addMsg('other', '你現在的房間。', { typing: 1200, meta: '03:04', isRain: true });
@@ -146,6 +147,7 @@ async function ch31_s5() {
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
     if (tr) tr.dataset.txt = '（你的呼吸聲）<br>……（第二個呼吸聲，更近）<br><i style="color:var(--sync)">EVA（極輕）：「我就知道你睡著了……」</i>';
+    res.bbl.dataset.audioSrc = 'assets/audio/story/ch3-1/ch31_sleep_recording.mp3';
   }
   showOpts([
     { text: '這錄音哪來的？！',       sync: 2 },
@@ -286,11 +288,12 @@ window.CHAPTERS['3-3'] = async function() {
   await addMsg('sys', '未接來電：K / 未接來電：你自己', { noTyping: true, delay: 400 });
   await sleep(800);
   const res = await addMsg('other',
-    '__AUDIO:K的第一段語音 · 0:06__',
+    '__AUDIO:K的第一段語音 · 0:11__',
     { typing: 1200, meta: '02:51', isK: true });
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
     if (tr) tr.dataset.txt = '（沙啞）「……你聽得到我嗎？<br>把音量開大一點……我只能用聲音跟你說了……」';
+    res.bbl.dataset.audioSrc = 'assets/audio/story/ch3-3/ch33_k_first_voice.mp3';
   }
   await sleep(600);
   await addMsg('other',
@@ -302,6 +305,7 @@ window.CHAPTERS['3-3'] = async function() {
   if (res2 && res2.bbl) {
     const tr = res2.bbl.querySelector('.audio-tr');
     if (tr) tr.dataset.txt = '（水滴聲、電流）<br>（第三個呼吸聲……比 K 和你都慢、都近）';
+    res2.bbl.dataset.audioSrc = 'assets/audio/story/ch3-3/ch33_tunnel_ambience.mp3';
   }
   showOpts([
     { text: '我聽到了第三個呼吸……', sync: 4 },
@@ -316,11 +320,11 @@ async function ch33_s2() {
     '它開始學你了……<br>再過不久，它就會用你的聲音跟我說話。',
     { typing: 2200, meta: '02:53', isK: true });
   const audios = [
-    ['玩家自己聲音說「救我」（語調完全不像自己）', '"救我……"（聲音是你的，但你從沒說過）'],
-    ['兩個K同時說話的對話', 'K1：「你在嗎？」K2：「我在……但不是那個K了。」'],
-    ['三種呼吸聲同時出現', '（你的）（K的）（第三個）'],
+    ['玩家自己聲音說「救我」（語調完全不像自己）', '"救我……"（聲音是你的，但你從沒說過）', 'assets/audio/story/ch3-3/ch33_fake_player_help.mp3'],
+    ['兩個K同時說話的對話', 'K1：「你在嗎？」K2：「我在……但不是那個K了。」', 'assets/audio/story/ch3-3/ch33_double_k.mp3'],
+    ['三種呼吸聲同時出現', '（你的）（K的）（第三個）', 'assets/audio/story/ch3-3/ch33_three_breaths.mp3'],
   ];
-  for (const [label, tr] of audios) {
+  for (const [label, tr, audioSrc] of audios) {
     await sleep(300);
     const res = await addMsg('other',
       '__AUDIO:' + label + '__',
@@ -328,6 +332,7 @@ async function ch33_s2() {
     if (res && res.bbl) {
       const tel = res.bbl.querySelector('.audio-tr');
       if (tel) tel.dataset.txt = tr;
+      res.bbl.dataset.audioSrc = audioSrc;
     }
   }
   await sleep(350);
@@ -394,6 +399,7 @@ async function ch33_s3() {
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
     if (tr) tr.dataset.txt = '（地下道回音、腳步聲）<br>……（第三個呼吸聲，極近）<br>K：「那個聲音……不是這裡的。」';
+    res.bbl.dataset.audioSrc = 'assets/audio/story/ch3-3/ch33_live_tunnel_call.mp3';
   }
   showOpts([
     { text: '那真的是我的聲音？', sync: 3 },
@@ -437,11 +443,12 @@ async function ch33_s5() {
   // 頭像換成 k_glitch（CSS 動態效果）
   applyKGlitch(1);
   const res = await addMsg('other',
-    '__AUDIO:自己的聲音 · 0:10__',
+    '__AUDIO:自己的聲音 · 0:15__',
     { typing: 0, delay: 200, meta: '02:59', isUnk: true });
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
-    if (tr) tr.dataset.txt = '（前10秒安靜）<br>（極度溫柔的自己的聲音）<br>「不要怕……我已經到你後面了。」';
+    if (tr) tr.dataset.txt = '（前段安靜）<br>（極度溫柔的自己的聲音）<br>「不要怕……我已經到你後面了。」';
+    res.bbl.dataset.audioSrc = 'assets/audio/story/ch3-3/ch33_own_voice.mp3';
   }
   await sleep(600);
   await addMsg('inject', '不要回頭', { noTyping: true, delay: 100 });
