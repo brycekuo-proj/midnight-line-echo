@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "updated": "2026-09-03",
+  "provider": "voxcpm2_local",
+  "source_license": "candidates/SOURCE_LICENSE.txt",
+  "mapping": {
+    "k": {
+      "character": "K",
+      "reference": "candidates/male_A_40s_taipei_REFERENCE.wav",
+      "transcript": "candidates/male_A_40s_taipei_REFERENCE.txt"
+    },
+    "rain": {
+      "character": "林雨晴",
+      "reference": "candidates/female_A_30s_newtaipei_REFERENCE.wav",
+      "transcript": "candidates/female_A_30s_newtaipei_REFERENCE.txt"
+    },
+    "eva": {
+      "character": "EVA",
+      "reference": "candidates/female_B_20s_REFERENCE.wav",
+      "transcript": "candidates/female_B_20s_REFERENCE.txt"
+    }
+  }
+}

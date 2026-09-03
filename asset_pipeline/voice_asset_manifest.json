@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "updated": "2026-09-03",
+  "source_commit": "2e48879",
+  "engine": {
+    "provider": "voxcpm2_local",
+    "local_root": "/Users/user/Bryce AI Studio/AI/AI Content Factory/vendor/external/voxcpm2_sandbox/",
+    "master_format": "wav_pcm16_24khz_mono",
+    "delivery_format": "mp3_96kbps_mono"
+  },
+  "voices": {
+    "k": {
+      "character": "K",
+      "reference": "assets/audio/voice_refs/candidates/male_A_40s_taipei_REFERENCE.wav",
+      "transcript": "assets/audio/voice_refs/candidates/male_A_40s_taipei_REFERENCE.txt",
+      "locked": true
+    },
+    "rain": {
+      "character": "林雨晴",
+      "reference": "assets/audio/voice_refs/candidates/female_A_30s_newtaipei_REFERENCE.wav",
+      "transcript": "assets/audio/voice_refs/candidates/female_A_30s_newtaipei_REFERENCE.txt",
+      "locked": true
+    },
+    "eva": {
+      "character": "EVA",
+      "reference": "assets/audio/voice_refs/candidates/female_B_20s_REFERENCE.wav",
+      "transcript": "assets/audio/voice_refs/candidates/female_B_20s_REFERENCE.txt",
+      "locked": true
+    }
+  },
+  "runtime_standard_tts": {
+    "total": 128,
+    "by_speaker": {
+      "k": 27,
+      "rain": 27,
+      "eva": 74
+    },
+    "by_chapter": [
+      { "chapter": "1-1", "k": 6, "rain": 0, "eva": 10, "total": 16 },
+      { "chapter": "2-1", "k": 11, "rain": 0, "eva": 2, "total": 13 },
+      { "chapter": "2-2", "k": 0, "rain": 15, "eva": 0, "total": 15 },
+      { "chapter": "3-1", "k": 0, "rain": 4, "eva": 10, "total": 14 },
+      { "chapter": "3-2", "k": 0, "rain": 6, "eva": 0, "total": 6 },
+      { "chapter": "3-3", "k": 6, "rain": 0, "eva": 0, "total": 6 },
+      { "chapter": "4-1", "k": 1, "rain": 0, "eva": 9, "total": 10 },
+      { "chapter": "4-2", "k": 0, "rain": 0, "eva": 26, "total": 26 },
+      { "chapter": "5", "k": 3, "rain": 2, "eva": 17, "total": 22 }
+    ]
+  },
+  "special_audio": [
+    {
+      "id": "sp_ch31_last_voice",
+      "chapter": "3-1",
+      "target_seconds": 15,
+      "voices": ["rain"],
+      "design": ["crying", "panting", "unstable_recording"]
+    },
+    {
+      "id": "sp_ch31_sleep_recording",
+      "chapter": "3-1",
+      "target_seconds": 20,
+      "voices": ["eva", "synthetic_player_breath", "second_breath"],
+      "design": ["very_quiet_eva", "close_second_breath"]
+    },
+    {
+      "id": "sp_ch33_k_first_voice",
+      "chapter": "3-3",
+      "target_seconds": 6,
+      "voices": ["k"],
+      "design": ["strained", "hoarse", "phone_recording"]
+    },
+    {
+      "id": "sp_ch33_tunnel_ambience",
+      "chapter": "3-3",
+      "target_seconds": 12,
+      "voices": [],
+      "design": ["water_drops", "electrical_noise", "third_breath"]
+    },
+    {
+      "id": "sp_ch33_fake_player_help",
+      "chapter": "3-3",
+      "target_seconds": null,
+      "voices": ["synthetic_player"],
+      "design": ["deliberately_wrong_identity", "distorted"]
+    },
+    {
+      "id": "sp_ch33_double_k",
+      "chapter": "3-3",
+      "target_seconds": null,
+      "voices": ["k", "k_processed"],
+      "design": ["two_k_layers", "separate_pitch_space_timing"]
+    },
+    {
+      "id": "sp_ch33_three_breaths",
+      "chapter": "3-3",
+      "target_seconds": null,
+      "voices": [],
+      "design": ["player_breath", "k_breath", "third_breath"]
+    },
+    {
+      "id": "sp_ch33_live_tunnel_call",
+      "chapter": "3-3",
+      "target_seconds": 20,
+      "voices": ["k"],
+      "design": ["tunnel_echo", "footsteps", "third_breath_close"]
+    },
+    {
+      "id": "sp_ch33_own_voice",
+      "chapter": "3-3",
+      "target_seconds": 10,
+      "voices": ["synthetic_player"],
+      "design": ["long_silence_leadin", "unnaturally_gentle", "distorted"]
+    },
+    {
+      "id": "sp_ch41_split_stereo",
+      "chapter": "4-1",
+      "target_seconds": 15,
+      "voices": ["eva", "synthetic_player", "synthetic_player_processed"],
+      "design": ["stereo", "left_right_identity_split"]
+    }
+  ],
+  "existing_audio": {
+    "ch3_3_animal_sfx": [
+      "audio/ch3-3/dog.wav",
+      "audio/ch3-3/cat.wav",
+      "audio/ch3-3/cow.wav",
+      "audio/ch3-3/goat.wav",
+      "audio/ch3-3/bird.wav",
+      "audio/ch3-3/chicken.wav"
+    ]
+  },
+  "text_only_mvp": [
+    "player_choices",
+    "player_messages",
+    "system_messages",
+    "inject_messages",
+    "time_labels",
+    "minigame_ui",
+    "evidence_cards",
+    "normal_end_friend",
+    "anonymous_text_chat"
+  ],
+  "deferred_canon": {
+    "end_mid": {
+      "status": "wait_for_dedicated_runtime",
+      "eva_assets": 1
+    },
+    "end_high": {
+      "status": "wait_for_dedicated_runtime",
+      "eva_assets": 4
+    },
+    "origin": {
+      "status": "wait_for_runtime_and_timing_freeze",
+      "new_voice_identities": ["alpha", "beta", "subject"],
+      "existing_voice_identities": ["eva"]
+    }
+  }
+}

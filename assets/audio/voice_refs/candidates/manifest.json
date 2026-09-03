@@ -1,0 +1,74 @@
+{
+  "female_A_30s_newtaipei": [
+    {
+      "file": "female_A_30s_newtaipei_1.wav",
+      "source_file": "common_voice_zh-TW_22704609_0000.wav",
+      "sentence": "我們會把責任扛起來",
+      "predicted_mos": 4.109375
+    },
+    {
+      "file": "female_A_30s_newtaipei_2.wav",
+      "source_file": "common_voice_zh-TW_22704578_0000.wav",
+      "sentence": "讓臺灣的經濟結構轉型",
+      "predicted_mos": 4.08203125
+    },
+    {
+      "file": "female_A_30s_newtaipei_3.wav",
+      "source_file": "common_voice_zh-TW_22704661_0000.wav",
+      "sentence": "按部就班來規劃與執行",
+      "predicted_mos": 3.953125
+    },
+    {
+      "file": "female_A_30s_newtaipei_4.wav",
+      "source_file": "common_voice_zh-TW_22704652_0000.wav",
+      "sentence": "是各國政府越來越關心的課題",
+      "predicted_mos": 3.892578125
+    }
+  ],
+  "female_B_20s": [
+    {
+      "file": "female_B_20s_1.wav",
+      "source_file": "common_voice_zh-TW_17381060_0000.wav",
+      "sentence": "下班公車要等四十分鐘",
+      "predicted_mos": 3.83203125
+    },
+    {
+      "file": "female_B_20s_2.wav",
+      "source_file": "common_voice_zh-TW_17381106_0000.wav",
+      "sentence": "研究機構包括學校",
+      "predicted_mos": 3.822265625
+    },
+    {
+      "file": "female_B_20s_3.wav",
+      "source_file": "common_voice_zh-TW_17397260_0000.wav",
+      "sentence": "完全沒有蟲鳴鳥叫",
+      "predicted_mos": 3.8125
+    },
+    {
+      "file": "female_B_20s_4.wav",
+      "source_file": "common_voice_zh-TW_17381449_0000.wav",
+      "sentence": "減輕受害者的傷痛",
+      "predicted_mos": 3.8046875
+    }
+  ],
+  "male_A_40s_taipei": [
+    {
+      "file": "male_A_40s_taipei_1.wav",
+      "source_file": "common_voice_zh-TW_21295654_0000.wav",
+      "sentence": "漢字順序不影響閱讀",
+      "predicted_mos": 3.791015625
+    },
+    {
+      "file": "male_A_40s_taipei_2.wav",
+      "source_file": "common_voice_zh-TW_20906937_0000.wav",
+      "sentence": "以前的民主是兩個價值觀的對決",
+      "predicted_mos": 3.76171875
+    },
+    {
+      "file": "male_A_40s_taipei_3.wav",
+      "source_file": "common_voice_zh-TW_20939463_0000.wav",
+      "sentence": "隨著版本流傳，文本會有增刪",
+      "predicted_mos": 3.73046875
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Source: OKHand/Clean_Common_Voice_Speech_24.0-TW (derived from Mozilla Common Voice zh-TW)
+License: CC0-1.0
+Purpose: candidate voice reference samples for local VoxCPM2 testing in ECHO.
+Dataset page: https://huggingface.co/datasets/OKHand/Clean_Common_Voice_Speech_24.0-TW
+Mozilla Common Voice terms state contributions are made available under CC0.
