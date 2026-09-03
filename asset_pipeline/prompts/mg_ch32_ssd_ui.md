@@ -1,4 +1,6 @@
-# Prompt Spec — CH3-2 SSD Personality Archive GUI
+# LEGACY Prompt Spec — CH3-2 SSD Personality Archive GUI
+
+> Deprecated for CH3-2 gameplay as of 2026-09-03. Do not regenerate this as the chapter's primary mini-game UI. CH3-2 now uses the ONLINE GAME / Moderator Deduction hidden-role interface. Existing SSD images may remain only as backing art or post-win archive atmosphere.
 
 Mini-game ID: `ssd_archive`
 Asset type: `minigame_ui`

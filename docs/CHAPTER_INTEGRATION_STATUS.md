@@ -12,7 +12,7 @@ Purpose: single runtime handoff table for chapter organization, canonical route 
 | `2-1` | 《地下道》 | K investigation route | Underground Map Investigation | `mg_ch21_*` + tunnel evidence | integrated |
 | `2-2` | 《雨夜留言》 | Lin Yuqing route | Room Spot-the-Difference | `ch22_room_diff_A/B` + `mg_ch22_*` | integrated |
 | `3-1` | 《已讀中》 | EVA memory corruption route | Memory Repair | `mg_ch31_*` | integrated |
-| `3-2` | 《在線中》 | online-presence horror route | SSD Personality Archive support interaction | `mg_ch32_*` | integrated visual/gameplay layer; canon online-confirmation structure still needs deeper rewrite |
+| `3-2` | 《在線中》 | hidden-role online deduction / Lin Yuqing route | ONLINE GAME (Werewolf-style moderator deduction) | DOM roster + reused `mg_ch32_*` backing art | implemented: 3 discussion rounds, offline eliminations, final one-shot moderator vote, win/fail route lock |
 | `3-3` | 《不要開聲音》 | K audio anomaly route | Audio Verification | `mg_ch33_*` | integrated |
 | `4-1` | 《鏡中已讀》 | mirror / identity route | Mirror Fragment + Mirror Lock | `mg_ch41_*` | integrated |
 | `4-2` | 《Agent》 | EVA assistant escalation | Permission Whack + Territory | `mg_ch42_permission_*`, `mg_ch42_territory_*` | integrated |
@@ -27,7 +27,7 @@ Purpose: single runtime handoff table for chapter organization, canonical route 
 1. CH2-1 calls `runGraphicMapInvestigation()`.
 2. CH2-2 calls `runSpotDifference()`.
 3. CH3-1 calls `runMemoryRepair()`.
-4. CH3-2 calls `runSsdArchive()`.
+4. CH3-2 calls `runOnlineModeratorGame()`; `runSsdArchive()` remains only as a compatibility alias for older snapshots.
 5. CH3-3 calls `runAudioVerification()`.
 6. CH4-1 calls `runMirrorFragment()` and resolves Mirror Lock inside the same widget.
 7. CH4-2 keeps its existing `runPermissionWhack()` and `ch42RunTerritory()` logic; CSS now layers the generated production UI assets onto those real interactions.

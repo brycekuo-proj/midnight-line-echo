@@ -414,6 +414,35 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .ssd-detail{min-height:76px;border:1px solid #293246;border-radius:11px;background:linear-gradient(rgba(8,10,16,.78),rgba(8,10,16,.78)),var(--detail-art);background-size:cover;padding:.65rem;display:flex;flex-direction:column;gap:.3rem}
 .ssd-detail-title{font-size:.62rem;color:#b8cff4;font-family:monospace}.ssd-detail-copy{font-size:.68rem;color:#8b94a8;line-height:1.55}
 
+/* CH3-2 · ONLINE GAME — hidden-role / Werewolf-style discussion and final vote */
+.online-werewolf-game{background:linear-gradient(180deg,rgba(4,12,13,.96),rgba(3,7,9,.99)),var(--mg-art);border-color:#1f3a3c}
+.online-werewolf-game:before{background:radial-gradient(circle at 50% 0,rgba(53,190,168,.09),transparent 44%)}
+.online-game-status{color:#8de9d2;border-color:rgba(85,220,190,.32);background:rgba(6,24,23,.7)}
+.online-phase-bar{display:flex;align-items:center;justify-content:space-between;gap:.55rem;padding:.5rem .6rem;border:1px solid rgba(99,184,169,.18);border-radius:10px;background:rgba(4,18,18,.78)}
+.online-phase-label{font-size:.62rem;color:#c9fff2;letter-spacing:.09em;font-weight:700}
+.online-system-line{font-size:.56rem;color:#688d89;text-align:right;line-height:1.35}
+.online-roster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.48rem}
+.online-player-card{position:relative;overflow:hidden;min-height:112px;border:1px solid #263d3e;border-radius:11px;background:linear-gradient(rgba(5,15,16,.82),rgba(5,12,14,.92)),var(--card-art);background-size:cover;transition:opacity .25s,border-color .25s,filter .25s}
+.online-player-card.is-suspected{border-color:#796d42}.online-player-card.is-offline{opacity:.46;filter:grayscale(.82)}
+.online-player-card.is-just-offline{animation:onlineDrop .75s ease both}
+.online-player-top{display:grid;grid-template-columns:1fr auto;align-items:stretch;border-bottom:1px solid rgba(255,255,255,.05)}
+.online-player-main,.online-testimony,.online-suspicion-mark,.online-vote-card{appearance:none;font-family:inherit}
+.online-player-main{min-width:0;border:0;background:transparent;color:#dff7f1;padding:.5rem .52rem;text-align:left;display:flex;flex-direction:column;gap:.12rem}
+.online-player-main b{font-size:.65rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.online-player-main span{font-size:.5rem;color:#648a84;letter-spacing:.04em}
+.online-suspicion-mark{width:50px;border:0;border-left:1px solid rgba(255,255,255,.05);background:rgba(7,12,14,.62);color:#607673;font-size:.55rem;font-weight:700}
+.online-suspicion-mark.is-suspect{color:#d7bd6a;background:rgba(58,45,12,.34)}.online-suspicion-mark.is-admin-suspect{color:#ffd86d;box-shadow:inset 0 0 0 1px rgba(255,207,77,.18)}
+.online-testimony{width:100%;min-height:62px;border:0;background:transparent;color:#9aaea9;padding:.5rem .55rem;text-align:left;font-size:.6rem;line-height:1.48}
+.online-testimony-detail{min-height:66px;padding:.6rem .65rem;border:1px solid #213739;border-radius:10px;background:rgba(3,12,14,.84);display:flex;flex-direction:column;gap:.26rem}
+.online-testimony-detail b{font-size:.62rem;color:#bde8dd}.online-testimony-detail span{font-size:.65rem;color:#829a95;line-height:1.5}
+.online-main-action{border-color:#2e5d58;background:linear-gradient(180deg,#102925,#091a19)}
+.online-vote-card{min-height:88px;border:1px solid #29403f;border-radius:10px;background:rgba(5,16,17,.86);color:#d9ede9;padding:.55rem;display:flex;flex-direction:column;gap:.16rem;text-align:left;transition:transform .16s,border-color .16s,box-shadow .16s}
+.online-vote-card b{font-size:.67rem}.online-vote-card span{font-size:.52rem;color:#688984}.online-vote-card small{font-size:.5rem;color:#8d825b;margin-top:.2rem}
+.online-vote-card.is-offline{opacity:.58;filter:grayscale(.65)}.online-vote-card.is-selected{opacity:1;filter:none;border-color:#79d8c5;box-shadow:0 0 0 1px rgba(105,220,196,.2),0 0 16px rgba(58,173,153,.12);transform:translateY(-1px)}
+.online-werewolf-game.is-victory{border-color:#4f9e8e;box-shadow:0 0 28px rgba(60,190,160,.14)}
+.online-werewolf-game.is-defeat{border-color:#5d363c;box-shadow:0 0 28px rgba(180,55,70,.12)}
+.online-werewolf-game.is-defeat .online-game-status{color:#e18d99;border-color:rgba(220,85,100,.32)}
+@keyframes onlineDrop{0%{opacity:1;filter:none}28%{transform:translateX(-3px)}45%{transform:translateX(3px);background-color:rgba(120,20,30,.2)}100%{opacity:.46;filter:grayscale(.82);transform:translateX(0)}}
+
 .audio-verify-label{font-size:.62rem;color:#a5badc;letter-spacing:.09em;font-family:monospace}
 .audio-verify-wave{width:100%;height:120px;object-fit:cover;border:1px solid #2c3347;border-radius:11px;filter:brightness(.7) saturate(.8)}
 .audio-verify-wave.pulse-wave{animation:wavePulse .8s ease}
@@ -455,4 +484,4 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .tr-timer{background-image:linear-gradient(rgba(12,12,18,.62),rgba(12,12,18,.62)),url('../img/ui/mg_ch42_territory_timer.png');background-size:cover;background-position:center;border-radius:8px;padding:.25rem .45rem}
 .tr-report{background-image:linear-gradient(rgba(12,12,18,.78),rgba(12,12,18,.88)),url('../img/ui/mg_ch42_territory_result.png');background-size:cover;background-position:center}
 
-@media (max-width:430px){#options-area.widget-open{max-height:72dvh;padding:.55rem}.mode-choice{grid-template-columns:1fr;max-width:340px;margin-top:1.7rem}.mode-card{min-height:56px}.t-quote{margin-top:1.5rem}.t-warn{position:static;margin-top:1.4rem}.echo-mg{padding:.65rem}.echo-mg-stage,.echo-mg-stage-img{min-height:190px}.link-stage{min-height:270px}.map-hotspot{font-size:.5rem;padding:.22rem .38rem}.memory-card{font-size:.61rem}.candy-hotspot{width:64px;height:64px}}
+@media (max-width:430px){#options-area.widget-open{max-height:72dvh;padding:.55rem}.mode-choice{grid-template-columns:1fr;max-width:340px;margin-top:1.7rem}.mode-card{min-height:56px}.t-quote{margin-top:1.5rem}.t-warn{position:static;margin-top:1.4rem}.echo-mg{padding:.65rem}.echo-mg-stage,.echo-mg-stage-img{min-height:190px}.link-stage{min-height:270px}.map-hotspot{font-size:.5rem;padding:.22rem .38rem}.memory-card{font-size:.61rem}.online-roster{grid-template-columns:1fr}.online-player-card{min-height:96px}.online-testimony{min-height:50px}.online-phase-bar{align-items:flex-start;flex-direction:column}.online-system-line{text-align:left}.candy-hotspot{width:64px;height:64px}}

@@ -6,6 +6,7 @@ let totalSync = 0;
 let chapterSync = 0;
 let currentChapter = '';
 let completedChapters = {};
+let storyFlags = {};
 let echoMode = null; // 'player' | 'engineer'; must be chosen on the landing screen.
 let backCount = 0, filesViewed = 0, silTimer = null, silTriggered = false;
 let lbViewCount = {};
@@ -14,14 +15,20 @@ let activeWidgetController = null;
 function loadProgress() {
   totalSync = 0;
   completedChapters = {};
+  storyFlags = {};
   try {
     const s = localStorage.getItem('echo_progress');
-    if (s) { const d = JSON.parse(s); totalSync = d.t || 0; completedChapters = d.c || {}; }
+    if (s) {
+      const d = JSON.parse(s);
+      totalSync = d.t || 0;
+      completedChapters = d.c || {};
+      storyFlags = d.f || {};
+    }
   } catch(e) {}
 }
 function saveProgress() {
   if (echoMode !== 'player') return;
-  try { localStorage.setItem('echo_progress', JSON.stringify({ t: totalSync, c: completedChapters })); } catch(e) {}
+  try { localStorage.setItem('echo_progress', JSON.stringify({ t: totalSync, c: completedChapters, f: storyFlags })); } catch(e) {}
 }
 
 function resetPlayerProgress() {
@@ -1082,6 +1089,8 @@ function getPlayerUnlocks() {
   const ch1Done = completedChapters['1-1'] !== undefined;
   const ch2Done = completedChapters['2-1'] !== undefined || completedChapters['2-2'] !== undefined;
   const ch3Done = completedChapters['3-1'] !== undefined || completedChapters['3-2'] !== undefined || completedChapters['3-3'] !== undefined;
+  const ch32Done = completedChapters['3-2'] !== undefined;
+  const ch32AdminVerified = storyFlags.ch32AdminVerified === true;
   const ch4Done = completedChapters['4-1'] !== undefined || completedChapters['4-2'] !== undefined;
   return {
     '1-1': true,
@@ -1090,8 +1099,10 @@ function getPlayerUnlocks() {
     '3-1': ch2Done && !ch3Done && t >= 16,
     '3-2': ch2Done && !ch3Done && t >= 8 && t <= 15,
     '3-3': ch2Done && !ch3Done && t >= 5 && t <= 10,
-    '4-1': ch3Done && !ch4Done && t >= 33,
-    '4-2': ch3Done && !ch4Done && t >= 18 && t <= 66,
+    // CH3-2 is a route judgment game: finding the moderator preserves the high-sync route;
+    // failing it forces the low-sync CH4 route regardless of accumulated sync.
+    '4-1': ch3Done && !ch4Done && (ch32Done ? ch32AdminVerified : t >= 33),
+    '4-2': ch3Done && !ch4Done && (ch32Done ? !ch32AdminVerified : (t >= 18 && t <= 66)),
     '5': ch4Done && t >= 50
   };
 }
@@ -1116,6 +1127,7 @@ async function chooseGameMode(mode, event) {
   } else {
     totalSync = 0;
     completedChapters = {};
+    storyFlags = {};
   }
 
   const title = document.getElementById('title-screen');

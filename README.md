@@ -22,7 +22,7 @@ Interactive psychological-horror chat game built as a static web project.
 | `2-1` | 《地下道》 | Underground Map Investigation |
 | `2-2` | 《雨夜留言》 | Room Spot-the-Difference |
 | `3-1` | 《已讀中》 | Memory Repair |
-| `3-2` | 《在線中》 | SSD Personality Archive support layer |
+| `3-2` | 《在線中》 | ONLINE GAME — hidden-role moderator deduction (Werewolf-style) |
 | `3-3` | 《不要開聲音》 | Audio Verification |
 | `4-1` | 《鏡中已讀》 | Mirror Fragment / Mirror Lock |
 | `4-2` | 《Agent》 | Permission Whack / Territory |

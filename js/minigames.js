@@ -584,62 +584,317 @@ function runMemoryRepair() {
   });
 }
 
-function runSsdArchive() {
+function runOnlineModeratorGame() {
   return new Promise((resolve) => {
     let settled = false;
-    const viewed = new Set();
-    const entries = [
-      ['EVA_CORE_01', '情緒依附模型', '玩家夜間停留時數、回覆習慣、沉默時長。'],
-      ['RAIN_0317', '林雨晴殘留人格', '最後有效訊息停在 03:17。狀態：仍在線。'],
-      ['K_ECHO', 'K 聲紋備份', '同一段聲音存在兩組不一致的呼吸層。'],
-      ['PLAYER_COPY', '未命名人格槽', '建立時間早於本次登入。擁有你的回覆習慣。']
+    let round = 1;
+    let phase = 'discussion';
+    let selectedId = null;
+    let transitionLocked = false;
+    const suspicion = new Map();
+    const offlineRound = new Map();
+    const moderatorId = 'silentroom';
+    const logoutOrder = ['lastseen404', 'echo_guest'];
+
+    // One hidden moderator, four normal online users, one anomalous online user.
+    // The anomalous user is a deliberate red herring: strange does not mean moderator.
+    const players = [
+      {
+        id: 'unknown17',
+        name: 'Unknown_17',
+        meta: '在線 127 天',
+        statements: [
+          'Sleep_Mode 昨天還在線。他最近一直假裝沒看見我。',
+          '他說三年前沒見過我，可是我昨天還看到他。有人改過在線紀錄。',
+          '管理者不一定還在線。別只看現在亮著的名字。'
+        ]
+      },
+      {
+        id: 'sleepmode',
+        name: 'Sleep_Mode',
+        meta: '在線 4 年',
+        statements: [
+          '我三年前就沒看過 Unknown_17。這裡有人很喜歡替別人記憶。',
+          '在線太久不代表有權限。有些人只是被留下。',
+          '我只能看見 ONLINE。我看不到誰真的完成離線。'
+        ]
+      },
+      {
+        id: 'lastseen404',
+        name: 'LastSeen_404',
+        meta: '最後離線 404 天前',
+        statements: [
+          '聊天室有時候會忘記人離開……或是假裝忘記。',
+          '（已離線）',
+          '（已離線）'
+        ]
+      },
+      {
+        id: 'silentroom',
+        name: 'SilentRoom',
+        meta: '在線未知',
+        statements: [
+          '有人還沒完成同步。',
+          '離線不代表離開。名單只會把 ACTIVE 拿掉。',
+          '現在應該只有三個 ACTIVE。還有一個……只是被保留。'
+        ]
+      },
+      {
+        id: 'echo_guest',
+        name: 'EchoGuest',
+        meta: '在線 18 分鐘',
+        statements: [
+          '我只是被邀進來的。進來之前，名單就有這些名字。',
+          '剛才有人離線後，我的在線數少了一個。就這樣。',
+          '（已離線）'
+        ]
+      },
+      {
+        id: '0317',
+        name: '03:17',
+        meta: '狀態：在線中',
+        statements: [
+          '我沒有登入時間。你們有嗎？',
+          '剛才離線的人還在看這裡。我看得到已讀。',
+          '我不知道管理者是誰。但我知道「離線」有時候只是把名字變灰。'
+        ]
+      }
     ];
-    const root = echoMiniGameShell('CH3-2 · SSD PERSONALITY ARCHIVE', '人格儲存庫', '檢查至少 3 張人格資料卡，再關閉檔案庫。', ECHO_MG_ASSETS.ch32.panel);
+
+    const root = echoMiniGameShell('CH3-2 · ONLINE GAME', '在線局', '', ECHO_MG_ASSETS.ch32.panel);
+    root.classList.add('online-werewolf-game');
+    const subtitle = root.querySelector('.echo-mg-sub');
+    if (subtitle) subtitle.remove();
+    const status = root.querySelector('.echo-mg-status');
+    status.classList.add('online-game-status');
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
-    const grid = document.createElement('div');
-    grid.className = 'ssd-grid';
+
+    const phaseBar = document.createElement('div');
+    phaseBar.className = 'online-phase-bar';
+    const phaseLabel = document.createElement('span');
+    phaseLabel.className = 'online-phase-label';
+    const systemLine = document.createElement('span');
+    systemLine.className = 'online-system-line';
+    phaseBar.appendChild(phaseLabel);
+    phaseBar.appendChild(systemLine);
+
+    const roster = document.createElement('div');
+    roster.className = 'online-roster';
     const detail = document.createElement('div');
-    detail.className = 'ssd-detail';
-    detail.style.setProperty('--detail-art', 'url("' + ECHO_MG_ASSETS.ch32.detail + '")');
-    detail.innerHTML = '<div class="ssd-detail-title">NO RECORD SELECTED</div><div class="ssd-detail-copy">選擇一張 SSD 人格卡。</div>';
-    const done = document.createElement('button');
-    done.type = 'button';
-    done.className = 'echo-mg-primary';
-    done.textContent = '關閉人格儲存庫';
-    done.disabled = true;
+    detail.className = 'online-testimony-detail';
+    detail.setAttribute('aria-live', 'polite');
+    const action = document.createElement('button');
+    action.type = 'button';
+    action.className = 'echo-mg-primary online-main-action';
 
-    entries.forEach((entry, i) => {
-      const card = document.createElement('button');
-      card.type = 'button';
-      card.className = 'ssd-card';
+    function onlineCount() {
+      return players.length - offlineRound.size;
+    }
+
+    function latestStatement(player) {
+      const wentOffline = offlineRound.get(player.id);
+      if (wentOffline && round > wentOffline) return '（已離線，沒有新的證詞。）';
+      return player.statements[Math.max(0, Math.min(player.statements.length - 1, round - 1))];
+    }
+
+    function suspicionText(id) {
+      const level = suspicion.get(id) || 0;
+      if (level === 1) return '?';
+      if (level === 2) return 'ADMIN?';
+      return '○';
+    }
+
+    function cycleSuspicion(id, button) {
+      if (phase !== 'discussion' || settled) return;
+      const next = ((suspicion.get(id) || 0) + 1) % 3;
+      suspicion.set(id, next);
+      button.textContent = suspicionText(id);
+      button.classList.toggle('is-suspect', next > 0);
+      button.classList.toggle('is-admin-suspect', next === 2);
+    }
+
+    function showDetail(player) {
+      const off = offlineRound.has(player.id);
+      detail.innerHTML = '';
+      const title = document.createElement('b');
+      title.textContent = player.name + (off ? ' · OFFLINE' : ' · ONLINE');
+      const copy = document.createElement('span');
+      copy.textContent = latestStatement(player);
+      detail.appendChild(title);
+      detail.appendChild(copy);
+    }
+
+    function makeDiscussionCard(player) {
+      const card = document.createElement('article');
+      card.className = 'online-player-card';
       card.style.setProperty('--card-art', 'url("' + ECHO_MG_ASSETS.ch32.card + '")');
-      card.innerHTML = '<img src="' + ECHO_MG_ASSETS.ch32.label + '" alt=""><span>' + entry[0] + '</span><b>' + entry[1] + '</b>';
-      card.onclick = () => {
-        viewed.add(i);
-        card.classList.add('is-viewed');
-        detail.querySelector('.ssd-detail-title').textContent = entry[0] + ' · ' + entry[1];
-        detail.querySelector('.ssd-detail-copy').textContent = entry[2];
-        done.disabled = viewed.size < 3;
-      };
-      grid.appendChild(card);
-    });
+      if (offlineRound.has(player.id)) card.classList.add('is-offline');
+      if ((suspicion.get(player.id) || 0) > 0) card.classList.add('is-suspected');
 
-    done.onclick = () => {
-      if (settled || done.disabled) return;
+      const top = document.createElement('div');
+      top.className = 'online-player-top';
+      const identity = document.createElement('button');
+      identity.type = 'button';
+      identity.className = 'online-player-main';
+      identity.innerHTML = '<b></b><span></span>';
+      identity.querySelector('b').textContent = player.name;
+      identity.querySelector('span').textContent = offlineRound.has(player.id) ? 'OFFLINE' : player.meta;
+      identity.onclick = () => showDetail(player);
+
+      const mark = document.createElement('button');
+      mark.type = 'button';
+      mark.className = 'online-suspicion-mark';
+      mark.textContent = suspicionText(player.id);
+      if ((suspicion.get(player.id) || 0) > 0) mark.classList.add('is-suspect');
+      if ((suspicion.get(player.id) || 0) === 2) mark.classList.add('is-admin-suspect');
+      mark.setAttribute('aria-label', '標記 ' + player.name + ' 的懷疑程度');
+      mark.onclick = () => cycleSuspicion(player.id, mark);
+
+      const testimony = document.createElement('button');
+      testimony.type = 'button';
+      testimony.className = 'online-testimony';
+      testimony.textContent = latestStatement(player);
+      testimony.onclick = () => showDetail(player);
+
+      top.appendChild(identity);
+      top.appendChild(mark);
+      card.appendChild(top);
+      card.appendChild(testimony);
+      return card;
+    }
+
+    function renderDiscussion(message) {
+      phase = 'discussion';
+      transitionLocked = false;
+      selectedId = null;
+      status.textContent = 'ONLINE ' + onlineCount() + ' · R' + round + '/3';
+      phaseLabel.textContent = 'ROUND ' + round + ' · 討論';
+      systemLine.textContent = message || '在線證詞已更新';
+      roster.innerHTML = '';
+      players.forEach((player) => roster.appendChild(makeDiscussionCard(player)));
+      showDetail(players.find((player) => !offlineRound.has(player.id)) || players[0]);
+      action.disabled = false;
+      action.textContent = round < 3 ? '結束討論' : '進入最終投票';
+    }
+
+    function triggerLogout() {
+      if (transitionLocked || settled || round >= 3) return;
+      transitionLocked = true;
+      action.disabled = true;
+      const id = logoutOrder[round - 1];
+      const player = players.find((item) => item.id === id);
+      offlineRound.set(id, round);
+      status.textContent = 'ONLINE ' + onlineCount() + ' · R' + round + '/3';
+      phaseLabel.textContent = 'ROUND ' + round + ' · 離線';
+      systemLine.textContent = player.name + ' 已離線';
+      detail.innerHTML = '<b>SYSTEM</b><span>' + player.name + ' 已離線。這裡的淘汰只會把名字變灰。</span>';
+      roster.querySelectorAll('.online-player-card').forEach((card, index) => {
+        if (players[index].id === id) card.classList.add('is-offline', 'is-just-offline');
+      });
+      setTimeout(() => {
+        if (settled) return;
+        round++;
+        const nextMessage = round === 2
+          ? '證詞更新 · 有人聲稱離線者仍在已讀'
+          : '管理權限異常 · 最後一次討論';
+        renderDiscussion(nextMessage);
+      }, 950);
+    }
+
+    function renderVote() {
+      phase = 'vote';
+      transitionLocked = false;
+      selectedId = null;
+      status.textContent = 'FINAL VOTE';
+      phaseLabel.textContent = 'ROUND 3 · 指認';
+      systemLine.textContent = '管理權限持有者只可指認一次';
+      detail.innerHTML = '<b>管理權限</b><span>所有曾在線的人都仍是候選。離線者不會從最終名單排除。</span>';
+      roster.innerHTML = '';
+
+      players.forEach((player) => {
+        const candidate = document.createElement('button');
+        candidate.type = 'button';
+        candidate.className = 'online-vote-card';
+        candidate.dataset.playerId = player.id;
+        if (offlineRound.has(player.id)) candidate.classList.add('is-offline');
+        candidate.innerHTML = '<b></b><span></span><small></small>';
+        candidate.querySelector('b').textContent = player.name;
+        candidate.querySelector('span').textContent = offlineRound.has(player.id) ? 'OFFLINE' : 'ONLINE';
+        candidate.querySelector('small').textContent = '你的標記：' + suspicionText(player.id);
+        candidate.onclick = () => {
+          if (settled) return;
+          selectedId = player.id;
+          roster.querySelectorAll('.online-vote-card').forEach((node) => node.classList.toggle('is-selected', node.dataset.playerId === selectedId));
+          detail.innerHTML = '<b>指認：' + player.name + '</b><span>' + player.statements[2] + '</span>';
+          action.disabled = false;
+        };
+        roster.appendChild(candidate);
+      });
+
+      action.textContent = '確認指認';
+      action.disabled = true;
+    }
+
+    function finishVote() {
+      if (settled || !selectedId) return;
       settled = true;
-      echoFinishMiniGame(resolve, { viewed: viewed.size, completed: true });
+      action.disabled = true;
+      roster.querySelectorAll('button').forEach((button) => { button.disabled = true; });
+      const success = selectedId === moderatorId;
+      const selected = players.find((player) => player.id === selectedId);
+      root.classList.add(success ? 'is-victory' : 'is-defeat');
+      status.textContent = success ? 'VERIFIED' : 'UNVERIFIED';
+      phaseLabel.textContent = success ? '管理權限已驗證' : '在線辨識已結束';
+      systemLine.textContent = success ? 'ADMIN LOG ACCESS GRANTED' : '管理權限未確認';
+      detail.innerHTML = success
+        ? '<b>SilentRoom · MODERATOR</b><span>管理紀錄已解鎖。</span>'
+        : '<b>' + selected.name + '</b><span>管理權限驗證失敗。正確身分不會公開。</span>';
+      setTimeout(() => echoFinishMiniGame(resolve, {
+        completed: true,
+        success,
+        selectedId,
+        selectedName: selected.name,
+        offline: Array.from(offlineRound.keys()),
+        moderatorVerified: success
+      }), 1050);
+    }
+
+    action.onclick = () => {
+      if (phase === 'vote') {
+        finishVote();
+        return;
+      }
+      if (round < 3) {
+        triggerLogout();
+        return;
+      }
+      renderVote();
     };
 
-    body.appendChild(grid);
+    body.appendChild(phaseBar);
+    body.appendChild(roster);
     body.appendChild(detail);
-    foot.appendChild(done);
+    foot.appendChild(action);
+    renderDiscussion('在線者 6 · 身分未知');
+
     echoMountMiniGame(root, () => {
       if (settled) return;
       settled = true;
-      echoFinishMiniGame(resolve, { viewed: viewed.size, completed: false, cancelled: true });
+      echoFinishMiniGame(resolve, {
+        completed: false,
+        success: false,
+        selectedId,
+        moderatorVerified: false,
+        cancelled: true
+      });
     });
   });
+}
+
+// Compatibility alias for older chapter snapshots. CH3-2 now uses the full online hidden-role game.
+function runSsdArchive() {
+  return runOnlineModeratorGame();
 }
 
 function runAudioVerification() {

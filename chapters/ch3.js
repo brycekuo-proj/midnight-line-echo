@@ -181,141 +181,101 @@ async function ch31_s5() {
 //  CH 3-2：在線中
 // ─────────────────────────────────────────────────────
 window.CHAPTERS['3-2'] = async function() {
-  setHeader('rain', '林雨晴', '最後上線：3天前');
-  await addMsg('time', '凌晨 03:06');
-  chatBody.style.background = '#090f0f';
-  await sleep(800);
-  await addMsg('other', '__ONLINE_COUNT:3', { typing: 0, delay: 200, meta: '03:06', isRain: true });
-  await sleep(400);
-  await addMsg('sys', '成員列表只有你和林雨晴……第三個是誰？', { noTyping: true });
-  await sleep(2000);
-  await addMsg('sys', '林雨晴 正在輸入中…', { noTyping: true });
-  await sleep(3000);
+  setHeader('rain', '林雨晴', '同步中');
+  chatBody.style.background = '#071011';
+  await addMsg('time', '凌晨 03:12');
+  await sleep(700);
+  await addMsg('sys', '同步區連線中……', { noTyping: true, delay: 180 });
+  await sleep(380);
+  await addMsg('sys', '人格同步完成 · 在線狀態同步中……', { noTyping: true, delay: 180 });
+  await sleep(700);
+  await addMsg('other', '……你也在？', { typing: 1500, meta: '03:12', isRain: true });
+  await sleep(450);
   await addMsg('other',
-    '……你有沒有覺得……<br>這裡越來越擠了？',
-    { typing: 800, meta: '03:07', isRain: true });
-  const c1 = startSilence(4, '（聊天室靜止中……）');
-  showOpts([
-    { text: '什麼意思？',          sync: 1 },
-    { text: '聊天室裡還有別人？',  sync: 3 },
-    { text: '妳又看到什麼了？',    sync: 2 },
-    { text: '（沉默超過10秒）',    sync: 4 },
-  ], async () => {
-    c1();
-    await addMsg('other',
-      '最近……開始有很多人一直在線。<br>可是我從來沒看過他們說話……<br>他們只是……一直「在」。',
-      { typing: 2800, meta: '03:08', isRain: true });
-    await sleep(400);
-    await addMsg('other', '__ONLINE_COUNT:417', { typing: 0, delay: 300, meta: '03:08', isRain: true });
-    await sleep(400);
-    await addMsg('other',
-      '他們不說話……<br>卻一直看著我們。',
-      { typing: 1800, meta: '03:08', isRain: true });
-    await sleep(500);
-    await ch32_s2();
-  });
+    '我本來以為。<br>只剩我還在線。',
+    { typing: 1900, meta: '03:12', isRain: true });
+  await sleep(650);
+  await addMsg('other',
+    '……最近。<br>有些人一直沒有離線。',
+    { typing: 1900, meta: '03:13', isRain: true });
+  await sleep(420);
+  await addMsg('other', '__ONLINE_COUNT:6', { typing: 0, delay: 220, meta: '03:13', isRain: true });
+  await sleep(550);
+  await addMsg('other',
+    '如果有人真的一直掌握這裡……<br>他應該知道，為什麼有人離不了線。',
+    { typing: 2300, meta: '03:13', isRain: true });
+  await sleep(500);
+  await addMsg('sys', '在線局已建立 · 管理權限尚未確認', { noTyping: true, delay: 220 });
+  await sleep(650);
+
+  const gameResult = await runOnlineModeratorGame();
+  if (!gameResult || !gameResult.completed) return;
+
+  await sleep(450);
+  if (gameResult.success) {
+    await ch32_win(gameResult);
+  } else {
+    await ch32_fail(gameResult);
+  }
 };
 
-async function ch32_s2() {
-  await addMsg('sys', '── 在線聊天室探索 ──', { noTyping: true, delay: 400 });
-  await sleep(400);
-  const accounts = [
-    '不要回頭（最後發言：8年前）',
-    '03:17（狀態：在線中）',
-    '他在後面（簡介：最後上線：死亡當天）',
-    '██████（點擊後聊天室震動）',
-  ];
-  for (const a of accounts) {
-    await sleep(350);
-    await addMsg('other',
-      '<span style="color:var(--ghost);font-size:.75rem">帳號：' + a + '</span>',
-      { typing: 0, delay: 150, meta: '03:09', isRain: true });
-  }
-  await sleep(350);
-  const archiveResult = await runSsdArchive();
-  if (archiveResult && archiveResult.completed) {
-    addSync(2);
-    gToast('+2% 同步率（人格儲存庫）');
-    await addMsg('sys', '人格儲存庫：已檢查 ' + archiveResult.viewed + ' 筆異常紀錄', { noTyping: true, delay: 180 });
-  }
-  await sleep(600);
-  await addMsg('other',
-    '……不要點太深。<br>有些聊天室，不是給活人看的。',
-    { typing: 2200, meta: '03:10', isRain: true });
-  await sleep(400);
-  await ch32_s3();
-}
+async function ch32_win(gameResult) {
+  storyFlags.ch32AdminVerified = true;
+  // Success preserves CH3-2's high-sync qualification. Keep a visible chapter result floor
+  // without making the truth reward depend on farming dialogue points.
+  if (chapterSync < 8) addSync(8 - chapterSync);
+  gToast('同步率保留 · 高同步資格維持');
 
-async function ch32_s3() {
-  await addMsg('sys', '── 不存在的帳號 開始傳訊 ──', { noTyping: true, delay: 400 });
-  await sleep(400);
-  await addMsg('other', '你終於進來了。', { typing: 1500, meta: '03:11', isUnk: true });
-  showOpts([
-    { text: '你是誰？',              sync: 2 },
-    { text: '這聊天室到底是什麼？',  sync: 3 },
-    { text: '林雨晴認識你？',        sync: 1 },
-    { text: '（不回覆）',            sync: 4 },
-  ], async (i) => {
-    if (i === 3) await addMsg('inject', '訊息自動顯示已讀（玩家未點開）', { noTyping: true, delay: 200 });
-    await addMsg('other',
-      '別假裝了。<br>你已經在線很久了。',
-      { typing: 1800, meta: '03:12', isUnk: true });
-    await sleep(400);
-    await ch32_s4();
-  });
-}
-
-async function ch32_s4() {
-  await addMsg('sys', '── 深層聊天室（自動往下捲）──', { noTyping: true, delay: 400 });
-  await sleep(600);
-  // 林雨晴頭像換成消融版
-  swapHeaderImg('img/rain/rain_glitch1.jpg');
+  await addMsg('sys', '管理權限已驗證', { noTyping: true, delay: 180 });
+  await sleep(550);
+  await addMsg('inject', 'ADMIN LOG ACCESS GRANTED', { noTyping: true, delay: 180 });
+  await sleep(650);
+  await addMsg('sys', '聊天室保留狀態：ACTIVE', { noTyping: true, delay: 180 });
+  await sleep(300);
+  await addMsg('sys', '未完成離線：2', { noTyping: true, delay: 180 });
+  await sleep(520);
+  await addMsg('inject', 'USER：林雨晴 · LOGOUT REQUEST：FAILED', { noTyping: true, delay: 180 });
+  await sleep(700);
+  await addMsg('inject', 'USER：████ · STATUS：……', { noTyping: true, delay: 180 });
+  await sleep(260);
+  glitch();
+  await sleep(650);
   await addMsg('other',
-    '不要再往下滑了……<br>下面不是聊天室……',
-    { typing: 1800, meta: '03:13', isRain: true });
-  await sleep(800); glitch();
-  await addMsg('sys',
-    '聊天室名稱：在線中 · 成員數：<b style="color:var(--red)">417人</b>',
-    { noTyping: true, delay: 300 });
-  for (let i = 0; i < 3; i++) {
-    await sleep(i === 0 ? 400 : 200);
-    await addMsg('sys', '正在輸入中… × 417', { noTyping: true, delay: 100 });
-  }
-  await sleep(1000);
-  await addMsg('other',
-    '妳到底在哪裡？',
-    { typing: 2000, meta: '03:14', isRain: true });
-  showOpts([
-    { text: '我會救妳。',              sync: 4 },
-    { text: '妳到底在哪裡？',          sync: 2 },
-    { text: '那些在線的人到底是誰？',  sync: 3 },
-    { text: '妳是不是已經死了？',      sync: 1 },
-  ], async (i) => {
-    if (i === 0)
-      await addMsg('other',
-        '……以前也有人這樣跟我說過。<br>後來……他們也留在這裡了。',
-        { typing: 3000, meta: '03:15', isRain: true });
-    else
-      await addMsg('other',
-        '你不要管我了……<br>你快離開這裡。',
-        { typing: 2500, meta: '03:15', isRain: true });
-    await sleep(600);
-    await ch32_end();
-  });
-}
-
-async function ch32_end() {
-  // 最終頭像換成眼睛消失版
-  swapHeaderImg('img/rain/rain_glitch2.jpg');
-  await addMsg('other', '__ONLINE_COUNT:∞', { typing: 0, delay: 400, meta: '03:16', isRain: true });
-  await sleep(800);
-  await addMsg('sys', '── 系統訊息 ──', { noTyping: true, delay: 200 });
-  await sleep(400);
-  await addMsg('inject', '請不要離開聊天室。', { noTyping: true, delay: 200 });
-  await sleep(1500); glitch(); await sleep(300); glitch();
+    '……原來不是我忘了離開。<br>是聊天室沒有放我走。',
+    { typing: 2400, meta: '03:17', isRain: true });
+  await sleep(500);
+  await addMsg('sys', '高同步維持 · 第四章高同步路線已解鎖', { noTyping: true, delay: 200 });
+  await sleep(900);
   await fadeOut();
   showEnd('《在線中》');
-  setTimeout(() => notification('在線中', 'LINE', '目前共有 1308 位成員在線。包含你。'), 120000);
+}
+
+async function ch32_fail(gameResult) {
+  storyFlags.ch32AdminVerified = false;
+  chapterSync = 0;
+  updateSyncUI();
+
+  await addMsg('sys', '在線辨識已結束', { noTyping: true, delay: 180 });
+  await sleep(650);
+  await addMsg('inject', '管理權限未確認', { noTyping: true, delay: 180 });
+  await sleep(700);
+  await addMsg('other', '__ONLINE_COUNT:3', { typing: 0, delay: 180, meta: '03:17', isRain: true });
+  await sleep(430);
+  await addMsg('other', '__ONLINE_COUNT:2', { typing: 0, delay: 180, meta: '03:17', isRain: true });
+  await sleep(500);
+  await addMsg('other', '__ONLINE_COUNT:1', { typing: 0, delay: 180, meta: '03:17', isRain: true });
+  await sleep(900);
+  swapHeaderImg('img/rain/rain_glitch1.jpg');
+  await addMsg('other',
+    '……又剩我了。',
+    { typing: 2100, meta: '03:18', isRain: true });
+  await sleep(700);
+  await addMsg('inject', 'SYNC LOST · 3-2 同步率歸零', { noTyping: true, delay: 180 });
+  await sleep(500);
+  await addMsg('sys', '高同步失效 · 第四章低同步路線固定', { noTyping: true, delay: 180 });
+  await sleep(1000);
+  await fadeOut();
+  showEnd('《在線中》');
 }
 
 // ─────────────────────────────────────────────────────

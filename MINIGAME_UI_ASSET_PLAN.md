@@ -67,14 +67,16 @@ Assets:
 - `mg_ch31_memory_slot.png`
 - `mg_ch31_memory_complete.png`
 
-### CH3-2 — SSD Personality Archive
-Interaction: inspect personality storage cards / SSD records.
+### CH3-2 — ONLINE GAME / Moderator Deduction
+Interaction: one persistent three-round hidden-role game. Read testimony, mark suspicion, watch two users go offline, then make one final moderator vote. Offline candidates remain selectable in the final vote.
 
-Assets:
+Current backing assets (reused temporarily; no longer define the mechanic):
 - `mg_ch32_ssd_panel.png`
 - `mg_ch32_ssd_card.png`
 - `mg_ch32_ssd_label.png`
 - `mg_ch32_ssd_detail.png`
+
+Future CH3-2 art refresh should target online roster cards / moderator-vote UI, not SSD inspection.
 
 ### CH3-3 — Audio Verification
 Interaction: play, compare and verify suspicious audio evidence.
@@ -165,7 +167,7 @@ Assets:
 
 ### Batch 3
 7. CH2-1 Underground Map
-8. CH3-2 SSD Personality Archive
+8. CH3-2 ONLINE GAME / Moderator Deduction
 9. CH3-3 Audio Verification
 10. CH5 Residual Voices
 
