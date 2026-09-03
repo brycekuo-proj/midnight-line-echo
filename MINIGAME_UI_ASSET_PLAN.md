@@ -57,7 +57,9 @@ Assets:
 Critical lock: B must be an edit of approved A and may only contain the five canon differences.
 
 ### CH3-1 — Memory Repair
-Interaction: drag / reorder corrupted message fragments into valid memory sequence.
+Interaction: drag / reorder 6–8 corrupted message positions with additional decoy fragments, then submit the full arrangement for 1A2B evaluation.
+
+Critical lock: never reveal per-fragment correctness. The mini-game UI must not explain the rules or show instructional prose. The current `xAyB` value is permanently displayed in the mini-game UI's upper-right status position and is updated in place after each submission; do not render separate result/history messages elsewhere. A = correct fragment in the correct position, B = correct fragment in a wrong position. Current runtime uses 7 positions + 2 decoys.
 
 Assets:
 - `mg_ch31_memory_board.png`

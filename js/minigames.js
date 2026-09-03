@@ -336,72 +336,250 @@ function runSpotDifference() {
 function runMemoryRepair() {
   return new Promise((resolve) => {
     let settled = false;
-    let nextIndex = 0;
-    let mistakes = 0;
+    let attempts = 0;
+    let suppressClick = false;
+    let dragState = null;
+    let activeDropTarget = null;
+
+    // 3-1 locked mechanic: 7 memory positions + 2 decoy fragments.
+    // A = correct fragment in the correct position; B = correct fragment in a wrong position.
+    const targetIds = [0, 1, 2, 3, 4, 5, 6];
     const fragments = [
-      { id: 0, text: '我不會去地下道。' },
-      { id: 1, text: '03:17 的畫面不是現在。' },
-      { id: 2, text: '林雨晴說：不要回頭。' },
-      { id: 3, text: 'EVA：我都有記著。' }
+      { id: 0, text: 'K：Oracle 裡到底發生什麼？' },
+      { id: 1, text: '林雨晴：那不是普通專案。' },
+      { id: 2, text: 'K：妳說的那個代號……' },
+      { id: 3, text: '林雨晴：你不要直接打名字。' },
+      { id: 4, text: 'K：妳之前說過。它和陪伴系統有關。' },
+      { id: 5, text: '林雨晴：……因為它本來就不該公開。' },
+      { id: 6, text: 'K：那為什麼還要繼續？' },
+      { id: 7, text: 'K：我不是第一次看到妳去那裡。' },
+      { id: 8, text: '林雨晴：那你為什麼還聯絡他？' }
     ];
 
-    const root = echoMiniGameShell('CH3-1 · MEMORY REPAIR', '記憶修復', '依照原始時間順序，把四段受損訊息放回記憶槽。', ECHO_MG_ASSETS.ch31.board);
+    const root = echoMiniGameShell('CH3-1 · MEMORY REPAIR', '記憶修復', '', ECHO_MG_ASSETS.ch31.board);
+    const subtitle = root.querySelector('.echo-mg-sub');
+    if (subtitle) subtitle.remove();
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
+
+    const layout = document.createElement('div');
+    layout.className = 'memory-repair-layout';
     const slots = document.createElement('div');
     slots.className = 'memory-slots';
-    for (let i = 0; i < fragments.length; i++) {
-      const slot = document.createElement('div');
-      slot.className = 'memory-slot';
-      slot.style.setProperty('--slot-art', 'url("' + ECHO_MG_ASSETS.ch31.slot + '")');
-      slot.textContent = String(i + 1).padStart(2, '0');
-      slots.appendChild(slot);
-    }
     const cards = document.createElement('div');
     cards.className = 'memory-cards';
-    const note = document.createElement('div');
-    note.className = 'echo-mg-note';
-    note.textContent = '先選擇第一段記憶。';
+    const slotElements = [];
 
-    echoShuffle(fragments).forEach((frag) => {
+    for (let i = 0; i < targetIds.length; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'memory-slot';
+      slot.dataset.index = String(i);
+      slot.style.setProperty('--slot-art', 'url("' + ECHO_MG_ASSETS.ch31.slot + '")');
+      const index = document.createElement('span');
+      index.className = 'memory-slot-index';
+      index.textContent = String(i + 1).padStart(2, '0');
+      slot.appendChild(index);
+      slots.appendChild(slot);
+      slotElements.push(slot);
+    }
+
+    const score = root.querySelector('.echo-mg-status');
+    score.className = 'echo-mg-status memory-score';
+    score.setAttribute('aria-live', 'polite');
+    score.textContent = '0A0B';
+    const submit = document.createElement('button');
+    submit.type = 'button';
+    submit.className = 'echo-mg-primary memory-submit';
+    submit.textContent = '判定';
+    submit.disabled = true;
+
+    function getSlotCard(slot) {
+      return slot.querySelector('.memory-card');
+    }
+
+    function updateFilledState() {
+      slotElements.forEach((slot) => slot.classList.toggle('is-filled', !!getSlotCard(slot)));
+      submit.disabled = slotElements.some((slot) => !getSlotCard(slot));
+    }
+
+    function clearDropTarget() {
+      if (activeDropTarget) activeDropTarget.classList.remove('is-drop-target');
+      activeDropTarget = null;
+    }
+
+    function setDropTarget(target) {
+      clearDropTarget();
+      if (!target) return;
+      activeDropTarget = target;
+      activeDropTarget.classList.add('is-drop-target');
+    }
+
+    function placeCard(card, slot) {
+      if (!card || !slot || settled) return;
+      const sourceSlot = card.closest('.memory-slot');
+      if (sourceSlot === slot) return;
+      const occupying = getSlotCard(slot);
+
+      if (occupying) {
+        if (sourceSlot) {
+          sourceSlot.appendChild(occupying);
+          occupying.classList.add('is-placed');
+        } else {
+          cards.appendChild(occupying);
+          occupying.classList.remove('is-placed');
+        }
+      }
+
+      slot.appendChild(card);
+      card.classList.add('is-placed');
+      updateFilledState();
+    }
+
+    function returnCard(card) {
+      if (!card || settled) return;
+      cards.appendChild(card);
+      card.classList.remove('is-placed');
+      updateFilledState();
+    }
+
+    function positionGhost(ghost, x, y) {
+      ghost.style.left = x + 'px';
+      ghost.style.top = y + 'px';
+    }
+
+    function startPointerDrag(event, card) {
+      if (settled || event.button > 0) return;
+      dragState = {
+        card,
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        dragging: false,
+        ghost: null
+      };
+      if (card.setPointerCapture) card.setPointerCapture(event.pointerId);
+    }
+
+    function movePointerDrag(event) {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      const dx = event.clientX - dragState.startX;
+      const dy = event.clientY - dragState.startY;
+      if (!dragState.dragging && Math.hypot(dx, dy) < 7) return;
+
+      if (!dragState.dragging) {
+        dragState.dragging = true;
+        dragState.card.classList.add('is-drag-source');
+        dragState.ghost = dragState.card.cloneNode(true);
+        dragState.ghost.classList.add('memory-drag-ghost');
+        dragState.ghost.removeAttribute('id');
+        document.body.appendChild(dragState.ghost);
+      }
+
+      event.preventDefault();
+      positionGhost(dragState.ghost, event.clientX, event.clientY);
+      const hit = document.elementFromPoint(event.clientX, event.clientY);
+      const slot = hit && hit.closest ? hit.closest('.memory-slot') : null;
+      const pool = hit && hit.closest ? hit.closest('.memory-cards') : null;
+      setDropTarget(slot || pool);
+    }
+
+    function finishPointerDrag(event) {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      const state = dragState;
+      if (state.dragging) {
+        suppressClick = true;
+        const hit = document.elementFromPoint(event.clientX, event.clientY);
+        const slot = hit && hit.closest ? hit.closest('.memory-slot') : null;
+        const pool = hit && hit.closest ? hit.closest('.memory-cards') : null;
+        if (slot) placeCard(state.card, slot);
+        else if (pool) returnCard(state.card);
+        setTimeout(() => { suppressClick = false; }, 0);
+      }
+      clearDropTarget();
+      state.card.classList.remove('is-drag-source');
+      if (state.ghost) state.ghost.remove();
+      if (state.card.releasePointerCapture) {
+        try { state.card.releasePointerCapture(event.pointerId); } catch (_) {}
+      }
+      dragState = null;
+    }
+
+    function createCard(frag) {
       const card = document.createElement('button');
       card.type = 'button';
       card.className = 'memory-card';
+      card.dataset.memoryId = String(frag.id);
       card.style.setProperty('--card-art', 'url("' + ECHO_MG_ASSETS.ch31.card + '")');
       card.textContent = frag.text;
+      card.addEventListener('pointerdown', (event) => startPointerDrag(event, card));
+      card.addEventListener('pointermove', movePointerDrag);
+      card.addEventListener('pointerup', finishPointerDrag);
+      card.addEventListener('pointercancel', finishPointerDrag);
       card.onclick = () => {
-        if (settled || card.disabled) return;
-        if (frag.id !== nextIndex) {
-          mistakes++;
-          card.classList.add('is-wrong');
-          note.textContent = '順序錯誤。這段記憶還接不上。';
-          setTimeout(() => card.classList.remove('is-wrong'), 450);
+        if (settled || suppressClick) return;
+        const sourceSlot = card.closest('.memory-slot');
+        if (sourceSlot) {
+          returnCard(card);
           return;
         }
-        const slot = slots.children[nextIndex];
-        slot.classList.add('is-filled');
-        slot.textContent = frag.text;
-        card.disabled = true;
-        card.classList.add('is-used');
-        nextIndex++;
-        note.textContent = '記憶已修復 ' + nextIndex + ' / ' + fragments.length;
-        if (nextIndex === fragments.length) {
-          settled = true;
-          const complete = echoArtImg(ECHO_MG_ASSETS.ch31.complete, 'echo-mg-complete-art', '記憶修復完成');
-          body.appendChild(complete);
-          setTimeout(() => echoFinishMiniGame(resolve, { completed: true, mistakes }), 850);
-        }
+        const emptySlot = slotElements.find((slot) => !getSlotCard(slot));
+        if (emptySlot) placeCard(card, emptySlot);
       };
-      cards.appendChild(card);
-    });
+      return card;
+    }
 
-    body.appendChild(slots);
-    body.appendChild(cards);
-    foot.appendChild(note);
+    echoShuffle(fragments).forEach((frag) => cards.appendChild(createCard(frag)));
+
+    submit.onclick = () => {
+      if (settled || submit.disabled) return;
+      const guess = slotElements.map((slot) => Number(getSlotCard(slot).dataset.memoryId));
+      let a = 0;
+      let b = 0;
+      guess.forEach((id, index) => {
+        if (id === targetIds[index]) a++;
+        else if (targetIds.includes(id)) b++;
+      });
+
+      attempts++;
+      const resultText = a + 'A' + b + 'B';
+      score.textContent = resultText;
+
+      if (a === targetIds.length) {
+        settled = true;
+        submit.disabled = true;
+        root.querySelectorAll('.memory-card').forEach((card) => {
+          card.disabled = true;
+          card.classList.remove('is-drag-source');
+        });
+        const complete = echoArtImg(ECHO_MG_ASSETS.ch31.complete, 'echo-mg-complete-art', '記憶修復完成');
+        body.appendChild(complete);
+        setTimeout(() => echoFinishMiniGame(resolve, {
+          completed: true,
+          mistakes: Math.max(0, attempts - 1),
+          attempts,
+          a,
+          b
+        }), 850);
+      }
+    };
+
+    layout.appendChild(slots);
+    layout.appendChild(cards);
+    body.appendChild(layout);
+    foot.appendChild(submit);
+    updateFilledState();
+
     echoMountMiniGame(root, () => {
       if (settled) return;
       settled = true;
-      echoFinishMiniGame(resolve, { completed: false, mistakes, cancelled: true });
+      if (dragState && dragState.ghost) dragState.ghost.remove();
+      clearDropTarget();
+      echoFinishMiniGame(resolve, {
+        completed: false,
+        mistakes: Math.max(0, attempts),
+        attempts,
+        cancelled: true
+      });
     });
   });
 }
