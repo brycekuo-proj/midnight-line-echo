@@ -902,67 +902,168 @@ function runAudioVerification() {
     let settled = false;
     let round = 0;
     let correct = 0;
+    let mistakes = 0;
+    let roundHadMistake = false;
+    let transitionLocked = false;
+    let activeAudio = null;
+
+    const sound = (name) => 'audio/ch3-3/' + name + '.wav';
     const rounds = [
-      { label: 'CLIP 01 · 地下道呼吸', copy: '頻譜尾端多出一層固定低頻呼吸。', answer: 'anomaly' },
-      { label: 'CLIP 02 · K 聲紋', copy: '兩個聲紋使用完全相同的語尾，但相位不同。', answer: 'anomaly' },
-      { label: 'CLIP 03 · 玩家聲音', copy: '聲音內容為「救我」，但沒有對應的錄音事件。', answer: 'anomaly' }
+      { clips: [sound('dog'), sound('dog'), sound('cat')], answer: 2 },
+      { clips: [sound('cow'), sound('goat'), sound('cow')], answer: 1 },
+      { clips: [sound('bird'), sound('bird'), sound('chicken')], answer: 2 },
+      { clips: [sound('cat'), sound('dog'), sound('cat')], answer: 1 },
+      { clips: [sound('goat'), sound('chicken'), sound('chicken')], answer: 0 }
     ];
-    const root = echoMiniGameShell('CH3-3 · AUDIO VERIFICATION', '聲音驗證', '逐段檢查頻譜，判定它是原始錄音或異常複製。', ECHO_MG_ASSETS.ch33.panel);
+
+    const root = echoMiniGameShell('CH3-3 · AUDIO VERIFICATION', '聲音驗證', '找出三段聲音中不同的一段。', ECHO_MG_ASSETS.ch33.panel);
+    root.classList.add('audio-animal-game');
+    const status = root.querySelector('.echo-mg-status');
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
     const label = document.createElement('div');
     label.className = 'audio-verify-label';
-    const wave = echoArtImg(ECHO_MG_ASSETS.ch33.wave, 'audio-verify-wave', '聲音波形');
-    const copy = document.createElement('div');
-    copy.className = 'echo-mg-note';
     const controls = document.createElement('div');
     controls.className = 'audio-verify-controls';
-    const original = document.createElement('button');
-    const anomaly = document.createElement('button');
-    [original, anomaly].forEach((b) => {
-      b.type = 'button';
-      b.className = 'audio-verify-btn';
-      b.style.setProperty('--button-art', 'url("' + ECHO_MG_ASSETS.ch33.button + '")');
-    });
-    original.textContent = '原始錄音';
-    anomaly.textContent = '異常複製';
-    controls.appendChild(original);
-    controls.appendChild(anomaly);
+    const copy = document.createElement('div');
+    copy.className = 'echo-mg-note audio-verify-note';
+    copy.setAttribute('aria-live', 'polite');
 
-    function render() {
-      const r = rounds[round];
-      label.textContent = r.label;
-      copy.textContent = r.copy;
-      wave.classList.remove('pulse-wave');
-      void wave.offsetWidth;
-      wave.classList.add('pulse-wave');
+    function stopAudio() {
+      if (!activeAudio) return;
+      activeAudio.pause();
+      activeAudio.currentTime = 0;
+      activeAudio = null;
+      controls.querySelectorAll('.audio-choice').forEach((choice) => choice.classList.remove('is-playing'));
     }
 
-    function choose(value) {
-      if (settled) return;
-      if (value === rounds[round].answer) correct++;
-      round++;
-      if (round >= rounds.length) {
-        settled = true;
-        body.appendChild(echoArtImg(ECHO_MG_ASSETS.ch33.result, 'echo-mg-complete-art', '聲音分析完成'));
-        copy.textContent = '驗證完成：' + correct + ' / ' + rounds.length + ' 段判定正確。';
-        setTimeout(() => echoFinishMiniGame(resolve, { correct, total: rounds.length, completed: true }), 850);
+    function playClip(index, choice) {
+      if (settled || transitionLocked) return;
+      stopAudio();
+      const clip = rounds[round].clips[index];
+      const player = new Audio(new URL(clip, document.baseURI).href);
+      player.preload = 'auto';
+      activeAudio = player;
+      choice.classList.add('is-playing');
+      player.onended = () => {
+        if (activeAudio === player) activeAudio = null;
+        choice.classList.remove('is-playing');
+      };
+      player.onerror = () => {
+        if (activeAudio === player) activeAudio = null;
+        choice.classList.remove('is-playing');
+        copy.textContent = '音訊載入失敗，請重新播放。';
+      };
+      player.play().catch(() => {
+        if (activeAudio === player) activeAudio = null;
+        choice.classList.remove('is-playing');
+        copy.textContent = '請再點一次播放按鈕。';
+      });
+    }
+
+    function makeChoice(index) {
+      const letters = ['A', 'B', 'C'];
+      const choice = document.createElement('div');
+      choice.className = 'audio-choice';
+      choice.style.setProperty('--button-art', 'url("' + ECHO_MG_ASSETS.ch33.button + '")');
+
+      const wave = echoArtImg(ECHO_MG_ASSETS.ch33.wave, 'audio-choice-wave', '聲音波形 ' + letters[index]);
+      const play = document.createElement('button');
+      play.type = 'button';
+      play.className = 'audio-choice-play';
+      play.setAttribute('aria-label', '播放聲音 ' + letters[index]);
+      play.innerHTML = '<span class="audio-choice-letter">' + letters[index] + '</span><span class="audio-choice-icon">▶</span>';
+      play.onclick = () => playClip(index, choice);
+
+      const select = document.createElement('button');
+      select.type = 'button';
+      select.className = 'audio-choice-select';
+      select.textContent = '選 ' + letters[index];
+      select.onclick = () => choose(index, choice);
+
+      choice.appendChild(wave);
+      choice.appendChild(play);
+      choice.appendChild(select);
+      return choice;
+    }
+
+    function setControlsDisabled(disabled) {
+      controls.querySelectorAll('button').forEach((button) => { button.disabled = disabled; });
+    }
+
+    function finish() {
+      settled = true;
+      transitionLocked = true;
+      stopAudio();
+      setControlsDisabled(true);
+      body.appendChild(echoArtImg(ECHO_MG_ASSETS.ch33.result, 'echo-mg-complete-art audio-verify-result', '聲音驗證完成'));
+      status.textContent = '5 / 5';
+      label.textContent = 'VERIFIED';
+      copy.textContent = mistakes === 0 ? '5 關驗證完成。' : '5 關驗證完成 · 錯誤 ' + mistakes + ' 次。';
+      setTimeout(() => echoFinishMiniGame(resolve, {
+        correct,
+        total: rounds.length,
+        mistakes,
+        completed: true
+      }), 850);
+    }
+
+    function choose(index, choice) {
+      if (settled || transitionLocked) return;
+      stopAudio();
+      if (index !== rounds[round].answer) {
+        mistakes++;
+        roundHadMistake = true;
+        choice.classList.add('is-wrong');
+        copy.textContent = '不一致。再聽一次。';
+        setTimeout(() => choice.classList.remove('is-wrong'), 480);
         return;
       }
-      render();
+
+      if (!roundHadMistake) correct++;
+      choice.classList.add('is-correct');
+      copy.textContent = '驗證成功。';
+      transitionLocked = true;
+      setControlsDisabled(true);
+
+      setTimeout(() => {
+        if (settled) return;
+        round++;
+        roundHadMistake = false;
+        transitionLocked = false;
+        if (round >= rounds.length) {
+          finish();
+          return;
+        }
+        render();
+      }, 520);
     }
 
-    original.onclick = () => choose('original');
-    anomaly.onclick = () => choose('anomaly');
+    function render() {
+      stopAudio();
+      controls.innerHTML = '';
+      status.textContent = (round + 1) + ' / ' + rounds.length;
+      label.textContent = 'ROUND ' + String(round + 1).padStart(2, '0');
+      copy.textContent = 'A / B / C';
+      for (let i = 0; i < 3; i++) controls.appendChild(makeChoice(i));
+    }
+
     body.appendChild(label);
-    body.appendChild(wave);
     body.appendChild(controls);
     foot.appendChild(copy);
     render();
+
     echoMountMiniGame(root, () => {
       if (settled) return;
       settled = true;
-      echoFinishMiniGame(resolve, { correct, total: rounds.length, completed: false, cancelled: true });
+      stopAudio();
+      echoFinishMiniGame(resolve, {
+        correct,
+        total: rounds.length,
+        mistakes,
+        completed: false,
+        cancelled: true
+      });
     });
   });
 }
