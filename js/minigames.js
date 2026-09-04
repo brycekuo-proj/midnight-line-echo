@@ -595,6 +595,8 @@ function runOnlineModeratorGame() {
     const offlineRound = new Map();
     const moderatorId = 'silentroom';
     const logoutOrder = ['lastseen404', 'echo_guest'];
+    const cardSlots = ['A1', 'B1', 'C1', 'A2', 'B2', 'C2'];
+    const nightLabels = ['第一夜', '第二夜', '最終夜'];
 
     // One hidden moderator, four normal online users, one anomalous online user.
     // The anomalous user is a deliberate red herring: strange does not mean moderator.
@@ -725,22 +727,50 @@ function runOnlineModeratorGame() {
       detail.appendChild(copy);
     }
 
-    function makeDiscussionCard(player) {
+    function makePortrait(player, index, mode) {
+      const wrap = document.createElement('span');
+      wrap.className = 'online-card-portrait avatar-' + player.id + (mode === 'vote' ? ' is-vote-portrait' : '');
+      wrap.innerHTML =
+        '<span class="online-card-code"></span>' +
+        '<span class="online-card-state"></span>' +
+        '<span class="online-avatar-figure" aria-hidden="true">' +
+          '<i class="online-avatar-hair"></i>' +
+          '<i class="online-avatar-head"></i>' +
+          '<i class="online-avatar-eye eye-l"></i>' +
+          '<i class="online-avatar-eye eye-r"></i>' +
+          '<i class="online-avatar-body"></i>' +
+          '<i class="online-avatar-glitch"></i>' +
+        '</span>';
+      wrap.querySelector('.online-card-code').textContent = cardSlots[index];
+      wrap.querySelector('.online-card-state').textContent = offlineRound.has(player.id) ? 'OFF' : 'ON';
+      return wrap;
+    }
+
+    function makeDiscussionCard(player, index) {
       const card = document.createElement('article');
-      card.className = 'online-player-card';
+      card.className = 'online-player-card online-character-card';
       card.style.setProperty('--card-art', 'url("' + ECHO_MG_ASSETS.ch32.card + '")');
       if (offlineRound.has(player.id)) card.classList.add('is-offline');
       if ((suspicion.get(player.id) || 0) > 0) card.classList.add('is-suspected');
 
-      const top = document.createElement('div');
-      top.className = 'online-player-top';
-      const identity = document.createElement('button');
-      identity.type = 'button';
-      identity.className = 'online-player-main';
-      identity.innerHTML = '<b></b><span></span>';
-      identity.querySelector('b').textContent = player.name;
-      identity.querySelector('span').textContent = offlineRound.has(player.id) ? 'OFFLINE' : player.meta;
-      identity.onclick = () => showDetail(player);
+      const main = document.createElement('button');
+      main.type = 'button';
+      main.className = 'online-card-main';
+      main.appendChild(makePortrait(player, index, 'discussion'));
+
+      const name = document.createElement('span');
+      name.className = 'online-card-name';
+      name.textContent = player.name;
+      const meta = document.createElement('span');
+      meta.className = 'online-card-meta';
+      meta.textContent = offlineRound.has(player.id) ? 'OFFLINE' : player.meta;
+      const clue = document.createElement('span');
+      clue.className = 'online-card-clue';
+      clue.textContent = latestStatement(player);
+      main.appendChild(name);
+      main.appendChild(meta);
+      main.appendChild(clue);
+      main.onclick = () => showDetail(player);
 
       const mark = document.createElement('button');
       mark.type = 'button';
@@ -751,16 +781,8 @@ function runOnlineModeratorGame() {
       mark.setAttribute('aria-label', '標記 ' + player.name + ' 的懷疑程度');
       mark.onclick = () => cycleSuspicion(player.id, mark);
 
-      const testimony = document.createElement('button');
-      testimony.type = 'button';
-      testimony.className = 'online-testimony';
-      testimony.textContent = latestStatement(player);
-      testimony.onclick = () => showDetail(player);
-
-      top.appendChild(identity);
-      top.appendChild(mark);
-      card.appendChild(top);
-      card.appendChild(testimony);
+      card.appendChild(main);
+      card.appendChild(mark);
       return card;
     }
 
@@ -769,10 +791,10 @@ function runOnlineModeratorGame() {
       transitionLocked = false;
       selectedId = null;
       status.textContent = 'ONLINE ' + onlineCount() + ' · R' + round + '/3';
-      phaseLabel.textContent = 'ROUND ' + round + ' · 討論';
+      phaseLabel.textContent = nightLabels[round - 1] + ' · 討論';
       systemLine.textContent = message || '在線證詞已更新';
       roster.innerHTML = '';
-      players.forEach((player) => roster.appendChild(makeDiscussionCard(player)));
+      players.forEach((player, index) => roster.appendChild(makeDiscussionCard(player, index)));
       showDetail(players.find((player) => !offlineRound.has(player.id)) || players[0]);
       action.disabled = false;
       action.textContent = round < 3 ? '結束討論' : '進入最終投票';
@@ -786,7 +808,7 @@ function runOnlineModeratorGame() {
       const player = players.find((item) => item.id === id);
       offlineRound.set(id, round);
       status.textContent = 'ONLINE ' + onlineCount() + ' · R' + round + '/3';
-      phaseLabel.textContent = 'ROUND ' + round + ' · 離線';
+      phaseLabel.textContent = nightLabels[round - 1] + ' · 夜間離線';
       systemLine.textContent = player.name + ' 已離線';
       detail.innerHTML = '<b>SYSTEM</b><span>' + player.name + ' 已離線。這裡的淘汰只會把名字變灰。</span>';
       roster.querySelectorAll('.online-player-card').forEach((card, index) => {
@@ -807,21 +829,29 @@ function runOnlineModeratorGame() {
       transitionLocked = false;
       selectedId = null;
       status.textContent = 'FINAL VOTE';
-      phaseLabel.textContent = 'ROUND 3 · 指認';
+      phaseLabel.textContent = '最終夜 · 指認';
       systemLine.textContent = '管理權限持有者只可指認一次';
       detail.innerHTML = '<b>管理權限</b><span>所有曾在線的人都仍是候選。離線者不會從最終名單排除。</span>';
       roster.innerHTML = '';
 
-      players.forEach((player) => {
+      players.forEach((player, index) => {
         const candidate = document.createElement('button');
         candidate.type = 'button';
-        candidate.className = 'online-vote-card';
+        candidate.className = 'online-vote-card online-character-card';
         candidate.dataset.playerId = player.id;
         if (offlineRound.has(player.id)) candidate.classList.add('is-offline');
-        candidate.innerHTML = '<b></b><span></span><small></small>';
-        candidate.querySelector('b').textContent = player.name;
-        candidate.querySelector('span').textContent = offlineRound.has(player.id) ? 'OFFLINE' : 'ONLINE';
-        candidate.querySelector('small').textContent = '你的標記：' + suspicionText(player.id);
+        candidate.appendChild(makePortrait(player, index, 'vote'));
+        const name = document.createElement('b');
+        name.className = 'online-card-name';
+        name.textContent = player.name;
+        const state = document.createElement('span');
+        state.className = 'online-card-meta';
+        state.textContent = offlineRound.has(player.id) ? 'OFFLINE' : 'ONLINE';
+        const mark = document.createElement('small');
+        mark.textContent = '標記 ' + suspicionText(player.id);
+        candidate.appendChild(name);
+        candidate.appendChild(state);
+        candidate.appendChild(mark);
         candidate.onclick = () => {
           if (settled) return;
           selectedId = player.id;

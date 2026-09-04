@@ -414,34 +414,52 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .ssd-detail{min-height:76px;border:1px solid #293246;border-radius:11px;background:linear-gradient(rgba(8,10,16,.78),rgba(8,10,16,.78)),var(--detail-art);background-size:cover;padding:.65rem;display:flex;flex-direction:column;gap:.3rem}
 .ssd-detail-title{font-size:.62rem;color:#b8cff4;font-family:monospace}.ssd-detail-copy{font-size:.68rem;color:#8b94a8;line-height:1.55}
 
-/* CH3-2 · ONLINE GAME — hidden-role / Werewolf-style discussion and final vote */
-.online-werewolf-game{background:linear-gradient(180deg,rgba(4,12,13,.96),rgba(3,7,9,.99)),var(--mg-art);border-color:#1f3a3c}
-.online-werewolf-game:before{background:radial-gradient(circle at 50% 0,rgba(53,190,168,.09),transparent 44%)}
-.online-game-status{color:#8de9d2;border-color:rgba(85,220,190,.32);background:rgba(6,24,23,.7)}
-.online-phase-bar{display:flex;align-items:center;justify-content:space-between;gap:.55rem;padding:.5rem .6rem;border:1px solid rgba(99,184,169,.18);border-radius:10px;background:rgba(4,18,18,.78)}
-.online-phase-label{font-size:.62rem;color:#c9fff2;letter-spacing:.09em;font-weight:700}
-.online-system-line{font-size:.56rem;color:#688d89;text-align:right;line-height:1.35}
-.online-roster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.48rem}
-.online-player-card{position:relative;overflow:hidden;min-height:112px;border:1px solid #263d3e;border-radius:11px;background:linear-gradient(rgba(5,15,16,.82),rgba(5,12,14,.92)),var(--card-art);background-size:cover;transition:opacity .25s,border-color .25s,filter .25s}
-.online-player-card.is-suspected{border-color:#796d42}.online-player-card.is-offline{opacity:.46;filter:grayscale(.82)}
+/* CH3-2 · ONLINE GAME — graphical hidden-role card table */
+.online-werewolf-game{background:linear-gradient(180deg,rgba(6,13,18,.96),rgba(3,7,10,.99)),var(--mg-art);border-color:#273e49;box-shadow:0 18px 60px rgba(0,0,0,.55)}
+.online-werewolf-game:before{background:radial-gradient(circle at 50% 0,rgba(93,136,181,.13),transparent 43%)}
+.online-werewolf-game .echo-mg-title{font-size:1rem;letter-spacing:.06em}
+.online-game-status{color:#b9dcff;border-color:rgba(120,174,226,.36);background:rgba(10,24,39,.78);font-weight:700}
+.online-phase-bar{position:relative;display:flex;align-items:center;justify-content:center;gap:.55rem;padding:.58rem .7rem;border:1px solid rgba(117,150,188,.22);border-radius:12px;background:linear-gradient(180deg,rgba(36,50,69,.78),rgba(15,23,34,.9));box-shadow:inset 0 0 22px rgba(74,107,145,.08)}
+.online-phase-label{font-size:.82rem;color:#eef6ff;letter-spacing:.1em;font-weight:800;text-shadow:0 1px 8px rgba(110,169,230,.28)}
+.online-system-line{position:absolute;right:.55rem;max-width:38%;font-size:.5rem;color:#8192a6;text-align:right;line-height:1.25}
+.online-roster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.42rem;align-items:stretch}
+.online-character-card{position:relative;overflow:hidden;border-radius:12px}
+.online-player-card{min-height:218px;border:1px solid #47627d;background:linear-gradient(180deg,rgba(35,57,82,.58),rgba(15,27,42,.94)),var(--card-art);background-size:cover;box-shadow:inset 0 0 0 1px rgba(185,220,255,.04),0 5px 14px rgba(0,0,0,.2);transition:opacity .25s,border-color .25s,filter .25s,transform .18s}
+.online-player-card.is-suspected{border-color:#9466ad;background:linear-gradient(180deg,rgba(82,43,100,.58),rgba(34,21,48,.95)),var(--card-art)}
+.online-player-card.is-offline{opacity:.42;filter:grayscale(.9) brightness(.65)}
 .online-player-card.is-just-offline{animation:onlineDrop .75s ease both}
-.online-player-top{display:grid;grid-template-columns:1fr auto;align-items:stretch;border-bottom:1px solid rgba(255,255,255,.05)}
-.online-player-main,.online-testimony,.online-suspicion-mark,.online-vote-card{appearance:none;font-family:inherit}
-.online-player-main{min-width:0;border:0;background:transparent;color:#dff7f1;padding:.5rem .52rem;text-align:left;display:flex;flex-direction:column;gap:.12rem}
-.online-player-main b{font-size:.65rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.online-player-main span{font-size:.5rem;color:#648a84;letter-spacing:.04em}
-.online-suspicion-mark{width:50px;border:0;border-left:1px solid rgba(255,255,255,.05);background:rgba(7,12,14,.62);color:#607673;font-size:.55rem;font-weight:700}
-.online-suspicion-mark.is-suspect{color:#d7bd6a;background:rgba(58,45,12,.34)}.online-suspicion-mark.is-admin-suspect{color:#ffd86d;box-shadow:inset 0 0 0 1px rgba(255,207,77,.18)}
-.online-testimony{width:100%;min-height:62px;border:0;background:transparent;color:#9aaea9;padding:.5rem .55rem;text-align:left;font-size:.6rem;line-height:1.48}
-.online-testimony-detail{min-height:66px;padding:.6rem .65rem;border:1px solid #213739;border-radius:10px;background:rgba(3,12,14,.84);display:flex;flex-direction:column;gap:.26rem}
-.online-testimony-detail b{font-size:.62rem;color:#bde8dd}.online-testimony-detail span{font-size:.65rem;color:#829a95;line-height:1.5}
-.online-main-action{border-color:#2e5d58;background:linear-gradient(180deg,#102925,#091a19)}
-.online-vote-card{min-height:88px;border:1px solid #29403f;border-radius:10px;background:rgba(5,16,17,.86);color:#d9ede9;padding:.55rem;display:flex;flex-direction:column;gap:.16rem;text-align:left;transition:transform .16s,border-color .16s,box-shadow .16s}
-.online-vote-card b{font-size:.67rem}.online-vote-card span{font-size:.52rem;color:#688984}.online-vote-card small{font-size:.5rem;color:#8d825b;margin-top:.2rem}
-.online-vote-card.is-offline{opacity:.58;filter:grayscale(.65)}.online-vote-card.is-selected{opacity:1;filter:none;border-color:#79d8c5;box-shadow:0 0 0 1px rgba(105,220,196,.2),0 0 16px rgba(58,173,153,.12);transform:translateY(-1px)}
+.online-card-main,.online-suspicion-mark,.online-vote-card{appearance:none;font-family:inherit}
+.online-card-main{width:100%;height:100%;min-height:218px;border:0;background:transparent;color:#eef5ff;padding:0;display:flex;flex-direction:column;align-items:stretch;text-align:left}
+.online-card-portrait{position:relative;display:block;height:116px;overflow:hidden;background:radial-gradient(circle at 50% 38%,rgba(141,181,221,.24),transparent 38%),linear-gradient(180deg,rgba(80,110,150,.34),rgba(19,29,44,.88));border-bottom:1px solid rgba(198,224,255,.12)}
+.online-card-code{position:absolute;left:.32rem;top:.25rem;z-index:5;font-size:.55rem;font-weight:900;color:#edf5ff;text-shadow:0 1px 3px #000}
+.online-card-state{position:absolute;right:.3rem;top:.25rem;z-index:5;border:1px solid rgba(180,218,255,.25);border-radius:999px;background:rgba(7,17,29,.58);padding:.08rem .25rem;font-size:.43rem;font-weight:800;color:#9dcbf2;letter-spacing:.08em}
+.online-avatar-figure{position:absolute;left:50%;bottom:-2px;width:78px;height:105px;transform:translateX(-50%)}
+.online-avatar-head{position:absolute;left:25px;top:20px;width:30px;height:38px;border-radius:48% 48% 44% 44%;background:linear-gradient(135deg,#c5c8c9,#8d979b);box-shadow:0 0 0 2px rgba(5,13,20,.48),inset -4px -4px 7px rgba(0,0,0,.18)}
+.online-avatar-hair{position:absolute;left:20px;top:13px;width:40px;height:29px;border-radius:52% 52% 36% 36%;background:#202a35;z-index:2;clip-path:polygon(0 0,100% 0,94% 63%,80% 52%,72% 100%,57% 58%,42% 92%,29% 52%,12% 70%)}
+.online-avatar-eye{position:absolute;top:36px;width:5px;height:5px;border-radius:50%;background:#dbeeff;box-shadow:0 0 6px rgba(153,213,255,.7);z-index:3}.online-avatar-eye.eye-l{left:32px}.online-avatar-eye.eye-r{right:32px}
+.online-avatar-body{position:absolute;left:11px;bottom:-10px;width:58px;height:58px;border-radius:48% 48% 10% 10%;background:linear-gradient(135deg,#566a7d,#243443);box-shadow:inset -8px -8px 12px rgba(0,0,0,.24)}
+.online-avatar-glitch{position:absolute;left:8px;right:8px;top:46px;height:2px;background:rgba(174,224,255,.24);box-shadow:0 13px 0 rgba(174,224,255,.08),0 -17px 0 rgba(174,224,255,.09)}
+.avatar-sleepmode .online-avatar-hair{height:42px;top:10px;border-radius:50% 50% 60% 60%;clip-path:polygon(0 0,100% 0,92% 100%,75% 78%,65% 100%,48% 72%,31% 100%,15% 78%)}
+.avatar-lastseen404 .online-avatar-head{transform:rotate(-3deg);background:linear-gradient(135deg,#b9b6b3,#777c80)}.avatar-lastseen404 .online-avatar-glitch{height:4px;background:rgba(255,152,160,.22);transform:rotate(-5deg)}
+.avatar-silentroom .online-avatar-hair{top:15px;height:22px;clip-path:ellipse(50% 45% at 50% 50%)}.avatar-silentroom .online-avatar-head{background:linear-gradient(135deg,#bfc5c9,#858c94)}
+.avatar-echo_guest .online-avatar-eye{width:8px;height:5px;border-radius:50%;background:transparent;border:1px solid #d8edff;box-shadow:none}.avatar-echo_guest .eye-l{left:29px}.avatar-echo_guest .eye-r{right:29px}
+.avatar-0317 .online-avatar-glitch{height:3px;background:rgba(137,214,255,.42);box-shadow:0 9px 0 rgba(154,109,218,.23),0 -12px 0 rgba(255,255,255,.1)}.avatar-0317 .online-avatar-head{filter:contrast(1.25)}
+.online-card-name{display:block;margin:.36rem .32rem .05rem;border-radius:7px;background:linear-gradient(180deg,#516d8b,#31475f);padding:.22rem .28rem;text-align:center;font-size:.58rem;font-weight:800;color:#f3f7fb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:inset 0 0 0 1px rgba(218,237,255,.1)}
+.online-card-meta{display:block;padding:0 .38rem;font-size:.44rem;color:#7290aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.online-card-clue{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:45px;padding:.25rem .38rem .38rem;font-size:.51rem;line-height:1.38;color:#b4c0cb}
+.online-suspicion-mark{position:absolute;right:.28rem;bottom:.28rem;z-index:6;min-width:30px;height:30px;padding:0 .26rem;border:1px solid rgba(255,255,255,.12);border-radius:50%;background:rgba(7,13,21,.86);color:#8b9aa8;font-size:.48rem;font-weight:900;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.online-suspicion-mark.is-suspect{color:#f0c0ff;border-color:rgba(205,135,234,.48);background:rgba(58,27,72,.88)}.online-suspicion-mark.is-admin-suspect{width:auto;border-radius:999px;color:#ffe19b;border-color:rgba(255,211,102,.5);background:rgba(81,55,12,.9)}
+.online-testimony-detail{min-height:66px;padding:.6rem .65rem;border:1px solid #263d50;border-radius:10px;background:linear-gradient(180deg,rgba(12,23,33,.9),rgba(7,15,23,.94));display:flex;flex-direction:column;gap:.26rem;box-shadow:inset 0 0 18px rgba(104,157,207,.04)}
+.online-testimony-detail b{font-size:.62rem;color:#cfe8ff}.online-testimony-detail span{font-size:.65rem;color:#91a6b9;line-height:1.5}
+.online-main-action{border-color:#405f7d;background:linear-gradient(180deg,#1d344b,#0e2032);box-shadow:0 4px 13px rgba(0,0,0,.25)}
+.online-vote-card{min-height:190px;border:1px solid #47627d;background:linear-gradient(180deg,rgba(35,57,82,.7),rgba(15,27,42,.96)),var(--card-art);background-size:cover;color:#eaf3fb;padding:0 0 .38rem;display:flex;flex-direction:column;gap:.08rem;text-align:left;transition:transform .16s,border-color .16s,box-shadow .16s}
+.online-vote-card .online-card-portrait{width:100%;height:116px}.online-vote-card .online-card-name{width:calc(100% - .64rem);box-sizing:border-box}.online-vote-card .online-card-meta{padding:0 .38rem}.online-vote-card small{font-size:.46rem;color:#b6a879;margin:.08rem .38rem 0}
+.online-vote-card.is-offline{opacity:.5;filter:grayscale(.78)}.online-vote-card.is-selected{opacity:1;filter:none;border-color:#e6c767;box-shadow:0 0 0 2px rgba(230,199,103,.24),0 0 20px rgba(214,176,78,.18);transform:translateY(-2px)}
+.online-vote-card.is-selected .online-card-name{background:linear-gradient(180deg,#8a7236,#5e4c26)}
 .online-werewolf-game.is-victory{border-color:#4f9e8e;box-shadow:0 0 28px rgba(60,190,160,.14)}
-.online-werewolf-game.is-defeat{border-color:#5d363c;box-shadow:0 0 28px rgba(180,55,70,.12)}
-.online-werewolf-game.is-defeat .online-game-status{color:#e18d99;border-color:rgba(220,85,100,.32)}
-@keyframes onlineDrop{0%{opacity:1;filter:none}28%{transform:translateX(-3px)}45%{transform:translateX(3px);background-color:rgba(120,20,30,.2)}100%{opacity:.46;filter:grayscale(.82);transform:translateX(0)}}
+.online-werewolf-game.is-defeat{border-color:#6c3d49;box-shadow:0 0 28px rgba(180,55,70,.12)}
+.online-werewolf-game.is-defeat .online-game-status{color:#e9a2ad;border-color:rgba(220,85,100,.32)}
+@keyframes onlineDrop{0%{opacity:1;filter:none}28%{transform:translateX(-3px)}45%{transform:translateX(3px);background-color:rgba(120,20,30,.2)}100%{opacity:.42;filter:grayscale(.9) brightness(.65);transform:translateX(0)}}
 
 .audio-verify-label{font-size:.62rem;color:#a5badc;letter-spacing:.09em;font-family:monospace}
 .audio-verify-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem}
@@ -495,4 +513,4 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .tr-timer{background-image:linear-gradient(rgba(12,12,18,.62),rgba(12,12,18,.62)),url('../img/ui/mg_ch42_territory_timer.png');background-size:cover;background-position:center;border-radius:8px;padding:.25rem .45rem}
 .tr-report{background-image:linear-gradient(rgba(12,12,18,.78),rgba(12,12,18,.88)),url('../img/ui/mg_ch42_territory_result.png');background-size:cover;background-position:center}
 
-@media (max-width:430px){#options-area.widget-open{max-height:72dvh;padding:.55rem}.mode-choice{grid-template-columns:1fr;max-width:340px;margin-top:1.7rem}.mode-card{min-height:56px}.t-quote{margin-top:1.5rem}.t-warn{position:static;margin-top:1.4rem}.echo-mg{padding:.65rem}.echo-mg-stage,.echo-mg-stage-img{min-height:190px}.link-stage{min-height:270px}.map-hotspot{font-size:.5rem;padding:.22rem .38rem}.memory-card{font-size:.61rem}.online-roster{grid-template-columns:1fr}.online-player-card{min-height:96px}.online-testimony{min-height:50px}.online-phase-bar{align-items:flex-start;flex-direction:column}.online-system-line{text-align:left}.candy-hotspot{width:64px;height:64px}}
+@media (max-width:430px){#options-area.widget-open{max-height:72dvh;padding:.55rem}.mode-choice{grid-template-columns:1fr;max-width:340px;margin-top:1.7rem}.mode-card{min-height:56px}.t-quote{margin-top:1.5rem}.t-warn{position:static;margin-top:1.4rem}.echo-mg{padding:.55rem}.echo-mg-stage,.echo-mg-stage-img{min-height:190px}.link-stage{min-height:270px}.map-hotspot{font-size:.5rem;padding:.22rem .38rem}.memory-card{font-size:.61rem}.online-roster{grid-template-columns:repeat(3,minmax(0,1fr));gap:.3rem}.online-player-card,.online-card-main{min-height:196px}.online-card-portrait,.online-vote-card .online-card-portrait{height:102px}.online-avatar-figure{transform:translateX(-50%) scale(.88);transform-origin:50% 100%}.online-card-name{margin:.28rem .24rem .04rem;padding:.18rem .16rem;font-size:.5rem}.online-card-meta{padding:0 .28rem;font-size:.39rem}.online-card-clue{min-height:39px;padding:.2rem .28rem .3rem;font-size:.45rem;-webkit-line-clamp:3}.online-suspicion-mark{right:.2rem;bottom:.2rem;min-width:27px;height:27px;font-size:.42rem}.online-phase-bar{flex-direction:column;gap:.18rem;padding:.46rem .55rem}.online-phase-label{font-size:.72rem}.online-system-line{position:static;max-width:none;text-align:center;font-size:.46rem}.online-vote-card{min-height:168px}.online-vote-card small{font-size:.4rem;margin-left:.28rem}.candy-hotspot{width:64px;height:64px}}\n@media (max-width:340px){.online-roster{grid-template-columns:repeat(2,minmax(0,1fr))}.online-player-card,.online-card-main{min-height:205px}.online-card-portrait,.online-vote-card .online-card-portrait{height:108px}}
