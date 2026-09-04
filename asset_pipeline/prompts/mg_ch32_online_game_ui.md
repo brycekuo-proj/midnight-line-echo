@@ -17,7 +17,23 @@ Gameplay structure represented by the art:
 - No werewolf, villager, weapon, kill, blood, or death iconography.
 - Visual language is a corrupted late-night chat moderation console, not fantasy Mafia art.
 
-Needed future asset family:
+Current portrait asset family:
+- `img/ui/ch32/ch32_a1.jpg` — 阿澤 / male / 15
+- `img/ui/ch32/ch32_b1.jpg` — 林薇 / female / 28
+- `img/ui/ch32/ch32_c1.jpg` — 陳默 / male / 42
+- `img/ui/ch32/ch32_a2.jpg` — 小葵 / female / 19
+- `img/ui/ch32/ch32_b2.jpg` — 高翔 / male / 35
+- `img/ui/ch32/ch32_c2.jpg` — 周伯 / male / 80
+
+Portrait lock:
+- 1:1 head-and-shoulders photographic portrait, one person only.
+- Realistic, low-saturation, cold late-night lighting.
+- Eye region deliberately blurred / digitally defocused.
+- Non-bloody uncanny smile extends unnaturally toward both cheeks.
+- No embedded names, ages, status labels, card borders or UI text; those remain DOM-rendered.
+- Six people must remain clearly different in age, face, clothing and silhouette while sharing one photographic treatment.
+
+Additional future backing asset family:
 - `mg_ch32_online_panel.png` — dark online-room frame / subtle system grid.
 - `mg_ch32_online_card.png` — neutral candidate-card backing with room for name, status and testimony.
 - `mg_ch32_online_offline.png` — optional subtle disconnected/static treatment.
@@ -32,4 +48,4 @@ Style:
 - Horror through persistent presence and system inconsistency, not jumpscare imagery.
 
 Canonical mechanic note:
-SilentRoom is the fixed Moderator in the story. 03:17 is an anomalous-user red herring. The art must not reveal either role before the final result.
+Internal id `silentroom` (display name 小葵 / A2) is the fixed Moderator in the story. Internal id `0317` (display name 周伯 / C2) is an anomalous-user red herring. The art must not reveal either role before the final result.

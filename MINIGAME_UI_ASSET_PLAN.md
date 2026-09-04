@@ -76,7 +76,15 @@ Current backing assets (reused temporarily; no longer define the mechanic):
 - `mg_ch32_ssd_label.png`
 - `mg_ch32_ssd_detail.png`
 
-Future CH3-2 art refresh should target online roster cards / moderator-vote UI, not SSD inspection.
+Current CH3-2 portrait assets:
+- `img/ui/ch32/ch32_a1.jpg` — 阿澤，男，15歲
+- `img/ui/ch32/ch32_b1.jpg` — 林薇，女，28歲
+- `img/ui/ch32/ch32_c1.jpg` — 陳默，男，42歲
+- `img/ui/ch32/ch32_a2.jpg` — 小葵，女，19歲
+- `img/ui/ch32/ch32_b2.jpg` — 高翔，男，35歲
+- `img/ui/ch32/ch32_c2.jpg` — 周伯，男，80歲
+
+All six portraits use the same ECHO abnormal-profile-photo treatment: realistic low-saturation photography, digitally blurred eye region, and a non-bloody unnaturally extended smile reaching toward both cheeks. Names, ages, online state and testimony remain DOM-rendered.
 
 ### CH3-3 — Audio Verification
 Interaction: play, compare and verify suspicious audio evidence.

@@ -603,28 +603,31 @@ function runOnlineModeratorGame() {
     const players = [
       {
         id: 'unknown17',
-        name: 'Unknown_17',
-        meta: '在線 127 天',
+        name: '阿澤',
+        meta: '15歲 · 在線 127 天',
+        portrait: 'img/ui/ch32/ch32_a1.jpg?v=20260905-1',
         statements: [
-          'Sleep_Mode 昨天還在線。他最近一直假裝沒看見我。',
-          '他說三年前沒見過我，可是我昨天還看到他。有人改過在線紀錄。',
+          '林薇昨天還在線。她最近一直假裝沒看見我。',
+          '她說三年前沒見過我，可是我昨天還看到她。有人改過在線紀錄。',
           '管理者不一定還在線。別只看現在亮著的名字。'
         ]
       },
       {
         id: 'sleepmode',
-        name: 'Sleep_Mode',
-        meta: '在線 4 年',
+        name: '林薇',
+        meta: '28歲 · 在線 4 年',
+        portrait: 'img/ui/ch32/ch32_b1.jpg?v=20260905-1',
         statements: [
-          '我三年前就沒看過 Unknown_17。這裡有人很喜歡替別人記憶。',
+          '我三年前就沒看過阿澤。這裡有人很喜歡替別人記憶。',
           '在線太久不代表有權限。有些人只是被留下。',
           '我只能看見 ONLINE。我看不到誰真的完成離線。'
         ]
       },
       {
         id: 'lastseen404',
-        name: 'LastSeen_404',
-        meta: '最後離線 404 天前',
+        name: '陳默',
+        meta: '42歲 · 最後離線 404 天前',
+        portrait: 'img/ui/ch32/ch32_c1.jpg?v=20260905-1',
         statements: [
           '聊天室有時候會忘記人離開……或是假裝忘記。',
           '（已離線）',
@@ -633,8 +636,9 @@ function runOnlineModeratorGame() {
       },
       {
         id: 'silentroom',
-        name: 'SilentRoom',
-        meta: '在線未知',
+        name: '小葵',
+        meta: '19歲 · 在線未知',
+        portrait: 'img/ui/ch32/ch32_a2.jpg?v=20260905-1',
         statements: [
           '有人還沒完成同步。',
           '離線不代表離開。名單只會把 ACTIVE 拿掉。',
@@ -643,8 +647,9 @@ function runOnlineModeratorGame() {
       },
       {
         id: 'echo_guest',
-        name: 'EchoGuest',
-        meta: '在線 18 分鐘',
+        name: '高翔',
+        meta: '35歲 · 在線 18 分鐘',
+        portrait: 'img/ui/ch32/ch32_b2.jpg?v=20260905-1',
         statements: [
           '我只是被邀進來的。進來之前，名單就有這些名字。',
           '剛才有人離線後，我的在線數少了一個。就這樣。',
@@ -653,8 +658,9 @@ function runOnlineModeratorGame() {
       },
       {
         id: '0317',
-        name: '03:17',
-        meta: '狀態：在線中',
+        name: '周伯',
+        meta: '80歲 · 狀態：在線中',
+        portrait: 'img/ui/ch32/ch32_c2.jpg?v=20260905-1',
         statements: [
           '我沒有登入時間。你們有嗎？',
           '剛才離線的人還在看這裡。我看得到已讀。',
@@ -733,16 +739,12 @@ function runOnlineModeratorGame() {
       wrap.innerHTML =
         '<span class="online-card-code"></span>' +
         '<span class="online-card-state"></span>' +
-        '<span class="online-avatar-figure" aria-hidden="true">' +
-          '<i class="online-avatar-hair"></i>' +
-          '<i class="online-avatar-head"></i>' +
-          '<i class="online-avatar-eye eye-l"></i>' +
-          '<i class="online-avatar-eye eye-r"></i>' +
-          '<i class="online-avatar-body"></i>' +
-          '<i class="online-avatar-glitch"></i>' +
-        '</span>';
+        '<img class="online-card-photo" alt="">';
       wrap.querySelector('.online-card-code').textContent = cardSlots[index];
       wrap.querySelector('.online-card-state').textContent = offlineRound.has(player.id) ? 'OFF' : 'ON';
+      const photo = wrap.querySelector('.online-card-photo');
+      photo.src = player.portrait;
+      photo.alt = player.name + ' 大頭照';
       return wrap;
     }
 
@@ -878,7 +880,7 @@ function runOnlineModeratorGame() {
       phaseLabel.textContent = success ? '管理權限已驗證' : '在線辨識已結束';
       systemLine.textContent = success ? 'ADMIN LOG ACCESS GRANTED' : '管理權限未確認';
       detail.innerHTML = success
-        ? '<b>SilentRoom · MODERATOR</b><span>管理紀錄已解鎖。</span>'
+        ? '<b>' + selected.name + ' · MODERATOR</b><span>管理紀錄已解鎖。</span>'
         : '<b>' + selected.name + '</b><span>管理權限驗證失敗。正確身分不會公開。</span>';
       setTimeout(() => echoFinishMiniGame(resolve, {
         completed: true,

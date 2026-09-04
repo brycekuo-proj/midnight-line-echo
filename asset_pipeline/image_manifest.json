@@ -1583,6 +1583,198 @@
       },
       "sha256": "da3240dd832bca16e34c79eba8d31fd371d117f5c2b965f245d571be1e03a205",
       "asset_commit_sha": "e482b4559eb037974bf74d24ebf6af14893c08bf"
+    },
+    {
+      "id": "ch32_portrait_a1",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "online_moderator_game",
+      "generation_mode": "generate",
+      "status": "approved",
+      "output": "img/ui/ch32/ch32_a1.jpg",
+      "ui_role": "candidate_portrait",
+      "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
+      "attempts": 1,
+      "source_temp": null,
+      "version": 1,
+      "last_generated_at": "2026-09-05T00:05:00+08:00",
+      "last_error": null,
+      "source_path": "img/ui/ch32/ch32_a1.jpg",
+      "source_sha256": "7bae5feaff136ec2f0b6672251e13dcd040165c213bf691f152584aaff5cca21",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/ch32/ch32_a1.jpg",
+      "github_path": "img/ui/ch32/ch32_a1.jpg",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "sha256": "7bae5feaff136ec2f0b6672251e13dcd040165c213bf691f152584aaff5cca21",
+      "asset_commit_sha": null,
+      "subject": {
+        "slot": "A1",
+        "name": "阿澤",
+        "gender": "male",
+        "age": 15
+      }
+    },
+    {
+      "id": "ch32_portrait_b1",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "online_moderator_game",
+      "generation_mode": "generate",
+      "status": "approved",
+      "output": "img/ui/ch32/ch32_b1.jpg",
+      "ui_role": "candidate_portrait",
+      "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
+      "attempts": 1,
+      "source_temp": null,
+      "version": 1,
+      "last_generated_at": "2026-09-05T00:05:00+08:00",
+      "last_error": null,
+      "source_path": "img/ui/ch32/ch32_b1.jpg",
+      "source_sha256": "ad2c69207e1bb15f5eccfc8894d46a790b4eac605ddec6f59cba18edc6ce0bc1",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/ch32/ch32_b1.jpg",
+      "github_path": "img/ui/ch32/ch32_b1.jpg",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "sha256": "ad2c69207e1bb15f5eccfc8894d46a790b4eac605ddec6f59cba18edc6ce0bc1",
+      "asset_commit_sha": null,
+      "subject": {
+        "slot": "B1",
+        "name": "林薇",
+        "gender": "female",
+        "age": 28
+      }
+    },
+    {
+      "id": "ch32_portrait_c1",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "online_moderator_game",
+      "generation_mode": "generate",
+      "status": "approved",
+      "output": "img/ui/ch32/ch32_c1.jpg",
+      "ui_role": "candidate_portrait",
+      "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
+      "attempts": 1,
+      "source_temp": null,
+      "version": 1,
+      "last_generated_at": "2026-09-05T00:05:00+08:00",
+      "last_error": null,
+      "source_path": "img/ui/ch32/ch32_c1.jpg",
+      "source_sha256": "55c8827b93310ddfba4cc73327a2abf909688e61641240241b21ff62758fbe3d",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/ch32/ch32_c1.jpg",
+      "github_path": "img/ui/ch32/ch32_c1.jpg",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "sha256": "55c8827b93310ddfba4cc73327a2abf909688e61641240241b21ff62758fbe3d",
+      "asset_commit_sha": null,
+      "subject": {
+        "slot": "C1",
+        "name": "陳默",
+        "gender": "male",
+        "age": 42
+      }
+    },
+    {
+      "id": "ch32_portrait_a2",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "online_moderator_game",
+      "generation_mode": "generate",
+      "status": "approved",
+      "output": "img/ui/ch32/ch32_a2.jpg",
+      "ui_role": "candidate_portrait",
+      "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
+      "attempts": 1,
+      "source_temp": null,
+      "version": 1,
+      "last_generated_at": "2026-09-05T00:05:00+08:00",
+      "last_error": null,
+      "source_path": "img/ui/ch32/ch32_a2.jpg",
+      "source_sha256": "1fa491e91dd943fe46dcc05927bf29e1a7c19eacf3e45c9fdd0b4dae290c9e5c",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/ch32/ch32_a2.jpg",
+      "github_path": "img/ui/ch32/ch32_a2.jpg",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "sha256": "1fa491e91dd943fe46dcc05927bf29e1a7c19eacf3e45c9fdd0b4dae290c9e5c",
+      "asset_commit_sha": null,
+      "subject": {
+        "slot": "A2",
+        "name": "小葵",
+        "gender": "female",
+        "age": 19
+      }
+    },
+    {
+      "id": "ch32_portrait_b2",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "online_moderator_game",
+      "generation_mode": "generate",
+      "status": "approved",
+      "output": "img/ui/ch32/ch32_b2.jpg",
+      "ui_role": "candidate_portrait",
+      "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
+      "attempts": 1,
+      "source_temp": null,
+      "version": 1,
+      "last_generated_at": "2026-09-05T00:05:00+08:00",
+      "last_error": null,
+      "source_path": "img/ui/ch32/ch32_b2.jpg",
+      "source_sha256": "6790df804c6fafe17838f58a8aa8791f0ec0c874c28fd4c801bb672a195174c5",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/ch32/ch32_b2.jpg",
+      "github_path": "img/ui/ch32/ch32_b2.jpg",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "sha256": "6790df804c6fafe17838f58a8aa8791f0ec0c874c28fd4c801bb672a195174c5",
+      "asset_commit_sha": null,
+      "subject": {
+        "slot": "B2",
+        "name": "高翔",
+        "gender": "male",
+        "age": 35
+      }
+    },
+    {
+      "id": "ch32_portrait_c2",
+      "chapter": "3-2",
+      "type": "minigame_ui",
+      "minigame": "online_moderator_game",
+      "generation_mode": "generate",
+      "status": "approved",
+      "output": "img/ui/ch32/ch32_c2.jpg",
+      "ui_role": "candidate_portrait",
+      "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
+      "attempts": 1,
+      "source_temp": null,
+      "version": 1,
+      "last_generated_at": "2026-09-05T00:05:00+08:00",
+      "last_error": null,
+      "source_path": "img/ui/ch32/ch32_c2.jpg",
+      "source_sha256": "5e9d32d6a766be2e9049923adef9e15d999f55a962a1e8394a9d46dc189f5f2b",
+      "local_path": "/Users/user/Bryce AI Studio/Games/ECHO/img/ui/ch32/ch32_c2.jpg",
+      "github_path": "img/ui/ch32/ch32_c2.jpg",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "sha256": "5e9d32d6a766be2e9049923adef9e15d999f55a962a1e8394a9d46dc189f5f2b",
+      "asset_commit_sha": null,
+      "subject": {
+        "slot": "C2",
+        "name": "周伯",
+        "gender": "male",
+        "age": 80
+      }
     }
   ]
 }
