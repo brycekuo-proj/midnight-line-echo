@@ -1590,7 +1590,7 @@
       "type": "minigame_ui",
       "minigame": "online_moderator_game",
       "generation_mode": "generate",
-      "status": "approved",
+      "status": "approved_synced",
       "output": "img/ui/ch32/ch32_a1.jpg",
       "ui_role": "candidate_portrait",
       "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
@@ -1608,7 +1608,7 @@
         "height": 384
       },
       "sha256": "7bae5feaff136ec2f0b6672251e13dcd040165c213bf691f152584aaff5cca21",
-      "asset_commit_sha": null,
+      "asset_commit_sha": "e42797cd1cfb3acb89256c830978666bcad0d322",
       "subject": {
         "slot": "A1",
         "name": "阿澤",
@@ -1622,7 +1622,7 @@
       "type": "minigame_ui",
       "minigame": "online_moderator_game",
       "generation_mode": "generate",
-      "status": "approved",
+      "status": "approved_synced",
       "output": "img/ui/ch32/ch32_b1.jpg",
       "ui_role": "candidate_portrait",
       "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
@@ -1640,7 +1640,7 @@
         "height": 384
       },
       "sha256": "ad2c69207e1bb15f5eccfc8894d46a790b4eac605ddec6f59cba18edc6ce0bc1",
-      "asset_commit_sha": null,
+      "asset_commit_sha": "e42797cd1cfb3acb89256c830978666bcad0d322",
       "subject": {
         "slot": "B1",
         "name": "林薇",
@@ -1654,7 +1654,7 @@
       "type": "minigame_ui",
       "minigame": "online_moderator_game",
       "generation_mode": "generate",
-      "status": "approved",
+      "status": "approved_synced",
       "output": "img/ui/ch32/ch32_c1.jpg",
       "ui_role": "candidate_portrait",
       "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
@@ -1672,7 +1672,7 @@
         "height": 384
       },
       "sha256": "55c8827b93310ddfba4cc73327a2abf909688e61641240241b21ff62758fbe3d",
-      "asset_commit_sha": null,
+      "asset_commit_sha": "e42797cd1cfb3acb89256c830978666bcad0d322",
       "subject": {
         "slot": "C1",
         "name": "陳默",
@@ -1686,7 +1686,7 @@
       "type": "minigame_ui",
       "minigame": "online_moderator_game",
       "generation_mode": "generate",
-      "status": "approved",
+      "status": "approved_synced",
       "output": "img/ui/ch32/ch32_a2.jpg",
       "ui_role": "candidate_portrait",
       "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
@@ -1704,7 +1704,7 @@
         "height": 384
       },
       "sha256": "1fa491e91dd943fe46dcc05927bf29e1a7c19eacf3e45c9fdd0b4dae290c9e5c",
-      "asset_commit_sha": null,
+      "asset_commit_sha": "e42797cd1cfb3acb89256c830978666bcad0d322",
       "subject": {
         "slot": "A2",
         "name": "小葵",
@@ -1718,7 +1718,7 @@
       "type": "minigame_ui",
       "minigame": "online_moderator_game",
       "generation_mode": "generate",
-      "status": "approved",
+      "status": "approved_synced",
       "output": "img/ui/ch32/ch32_b2.jpg",
       "ui_role": "candidate_portrait",
       "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
@@ -1736,7 +1736,7 @@
         "height": 384
       },
       "sha256": "6790df804c6fafe17838f58a8aa8791f0ec0c874c28fd4c801bb672a195174c5",
-      "asset_commit_sha": null,
+      "asset_commit_sha": "e42797cd1cfb3acb89256c830978666bcad0d322",
       "subject": {
         "slot": "B2",
         "name": "高翔",
@@ -1750,7 +1750,7 @@
       "type": "minigame_ui",
       "minigame": "online_moderator_game",
       "generation_mode": "generate",
-      "status": "approved",
+      "status": "approved_synced",
       "output": "img/ui/ch32/ch32_c2.jpg",
       "ui_role": "candidate_portrait",
       "prompt_file": "asset_pipeline/prompts/mg_ch32_online_game_ui.md",
@@ -1768,7 +1768,7 @@
         "height": 384
       },
       "sha256": "5e9d32d6a766be2e9049923adef9e15d999f55a962a1e8394a9d46dc189f5f2b",
-      "asset_commit_sha": null,
+      "asset_commit_sha": "e42797cd1cfb3acb89256c830978666bcad0d322",
       "subject": {
         "slot": "C2",
         "name": "周伯",
