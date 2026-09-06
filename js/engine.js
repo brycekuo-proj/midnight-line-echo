@@ -1208,6 +1208,8 @@ function updateChapterSelectUI() {
     const el = document.getElementById('cs-' + ch);
     if (!el) return;
     const unlocked = engineering ? !!(window.CHAPTERS && window.CHAPTERS[ch]) : isChapterUnlocked(ch);
+    // 玩家版只顯示目前已解鎖（含已完成）的章節；工程版維持全章節可見。
+    el.style.display = (!engineering && !unlocked) ? 'none' : '';
     el.classList.toggle('locked', !unlocked);
     el.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
     el.title = unlocked ? '' : '此章節尚未解鎖';
@@ -1222,6 +1224,14 @@ function updateChapterSelectUI() {
     else syncEl.textContent = '🔒';
   });
 
+  // 若玩家版某一章節群組沒有任何已解鎖卡片，連章節標題一起隱藏。
+  document.querySelectorAll('#chapter-select .cs-grid').forEach((grid) => {
+    const hasVisibleCard = Array.from(grid.querySelectorAll('.cs-card')).some((card) => card.style.display !== 'none');
+    grid.style.display = hasVisibleCard ? '' : 'none';
+    const part = grid.previousElementSibling;
+    if (part && part.classList.contains('cs-part')) part.style.display = hasVisibleCard ? '' : 'none';
+  });
+
   const badge = document.getElementById('cs-mode-badge');
   const note = document.getElementById('cs-mode-note');
   if (badge) {
@@ -1231,7 +1241,7 @@ function updateChapterSelectUI() {
   if (note) {
     note.textContent = engineering
       ? '工程版：所有已實作章節全開；測試結果不會寫入玩家存檔。'
-      : '玩家版：依累積同步率、路線條件與已完成進度解鎖；鎖定章節不可直接進入。';
+      : '玩家版：僅顯示目前已解鎖章節；後續章節會依同步率、路線條件與完成進度出現。';
   }
 
   const tot = document.getElementById('cs-total');
