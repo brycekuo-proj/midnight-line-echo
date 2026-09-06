@@ -274,11 +274,11 @@ function ch42TerritoryReportCard(result) {
     '<div class="tr-report-kicker">MINIGAME 2 / 2 · RESULT</div>' +
     '<div class="tr-report-title">代理區域同步完成</div>' +
     '<div class="tr-report-grid">' +
-      '<div><span>自己保留</span><b>' + result.playerControlledCount + ' / 25</b></div>' +
-      '<div><span>EVA 接手</span><b>' + result.evaControlledCount + ' / 25</b></div>' +
-      '<div><span>代理比例</span><b>' + result.delegatedPercent + '%</b></div>' +
+      '<div><span>最終盤 YOU</span><b>' + result.playerControlledCount + ' / 25</b></div>' +
+      '<div><span>最終盤 EVA</span><b>' + result.evaControlledCount + ' / 25</b></div>' +
+      '<div><span>系列戰績</span><b>' + result.playerRoundWins + ' : ' + result.evaRoundWins + '</b></div>' +
     '</div>' +
-    '<div class="tr-report-line">代理同步：+' + result.rawSyncAward + '%</div>' +
+    '<div class="tr-report-line">3 回合 Territory 完成 · 代理同步：+' + result.rawSyncAward + '%</div>' +
   '</div>';
 }
 
@@ -494,6 +494,8 @@ async function ch42RunTerritory(config) {
 
   const cfg = config || {};
   const durationMs = cfg.durationMs || 60000;
+  const totalRounds = cfg.rounds || 3;
+  const roundDurationMs = cfg.roundDurationMs || Math.max(1000, Math.floor(durationMs / totalRounds));
   const cells = ch42BuildTerritoryCells();
   const applySync = cfg.applySync !== false;
   const directions = [
@@ -507,23 +509,22 @@ async function ch42RunTerritory(config) {
     3: 'Wave 3 · 穩定'
   };
 
-  // 5x5 board uses a compact four-piece opening around the center.
-  cells[6].owner = 'player';
-  cells[7].owner = 'eva';
-  cells[11].owner = 'eva';
-  cells[12].owner = 'player';
-
   return new Promise((resolve) => {
     let settled = false;
     let clockTimer = null;
     let evaMoveTimer = null;
-    let remainingMs = durationMs;
-    const startedAt = Date.now();
+    let roundTransitionTimer = null;
+    let round = 1;
+    let remainingMs = roundDurationMs;
+    let roundStartedAt = Date.now();
     let wave = 1;
     let turn = 'player';
     let playerActions = 0;
     let evaExpansions = 0;
     let lastFlipIds = [];
+    let lastMoveOwner = null;
+    let lastFlipCount = 0;
+    let roundResults = [];
 
     const widget = document.createElement('div');
     widget.className = 'tr-widget tr-othello';
@@ -534,7 +535,9 @@ async function ch42RunTerritory(config) {
       '</div>' +
       '<div class="tr-sub">夾住對方的管理區域，就能把整條代理權翻回來。</div>' +
       '<div class="tr-wave"></div>' +
+      '<div class="tr-roundbar"><span class="tr-round-label"></span><span class="tr-round-score"></span></div>' +
       '<div class="tr-turn"></div>' +
+      '<div class="tr-attack-banner"></div>' +
       '<div class="tr-board"></div>' +
       '<div class="tr-meter">' +
         '<div><span>自己保留</span><b class="tr-player-count">0</b></div>' +
@@ -545,12 +548,30 @@ async function ch42RunTerritory(config) {
 
     const timerEl = widget.querySelector('.tr-timer');
     const waveEl = widget.querySelector('.tr-wave');
+    const roundLabelEl = widget.querySelector('.tr-round-label');
+    const roundScoreEl = widget.querySelector('.tr-round-score');
     const turnEl = widget.querySelector('.tr-turn');
+    const attackEl = widget.querySelector('.tr-attack-banner');
     const boardEl = widget.querySelector('.tr-board');
     const hintEl = widget.querySelector('.tr-hint');
     const playerCountEl = widget.querySelector('.tr-player-count');
     const evaCountEl = widget.querySelector('.tr-eva-count');
     const emptyCountEl = widget.querySelector('.tr-empty-count');
+
+    function resetBoard() {
+      cells.forEach((cell) => {
+        cell.owner = null;
+        cell.lastChangedAt = 0;
+      });
+      cells[6].owner = 'player';
+      cells[7].owner = 'eva';
+      cells[11].owner = 'eva';
+      cells[12].owner = 'player';
+      lastFlipIds = [];
+      lastMoveOwner = null;
+      lastFlipCount = 0;
+      turn = round === 2 ? 'eva' : 'player';
+    }
 
     function indexOf(row, col) {
       if (row < 0 || row >= 5 || col < 0 || col >= 5) return -1;
@@ -609,6 +630,14 @@ async function ch42RunTerritory(config) {
       };
     }
 
+    function completedRoundWins() {
+      return roundResults.reduce((acc, item) => {
+        if (item.evaControlledCount > item.playerControlledCount) acc.eva++;
+        else if (item.playerControlledCount > item.evaControlledCount) acc.player++;
+        return acc;
+      }, { player: 0, eva: 0 });
+    }
+
     function formatMs(ms) {
       const totalSec = Math.max(0, Math.ceil(ms / 1000));
       const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
@@ -617,9 +646,7 @@ async function ch42RunTerritory(config) {
     }
 
     function currentWave() {
-      if (remainingMs > 40000) return 1;
-      if (remainingMs > 18000) return 2;
-      return 3;
+      return Math.min(3, round);
     }
 
     function makeMove(move, owner) {
@@ -632,6 +659,8 @@ async function ch42RunTerritory(config) {
         cells[idx].lastChangedAt = Date.now();
         lastFlipIds.push(cells[idx].id);
       });
+      lastMoveOwner = owner;
+      lastFlipCount = move.flips.length;
       if (owner === 'player') playerActions++;
       else evaExpansions++;
       return true;
@@ -644,7 +673,7 @@ async function ch42RunTerritory(config) {
       btn.className = 'tr-cell' +
         (cell.owner ? ' is-' + cell.owner : ' is-empty') +
         (isLegal ? ' is-legal' : '') +
-        (lastFlipIds.includes(cell.id) ? ' is-flipped' : '');
+        (lastFlipIds.includes(cell.id) ? ' is-flipped is-flipped-' + (lastMoveOwner || 'player') : '');
       btn.innerHTML =
         '<span class="tr-domain">' + cell.domain + '</span>' +
         '<span class="tr-label">' + cell.label + '</span>' +
@@ -661,36 +690,55 @@ async function ch42RunTerritory(config) {
       const stat = counts();
       const playerMoves = legalMoves('player');
       const playerMoveMap = new Map(playerMoves.map((move) => [move.index, move]));
+      const wins = completedRoundWins();
       boardEl.innerHTML = '';
       cells.forEach((cell, index) => boardEl.appendChild(renderBoardCell(cell, index, playerMoveMap)));
       timerEl.textContent = formatMs(remainingMs);
       waveEl.textContent = waveLabels[wave];
-      turnEl.textContent = turn === 'player' ? 'YOUR TURN · 點擊亮起空格' : 'EVA THINKING…';
+      roundLabelEl.textContent = 'ROUND ' + round + ' / ' + totalRounds;
+      roundScoreEl.textContent = 'YOU ' + wins.player + ' : ' + wins.eva + ' EVA';
+      turnEl.textContent = turn === 'player' ? 'YOUR TURN · 點擊亮起空格' : 'EVA ATTACKING…';
+      widget.classList.toggle('is-eva-turn', turn === 'eva');
+      attackEl.textContent = lastMoveOwner === 'eva' && lastFlipCount > 0 ? 'EVA TAKEOVER ×' + lastFlipCount : '';
+      attackEl.classList.toggle('is-active', lastMoveOwner === 'eva' && lastFlipCount > 0);
       playerCountEl.textContent = stat.playerControlledCount + ' / 25';
       evaCountEl.textContent = stat.evaControlledCount + ' / 25';
       emptyCountEl.textContent = stat.emptyCount + ' / 25';
     }
 
+    function scoreEvaMove(move) {
+      const cell = cells[move.index];
+      const isCorner = move.index === 0 || move.index === 4 || move.index === 20 || move.index === 24;
+      const isEdge = cell.row === 0 || cell.row === 4 || cell.col === 0 || cell.col === 4;
+      let score = move.flips.length * (round === 1 ? 10 : round === 2 ? 15 : 20);
+      if (isCorner) score += round === 1 ? 45 : 90;
+      else if (isEdge) score += round === 1 ? 8 : 24;
+      return score;
+    }
+
     function chooseEvaMove(moves) {
       if (!moves.length) return null;
-      // EVA prefers the move that flips the most pieces; later waves become more ruthless.
-      const sorted = [...moves].sort((a, b) => b.flips.length - a.flips.length);
-      if (wave === 1 && sorted.length > 1) return sorted[Math.min(1, sorted.length - 1)];
-      return sorted[0];
+      const ranked = [...moves].sort((a, b) => scoreEvaMove(b) - scoreEvaMove(a));
+      if (round === 1 && ranked.length > 1) return ranked[Math.min(1, ranked.length - 1)];
+      return ranked[0];
     }
 
     function scheduleEvaMove() {
       clearTimeout(evaMoveTimer);
-      const delay = wave === 1 ? 900 : wave === 2 ? 650 : 420;
+      const delay = round === 1 ? 720 : round === 2 ? 420 : 240;
       evaMoveTimer = setTimeout(() => {
         if (settled || turn !== 'eva') return;
         const moves = legalMoves('eva');
         const move = chooseEvaMove(moves);
         if (move) {
           makeMove(move, 'eva');
-          hintEl.textContent = move.flips.length >= 3
-            ? 'EVA 一次翻回了 ' + move.flips.length + ' 個區域。'
-            : 'EVA 接手了一塊區域。';
+          const isCorner = move.index === 0 || move.index === 4 || move.index === 20 || move.index === 24;
+          hintEl.textContent = move.flips.length >= 4
+            ? 'EVA 強制接管：一次翻走 ' + move.flips.length + ' 個區域。'
+            : isCorner
+              ? 'EVA 搶下角落，代理邊界被鎖住。'
+              : 'EVA 反擊：翻走 ' + move.flips.length + ' 個區域。';
+          render();
         } else {
           hintEl.textContent = 'EVA 無法落子，這回合跳過。';
         }
@@ -705,13 +753,13 @@ async function ch42RunTerritory(config) {
       const playerMoves = legalMoves('player');
       const evaMoves = legalMoves('eva');
       if (stat.emptyCount === 0 || (!playerMoves.length && !evaMoves.length)) {
-        finish('completed');
+        finishRound('board');
         return;
       }
 
       if (turn === 'player') {
         if (!playerMoves.length) {
-          hintEl.textContent = '你沒有可落子位置，回合交給 EVA。';
+          hintEl.textContent = '你沒有可落子位置，EVA 立即取得行動權。';
           turn = 'eva';
           render();
           scheduleEvaMove();
@@ -742,16 +790,69 @@ async function ch42RunTerritory(config) {
       scheduleEvaMove();
     }
 
+    function finishRound(reason) {
+      if (settled) return;
+      clearTimeout(evaMoveTimer);
+      const stat = counts();
+      roundResults.push({
+        round,
+        reason,
+        evaControlledCount: stat.evaControlledCount,
+        playerControlledCount: stat.playerControlledCount,
+        emptyCount: stat.emptyCount
+      });
+
+      if (round >= totalRounds) {
+        finish('completed');
+        return;
+      }
+
+      const evaWon = stat.evaControlledCount > stat.playerControlledCount;
+      const playerWon = stat.playerControlledCount > stat.evaControlledCount;
+      roundLabelEl.textContent = 'ROUND ' + round + ' COMPLETE';
+      turnEl.textContent = evaWon ? 'EVA ADVANTAGE' : playerWon ? 'PLAYER ADVANTAGE' : 'DRAW';
+      hintEl.textContent = evaWon
+        ? 'EVA：……下一輪，我會更快。'
+        : 'EVA：……我知道你會守。下一輪我不會讓那麼多。';
+      widget.classList.add('is-round-transition');
+
+      roundTransitionTimer = setTimeout(() => {
+        if (settled) return;
+        round++;
+        roundStartedAt = Date.now();
+        remainingMs = roundDurationMs;
+        wave = currentWave();
+        resetBoard();
+        widget.classList.remove('is-round-transition');
+        hintEl.textContent = round === 2
+          ? 'ROUND 2：EVA 開始優先搶邊線與大量翻面。'
+          : 'ROUND 3：EVA 進入強攻模式。';
+        render();
+        advanceTurn();
+      }, 900);
+    }
+
     function finish(reason) {
       if (settled) return;
       settled = true;
       clearTimeout(evaMoveTimer);
+      clearTimeout(roundTransitionTimer);
       const controller = activeWidgetController;
       if (controller && controller.mountTarget === 'overlay') closeMiniGameOverlay(controller);
       else activeWidgetController = null;
       clearInterval(clockTimer);
 
       const stat = counts();
+      if (!roundResults.some((item) => item.round === round)) {
+        roundResults.push({
+          round,
+          reason,
+          evaControlledCount: stat.evaControlledCount,
+          playerControlledCount: stat.playerControlledCount,
+          emptyCount: stat.emptyCount
+        });
+      }
+      const wins = completedRoundWins();
       const band = ch42TerritoryBand(stat.evaControlledCount);
       const syncAward = ch42TerritorySync(stat.evaControlledCount);
       const shouldApplySync = applySync && reason === 'completed';
@@ -760,6 +861,10 @@ async function ch42RunTerritory(config) {
         evaControlledCount: stat.evaControlledCount,
         playerControlledCount: stat.playerControlledCount,
         delegatedPercent: stat.delegatedPercent,
+        evaRoundWins: wins.eva,
+        playerRoundWins: wins.player,
+        roundsPlayed: roundResults.length,
+        roundResults,
         resultBand: band.key,
         evaLine: band.evaLine,
         syncAward: shouldApplySync ? syncAward : 0,
@@ -778,15 +883,18 @@ async function ch42RunTerritory(config) {
     }
 
     openMiniGameOverlay(widget, finish);
+    resetBoard();
+    wave = currentWave();
     render();
     advanceTurn();
 
     clockTimer = setInterval(() => {
-      remainingMs = Math.max(0, durationMs - (Date.now() - startedAt));
+      if (settled || widget.classList.contains('is-round-transition')) return;
+      remainingMs = Math.max(0, roundDurationMs - (Date.now() - roundStartedAt));
       wave = currentWave();
       render();
-      if (remainingMs <= 0) finish('completed');
-    }, 200);
+      if (remainingMs <= 0) finishRound('timeout');
+    }, 120);
   });
 }
 

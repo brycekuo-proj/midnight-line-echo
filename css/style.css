@@ -573,3 +573,15 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .tr-othello .tr-cell:disabled{cursor:default}
 @keyframes trFlip{0%{transform:scaleX(1)}45%{transform:scaleX(.08)}100%{transform:scaleX(1)}}
 @keyframes trLegalPulse{from{opacity:.45;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
+
+/* CH4-2 Territory · three-round EVA pressure */
+.tr-roundbar{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.34rem .5rem;border:1px solid rgba(140,120,180,.18);border-radius:9px;background:rgba(9,10,17,.62);font:700 .54rem/1 monospace;letter-spacing:.08em}.tr-round-label{color:#ddd3ee}.tr-round-score{color:#8ea5c2}
+.tr-attack-banner{height:0;opacity:0;overflow:hidden;text-align:center;color:#f0c9ff;font:900 .62rem/1 monospace;letter-spacing:.13em;text-shadow:0 0 12px rgba(192,86,255,.5);transition:height .16s,opacity .16s}.tr-attack-banner.is-active{height:1em;opacity:1}
+.tr-widget.is-eva-turn{border-color:rgba(187,82,255,.4);box-shadow:0 0 0 1px rgba(173,71,255,.08),0 0 26px rgba(109,46,160,.18),0 -10px 30px rgba(0,0,0,.25)}
+.tr-widget.is-eva-turn .tr-turn{color:#f0c9ff;border-color:rgba(201,111,255,.4);background:rgba(61,24,78,.72);animation:trEvaTurnPulse .42s ease-in-out infinite alternate}
+.tr-widget.is-eva-turn .tr-board{animation:trEvaBoardPressure .32s ease-out}
+.tr-cell.is-flipped-eva{animation:trEvaFlip .3s cubic-bezier(.15,.9,.2,1)}
+.tr-widget.is-round-transition .tr-board{filter:brightness(.55) saturate(.7);transform:scale(.985)}
+@keyframes trEvaTurnPulse{from{box-shadow:0 0 0 rgba(177,74,245,0)}to{box-shadow:0 0 16px rgba(177,74,245,.28)}}
+@keyframes trEvaBoardPressure{0%{transform:translateX(0)}35%{transform:translateX(-2px)}70%{transform:translateX(2px)}100%{transform:translateX(0)}}
+@keyframes trEvaFlip{0%{transform:scaleX(1);filter:brightness(1)}42%{transform:scaleX(.05);filter:brightness(1.8)}100%{transform:scaleX(1);filter:brightness(1)}}
