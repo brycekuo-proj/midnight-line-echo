@@ -1125,7 +1125,7 @@ function showEnd(chName) {
 // ═══════════════════════════════════════════════════════
 //  BUILD MODE + CHAPTER SELECT UI
 // ═══════════════════════════════════════════════════════
-const ECHO_CHAPTER_IDS = ['1-1', '2-1', '2-2', '3-1', '3-2', '3-3', '4-1', '4-2', '5'];
+const ECHO_CHAPTER_IDS = ['1-1', '2-1', '2-2', '3-1', '3-2', '3-3', '4-1', '4-2', '5', 'origin'];
 
 function getPlayerUnlocks() {
   const t = totalSync;
@@ -1146,7 +1146,9 @@ function getPlayerUnlocks() {
     // failing it forces the low-sync CH4 route regardless of accumulated sync.
     '4-1': ch3Done && !ch4Done && (ch32Done ? ch32AdminVerified : t >= 33),
     '4-2': ch3Done && !ch4Done && (ch32Done ? !ch32AdminVerified : (t >= 18 && t <= 66)),
-    '5': ch4Done && t >= 50
+    '5': ch4Done && t >= 50,
+    // Bonus origin chapter unlocks only after the true 100% Season 1 completion.
+    'origin': completedChapters['5'] !== undefined && t >= 100
   };
 }
 
@@ -1213,6 +1215,7 @@ function updateChapterSelectUI() {
     const syncEl = document.getElementById('cs-sync-' + ch);
     if (!syncEl) return;
     if (engineering) syncEl.textContent = 'TEST';
+    else if (ch === 'origin' && completedChapters[ch] !== undefined) syncEl.textContent = '完成 ✓';
     else if (completedChapters[ch] !== undefined) syncEl.textContent = completedChapters[ch] + '% ✓';
     else if (ch === '1-1') syncEl.textContent = '開始';
     else if (playerUnlocks[ch]) syncEl.textContent = '解鎖';

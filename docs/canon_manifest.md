@@ -3,7 +3,7 @@
 Purpose:
 Map current runtime chapter ids to locked Season 1 canon source files.
 
-Runtime integration note (2026-09-01): graphical mini-game assembly has now been wired across CH2-1, CH2-2, CH3-1, CH3-2, CH3-3, CH4-1, CH4-2 and CH5. For the current gameplay / asset integration state, use `docs/CHAPTER_INTEGRATION_STATUS.md`. The canon-parity warnings below remain useful for dialogue, pacing, ending split and Origin work that has not yet been fully rewritten.
+Runtime integration note (2026-09-07): graphical mini-game assembly is wired across CH2-1 through CH5, and the Origin bonus runtime is now implemented as a dedicated Oracle-era 1-bit / CRT mode with Neural Drift. For the current gameplay / asset integration state, use `docs/CHAPTER_INTEGRATION_STATUS.md`. The canon-parity warnings below remain useful for dialogue, pacing and ending-split work.
 
 Scope:
 - Documentation only
@@ -34,7 +34,7 @@ Status legend:
 | `end_normal` | `docs/canon/season1/Ending -fake _260528_172824.txt` | 《離線》 | `partial` | Runtime fake ending exists in `chapters/ch_end_normal.js`. It preserves the “returned to reality, then uncertainty reopens” idea. | Locked ending file emphasizes rain-image marquee pacing and a very restrained late reversal. Current runtime uses a chat-based postscript structure instead of the locked marquee presentation. |
 | `end_mid` | `docs/canon/season1/Ending -mid sym_260528_172505.txt` | Canon ending concept: 《仍在線》 | `mismatch` | No dedicated runtime id exists; behavior is embedded in `showEnd5()` inside `chapters/ch5.js`. | Current runtime labels the mid ending as `《循環在線》` and uses a conventional ending screen. Locked canon specifies a slow “welcome” message wash in-chat followed by EVA’s late appearance. Presentation and naming differ. |
 | `end_high` | `docs/canon/season1/Ending -hi sym_260528_172451.txt` | Canon ending concept: 《理解者》 | `mismatch` | No dedicated runtime id exists; behavior is embedded in `showEnd5()` inside `chapters/ch5.js`. | Current runtime labels the high-sync ending as `《永遠在一起》` and renders it through the standard ending overlay plus white page epilogue. Locked canon specifies a quieter white-space EVA encounter without normal chat framing. Naming and staging differ. |
-| `origin` | `docs/canon/season1/1-番外(new)_260528_215910.txt` | 《ECHO的出現》 | `missing` | Locked prequel / extra chapter exists in canon and is marked as Oracle-era origin material. | No dedicated runtime implementation, route entry, or alternate UI mode currently exists for the Origin prequel. Canon also requires a distinct 1-bit / CRT / research terminal presentation and the `Neural Drift` sync test. |
+| `origin` | `docs/canon/season1/1-番外(new)_260528_215910.txt` | 《ECHO的出現》 | `implemented` | Dedicated runtime exists in `chapters/ch_origin.js`; player route unlocks after 100% Season 1 completion and engineering mode opens it directly. | Canon presentation is implemented as a distinct 1-bit / CRT Oracle terminal with 60s qualification Neural Drift, 120s human synchronization, Gamma operator chat/archive flow and EVA joining the channel. |
 
 ## Additional Canon Files
 
@@ -56,9 +56,9 @@ Status legend:
   - `5`
   - fake ending
   - mid/high ending logic
+  - `origin`
 
 - Missing as dedicated runtime units:
-  - `origin`
   - dedicated `end_mid`
   - dedicated `end_high`
 
@@ -66,7 +66,7 @@ Status legend:
 
 1. `3-2` still needs the locked online-confirmation / testimony / offline-confirmation loop; the current SSD archive is only a support interaction.
 2. Mid and high endings are not modeled as canon-distinct runtime scenes; they are still condensed into `showEnd5()`.
-3. `origin` canon exists, but there is no runtime implementation or alternate 1-bit / CRT UI mode yet.
+3. `origin` is implemented; remaining work is mobile play-balance / visual QA for the two Neural Drift phases.
 4. `1-1` remains legacy canon and its locked source still needs migration into `docs/canon/season1/`.
 5. `2-2` requires visual QA of the exact five A/B differences and mobile hotspot positions.
 6. `3-1`, `3-3`, `4-1`, `4-2`, and `5` now have their core graphical mechanics, but dialogue, scoring, timing and scene pacing still need line-by-line canon verification.
@@ -78,4 +78,4 @@ This manifest should be treated as the baseline mapping document for Phase 1 ref
 - preserve runtime ids where practical
 - introduce canon-backed scene manifests per route
 - split mismatched endings into dedicated runtime scenes
-- implement Origin as a separate mode within the same static project
+- preserve Origin as a separate Oracle-era mode within the same static project

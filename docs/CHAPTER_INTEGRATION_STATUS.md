@@ -1,6 +1,6 @@
 # ECHO Chapter / Mini-game Integration Status
 
-Updated: 2026-09-01
+Updated: 2026-09-07
 
 Purpose: single runtime handoff table for chapter organization, canonical route identity, graphical mini-games, and production image usage.
 
@@ -20,7 +20,7 @@ Purpose: single runtime handoff table for chapter organization, canonical route 
 | `end_normal` | 《離線》 | low-sync fake ending | existing runtime ending | existing rain / chat assets | playable; presentation still differs from locked marquee pacing |
 | `end_mid` | 《仍在線》 | mid-sync ending | embedded in `showEnd5()` | no dedicated runtime unit | dedicated canon scene still missing |
 | `end_high` | 《理解者》 | high-sync ending | embedded in `showEnd5()` | `room_white.jpg` remains existing candidate | dedicated canon scene still missing |
-| `origin` | 《ECHO的出現》 | bonus / origin chapter | none | none | missing runtime implementation |
+| `origin` | 《ECHO的出現》 | bonus / Oracle origin chapter | Neural Drift qualification + human synchronization + Oracle archive | procedural 1-bit / CRT terminal UI | integrated; 100% player unlock + engineering direct access |
 
 ## Graphical mini-game runtime map
 
@@ -32,6 +32,7 @@ Purpose: single runtime handoff table for chapter organization, canonical route 
 6. CH4-1 calls `runMirrorFragment()` and resolves Mirror Lock inside the same widget.
 7. CH4-2 keeps its existing `runPermissionWhack()` and `ch42RunTerritory()` logic; CSS now layers the generated production UI assets onto those real interactions.
 8. CH5 calls `runEvidenceArchive()`, `runResidualVoices()`, `runEchoLinkBoard()`, and `runChoiceCandy()`.
+9. Origin runs its dedicated `Neural Drift` canvas interaction twice (60s qualification / 120s human synchronization), then switches to the Oracle terminal/chat/archive layer.
 
 Shared implementation lives in `js/minigames.js`. The widgets remain DOM/JS interactions; generated art is never used as a dead screenshot replacement.
 
@@ -47,5 +48,4 @@ Shared implementation lives in `js/minigames.js`. The widgets remain DOM/JS inte
 - migrate the legacy locked CH1-1 source into `docs/canon/season1/`;
 - rewrite CH3-2 toward the locked online-confirmation mechanic rather than treating SSD Archive as the final canon mechanic;
 - split `end_mid` and `end_high` into dedicated runtime scenes matching the locked endings;
-- implement `origin` with its distinct 1-bit / CRT research-terminal presentation;
 - perform full mobile visual QA for hotspot placement, generated-image readability, and chapter pacing.
