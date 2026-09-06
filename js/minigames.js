@@ -1144,6 +1144,7 @@ function runMirrorFragment(round = 1) {
     let dragState = null;
     let activeDropTarget = null;
     let attempts = 0;
+    let selectedCard = null;
 
     const root = echoMiniGameShell(spec.kicker, spec.title, spec.subtitle, ECHO_MG_ASSETS.ch41.board);
     root.classList.add('mirror-fragment-game');
@@ -1183,9 +1184,15 @@ function runMirrorFragment(round = 1) {
     verify.textContent = '重組紀錄';
     verify.disabled = true;
 
+    const hint = document.createElement('button');
+    hint.type = 'button';
+    hint.className = 'echo-mg-secondary mirror-hint';
+    hint.textContent = '提示一格';
+    hint.hidden = true;
+
     const note = document.createElement('div');
     note.className = 'echo-mg-note mirror-note';
-    note.textContent = '拖曳碎片到上方欄位；點一下碎片也能快速放入。';
+    note.textContent = '手機操作：點第一塊，再點第二塊可直接交換位置；也可拖曳。';
 
     function slotCard(slot) {
       return slot.querySelector('.mirror-fragment');
@@ -1284,6 +1291,34 @@ function runMirrorFragment(round = 1) {
       dragState = null;
     }
 
+    function clearSelectedCard() {
+      if (selectedCard) selectedCard.classList.remove('is-selected');
+      selectedCard = null;
+    }
+
+    function swapCards(first, second) {
+      if (!first || !second || first === second || settled) return;
+      const firstSlot = first.closest('.mirror-slot');
+      const secondSlot = second.closest('.mirror-slot');
+      if (firstSlot && secondSlot) {
+        const marker = document.createElement('span');
+        secondSlot.insertBefore(marker, second);
+        firstSlot.appendChild(second);
+        secondSlot.replaceChild(first, marker);
+      } else if (firstSlot && !secondSlot) {
+        firstSlot.appendChild(second);
+        pool.appendChild(first);
+        first.classList.remove('is-placed');
+        second.classList.add('is-placed');
+      } else if (!firstSlot && secondSlot) {
+        secondSlot.appendChild(first);
+        pool.appendChild(second);
+        first.classList.add('is-placed');
+        second.classList.remove('is-placed');
+      }
+      updateState();
+    }
+
     function makeCard(piece, id) {
       const card = document.createElement('button');
       card.type = 'button';
@@ -1298,10 +1333,27 @@ function runMirrorFragment(round = 1) {
       card.onclick = () => {
         if (settled || suppressClick) return;
         const source = card.closest('.mirror-slot');
-        if (source) returnCard(card);
-        else {
-          const empty = slots.find((slot) => !slotCard(slot));
-          if (empty) placeCard(card, empty);
+        if (selectedCard) {
+          if (selectedCard === card) {
+            clearSelectedCard();
+            note.textContent = '已取消選取。';
+            return;
+          }
+          swapCards(selectedCard, card);
+          clearSelectedCard();
+          note.textContent = '已交換兩塊碎片。可以繼續交換，或按「重組紀錄」檢查。';
+          return;
+        }
+        if (source) {
+          selectedCard = card;
+          card.classList.add('is-selected');
+          note.textContent = '已選取這一塊。再點另一塊即可交換位置。';
+          return;
+        }
+        const empty = slots.find((slot) => !slotCard(slot));
+        if (empty) {
+          placeCard(card, empty);
+          note.textContent = '碎片已放入。放滿後可直接點兩塊交換位置。';
         }
       };
       return card;
@@ -1309,6 +1361,42 @@ function runMirrorFragment(round = 1) {
 
     echoShuffle(spec.pieces.map((piece, id) => ({ piece, id })))
       .forEach((item) => pool.appendChild(makeCard(item.piece, item.id)));
+
+    hint.onclick = () => {
+      if (settled) return;
+      clearSelectedCard();
+      let targetIndex = -1;
+      for (let i = 0; i < slots.length; i++) {
+        const card = slotCard(slots[i]);
+        if (!card || card.textContent !== spec.pieces[i]) {
+          targetIndex = i;
+          break;
+        }
+      }
+      if (targetIndex < 0) return;
+      const targetSlot = slots[targetIndex];
+      const wanted = spec.pieces[targetIndex];
+      const candidate = [...root.querySelectorAll('.mirror-fragment')].find((card) => {
+        if (card.textContent !== wanted) return false;
+        const slot = card.closest('.mirror-slot');
+        return !slot || slot !== targetSlot;
+      });
+      if (!candidate) return;
+      const occupying = slotCard(targetSlot);
+      if (occupying) swapCards(occupying, candidate);
+      else placeCard(candidate, targetSlot);
+      slots.forEach((slot, index) => {
+        const card = slotCard(slot);
+        const ok = !!card && card.textContent === spec.pieces[index];
+        slot.classList.toggle('is-correct-position', ok);
+        if (ok) slot.classList.remove('is-wrong-position');
+      });
+      const correctPositions = slots.filter((slot, index) => {
+        const card = slotCard(slot);
+        return !!card && card.textContent === spec.pieces[index];
+      }).length;
+      note.textContent = '鏡像提示已固定 1 格。目前 ' + correctPositions + ' / ' + spec.pieces.length + ' 塊位置正確。';
+    };
 
     function revealInterpretation() {
       status.textContent = 'RESTORED';
@@ -1360,9 +1448,19 @@ function runMirrorFragment(round = 1) {
         void lane.offsetWidth;
         lane.classList.add('is-wrong');
         status.textContent = 'DESYNC';
-        note.textContent = '順序不對。鏡面殘字又錯開了一格。';
+        let correctPositions = 0;
+        slots.forEach((slot, index) => {
+          const card = slotCard(slot);
+          const isCorrect = !!card && card.textContent === spec.pieces[index];
+          slot.classList.toggle('is-correct-position', isCorrect);
+          slot.classList.toggle('is-wrong-position', !isCorrect);
+          if (isCorrect) correctPositions++;
+        });
+        hint.hidden = false;
+        note.textContent = '順序不對，但有 ' + correctPositions + ' / ' + spec.pieces.length + ' 塊已在正確位置。點兩塊可直接交換，或使用提示。';
         return;
       }
+      slots.forEach((slot) => slot.classList.remove('is-wrong-position'));
       root.querySelectorAll('.mirror-fragment').forEach((card) => { card.disabled = true; });
       revealInterpretation();
     };
@@ -1372,6 +1470,7 @@ function runMirrorFragment(round = 1) {
     body.appendChild(poolLabel);
     body.appendChild(pool);
     foot.appendChild(verify);
+    foot.appendChild(hint);
     foot.appendChild(note);
     updateState();
 

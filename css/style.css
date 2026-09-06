@@ -557,3 +557,9 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
   .ch42-stage{min-width:2.5rem;padding:.2rem .38rem;font-size:.5rem}
   .pw-timer,.tr-timer{font-size:.85rem}
 }
+
+/* CH4-1 · mobile-friendly fragment swapping and solvability feedback */
+.mirror-fragment.is-selected{border-color:#b49ad8!important;box-shadow:0 0 0 2px rgba(180,154,216,.18),0 0 20px rgba(156,116,211,.22);transform:translateY(-2px)}
+.mirror-slot.is-correct-position{border-color:rgba(116,185,158,.72)!important;box-shadow:inset 0 0 14px rgba(99,183,148,.08)}
+.mirror-slot.is-wrong-position{border-color:rgba(126,66,81,.58)}
+.mirror-hint{align-self:center;min-width:96px;font-size:.62rem}.mirror-hint[hidden]{display:none!important}
