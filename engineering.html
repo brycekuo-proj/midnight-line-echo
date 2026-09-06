@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>午夜連線：ECHO — 第一部</title>
+<title>午夜連線：ECHO — 工程版</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="css/style.css?v=20260907-1">
 </head>
@@ -12,22 +12,22 @@
 <!-- ── TITLE SCREEN ── -->
 <div id="title-screen">
   <div class="tg" data-text="ECHO">ECHO</div>
-  <div class="t-sub">午夜連線 · 第一部</div>
+  <div class="t-sub">午夜連線 · ENGINEERING</div>
   <div class="t-quote">「如果你收到來自死者的訊息，<br>你會回覆嗎？」</div>
-  <div class="mode-choice" aria-label="進入遊戲">
-    <button class="mode-card mode-player" type="button" onclick="chooseGameMode('player')">進入 ECHO</button>
+  <div class="mode-choice" aria-label="進入工程版">
+    <button class="mode-card mode-engineer" type="button" onclick="chooseGameMode('engineer')">進入工程版</button>
   </div>
   <div class="t-warn">
-    ⚠️ 含恐怖元素、失蹤議題及心理驚悚內容<br>
-    建議使用耳機，在安全環境中遊玩<br>
-    <span style="color:#1a1a22">你的選擇將被記錄。</span>
+    🛠️ 工程測試入口<br>
+    所有已實作章節直接開放<br>
+    <span style="color:#1a1a22">測試結果不寫入玩家存檔。</span>
   </div>
 </div>
 
 <!-- ── CHAPTER SELECT ── -->
 <div id="chapter-select">
   <div class="cs-modebar">
-    <button type="button" class="cs-mode-back" onclick="returnToModeSelect()">‹ 返回首頁</button>
+    <button type="button" class="cs-mode-back" onclick="returnToModeSelect()">‹ 返回工程首頁</button>
     <span class="cs-mode-badge" id="cs-mode-badge">PLAYER</span>
   </div>
   <div class="cs-title">選擇章節</div>
@@ -215,7 +215,7 @@
 
 <script>
   // ── 初始化 ──
-  // 玩家入口：僅進入玩家版；玩家進度正常讀寫。
+  // 工程入口：僅進入工程版；測試結果不寫入玩家存檔。
 
   document.getElementById('lightbox').onclick = function () {
     this.style.display = 'none';
