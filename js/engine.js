@@ -629,7 +629,7 @@ async function runPermissionWhack(config) {
   const permissions = clonePermissionConfig(cfg.permissions || getDefaultPermissionWhackConfig());
   const applySync = cfg.applySync !== false;
   const title = cfg.title || '⚙ EVA Assistant 權限管理';
-  const subtitle = cfg.subtitle || '在倒數內盡量關閉權限，但 EVA 會持續替你整理。';
+  const subtitle = cfg.subtitle || '關閉你不希望 EVA 接手的權限。';
   const introMs = cfg.introMs || 2600;
   const falseClearMs = cfg.falseClearMs || 2600;
   const waveLabels = cfg.waveLabels || {
@@ -661,7 +661,7 @@ async function runPermissionWhack(config) {
           '<div class="pw-kicker">Permission Whack</div>' +
           '<div class="pw-title"></div>' +
         '</div>' +
-        '<div class="pw-timer">00:30</div>' +
+        '<div class="ch42-head-status"><span class="ch42-stage">1 / 2</span><div class="pw-timer">00:30</div></div>' +
       '</div>' +
       '<div class="pw-sub"></div>' +
       '<div class="pw-wave"></div>' +

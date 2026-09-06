@@ -68,7 +68,7 @@ Assets:
 - `mg_ch31_memory_complete.png`
 
 ### CH3-2 — ONLINE GAME / Moderator Deduction
-Interaction: one persistent three-round hidden-role game. Read testimony, mark suspicion, watch two users go offline, then make one final moderator vote. Offline candidates remain selectable in the final vote.
+Interaction: one persistent three-round hidden-role game. Start from three explicit relationship pairs, read cross-referencing testimony, mark suspicion, watch two users go offline, then make one final moderator vote. Offline candidates remain selectable in the final vote. Difficulty lock: the relationship network must always remain visible; round 2 explicitly establishes that ordinary users only see ONLINE/OFFLINE; round 3 directs attention to the hidden admin-only fields ACTIVE / RETAINED / LOGOUT REQUEST so the moderator can be deduced rather than guessed.
 
 Current backing assets (reused temporarily; no longer define the mechanic):
 - `mg_ch32_ssd_panel.png`

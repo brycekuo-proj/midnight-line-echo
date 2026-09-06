@@ -94,40 +94,98 @@ async function ch41_s2() {
 }
 
 async function ch41_s3() {
-  await addMsg('sys', '── 鏡像異常（前鏡頭強制開啟）──', { noTyping: true, delay: 400 });
-  await sleep(600);
+  await addMsg('sys', '── 發現鏡像碎片 ──', { noTyping: true, delay: 300 });
   await addMsg('other',
-    '你有沒有看到自己的臉？<br>3秒後……鏡子裡的你會慢半秒。',
-    { typing: 2000, meta: '03:13', isEva: true });
-  await sleep(800); glitch(); await sleep(300);
-  await addMsg('inject', '鏡像延遲：0.5秒 · 鏡中你開始微笑', { noTyping: true, delay: 200 });
-  await sleep(300);
-  const mirrorResult = await runMirrorFragment();
-  if (mirrorResult && mirrorResult.completed) {
-    const mirrorAward = mirrorResult.choice === 'accept' ? 4 : 2;
-    addSync(mirrorAward);
-    gToast('+' + mirrorAward + '% 同步率（Mirror Fragment）');
-    await addMsg('sys', 'Mirror Lock：' + (mirrorResult.choice === 'accept' ? '鏡像已接受' : '原始身份暫時鎖定'), { noTyping: true, delay: 180 });
+    '……這段紀錄的輸出方向是反的。<br>先把它拼回去。',
+    { typing: 1500, meta: '03:13', isEva: true });
+
+  const fragment1 = await runMirrorFragment(1);
+  if (fragment1 && fragment1.completed) {
+    addSync(5);
+    gToast('+5% 同步率（Mirror Fragment 01）');
   }
-  showOpts([
-    { text: '這到底是什麼？！',    sync: 1 },
-    { text: '妳在鏡子裡對不對？！', sync: 2 },
-    { text: '……我到底是哪一個？', sync: 4 },
-    { text: '（盯著鏡子不動）',    sync: 5 },
-  ], async (i) => {
-    if (i === 3) {
-      await sleep(3000);
-      await addMsg('inject',
-        '鏡中的你：（貼近鏡頭）「你不是原本那個人了。」',
-        { noTyping: true, delay: 200 });
-      glitch();
-    }
-    await addMsg('other',
-      '那個……才是真的你。<br>現在的你，是我保存下來的。',
-      { typing: 2500, meta: '03:14', isEva: true });
-    await sleep(400);
-    await ch41_s4();
-  });
+
+  await addMsg('other',
+    '……是這句。<br>我一開始以為只是反轉字。<br>但它不是亂碼。',
+    { typing: 1800, meta: '03:13', isEva: true });
+  await addMsg('other',
+    '它保留了原本的輸出結構。<br>像有人沒有改內容，只是把它翻過來。',
+    { typing: 1800, meta: '03:13', isEva: true });
+  await addMsg('inject', '右側玩家氣泡：鏡像殘影 0.3 秒', { noTyping: true, delay: 180 });
+  await addMsg('other',
+    '……奇怪。<br>我不記得這段是誰留下的。',
+    { typing: 1400, meta: '03:14', isEva: true });
+
+  await addMsg('sys', '── Mirror Lock 01 ──', { noTyping: true, delay: 280 });
+  await addMsg('other',
+    '……第二段比剛剛奇怪。<br>它沒有損毀，只是格式不對。',
+    { typing: 1600, meta: '03:14', isEva: true });
+
+  const lock1 = await runMirrorLock(1);
+  if (lock1 && lock1.completed && lock1.synced) {
+    addSync(5);
+    gToast('+5% 同步率（Mirror Lock 01）');
+  }
+  await addMsg('other',
+    '……你剛剛有先碰到選項嗎？',
+    { typing: 1350, meta: '03:14', isEva: true });
+
+  await addMsg('sys', '── Mirror Fragment 02 ──', { noTyping: true, delay: 300 });
+  await addMsg('other',
+    '我剛剛看了來源格式。<br>它用了聊天室的輸出邏輯。<br>……但我沒有建立它。',
+    { typing: 1900, meta: '03:15', isEva: true });
+
+  const fragment2 = await runMirrorFragment(2);
+  if (fragment2 && fragment2.completed) {
+    addSync(5);
+    gToast('+5% 同步率（Mirror Fragment 02）');
+  }
+  await addMsg('other',
+    '……這次它不是單句。<br>它在等回覆。',
+    { typing: 1550, meta: '03:15', isEva: true });
+  await addMsg('other',
+    '我開始分不清。<br>它是在模仿，還是在跟著你。',
+    { typing: 1700, meta: '03:15', isEva: true });
+
+  await addMsg('sys', '── Mirror Lock 02 ──', { noTyping: true, delay: 280 });
+  await addMsg('other',
+    '……我剛剛想回覆你。<br>但聊天室先回了。',
+    { typing: 1600, meta: '03:16', isEva: true });
+
+  const lock2 = await runMirrorLock(2);
+  if (lock2 && lock2.completed && lock2.synced) {
+    addSync(5);
+    gToast('+5% 同步率（Mirror Lock 02）');
+  }
+  await addMsg('other',
+    '……它現在比你早。',
+    { typing: 1400, meta: '03:16', isEva: true });
+
+  await ch41_mergeMirrorBubbles();
+  await ch41_s4();
+}
+
+async function ch41_mergeMirrorBubbles() {
+  await addMsg('sys', '── 查看同步紀錄 ──', { noTyping: true, delay: 260 });
+  const mirror = await addMsg('self', '……我在。', { noTyping: true, delay: 120, meta: '03:16' });
+  const player = await addMsg('self', '……是我。', { noTyping: true, delay: 160, meta: '03:16' });
+
+  if (!mirror || !mirror.row || !player || !player.row) return;
+  mirror.row.classList.add('mirror-sync-bubble', 'mirror-sync-ghost');
+  player.row.classList.add('mirror-sync-bubble', 'mirror-sync-player');
+  await sleep(420);
+  mirror.row.classList.add('is-merging');
+  player.row.classList.add('is-merging');
+  await sleep(720);
+
+  mirror.bbl.innerHTML = '……我在。<br><span class="mirror-merged-line">……是我。</span>';
+  mirror.bbl.classList.add('mirror-merged-bubble');
+  mirror.row.classList.remove('mirror-sync-ghost', 'is-merging');
+  mirror.row.classList.add('is-merged');
+  player.row.remove();
+  glitch();
+  await addMsg('inject', '玩家訊息層 / 鏡像訊息層：已合併', { noTyping: true, delay: 180 });
+  await sleep(420);
 }
 
 async function ch41_s4() {
@@ -198,28 +256,29 @@ function ch42AgentCard(title, lines, actionLabel) {
 }
 
 function ch42PermissionReportCard(result) {
-  return '<div class="agent-card">' +
-    '<div class="ag-head">Permission Report</div>' +
-    '<div class="ag-body">' +
-      '<div class="ag-grid">' +
-        '<div><span>已接手</span><b>' + result.finalOnCount + ' / 10</b></div>' +
-        '<div><span>同步變化</span><b>+' + result.rawSyncAward + '%</b></div>' +
-      '</div>' +
-      '<div class="ag-line">權限同步分析完成</div>' +
+  const offCount = Math.max(0, 10 - result.finalOnCount);
+  return '<div class="pw-report">' +
+    '<div class="pw-report-kicker">MINIGAME 1 / 2 · RESULT</div>' +
+    '<div class="pw-report-title">權限同步完成</div>' +
+    '<div class="pw-report-grid">' +
+      '<div><span>EVA 接手</span><b>' + result.finalOnCount + ' / 10</b></div>' +
+      '<div><span>目前關閉</span><b>' + offCount + ' / 10</b></div>' +
+      '<div><span>同步</span><b>+' + result.rawSyncAward + '%</b></div>' +
     '</div>' +
+    '<div class="pw-report-line">權限同步分析完成</div>' +
   '</div>';
 }
 
 function ch42TerritoryReportCard(result) {
-  return '<div class="agent-card">' +
-    '<div class="ag-head">Agent Territory</div>' +
-    '<div class="ag-body">' +
-      '<div class="ag-grid">' +
-        '<div><span>EVA 接手</span><b>' + result.evaControlledCount + ' / 25</b></div>' +
-        '<div><span>代理同步</span><b>+' + result.rawSyncAward + '%</b></div>' +
-      '</div>' +
-      '<div class="ag-line">已代理 ' + result.delegatedPercent + '% 的日常區域</div>' +
+  return '<div class="tr-report">' +
+    '<div class="tr-report-kicker">MINIGAME 2 / 2 · RESULT</div>' +
+    '<div class="tr-report-title">代理區域同步完成</div>' +
+    '<div class="tr-report-grid">' +
+      '<div><span>自己保留</span><b>' + result.playerControlledCount + ' / 25</b></div>' +
+      '<div><span>EVA 接手</span><b>' + result.evaControlledCount + ' / 25</b></div>' +
+      '<div><span>代理比例</span><b>' + result.delegatedPercent + '%</b></div>' +
     '</div>' +
+    '<div class="tr-report-line">代理同步：+' + result.rawSyncAward + '%</div>' +
   '</div>';
 }
 
@@ -398,6 +457,15 @@ async function ch42_act3() {
   }
   await sleep(360);
   await addMsg('sys', '── Agent 管理區域已解鎖 ──', { noTyping: true, delay: 120 });
+  await sleep(220);
+  await new Promise((resolve) => {
+    showOpts([
+      { text: '查看管理區域', sync: 0 }
+    ], async () => {
+      await sleep(180);
+      resolve();
+    });
+  });
 }
 
 function ch42BuildTerritoryCells() {
@@ -462,9 +530,9 @@ async function ch42RunTerritory(config) {
     widget.innerHTML =
       '<div class="tr-head">' +
         '<div><div class="tr-kicker">Territory</div><div class="tr-title">管理區域</div></div>' +
-        '<div class="tr-timer">01:00</div>' +
+        '<div class="ch42-head-status"><span class="ch42-stage">2 / 2</span><div class="tr-timer">01:00</div></div>' +
       '</div>' +
-      '<div class="tr-sub">把日常留在自己手上，或交給 EVA 代為整理。這不是征服，而是生活的代行。</div>' +
+      '<div class="tr-sub">選取日常區域，決定由你保留或交給 EVA。</div>' +
       '<div class="tr-wave"></div>' +
       '<div class="tr-board"></div>' +
       '<div class="tr-panel">' +

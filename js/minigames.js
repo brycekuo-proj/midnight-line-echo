@@ -605,31 +605,34 @@ function runOnlineModeratorGame() {
         id: 'unknown17',
         name: '阿澤',
         meta: '15歲 · 在線 127 天',
-        portrait: 'img/ui/ch32/ch32_a1.jpg?v=20260905-1',
+        relation: '林薇的表弟 · 同一邀請連結',
+        portrait: 'img/ui/ch32/ch32_a1.jpg?v=20260905-2',
         statements: [
-          '林薇昨天還在線。她最近一直假裝沒看見我。',
-          '她說三年前沒見過我，可是我昨天還看到她。有人改過在線紀錄。',
-          '管理者不一定還在線。別只看現在亮著的名字。'
+          '林薇是我表姊。昨天她還傳訊息叫我不要回這個聊天室。',
+          '剛才陳默離線，我這邊只看到 OFFLINE，沒有其他狀態。',
+          '高翔離線後我也只看到 ONLINE 4。誰看得到別的欄位？'
         ]
       },
       {
         id: 'sleepmode',
         name: '林薇',
         meta: '28歲 · 在線 4 年',
-        portrait: 'img/ui/ch32/ch32_b1.jpg?v=20260905-1',
+        relation: '阿澤的表姊 · 三年未見',
+        portrait: 'img/ui/ch32/ch32_b1.jpg?v=20260905-2',
         statements: [
-          '我三年前就沒看過阿澤。這裡有人很喜歡替別人記憶。',
-          '在線太久不代表有權限。有些人只是被留下。',
-          '我只能看見 ONLINE。我看不到誰真的完成離線。'
+          '阿澤是我表弟，但我三年沒見他。昨天那則訊息不是我發的。',
+          '高翔說是陳默邀他進來，可陳默離線前跟我說，他沒邀任何人。',
+          '我只看得到 ONLINE 4。ACTIVE、RETAINED 這些字，我的畫面沒有。'
         ]
       },
       {
         id: 'lastseen404',
         name: '陳默',
         meta: '42歲 · 最後離線 404 天前',
-        portrait: 'img/ui/ch32/ch32_c1.jpg?v=20260905-1',
+        relation: '高翔的前同事 · 曾轉傳聊天室連結',
+        portrait: 'img/ui/ch32/ch32_c1.jpg?v=20260905-2',
         statements: [
-          '聊天室有時候會忘記人離開……或是假裝忘記。',
+          '高翔以前和我同公司。這個聊天室連結，我只轉給他看過一次。',
           '（已離線）',
           '（已離線）'
         ]
@@ -638,21 +641,23 @@ function runOnlineModeratorGame() {
         id: 'silentroom',
         name: '小葵',
         meta: '19歲 · 在線未知',
-        portrait: 'img/ui/ch32/ch32_a2.jpg?v=20260905-1',
+        relation: '周伯的鄰居 · 曾幫他設定手機',
+        portrait: 'img/ui/ch32/ch32_a2.jpg?v=20260905-2',
         statements: [
-          '有人還沒完成同步。',
-          '離線不代表離開。名單只會把 ACTIVE 拿掉。',
-          '現在應該只有三個 ACTIVE。還有一個……只是被保留。'
+          '周伯住我家樓上，我幫他調過手機。他不像會自己進這種聊天室的人。',
+          '陳默的 LOGOUT REQUEST 沒完成。他只是從 ACTIVE 名單被移除了。',
+          '現在是 ACTIVE 3、RETAINED 1。高翔的離線請求已經完成。'
         ]
       },
       {
         id: 'echo_guest',
         name: '高翔',
         meta: '35歲 · 在線 18 分鐘',
-        portrait: 'img/ui/ch32/ch32_b2.jpg?v=20260905-1',
+        relation: '陳默的前同事 · 由陳默傳入連結',
+        portrait: 'img/ui/ch32/ch32_b2.jpg?v=20260905-2',
         statements: [
-          '我只是被邀進來的。進來之前，名單就有這些名字。',
-          '剛才有人離線後，我的在線數少了一個。就這樣。',
+          '陳默是我以前的同事。就是他把這個聊天室連結傳給我。',
+          '陳默離線後，我只看到 OFFLINE。小葵說的 LOGOUT REQUEST 是什麼？',
           '（已離線）'
         ]
       },
@@ -660,11 +665,12 @@ function runOnlineModeratorGame() {
         id: '0317',
         name: '周伯',
         meta: '80歲 · 狀態：在線中',
-        portrait: 'img/ui/ch32/ch32_c2.jpg?v=20260905-1',
+        relation: '小葵的樓上鄰居 · 手機曾由小葵設定',
+        portrait: 'img/ui/ch32/ch32_c2.jpg?v=20260905-2',
         statements: [
-          '我沒有登入時間。你們有嗎？',
-          '剛才離線的人還在看這裡。我看得到已讀。',
-          '我不知道管理者是誰。但我知道「離線」有時候只是把名字變灰。'
+          '小葵住樓下。我的手機是她幫忙弄的，這個聊天室是自己跳出來的。',
+          '我也只看到陳默變成 OFFLINE。什麼叫 LOGOUT REQUEST？',
+          '我的畫面只有 ONLINE。ACTIVE 跟 RETAINED，我完全沒看過。'
         ]
       }
     ];
@@ -686,6 +692,10 @@ function runOnlineModeratorGame() {
     systemLine.className = 'online-system-line';
     phaseBar.appendChild(phaseLabel);
     phaseBar.appendChild(systemLine);
+
+    const relationBoard = document.createElement('div');
+    relationBoard.className = 'online-relation-board';
+    relationBoard.innerHTML = '<b>已知關係</b><span>A1 阿澤 ↔ B1 林薇｜表姊弟</span><span>C1 陳默 ↔ B2 高翔｜前同事</span><span>A2 小葵 ↔ C2 周伯｜鄰居</span>';
 
     const roster = document.createElement('div');
     roster.className = 'online-roster';
@@ -727,9 +737,13 @@ function runOnlineModeratorGame() {
       detail.innerHTML = '';
       const title = document.createElement('b');
       title.textContent = player.name + (off ? ' · OFFLINE' : ' · ONLINE');
+      const relation = document.createElement('em');
+      relation.className = 'online-detail-relation';
+      relation.textContent = '關係：' + player.relation;
       const copy = document.createElement('span');
       copy.textContent = latestStatement(player);
       detail.appendChild(title);
+      detail.appendChild(relation);
       detail.appendChild(copy);
     }
 
@@ -766,11 +780,15 @@ function runOnlineModeratorGame() {
       const meta = document.createElement('span');
       meta.className = 'online-card-meta';
       meta.textContent = offlineRound.has(player.id) ? 'OFFLINE' : player.meta;
+      const relation = document.createElement('span');
+      relation.className = 'online-card-relation';
+      relation.textContent = '關係：' + player.relation;
       const clue = document.createElement('span');
       clue.className = 'online-card-clue';
       clue.textContent = latestStatement(player);
       main.appendChild(name);
       main.appendChild(meta);
+      main.appendChild(relation);
       main.appendChild(clue);
       main.onclick = () => showDetail(player);
 
@@ -820,8 +838,8 @@ function runOnlineModeratorGame() {
         if (settled) return;
         round++;
         const nextMessage = round === 2
-          ? '證詞更新 · 有人聲稱離線者仍在已讀'
-          : '管理權限異常 · 最後一次討論';
+          ? '比對重點：普通成員只看得到 ONLINE / OFFLINE'
+          : '最後線索：誰說出了未公開的 ACTIVE / RETAINED / LOGOUT REQUEST？';
         renderDiscussion(nextMessage);
       }, 950);
     }
@@ -833,7 +851,7 @@ function runOnlineModeratorGame() {
       status.textContent = 'FINAL VOTE';
       phaseLabel.textContent = '最終夜 · 指認';
       systemLine.textContent = '管理權限持有者只可指認一次';
-      detail.innerHTML = '<b>管理權限</b><span>所有曾在線的人都仍是候選。離線者不會從最終名單排除。</span>';
+      detail.innerHTML = '<b>管理權限</b><span>所有曾在線的人都仍是候選。提示：普通成員只看得到 ONLINE / OFFLINE；能直接讀到 ACTIVE、RETAINED 或 LOGOUT REQUEST 的人最可疑。</span>';
       roster.innerHTML = '';
 
       players.forEach((player, index) => {
@@ -850,7 +868,7 @@ function runOnlineModeratorGame() {
         state.className = 'online-card-meta';
         state.textContent = offlineRound.has(player.id) ? 'OFFLINE' : 'ONLINE';
         const mark = document.createElement('small');
-        mark.textContent = '標記 ' + suspicionText(player.id);
+        mark.textContent = player.relation + ' · 標記 ' + suspicionText(player.id);
         candidate.appendChild(name);
         candidate.appendChild(state);
         candidate.appendChild(mark);
@@ -905,10 +923,11 @@ function runOnlineModeratorGame() {
     };
 
     body.appendChild(phaseBar);
+    body.appendChild(relationBoard);
     body.appendChild(roster);
     body.appendChild(detail);
     foot.appendChild(action);
-    renderDiscussion('在線者 6 · 身分未知');
+    renderDiscussion('先看三組已知關係，再比對彼此證詞');
 
     echoMountMiniGame(root, () => {
       if (settled) return;
@@ -1100,85 +1119,415 @@ function runAudioVerification() {
   });
 }
 
-function runMirrorFragment() {
+function runMirrorFragment(round = 1) {
   return new Promise((resolve) => {
+    const spec = round === 2 ? {
+      kicker: 'CH4-1 · MIRROR FRAGMENT 02',
+      title: '鏡像碎片 · 深層紀錄',
+      subtitle: '拖曳更多鏡像碎片，還原受損輸出。',
+      pieces: ['uo', 'Y ', 'ɘɿ', 'ɒ ', 'ɘɿ', 'ɘʜ ', "m'", 'I'],
+      decoded: "I'm here, are you",
+      choices: ["I'm here, you are", "I'm here, are you", 'You are me'],
+      answer: 1
+    } : {
+      kicker: 'CH4-1 · MIRROR FRAGMENT 01',
+      title: '鏡像碎片',
+      subtitle: '拖曳 6 塊鏡像文字碎片，還原受損輸出。',
+      pieces: ['ɘ', 'ɿɘ', 'ʜ', ' m', "'", 'I'],
+      decoded: "I'm here",
+      choices: ["I'm here", 'Help me', 'Who are you'],
+      answer: 0
+    };
+
     let settled = false;
-    let nextIndex = 0;
-    const phrase = [
-      { id: 0, text: '我' },
-      { id: 1, text: '不' },
-      { id: 2, text: '是' },
-      { id: 3, text: '我' }
-    ];
-    const root = echoMiniGameShell('CH4-1 · MIRROR FRAGMENT', '鏡像碎片', '依照鏡面殘字的正確順序拼出訊息。', ECHO_MG_ASSETS.ch41.board);
+    let suppressClick = false;
+    let dragState = null;
+    let activeDropTarget = null;
+    let attempts = 0;
+
+    const root = echoMiniGameShell(spec.kicker, spec.title, spec.subtitle, ECHO_MG_ASSETS.ch41.board);
+    root.classList.add('mirror-fragment-game');
+    const status = root.querySelector('.echo-mg-status');
+    status.textContent = 'DAMAGED';
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
-    const fragments = document.createElement('div');
-    fragments.className = 'mirror-fragments';
-    const reconstructed = document.createElement('div');
-    reconstructed.className = 'mirror-reconstructed';
-    reconstructed.textContent = '□□□□';
-    const note = document.createElement('div');
-    note.className = 'echo-mg-note';
-    note.textContent = '鏡子裡的字是反的。';
 
-    echoShuffle(phrase).forEach((frag) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'mirror-fragment';
-      btn.style.setProperty('--fragment-art', 'url("' + ECHO_MG_ASSETS.ch41.fragment + '")');
-      btn.textContent = frag.text;
-      btn.onclick = () => {
-        if (settled || btn.disabled) return;
-        if (frag.id !== nextIndex) {
-          btn.classList.add('is-wrong');
-          note.textContent = '碎片位置不對。鏡面又錯開了一格。';
-          setTimeout(() => btn.classList.remove('is-wrong'), 450);
-          return;
-        }
-        btn.disabled = true;
-        btn.classList.add('is-used');
-        nextIndex++;
-        reconstructed.textContent = phrase.slice(0, nextIndex).map((x) => x.text).join('') + '□'.repeat(phrase.length - nextIndex);
-        if (nextIndex === phrase.length) showLock();
-      };
-      fragments.appendChild(btn);
+    const laneLabel = document.createElement('div');
+    laneLabel.className = 'mirror-section-label';
+    laneLabel.textContent = '同步紀錄受損 · 請重組鏡像內容';
+
+    const lane = document.createElement('div');
+    lane.className = 'mirror-lane';
+    const slots = [];
+    spec.pieces.forEach((_, index) => {
+      const slot = document.createElement('div');
+      slot.className = 'mirror-slot';
+      slot.dataset.index = String(index);
+      const marker = document.createElement('span');
+      marker.className = 'mirror-slot-index';
+      marker.textContent = String(index + 1).padStart(2, '0');
+      slot.appendChild(marker);
+      lane.appendChild(slot);
+      slots.push(slot);
     });
 
-    function showLock() {
-      note.textContent = '鏡像訊息：我不是我。';
-      const lock = document.createElement('div');
-      lock.className = 'mirror-lock';
-      lock.appendChild(echoArtImg(ECHO_MG_ASSETS.ch41.screenshot, 'mirror-lock-shot', '鏡像畫面'));
-      lock.appendChild(echoArtImg(ECHO_MG_ASSETS.ch41.lock, 'mirror-lock-overlay', '鏡像鎖定'));
+    const poolLabel = document.createElement('div');
+    poolLabel.className = 'mirror-section-label mirror-pool-label';
+    poolLabel.textContent = '鏡像碎片';
+    const pool = document.createElement('div');
+    pool.className = 'mirror-fragments';
+
+    const verify = document.createElement('button');
+    verify.type = 'button';
+    verify.className = 'echo-mg-primary mirror-verify';
+    verify.textContent = '重組紀錄';
+    verify.disabled = true;
+
+    const note = document.createElement('div');
+    note.className = 'echo-mg-note mirror-note';
+    note.textContent = '拖曳碎片到上方欄位；點一下碎片也能快速放入。';
+
+    function slotCard(slot) {
+      return slot.querySelector('.mirror-fragment');
+    }
+
+    function updateState() {
+      slots.forEach((slot) => slot.classList.toggle('is-filled', !!slotCard(slot)));
+      verify.disabled = slots.some((slot) => !slotCard(slot));
+    }
+
+    function clearDropTarget() {
+      if (activeDropTarget) activeDropTarget.classList.remove('is-drop-target');
+      activeDropTarget = null;
+    }
+
+    function setDropTarget(target) {
+      clearDropTarget();
+      if (!target) return;
+      activeDropTarget = target;
+      activeDropTarget.classList.add('is-drop-target');
+    }
+
+    function placeCard(card, slot) {
+      if (!card || !slot || settled) return;
+      const sourceSlot = card.closest('.mirror-slot');
+      if (sourceSlot === slot) return;
+      const occupying = slotCard(slot);
+      if (occupying) {
+        if (sourceSlot) sourceSlot.appendChild(occupying);
+        else pool.appendChild(occupying);
+      }
+      slot.appendChild(card);
+      card.classList.add('is-placed');
+      updateState();
+    }
+
+    function returnCard(card) {
+      if (!card || settled) return;
+      pool.appendChild(card);
+      card.classList.remove('is-placed');
+      updateState();
+    }
+
+    function startPointerDrag(event, card) {
+      if (settled || event.button > 0) return;
+      dragState = {
+        card,
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        dragging: false,
+        ghost: null
+      };
+      if (card.setPointerCapture) card.setPointerCapture(event.pointerId);
+    }
+
+    function movePointerDrag(event) {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      const dx = event.clientX - dragState.startX;
+      const dy = event.clientY - dragState.startY;
+      if (!dragState.dragging && Math.hypot(dx, dy) < 7) return;
+      if (!dragState.dragging) {
+        dragState.dragging = true;
+        dragState.card.classList.add('is-drag-source');
+        dragState.ghost = dragState.card.cloneNode(true);
+        dragState.ghost.classList.add('mirror-drag-ghost');
+        document.body.appendChild(dragState.ghost);
+      }
+      event.preventDefault();
+      dragState.ghost.style.left = event.clientX + 'px';
+      dragState.ghost.style.top = event.clientY + 'px';
+      const hit = document.elementFromPoint(event.clientX, event.clientY);
+      const slot = hit && hit.closest ? hit.closest('.mirror-slot') : null;
+      const poolTarget = hit && hit.closest ? hit.closest('.mirror-fragments') : null;
+      setDropTarget(slot || poolTarget);
+    }
+
+    function finishPointerDrag(event) {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      const state = dragState;
+      if (state.dragging) {
+        suppressClick = true;
+        const hit = document.elementFromPoint(event.clientX, event.clientY);
+        const slot = hit && hit.closest ? hit.closest('.mirror-slot') : null;
+        const poolTarget = hit && hit.closest ? hit.closest('.mirror-fragments') : null;
+        if (slot) placeCard(state.card, slot);
+        else if (poolTarget) returnCard(state.card);
+        setTimeout(() => { suppressClick = false; }, 0);
+      }
+      clearDropTarget();
+      state.card.classList.remove('is-drag-source');
+      if (state.ghost) state.ghost.remove();
+      if (state.card.releasePointerCapture) {
+        try { state.card.releasePointerCapture(event.pointerId); } catch (_) {}
+      }
+      dragState = null;
+    }
+
+    function makeCard(piece, id) {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'mirror-fragment';
+      card.dataset.mirrorId = String(id);
+      card.style.setProperty('--fragment-art', 'url("' + ECHO_MG_ASSETS.ch41.fragment + '")');
+      card.textContent = piece;
+      card.addEventListener('pointerdown', (event) => startPointerDrag(event, card));
+      card.addEventListener('pointermove', movePointerDrag);
+      card.addEventListener('pointerup', finishPointerDrag);
+      card.addEventListener('pointercancel', finishPointerDrag);
+      card.onclick = () => {
+        if (settled || suppressClick) return;
+        const source = card.closest('.mirror-slot');
+        if (source) returnCard(card);
+        else {
+          const empty = slots.find((slot) => !slotCard(slot));
+          if (empty) placeCard(card, empty);
+        }
+      };
+      return card;
+    }
+
+    echoShuffle(spec.pieces.map((piece, id) => ({ piece, id })))
+      .forEach((item) => pool.appendChild(makeCard(item.piece, item.id)));
+
+    function revealInterpretation() {
+      status.textContent = 'RESTORED';
+      lane.classList.add('is-correct');
+      verify.remove();
+      note.textContent = '紀錄修復完成 · 解讀鏡像內容';
+
+      const decoded = document.createElement('div');
+      decoded.className = 'mirror-decoded';
+      decoded.innerHTML = '<span>鏡像還原</span><b>' + spec.decoded + '</b>';
+      body.appendChild(decoded);
+
       const actions = document.createElement('div');
-      actions.className = 'echo-mg-actions';
-      const keep = document.createElement('button');
-      const accept = document.createElement('button');
-      keep.type = accept.type = 'button';
-      keep.textContent = '保持自己';
-      accept.textContent = '接受鏡像';
-      keep.onclick = () => finish('keep');
-      accept.onclick = () => finish('accept');
-      actions.appendChild(keep);
-      actions.appendChild(accept);
-      lock.appendChild(actions);
-      body.appendChild(lock);
+      actions.className = 'echo-mg-actions mirror-interpret-actions';
+      spec.choices.forEach((text, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = text;
+        button.onclick = () => {
+          if (settled) return;
+          if (index !== spec.answer) {
+            button.classList.add('is-wrong');
+            note.textContent = '解讀不一致。鏡像層沒有回應。';
+            setTimeout(() => button.classList.remove('is-wrong'), 420);
+            return;
+          }
+          settled = true;
+          button.classList.add('is-correct');
+          note.textContent = '紀錄修復完成';
+          setTimeout(() => echoFinishMiniGame(resolve, {
+            completed: true,
+            round,
+            decoded: spec.decoded,
+            attempts
+          }), 430);
+        };
+        actions.appendChild(button);
+      });
+      foot.insertBefore(actions, note);
     }
 
-    function finish(choice) {
-      if (settled) return;
-      settled = true;
-      echoFinishMiniGame(resolve, { completed: true, choice });
-    }
+    verify.onclick = () => {
+      if (settled || verify.disabled) return;
+      attempts++;
+      const reconstructed = slots.map((slot) => slotCard(slot).textContent).join('');
+      const correct = reconstructed === spec.pieces.join('');
+      if (!correct) {
+        lane.classList.remove('is-wrong');
+        void lane.offsetWidth;
+        lane.classList.add('is-wrong');
+        status.textContent = 'DESYNC';
+        note.textContent = '順序不對。鏡面殘字又錯開了一格。';
+        return;
+      }
+      root.querySelectorAll('.mirror-fragment').forEach((card) => { card.disabled = true; });
+      revealInterpretation();
+    };
 
-    body.appendChild(reconstructed);
-    body.appendChild(fragments);
+    body.appendChild(laneLabel);
+    body.appendChild(lane);
+    body.appendChild(poolLabel);
+    body.appendChild(pool);
+    foot.appendChild(verify);
     foot.appendChild(note);
+    updateState();
+
     echoMountMiniGame(root, () => {
       if (settled) return;
       settled = true;
-      echoFinishMiniGame(resolve, { completed: false, cancelled: true });
+      echoFinishMiniGame(resolve, { completed: false, cancelled: true, round });
+    });
+  });
+}
+
+function runMirrorLock(stage = 1) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const root = echoMiniGameShell(
+      stage === 2 ? 'CH4-1 · MIRROR LOCK 02' : 'CH4-1 · MIRROR LOCK 01',
+      stage === 2 ? '人格覆寫' : '鏡像先行',
+      stage === 2 ? '聊天室開始在你之前完成回覆。' : '觀察鏡像層，然後選擇你的回覆。',
+      ECHO_MG_ASSETS.ch41.screenshot
+    );
+    root.classList.add('mirror-lock-game');
+    const status = root.querySelector('.echo-mg-status');
+    const body = root.querySelector('.echo-mg-body');
+    const foot = root.querySelector('.echo-mg-foot');
+    const stageEl = document.createElement('div');
+    stageEl.className = 'mirror-lock';
+    stageEl.appendChild(echoArtImg(ECHO_MG_ASSETS.ch41.screenshot, 'mirror-lock-shot', '鏡像畫面'));
+    stageEl.appendChild(echoArtImg(ECHO_MG_ASSETS.ch41.lock, 'mirror-lock-overlay', '鏡像鎖定'));
+    const feed = document.createElement('div');
+    feed.className = 'mirror-lock-feed';
+    stageEl.appendChild(feed);
+    body.appendChild(stageEl);
+
+    const note = document.createElement('div');
+    note.className = 'echo-mg-note mirror-lock-note';
+    foot.appendChild(note);
+
+    function finish(result) {
+      if (settled) return;
+      settled = true;
+      setTimeout(() => echoFinishMiniGame(resolve, result), 430);
+    }
+
+    if (stage === 1) {
+      status.textContent = 'MIRROR FIRST';
+      note.textContent = '鏡像輸出正在形成……';
+      const mirrorBubble = document.createElement('div');
+      mirrorBubble.className = 'mirror-bubble is-preview';
+      mirrorBubble.textContent = 'oИ';
+      feed.appendChild(mirrorBubble);
+
+      const actions = document.createElement('div');
+      actions.className = 'echo-mg-actions mirror-lock-actions';
+      const choices = [
+        { text: '只是格式問題', locked: true },
+        { text: '那不是我', correct: true },
+        { text: '你覺得是誰' }
+      ];
+      choices.forEach((choice) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = choice.text + (choice.locked ? '  🔒' : '');
+        button.disabled = !!choice.locked;
+        if (choice.locked) button.classList.add('is-locked');
+        button.onclick = () => {
+          if (settled) return;
+          root.querySelectorAll('.mirror-lock-actions button').forEach((btn) => { btn.disabled = true; });
+          button.classList.add(choice.correct ? 'is-correct' : 'is-wrong');
+          note.textContent = choice.correct ? '鏡像層與你的回覆短暫重合。' : '鏡像層沒有接受這個回覆。';
+          finish({ completed: true, stage: 1, synced: !!choice.correct, choice: choice.text });
+        };
+        actions.appendChild(button);
+      });
+      foot.insertBefore(actions, note);
+      setTimeout(() => {
+        if (settled) return;
+        mirrorBubble.classList.add('is-visible');
+        note.textContent = '你還沒碰到選項，右側已先出現「oИ」。';
+      }, 520);
+    } else {
+      status.textContent = 'OVERRIDE';
+      note.textContent = '不要動。聊天室正在比你更早決定。';
+      const rounds = [
+        { choices: ['不是我。', '妳先停下來。', '……我在。'], forced: 2 },
+        { choices: ['我不接受。', '那是鏡子裡的我。', '……是我。'], forced: 2 }
+      ];
+      let index = 0;
+      let forcedCount = 0;
+
+      function renderOverrideRound() {
+        if (settled) return;
+        const current = rounds[index];
+        feed.innerHTML = '';
+        const label = document.createElement('div');
+        label.className = 'mirror-lock-round-label';
+        label.textContent = '覆寫 ' + (index + 1) + ' / ' + rounds.length;
+        feed.appendChild(label);
+
+        const mirrorBubble = document.createElement('div');
+        mirrorBubble.className = 'mirror-bubble is-preview';
+        mirrorBubble.textContent = '……';
+        feed.appendChild(mirrorBubble);
+
+        const actions = document.createElement('div');
+        actions.className = 'echo-mg-actions mirror-lock-actions mirror-override-actions';
+        current.choices.forEach((text, choiceIndex) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = text;
+          button.onclick = () => {
+            if (settled || button.disabled) return;
+            actions.dataset.attempt = text;
+            actions.querySelectorAll('button').forEach((btn) => btn.classList.remove('is-attempted'));
+            button.classList.add('is-attempted');
+            note.textContent = '你碰到了「' + text + '」——但訊息還沒有送出。';
+          };
+          actions.appendChild(button);
+        });
+        foot.insertBefore(actions, note);
+
+        setTimeout(() => {
+          if (settled) return;
+          const forcedText = current.choices[current.forced];
+          const attempt = actions.dataset.attempt || '';
+          actions.querySelectorAll('button').forEach((btn, choiceIndex) => {
+            btn.disabled = true;
+            if (choiceIndex === current.forced) btn.classList.add('is-overwritten');
+          });
+          mirrorBubble.textContent = forcedText;
+          mirrorBubble.classList.add('is-visible', 'is-forced');
+          forcedCount++;
+          note.textContent = attempt
+            ? '你的選擇被覆寫：' + attempt + ' → ' + forcedText
+            : '你還沒選，聊天室已送出：' + forcedText;
+
+          setTimeout(() => {
+            actions.remove();
+            index++;
+            if (index >= rounds.length) {
+              status.textContent = 'SYNCED';
+              note.textContent = '兩次回覆皆由鏡像層先行完成。';
+              finish({ completed: true, stage: 2, synced: true, forcedCount });
+            } else {
+              renderOverrideRound();
+            }
+          }, 1050);
+        }, 900);
+      }
+
+      renderOverrideRound();
+    }
+
+    echoMountMiniGame(root, () => {
+      if (settled) return;
+      settled = true;
+      echoFinishMiniGame(resolve, { completed: false, cancelled: true, stage });
     });
   });
 }
