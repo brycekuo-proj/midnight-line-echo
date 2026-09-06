@@ -746,7 +746,8 @@ async function runPermissionWhack(config) {
     }
 
     function scheduleImmediateResponse(item) {
-      const delay = wave === 1 ? 1000 : wave === 2 ? 1150 : 1500;
+      const finalRush = phase === 'active' && remainingMs <= 3000;
+      const delay = finalRush ? 450 : (wave === 1 ? 1000 : wave === 2 ? 1150 : 1500);
       setTimeout(() => {
         if (settled || !activeWidgetController) return;
         if (phase === 'intro') return;
@@ -786,7 +787,7 @@ async function runPermissionWhack(config) {
       if (wave === 3 && now - falseClearUntil < 700) {
         hintEl.textContent = 'EVA：……好了，先這樣。我只是把剛剛中斷的服務補回來。';
       }
-      const cadence = wave === 1 ? 3200 : wave === 2 ? 3000 : 2400;
+      const cadence = remainingMs <= 3000 ? 650 : (wave === 1 ? 3200 : wave === 2 ? 3000 : 2400);
       if (now - lastPressureAt < cadence) return;
       lastPressureAt = now;
 

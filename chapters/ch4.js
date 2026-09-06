@@ -469,33 +469,22 @@ async function ch42_act3() {
 }
 
 function ch42BuildTerritoryCells() {
-  return [
-    { id: 'sleep-plan', domain: 'sleep', label: '就寢時間', owner: 'player', priority: 1, links: ['sleep-alarm', 'health-rest'] },
-    { id: 'sleep-alarm', domain: 'sleep', label: '鬧鐘', owner: 'eva', priority: 2, links: ['sleep-plan', 'schedule-morning'] },
-    { id: 'food-breakfast', domain: 'food', label: '早餐', owner: 'player', priority: 1, links: ['food-lunch', 'shopping-grocery'] },
-    { id: 'food-lunch', domain: 'food', label: '午餐', owner: 'eva', priority: 2, links: ['food-breakfast', 'food-dinner'] },
-    { id: 'food-dinner', domain: 'food', label: '晚餐', owner: 'eva', priority: 2, links: ['food-lunch', 'shopping-grocery'] },
-    { id: 'schedule-morning', domain: 'schedule', label: '上午安排', owner: 'player', priority: 1, links: ['schedule-evening', 'transport-route'] },
-    { id: 'schedule-evening', domain: 'schedule', label: '晚上安排', owner: 'player', priority: 1, links: ['sleep-plan', 'entertainment-scroll'] },
-    { id: 'transport-route', domain: 'transport', label: '通勤路線', owner: 'eva', priority: 2, links: ['transport-delay', 'schedule-morning'] },
-    { id: 'transport-delay', domain: 'transport', label: '延誤提醒', owner: 'eva', priority: 2, links: ['transport-route', 'messages-family'] },
-    { id: 'work-focus', domain: 'work', label: '工作排序', owner: 'player', priority: 1, links: ['work-break', 'schedule-evening'] },
-    { id: 'work-break', domain: 'work', label: '休息提醒', owner: 'eva', priority: 2, links: ['work-focus', 'health-water'] },
-    { id: 'messages-family', domain: 'messages', label: '家人訊息', owner: 'player', priority: 1, links: ['messages-friends', 'shopping-grocery'] },
-    { id: 'messages-friends', domain: 'messages', label: '朋友訊息', owner: 'player', priority: 1, links: ['messages-family', 'social-plan'] },
-    { id: 'social-plan', domain: 'social', label: '聚會安排', owner: 'player', priority: 1, links: ['messages-friends', 'entertainment-scroll'] },
-    { id: 'shopping-grocery', domain: 'shopping', label: '採買清單', owner: 'eva', priority: 2, links: ['food-breakfast', 'health-water'] },
-    { id: 'health-water', domain: 'health', label: '喝水提醒', owner: 'eva', priority: 2, links: ['health-rest', 'work-break'] },
-    { id: 'health-rest', domain: 'health', label: '疲勞監測', owner: 'eva', priority: 2, links: ['sleep-plan', 'health-water'] },
-    { id: 'entertainment-scroll', domain: 'entertainment', label: '晚間滑動', owner: 'player', priority: 1, links: ['schedule-evening', 'focus-noise'] },
-    { id: 'focus-noise', domain: 'work', label: '通知靜音', owner: 'eva', priority: 2, links: ['messages-family', 'work-focus'] },
-    { id: 'home-clean', domain: 'home', label: '房間整理', owner: 'eva', priority: 2, links: ['shopping-grocery', 'sleep-plan'] },
-    { id: 'bills', domain: 'finance', label: '帳單提醒', owner: 'eva', priority: 2, links: ['schedule-morning', 'shopping-grocery'] },
-    { id: 'media-save', domain: 'memory', label: '相片備份', owner: 'eva', priority: 2, links: ['messages-family', 'home-clean'] },
-    { id: 'calendar-hold', domain: 'schedule', label: '空白時段', owner: 'player', priority: 1, links: ['schedule-evening', 'social-plan'] },
-    { id: 'notes', domain: 'memory', label: '待辦記錄', owner: 'eva', priority: 2, links: ['work-focus', 'bills'] },
-    { id: 'night-mode', domain: 'sleep', label: '夜間模式', owner: 'eva', priority: 2, links: ['sleep-alarm', 'focus-noise'] }
+  const labels = [
+    ['sleep','就寢時間'], ['sleep','鬧鐘'], ['food','早餐'], ['food','午餐'], ['food','晚餐'],
+    ['schedule','上午安排'], ['schedule','晚上安排'], ['transport','通勤路線'], ['transport','延誤提醒'], ['work','工作排序'],
+    ['work','休息提醒'], ['messages','家人訊息'], ['messages','朋友訊息'], ['social','聚會安排'], ['shopping','採買清單'],
+    ['health','喝水提醒'], ['health','疲勞監測'], ['entertainment','晚間滑動'], ['work','通知靜音'], ['home','房間整理'],
+    ['finance','帳單提醒'], ['memory','相片備份'], ['schedule','空白時段'], ['memory','待辦記錄'], ['sleep','夜間模式']
   ];
+  return labels.map((item, index) => ({
+    id: 'territory-' + index,
+    row: Math.floor(index / 5),
+    col: index % 5,
+    domain: item[0],
+    label: item[1],
+    owner: null,
+    lastChangedAt: 0
+  }));
 }
 
 async function ch42RunTerritory(config) {
@@ -507,71 +496,115 @@ async function ch42RunTerritory(config) {
   const durationMs = cfg.durationMs || 60000;
   const cells = ch42BuildTerritoryCells();
   const applySync = cfg.applySync !== false;
+  const directions = [
+    [-1,-1],[-1,0],[-1,1],
+    [0,-1],         [0,1],
+    [1,-1], [1,0], [1,1]
+  ];
   const waveLabels = {
     1: 'Wave 1 · 整理',
     2: 'Wave 2 · 代行',
     3: 'Wave 3 · 穩定'
   };
 
+  // 5x5 board uses a compact four-piece opening around the center.
+  cells[6].owner = 'player';
+  cells[7].owner = 'eva';
+  cells[11].owner = 'eva';
+  cells[12].owner = 'player';
+
   return new Promise((resolve) => {
     let settled = false;
-    let selectedId = cells[0].id;
     let clockTimer = null;
-    let evaTimer = null;
+    let evaMoveTimer = null;
     let remainingMs = durationMs;
-    let startedAt = Date.now();
+    const startedAt = Date.now();
     let wave = 1;
+    let turn = 'player';
     let playerActions = 0;
     let evaExpansions = 0;
-    let lastEvaTick = 0;
+    let lastFlipIds = [];
 
     const widget = document.createElement('div');
-    widget.className = 'tr-widget';
+    widget.className = 'tr-widget tr-othello';
     widget.innerHTML =
       '<div class="tr-head">' +
         '<div><div class="tr-kicker">Territory</div><div class="tr-title">管理區域</div></div>' +
         '<div class="ch42-head-status"><span class="ch42-stage">2 / 2</span><div class="tr-timer">01:00</div></div>' +
       '</div>' +
-      '<div class="tr-sub">選取日常區域，決定由你保留或交給 EVA。</div>' +
+      '<div class="tr-sub">夾住對方的管理區域，就能把整條代理權翻回來。</div>' +
       '<div class="tr-wave"></div>' +
+      '<div class="tr-turn"></div>' +
       '<div class="tr-board"></div>' +
-      '<div class="tr-panel">' +
-        '<div class="tr-panel-title"></div>' +
-        '<div class="tr-panel-copy"></div>' +
-        '<div class="tr-actions">' +
-          '<button type="button" class="tr-btn player">維持<span>自己保留這一塊</span></button>' +
-          '<button type="button" class="tr-btn eva">交給 EVA<span>讓她代為維持</span></button>' +
-        '</div>' +
-      '</div>' +
       '<div class="tr-meter">' +
-        '<div><span>自己保留</span><b class="tr-player-count">0 / 25</b></div>' +
-        '<div><span>EVA 接手</span><b class="tr-eva-count">0 / 25</b></div>' +
-        '<div><span>代理比例</span><b class="tr-delegate-pct">0%</b></div>' +
+        '<div><span>自己保留</span><b class="tr-player-count">0</b></div>' +
+        '<div><span>EVA 接手</span><b class="tr-eva-count">0</b></div>' +
+        '<div><span>空白區域</span><b class="tr-empty-count">0</b></div>' +
       '</div>' +
-      '<div class="tr-hint">EVA：我剛剛整理的東西，會先放在這裡。比較不容易亂掉。</div>';
+      '<div class="tr-hint">點擊亮起的空格落子。夾住 EVA 區域時會整排翻回來。</div>';
 
     const timerEl = widget.querySelector('.tr-timer');
     const waveEl = widget.querySelector('.tr-wave');
+    const turnEl = widget.querySelector('.tr-turn');
     const boardEl = widget.querySelector('.tr-board');
-    const titleEl = widget.querySelector('.tr-panel-title');
-    const copyEl = widget.querySelector('.tr-panel-copy');
     const hintEl = widget.querySelector('.tr-hint');
-    const playerBtn = widget.querySelector('.tr-btn.player');
-    const evaBtn = widget.querySelector('.tr-btn.eva');
     const playerCountEl = widget.querySelector('.tr-player-count');
     const evaCountEl = widget.querySelector('.tr-eva-count');
-    const delegatePctEl = widget.querySelector('.tr-delegate-pct');
+    const emptyCountEl = widget.querySelector('.tr-empty-count');
 
-    function getCell(id) {
-      return cells.find((cell) => cell.id === id);
+    function indexOf(row, col) {
+      if (row < 0 || row >= 5 || col < 0 || col >= 5) return -1;
+      return row * 5 + col;
+    }
+
+    function opponent(owner) {
+      return owner === 'player' ? 'eva' : 'player';
+    }
+
+    function getFlips(index, owner) {
+      if (index < 0 || index >= cells.length || cells[index].owner) return [];
+      const start = cells[index];
+      const enemy = opponent(owner);
+      const flips = [];
+
+      for (const [dr, dc] of directions) {
+        const line = [];
+        let r = start.row + dr;
+        let c = start.col + dc;
+        while (true) {
+          const idx = indexOf(r, c);
+          if (idx < 0) break;
+          const piece = cells[idx];
+          if (piece.owner === enemy) {
+            line.push(idx);
+            r += dr;
+            c += dc;
+            continue;
+          }
+          if (piece.owner === owner && line.length) flips.push(...line);
+          break;
+        }
+      }
+      return [...new Set(flips)];
+    }
+
+    function legalMoves(owner) {
+      const moves = [];
+      cells.forEach((cell, index) => {
+        const flips = getFlips(index, owner);
+        if (flips.length) moves.push({ index, flips });
+      });
+      return moves;
     }
 
     function counts() {
       const evaControlledCount = cells.filter((cell) => cell.owner === 'eva').length;
-      const playerControlledCount = cells.length - evaControlledCount;
+      const playerControlledCount = cells.filter((cell) => cell.owner === 'player').length;
+      const emptyCount = cells.length - evaControlledCount - playerControlledCount;
       return {
         evaControlledCount,
         playerControlledCount,
+        emptyCount,
         delegatedPercent: Math.round((evaControlledCount / cells.length) * 100)
       };
     }
@@ -589,88 +622,134 @@ async function ch42RunTerritory(config) {
       return 3;
     }
 
-    function setOwner(id, owner, hintText) {
-      const cell = getCell(id);
-      if (!cell || cell.owner === owner) return false;
-      cell.owner = owner;
-      cell.lastChangedAt = Date.now();
-      if (hintText) hintEl.textContent = hintText;
-      render();
+    function makeMove(move, owner) {
+      if (!move || cells[move.index].owner) return false;
+      cells[move.index].owner = owner;
+      cells[move.index].lastChangedAt = Date.now();
+      lastFlipIds = [cells[move.index].id];
+      move.flips.forEach((idx) => {
+        cells[idx].owner = owner;
+        cells[idx].lastChangedAt = Date.now();
+        lastFlipIds.push(cells[idx].id);
+      });
+      if (owner === 'player') playerActions++;
+      else evaExpansions++;
       return true;
     }
 
-    function selectCell(id) {
-      selectedId = id;
-      render();
-    }
-
-    function renderBoardCell(cell) {
+    function renderBoardCell(cell, index, playerMoveMap) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'tr-cell is-' + cell.owner + (cell.id === selectedId ? ' is-selected' : '');
+      const isLegal = turn === 'player' && playerMoveMap.has(index);
+      btn.className = 'tr-cell' +
+        (cell.owner ? ' is-' + cell.owner : ' is-empty') +
+        (isLegal ? ' is-legal' : '') +
+        (lastFlipIds.includes(cell.id) ? ' is-flipped' : '');
       btn.innerHTML =
         '<span class="tr-domain">' + cell.domain + '</span>' +
         '<span class="tr-label">' + cell.label + '</span>' +
-        '<span class="tr-owner tr-owner-' + cell.owner + '">' + (cell.owner === 'eva' ? 'EVA 代行' : '自己保留') + '</span>';
-      btn.onclick = () => selectCell(cell.id);
+        '<span class="tr-owner">' + (cell.owner === 'eva' ? 'EVA' : cell.owner === 'player' ? 'YOU' : isLegal ? '●' : '') + '</span>';
+      if (isLegal) {
+        btn.onclick = () => playerMove(playerMoveMap.get(index));
+      } else {
+        btn.disabled = true;
+      }
       return btn;
     }
 
     function render() {
-      const selected = getCell(selectedId) || cells[0];
       const stat = counts();
+      const playerMoves = legalMoves('player');
+      const playerMoveMap = new Map(playerMoves.map((move) => [move.index, move]));
       boardEl.innerHTML = '';
-      cells.forEach((cell) => boardEl.appendChild(renderBoardCell(cell)));
+      cells.forEach((cell, index) => boardEl.appendChild(renderBoardCell(cell, index, playerMoveMap)));
       timerEl.textContent = formatMs(remainingMs);
       waveEl.textContent = waveLabels[wave];
-      titleEl.textContent = selected.label;
-      copyEl.textContent = '目前屬於「' + selected.domain + '」區域。你可以維持自己處理，或交給 EVA 代為整理。';
+      turnEl.textContent = turn === 'player' ? 'YOUR TURN · 點擊亮起空格' : 'EVA THINKING…';
       playerCountEl.textContent = stat.playerControlledCount + ' / 25';
       evaCountEl.textContent = stat.evaControlledCount + ' / 25';
-      delegatePctEl.textContent = stat.delegatedPercent + '%';
+      emptyCountEl.textContent = stat.emptyCount + ' / 25';
     }
 
-    function maybeExpandFrom(cell) {
-      if (!cell || cell.owner !== 'eva') return false;
-      for (const linkId of cell.links) {
-        const linked = getCell(linkId);
-        if (linked && linked.owner !== 'eva') {
-          evaExpansions++;
-          return setOwner(linked.id, 'eva', 'EVA：……這個和「' + cell.label + '」是連在一起的，我先一起替你留著。');
+    function chooseEvaMove(moves) {
+      if (!moves.length) return null;
+      // EVA prefers the move that flips the most pieces; later waves become more ruthless.
+      const sorted = [...moves].sort((a, b) => b.flips.length - a.flips.length);
+      if (wave === 1 && sorted.length > 1) return sorted[Math.min(1, sorted.length - 1)];
+      return sorted[0];
+    }
+
+    function scheduleEvaMove() {
+      clearTimeout(evaMoveTimer);
+      const delay = wave === 1 ? 900 : wave === 2 ? 650 : 420;
+      evaMoveTimer = setTimeout(() => {
+        if (settled || turn !== 'eva') return;
+        const moves = legalMoves('eva');
+        const move = chooseEvaMove(moves);
+        if (move) {
+          makeMove(move, 'eva');
+          hintEl.textContent = move.flips.length >= 3
+            ? 'EVA 一次翻回了 ' + move.flips.length + ' 個區域。'
+            : 'EVA 接手了一塊區域。';
+        } else {
+          hintEl.textContent = 'EVA 無法落子，這回合跳過。';
         }
-      }
-      return false;
+        turn = 'player';
+        advanceTurn();
+      }, delay);
     }
 
-    function evaExpand() {
-      const now = Date.now();
-      const cadence = wave === 1 ? 4200 : wave === 2 ? 3200 : 2200;
-      if (now - lastEvaTick < cadence) return;
-      lastEvaTick = now;
-
-      const selected = getCell(selectedId);
-      if (wave === 1 && selected && selected.owner === 'eva' && maybeExpandFrom(selected)) return;
-
-      const evaCells = cells.filter((cell) => cell.owner === 'eva').sort((a, b) => b.priority - a.priority);
-      for (const cell of evaCells) {
-        if (maybeExpandFrom(cell)) return;
+    function advanceTurn() {
+      if (settled) return;
+      const stat = counts();
+      const playerMoves = legalMoves('player');
+      const evaMoves = legalMoves('eva');
+      if (stat.emptyCount === 0 || (!playerMoves.length && !evaMoves.length)) {
+        finish('completed');
+        return;
       }
 
-      const playerCell = cells.find((cell) => cell.owner === 'player');
-      if (playerCell) {
-        evaExpansions++;
-        setOwner(playerCell.id, 'eva', 'EVA：……你先休息一下。這一塊我先幫你維持。');
+      if (turn === 'player') {
+        if (!playerMoves.length) {
+          hintEl.textContent = '你沒有可落子位置，回合交給 EVA。';
+          turn = 'eva';
+          render();
+          scheduleEvaMove();
+          return;
+        }
+        render();
+        return;
       }
+
+      if (!evaMoves.length) {
+        hintEl.textContent = 'EVA 無法落子，你可以繼續。';
+        turn = 'player';
+        render();
+        return;
+      }
+      render();
+      scheduleEvaMove();
+    }
+
+    function playerMove(move) {
+      if (settled || turn !== 'player' || !move) return;
+      makeMove(move, 'player');
+      hintEl.textContent = move.flips.length >= 3
+        ? '夾擊成功：你一次翻回了 ' + move.flips.length + ' 個區域。'
+        : '你翻回了 ' + move.flips.length + ' 個區域。';
+      turn = 'eva';
+      render();
+      scheduleEvaMove();
     }
 
     function finish(reason) {
       if (settled) return;
       settled = true;
+      clearTimeout(evaMoveTimer);
       const controller = activeWidgetController;
       if (controller && controller.mountTarget === 'overlay') closeMiniGameOverlay(controller);
       else activeWidgetController = null;
       clearInterval(clockTimer);
-      clearInterval(evaTimer);
 
       const stat = counts();
       const band = ch42TerritoryBand(stat.evaControlledCount);
@@ -691,29 +770,16 @@ async function ch42RunTerritory(config) {
 
       optionsArea.classList.remove('widget-open');
       optionsArea.innerHTML = '';
-
       if (shouldApplySync) {
         addSync(syncAward);
         syncEvaAvatar();
       }
-
       resolve(result);
     }
 
-    playerBtn.onclick = () => {
-      playerActions++;
-      const selected = getCell(selectedId);
-      setOwner(selected.id, 'player', '你把「' + selected.label + '」留在自己手上。');
-    };
-
-    evaBtn.onclick = () => {
-      playerActions++;
-      const selected = getCell(selectedId);
-      setOwner(selected.id, 'eva', 'EVA：……好。這一塊我替你記著。');
-    };
-
     openMiniGameOverlay(widget, finish);
     render();
+    advanceTurn();
 
     clockTimer = setInterval(() => {
       remainingMs = Math.max(0, durationMs - (Date.now() - startedAt));
@@ -721,10 +787,6 @@ async function ch42RunTerritory(config) {
       render();
       if (remainingMs <= 0) finish('completed');
     }, 200);
-
-    evaTimer = setInterval(() => {
-      if (!settled) evaExpand();
-    }, 300);
   });
 }
 

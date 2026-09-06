@@ -563,3 +563,13 @@ html,body{height:100%;background:var(--bg);font-family:'Noto Sans TC',sans-serif
 .mirror-slot.is-correct-position{border-color:rgba(116,185,158,.72)!important;box-shadow:inset 0 0 14px rgba(99,183,148,.08)}
 .mirror-slot.is-wrong-position{border-color:rgba(126,66,81,.58)}
 .mirror-hint{align-self:center;min-width:96px;font-size:.62rem}.mirror-hint[hidden]{display:none!important}
+
+/* CH4-2 Territory · Othello feel */
+.tr-turn{align-self:center;padding:.26rem .58rem;border:1px solid rgba(190,170,225,.22);border-radius:999px;background:rgba(20,18,30,.72);color:#d7c7ee;font:700 .58rem/1 monospace;letter-spacing:.08em}
+.tr-cell.is-empty{background:#0c0f16;border-color:#222938;opacity:.72}
+.tr-cell.is-legal{opacity:1;border-color:rgba(126,199,255,.58);box-shadow:inset 0 0 0 1px rgba(126,199,255,.12),0 0 12px rgba(79,156,220,.12);cursor:pointer}
+.tr-cell.is-legal .tr-owner{color:#9bd6ff;font-size:.8rem;animation:trLegalPulse .9s ease-in-out infinite alternate}
+.tr-cell.is-flipped{animation:trFlip .38s cubic-bezier(.2,.8,.2,1)}
+.tr-othello .tr-cell:disabled{cursor:default}
+@keyframes trFlip{0%{transform:scaleX(1)}45%{transform:scaleX(.08)}100%{transform:scaleX(1)}}
+@keyframes trLegalPulse{from{opacity:.45;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
