@@ -484,9 +484,11 @@ function originRunNeuralDrift(config) {
     }
 
     function boundsAt(x, elapsed, p) {
-      const center = .5 + Math.sin(elapsed * .55) * p.amp * .75 + Math.sin(elapsed * .17) * p.amp * .45;
-      const upperWave = Math.sin((x * 11) + elapsed * p.speed) * p.amp + Math.sin((x * 23) - elapsed * .42) * p.amp * .28;
-      const lowerWave = Math.sin((x * 9) + elapsed * (p.speed * .86) + 1.9) * p.amp + Math.cos((x * 17) + elapsed * .38) * p.amp * .24;
+      const waveAmp = p.amp * 1.75;
+      const waveSpeed = p.speed * 1.65;
+      const center = .5 + Math.sin(elapsed * .72) * waveAmp * .75 + Math.sin(elapsed * .26) * waveAmp * .45;
+      const upperWave = Math.sin((x * 19) + elapsed * waveSpeed) * waveAmp + Math.sin((x * 39) - elapsed * .72) * waveAmp * .28;
+      const lowerWave = Math.sin((x * 16) + elapsed * (waveSpeed * .86) + 1.9) * waveAmp + Math.cos((x * 30) + elapsed * .65) * waveAmp * .24;
       return {
         upper: center - p.gap / 2 + upperWave,
         lower: center + p.gap / 2 + lowerWave,
