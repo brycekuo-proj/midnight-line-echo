@@ -218,7 +218,7 @@ async function ch5_final() {
     await sleep(800);
     // ECHO 真相揭示
     await addMsg('other',
-      '其實……你還記得第一章嗎？',
+      '其實……你還記得最開始的那個晚上嗎？',
       { typing: 2500, meta: '03:44', isEva: true });
     await sleep(400);
     await addMsg('other',

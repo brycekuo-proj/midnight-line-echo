@@ -1798,7 +1798,7 @@ function runResidualVoices() {
 function runChoiceCandy() {
   return new Promise((resolve) => {
     let settled = false;
-    const root = echoMiniGameShell('CH5 · CHOICE CANDY', '同步糖果', '紅色：保留現實。藍色：接受 ECHO 同步。選擇一顆。', ECHO_MG_ASSETS.ch5.candyScene);
+    const root = echoMiniGameShell('CH5 · CHOICE CANDY', '同步糖果', '選擇一顆。', ECHO_MG_ASSETS.ch5.candyScene);
     const body = root.querySelector('.echo-mg-body');
     const foot = root.querySelector('.echo-mg-foot');
     const stage = document.createElement('div');
@@ -1809,8 +1809,8 @@ function runChoiceCandy() {
     left.type = right.type = 'button';
     left.className = 'candy-hotspot candy-red';
     right.className = 'candy-hotspot candy-blue';
-    left.textContent = '紅';
-    right.textContent = '藍';
+    left.setAttribute('aria-label', '左側糖果');
+    right.setAttribute('aria-label', '右側糖果');
     const note = document.createElement('div');
     note.className = 'echo-mg-note';
     note.textContent = 'EVA：你可以自己選。';
