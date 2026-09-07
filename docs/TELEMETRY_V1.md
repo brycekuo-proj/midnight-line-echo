@@ -45,7 +45,7 @@
 目前程式已支援 GA4，但正式上傳只有在玩家頁 `<head>` 內的設定填入有效 Measurement ID 才會啟用：
 
 ```html
-<meta name="echo-ga4-id" content="G-XXXXXXXXXX">
+<meta name="echo-ga4-id" content="G-4CC46M98D0">
 ```
 
 ID 空白時不會連線 Google Analytics；事件仍會寫入本機 debug ring buffer，方便先 QA。
