@@ -13,6 +13,14 @@ let lbViewCount = {};
 let activeWidgetController = null;
 let activeStoryAudio = null;
 
+function echoTelemetry(method, ...args) {
+  const telemetry = window.EchoTelemetry;
+  if (!telemetry || typeof telemetry[method] !== 'function') return;
+  try { telemetry[method](...args); } catch (e) {
+    if (new URLSearchParams(location.search).get('echo_debug') === '1') console.warn('[ECHO telemetry hook]', method, e);
+  }
+}
+
 function loadProgress() {
   totalSync = 0;
   completedChapters = {};
@@ -34,6 +42,7 @@ function saveProgress() {
 
 function resetPlayerProgress() {
   if (echoMode === 'player') {
+    echoTelemetry('progressReset');
     try { localStorage.removeItem('echo_progress'); } catch(e) {}
   }
   location.reload();
@@ -1057,6 +1066,7 @@ function showEnd(chName) {
   completedChapters[currentChapter] = chapterSync;
   totalSync = Math.min(100, totalSync + chapterSync);
   saveProgress();
+  echoTelemetry('levelEnd', currentChapter, { chapter_sync: chapterSync, total_sync: totalSync });
 
   // ── 第四章結束後依同步率分流 ──
   const isCh4 = currentChapter === '4-1' || currentChapter === '4-2';
@@ -1072,6 +1082,7 @@ function showEnd(chName) {
         chatBody.innerHTML = '';
         chatBody.appendChild(typingEl);
         currentChapter = 'end_normal';
+        echoTelemetry('levelStart', 'end_normal', { total_sync: totalSync, route: 'normal_end' });
         chapterSync = 0;
         if (window.CHAPTERS && window.CHAPTERS['end_normal']) window.CHAPTERS['end_normal']();
       }, 2000);
@@ -1088,6 +1099,7 @@ function showEnd(chName) {
         chatBody.innerHTML = '';
         chatBody.appendChild(typingEl);
         currentChapter = '5';
+        echoTelemetry('levelStart', '5', { total_sync: totalSync, route: 'direct_ch5' });
         chapterSync = 0;
         if (window.CHAPTERS && window.CHAPTERS['5']) window.CHAPTERS['5']();
       }, 2000);
@@ -1165,6 +1177,7 @@ async function chooseGameMode(mode, event) {
   if (mode !== 'player' && mode !== 'engineer') return;
 
   echoMode = mode;
+  echoTelemetry('gameStart', mode);
   chapterSync = 0;
   currentChapter = '';
   if (mode === 'player') {
@@ -1271,6 +1284,7 @@ function startChapter(ch) {
   cancelActiveWidget('start_chapter');
   document.getElementById('chapter-select').style.display = 'none';
   currentChapter = ch;
+  echoTelemetry('levelStart', ch, { total_sync: totalSync });
   chapterSync = 0; backCount = 0; filesViewed = 0; lbViewCount = {};
   clearTimeout(silTimer);
   const app = document.getElementById('app');

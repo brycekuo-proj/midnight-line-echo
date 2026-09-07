@@ -247,6 +247,7 @@ function showEnd5(choice) {
   completedChapters['5'] = chapterSync;
   totalSync = Math.min(100, totalSync + chapterSync);
   saveProgress();
+  echoTelemetry('levelEnd', '5', { chapter_sync: chapterSync, total_sync: totalSync, final_choice: choice });
 
   const isMid  = totalSync >= 66 && totalSync <= 85;
   const isHigh = totalSync >= 86;
@@ -255,6 +256,7 @@ function showEnd5(choice) {
   const endEl = document.getElementById('chapter-end');
 
   if (isMid) {
+    echoTelemetry('endingReached', 'mid_loop_online', { total_sync: totalSync, final_choice: choice });
     // 中同步結局（66～85%）
     endEl.style.background = '#0a0a14';
     endEl.className = '';
@@ -275,6 +277,7 @@ function showEnd5(choice) {
     }, 800);
 
   } else if (isHigh) {
+    echoTelemetry('endingReached', is100 ? 'high_forever_100' : 'high_forever', { total_sync: totalSync, final_choice: choice });
     // 高同步結局（86～100%）
     endEl.style.background = '#f8f8ff';
     endEl.className = 'white-end';
@@ -304,6 +307,7 @@ function showEnd5(choice) {
     }, 800);
 
   } else {
+    echoTelemetry('endingReached', 'fallback_echo', { total_sync: totalSync, final_choice: choice });
     // 不應到達這裡（低同步已由 showEnd 攔截），但保底處理
     endEl.style.display = 'flex';
     document.getElementById('ce-title').textContent = '第一部 完';

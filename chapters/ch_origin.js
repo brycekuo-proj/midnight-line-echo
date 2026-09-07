@@ -418,6 +418,12 @@ async function originAct4() {
 
 function originExit(completed) {
   ORIGIN.running = false;
+  if (completed) {
+    echoTelemetry('levelEnd', 'origin', { completed: true, total_sync: totalSync });
+    echoTelemetry('endingReached', 'origin_complete', { total_sync: totalSync });
+  } else {
+    echoTelemetry('levelExit', 'origin_incomplete');
+  }
   originUnmount(true);
   currentChapter = '';
   chapterSync = 0;

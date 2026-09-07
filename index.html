@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="echo-ga4-id" content="">
 <title>午夜連線：ECHO — 第一部</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="css/style.css?v=20260907-1">
@@ -202,8 +203,10 @@
 </div>
 
 <!-- ── SCRIPTS ── -->
-<!-- Engine 必須最先載入 -->
-<script src="js/engine.js?v=20260907-2"></script>
+<!-- Telemetry 先於 Engine 載入；GA4 ID 空白時只做本機驗證，不上傳。 -->
+<script src="js/telemetry.js?v=20260907-1"></script>
+<!-- Engine 必須在遊戲章節前載入 -->
+<script src="js/engine.js?v=20260907-3"></script>
 <script src="js/minigames.js?v=20260906-2"></script>
 <script src="chapters/ch1-1.js?v=20260901-2"></script>
 <script src="chapters/ch2.js?v=20260902-1"></script>

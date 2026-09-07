@@ -1841,3 +1841,42 @@ function runChoiceCandy() {
     });
   });
 }
+
+
+// ═══════════════════════════════════════════════════════
+//  ECHO MINI-GAME TELEMETRY WRAPPERS
+//  Instrument at the Promise boundary so gameplay logic stays untouched.
+// ═══════════════════════════════════════════════════════
+function echoInstrumentMiniGame(name, fn, metaFactory) {
+  return function (...args) {
+    const telemetry = window.EchoTelemetry;
+    const meta = typeof metaFactory === 'function' ? (metaFactory(args) || {}) : {};
+    if (telemetry && typeof telemetry.minigameStart === 'function') telemetry.minigameStart(name, meta);
+    let result;
+    try {
+      result = fn.apply(this, args);
+    } catch (error) {
+      if (telemetry && typeof telemetry.minigameEnd === 'function') telemetry.minigameEnd(name, { completed: false, error: true }, meta);
+      throw error;
+    }
+    return Promise.resolve(result).then((value) => {
+      if (telemetry && typeof telemetry.minigameEnd === 'function') telemetry.minigameEnd(name, value || { completed: true }, meta);
+      return value;
+    }, (error) => {
+      if (telemetry && typeof telemetry.minigameEnd === 'function') telemetry.minigameEnd(name, { completed: false, error: true }, meta);
+      throw error;
+    });
+  };
+}
+
+runGraphicMapInvestigation = echoInstrumentMiniGame('ch2_1_map_investigation', runGraphicMapInvestigation);
+runSpotDifference = echoInstrumentMiniGame('ch2_2_spot_difference', runSpotDifference);
+runMemoryRepair = echoInstrumentMiniGame('ch3_1_memory_repair', runMemoryRepair);
+runOnlineModeratorGame = echoInstrumentMiniGame('ch3_2_moderator', runOnlineModeratorGame);
+runAudioVerification = echoInstrumentMiniGame('ch3_3_audio_verification', runAudioVerification);
+runMirrorFragment = echoInstrumentMiniGame('ch4_1_mirror_fragment', runMirrorFragment, (args) => ({ round: Number(args[0] || 1) }));
+runMirrorLock = echoInstrumentMiniGame('ch4_1_mirror_lock', runMirrorLock, (args) => ({ stage: Number(args[0] || 1) }));
+runEvidenceArchive = echoInstrumentMiniGame('ch5_evidence_archive', runEvidenceArchive);
+runEchoLinkBoard = echoInstrumentMiniGame('ch5_link_board', runEchoLinkBoard);
+runResidualVoices = echoInstrumentMiniGame('ch5_residual_voices', runResidualVoices);
+runChoiceCandy = echoInstrumentMiniGame('ch5_choice_candy', runChoiceCandy);

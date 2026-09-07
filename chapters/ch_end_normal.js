@@ -123,6 +123,8 @@ async function end_n_s3() {
 };
 
 function showNormalEnd() {
+  echoTelemetry('levelEnd', 'end_normal', { total_sync: totalSync });
+  echoTelemetry('endingReached', 'normal_offline', { total_sync: totalSync });
   const endEl = document.getElementById('chapter-end');
   endEl.style.display = 'flex';
   endEl.className = ''; // 黑底
