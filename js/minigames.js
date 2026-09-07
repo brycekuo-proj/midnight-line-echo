@@ -374,7 +374,7 @@ function runMemoryRepair() {
       const slot = document.createElement('div');
       slot.className = 'memory-slot';
       slot.dataset.index = String(i);
-      slot.style.setProperty('--slot-art', 'url("' + ECHO_MG_ASSETS.ch31.slot + '")');
+      slot.style.setProperty('--slot-art', 'url("' + new URL(ECHO_MG_ASSETS.ch31.slot, document.baseURI).href + '")');
       const index = document.createElement('span');
       index.className = 'memory-slot-index';
       index.textContent = String(i + 1).padStart(2, '0');
@@ -509,7 +509,7 @@ function runMemoryRepair() {
       card.type = 'button';
       card.className = 'memory-card';
       card.dataset.memoryId = String(frag.id);
-      card.style.setProperty('--card-art', 'url("' + ECHO_MG_ASSETS.ch31.card + '")');
+      card.style.setProperty('--card-art', 'url("' + new URL(ECHO_MG_ASSETS.ch31.card, document.baseURI).href + '")');
       card.textContent = frag.text;
       card.addEventListener('pointerdown', (event) => startPointerDrag(event, card));
       card.addEventListener('pointermove', movePointerDrag);
@@ -765,7 +765,7 @@ function runOnlineModeratorGame() {
     function makeDiscussionCard(player, index) {
       const card = document.createElement('article');
       card.className = 'online-player-card online-character-card';
-      card.style.setProperty('--card-art', 'url("' + ECHO_MG_ASSETS.ch32.card + '")');
+      card.style.setProperty('--card-art', 'url("' + new URL(ECHO_MG_ASSETS.ch32.card, document.baseURI).href + '")');
       if (offlineRound.has(player.id)) card.classList.add('is-offline');
       if ((suspicion.get(player.id) || 0) > 0) card.classList.add('is-suspected');
 
@@ -1016,7 +1016,7 @@ function runAudioVerification() {
       const letters = ['A', 'B', 'C'];
       const choice = document.createElement('div');
       choice.className = 'audio-choice';
-      choice.style.setProperty('--button-art', 'url("' + ECHO_MG_ASSETS.ch33.button + '")');
+      choice.style.setProperty('--button-art', 'url("' + new URL(ECHO_MG_ASSETS.ch33.button, document.baseURI).href + '")');
 
       const wave = echoArtImg(ECHO_MG_ASSETS.ch33.wave, 'audio-choice-wave', '聲音波形 ' + letters[index]);
       const play = document.createElement('button');
@@ -1324,7 +1324,7 @@ function runMirrorFragment(round = 1) {
       card.type = 'button';
       card.className = 'mirror-fragment';
       card.dataset.mirrorId = String(id);
-      card.style.setProperty('--fragment-art', 'url("' + ECHO_MG_ASSETS.ch41.fragment + '")');
+      card.style.setProperty('--fragment-art', 'url("' + new URL(ECHO_MG_ASSETS.ch41.fragment, document.baseURI).href + '")');
       card.textContent = piece;
       card.addEventListener('pointerdown', (event) => startPointerDrag(event, card));
       card.addEventListener('pointermove', movePointerDrag);
@@ -1648,7 +1648,7 @@ function runEvidenceArchive() {
     grid.className = 'archive-grid';
     const detail = document.createElement('div');
     detail.className = 'archive-detail';
-    detail.style.setProperty('--detail-art', 'url("' + ECHO_MG_ASSETS.ch5.archiveDetail + '")');
+    detail.style.setProperty('--detail-art', 'url("' + new URL(ECHO_MG_ASSETS.ch5.archiveDetail, document.baseURI).href + '")');
     detail.textContent = '選擇一份證據。';
     const done = document.createElement('button');
     done.type = 'button';
@@ -1660,7 +1660,7 @@ function runEvidenceArchive() {
       const card = document.createElement('button');
       card.type = 'button';
       card.className = 'archive-card';
-      card.style.setProperty('--card-art', 'url("' + ECHO_MG_ASSETS.ch5.archiveCard + '")');
+      card.style.setProperty('--card-art', 'url("' + new URL(ECHO_MG_ASSETS.ch5.archiveCard, document.baseURI).href + '")');
       card.innerHTML = '<span class="archive-thumb"><img src="' + r[2] + '" alt=""><img class="archive-thumb-frame" src="' + ECHO_MG_ASSETS.ch5.archiveThumb + '" alt=""></span><b>' + r[0] + '</b><span>' + r[1] + '</span>';
       card.onclick = () => {
         viewed.add(i);
@@ -1715,7 +1715,7 @@ function runEchoLinkBoard() {
       btn.className = 'link-node';
       btn.style.left = n[2] + '%';
       btn.style.top = n[3] + '%';
-      btn.style.setProperty('--node-art', 'url("' + ECHO_MG_ASSETS.ch5.linkEvidence + '")');
+      btn.style.setProperty('--node-art', 'url("' + new URL(ECHO_MG_ASSETS.ch5.linkEvidence, document.baseURI).href + '")');
       btn.textContent = n[1];
       btn.onclick = () => {
         if (settled || connected.has(n[0])) return;
@@ -1769,7 +1769,7 @@ function runResidualVoices() {
       const bubble = document.createElement('button');
       bubble.type = 'button';
       bubble.className = 'residual-bubble';
-      bubble.style.setProperty('--bubble-art', 'url("' + ECHO_MG_ASSETS.ch5.residualBubble + '")');
+      bubble.style.setProperty('--bubble-art', 'url("' + new URL(ECHO_MG_ASSETS.ch5.residualBubble, document.baseURI).href + '")');
       bubble.innerHTML = '<b>' + v[1] + '</b><span>點擊讀取殘留</span>';
       bubble.onclick = () => {
         if (opened.has(v[0])) return;
