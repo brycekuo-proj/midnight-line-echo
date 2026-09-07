@@ -1254,7 +1254,8 @@ function updateChapterSelectUI() {
   if (note) {
     note.textContent = engineering
       ? ECHO_I18N.t('工程版：所有已實作章節全開；測試結果不會寫入玩家存檔。')
-      : ECHO_I18N.t('玩家版：僅顯示目前已解鎖章節；後續章節會依同步率、路線條件與完成進度出現。');
+      : '';
+    note.style.display = engineering ? '' : 'none';
   }
 
   const tot = document.getElementById('cs-total');

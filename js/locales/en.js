@@ -141,7 +141,6 @@ window.ECHO_EN = Object.freeze({
   "開始": "Start",
   "解鎖": "Unlocked",
   "工程版：所有已實作章節全開；測試結果不會寫入玩家存檔。": "Engineering: All implemented chapters are open. Test results do not affect player saves.",
-  "玩家版：僅顯示目前已解鎖章節；後續章節會依同步率、路線條件與完成進度出現。": "Player: Unlocked chapters appear here. More open as your sync, route, and progress change.",
   "工程測試模式 ·": "Engineering mode ·",
   "全章節開放": "All chapters open",
   "🔒 此章節尚未解鎖": "🔒 This chapter is locked",
