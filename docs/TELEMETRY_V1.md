@@ -50,6 +50,14 @@
 
 ID 空白時不會連線 Google Analytics；事件仍會寫入本機 debug ring buffer，方便先 QA。
 
+## 測試裝置排除
+
+- `localhost`、`127.0.0.1`、`::1` 與 `file://` 自動不送 GA4。
+- 在正式玩家網址加一次 `?echo_analytics=off`，會把 `echo_analytics_opt_out=1` 永久寫入該瀏覽器 localStorage；之後同一瀏覽器照常開玩家版也不送 GA4。
+- 要恢復正式統計，開一次 `?echo_analytics=on`。
+- 此機制用於開發者 Mac、Samsung A37 等固定測試裝置，不依賴 IP 或裝置型號偵測。
+- `EchoTelemetry.status()` 會顯示 `localHost`、`analyticsOptOut`、`remoteEnabled`，可直接確認目前是否被排除。
+
 ## 本機 QA
 
 網址加 `?echo_debug=1` 後，事件會在 Console 顯示。

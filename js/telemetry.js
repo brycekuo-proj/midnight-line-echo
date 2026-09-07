@@ -9,15 +9,19 @@
   const STORAGE = {
     playerId: 'echo_telemetry_player_id',
     firstTouch: 'echo_telemetry_first_touch',
-    debugEvents: 'echo_telemetry_debug_events'
+    debugEvents: 'echo_telemetry_debug_events',
+    analyticsOptOut: 'echo_analytics_opt_out'
   };
   const SESSION = {
     sessionId: 'echo_telemetry_session_id'
   };
   const MAX_DEBUG_EVENTS = 120;
   const isEngineering = /(?:^|\/)engineering\.html$/i.test(location.pathname);
+  const isLocalHost = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|::1)$/i.test(location.hostname || '');
   const ga4Id = ((document.querySelector('meta[name="echo-ga4-id"]') || {}).content || '').trim();
-  const debugEnabled = new URLSearchParams(location.search).get('echo_debug') === '1';
+  const query = new URLSearchParams(location.search);
+  const debugEnabled = query.get('echo_debug') === '1';
+  const analyticsSwitch = (query.get('echo_analytics') || '').toLowerCase();
 
   function randomId(prefix) {
     let id = '';
@@ -35,6 +39,10 @@
   function safeJson(value, fallback) {
     try { return JSON.parse(value); } catch (e) { return fallback; }
   }
+
+  if (analyticsSwitch === 'off') safeSet(localStorage, STORAGE.analyticsOptOut, '1');
+  else if (analyticsSwitch === 'on') safeSet(localStorage, STORAGE.analyticsOptOut, '0');
+  const analyticsOptOut = safeGet(localStorage, STORAGE.analyticsOptOut) === '1';
   function clean(value, maxLen) {
     if (value === undefined || value === null) return '';
     return String(value).replace(/[\r\n\t]+/g, ' ').trim().slice(0, maxLen || 100);
@@ -104,7 +112,7 @@
     attempts: new Map(),
     openTracked: false,
     gameStarted: false,
-    remoteEnabled: !isEngineering && /^G-[A-Z0-9]+$/i.test(ga4Id)
+    remoteEnabled: !isEngineering && !isLocalHost && !analyticsOptOut && /^G-[A-Z0-9]+$/i.test(ga4Id)
   };
 
   function setupGa4() {
@@ -335,6 +343,8 @@
     status: function () {
       return {
         engineering: isEngineering,
+        localHost: isLocalHost,
+        analyticsOptOut,
         remoteEnabled: state.remoteEnabled,
         ga4Id: state.remoteEnabled ? ga4Id : '',
         playerId: state.playerId,
