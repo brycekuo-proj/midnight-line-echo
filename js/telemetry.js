@@ -152,6 +152,7 @@
     if (!name) return;
     const payload = Object.assign({
       echo_session: state.sessionId,
+      language: window.ECHO_I18N ? window.ECHO_I18N.language : 'zh-TW',
       source: state.sessionTouch.source,
       medium: state.sessionTouch.medium,
       campaign: state.sessionTouch.campaign || undefined,

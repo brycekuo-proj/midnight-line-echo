@@ -1,151 +1,94 @@
 window.CHAPTERS = window.CHAPTERS || {};
 
 // ─────────────────────────────────────────────────────
-//  假結局《離線》— 同步率 0～33%
-//  第四章結束後，由 showEnd() 判斷觸發
+//  偽結局《離線》— 低同步路線
+//  Canon visual: 雨夜地面上的破裂手機，玩家背影離去。
 // ─────────────────────────────────────────────────────
 window.CHAPTERS['end_normal'] = async function() {
+  clearOpts();
+  stopStoryAudio();
 
-  // 重設畫面為「白天感」
-  setHeader('unk', '系統通知', 'ECHO');
-  chatBody.style.background = '';
-  chatBody.style.filter = '';
-  chatBody.innerHTML = '';
-  chatBody.appendChild(typingEl);
+  const app = document.getElementById('app');
+  const syncBar = document.getElementById('sync-bar');
+  if (app) app.style.visibility = 'hidden';
+  if (syncBar) syncBar.style.visibility = 'hidden';
 
-  await addMsg('time', '隔天早上 09:41');
-  await sleep(1000);
-  await addMsg('sys', '── 手機重新開機 ──', { noTyping: true });
-  await sleep(800);
+  const scene = document.createElement('section');
+  scene.className = 'offline-ending-scene';
+  scene.setAttribute('aria-label', ECHO_I18N.t('偽結局《離線》'));
 
-  // 系統訊息：一切恢復正常
-  await addMsg('sys', '所有異常聊天室已消失', { noTyping: true, delay: 300 });
-  await sleep(400);
-  await addMsg('sys', 'EVA · K · 林雨晴 — 查無此帳號', { noTyping: true, delay: 200 });
-  await sleep(600);
+  const image = document.createElement('img');
+  image.className = 'offline-ending-image';
+  image.src = 'img/scenes/ch41_offline_phone.webp';
+  image.alt = ECHO_I18N.t('雨夜街道上，一支破裂的手機被留在地面，遠處的人正離開');
 
-  // 假正常：朋友的普通訊息
-  await addMsg('other',
-    '欸你昨晚去哪了？<br>一直找不到你',
-    { typing: 1200, meta: '09:41' });
-  await sleep(400);
-  await addMsg('other',
-    '你沒事吧？感覺臉色很差',
-    { typing: 1000, meta: '09:42' });
+  const vignette = document.createElement('div');
+  vignette.className = 'offline-ending-vignette';
 
-  showOpts([
-    { text: '沒事，昨晚睡不好。',      sync: 0 },
-    { text: '我遇到很奇怪的事……',     sync: 0 },
-    { text: '（不想說）',              sync: 0 },
-  ], async () => {
-    await addMsg('other',
-      '多休息啦，最近壓力太大了吧',
-      { typing: 1200, meta: '09:43' });
-    await sleep(600);
-    await end_n_s2();
-  });
-};
+  const copy = document.createElement('div');
+  copy.className = 'offline-ending-copy';
+  copy.setAttribute('aria-live', 'polite');
 
-async function end_n_s2() {
-  await sleep(800);
-  await addMsg('sys', '── 一週後 ──', { noTyping: true });
-  await sleep(600);
-  await addMsg('time', '凌晨 02:17');
-  chatBody.style.background = '#0e0e12';
-  await sleep(800);
+  scene.appendChild(image);
+  scene.appendChild(vignette);
+  scene.appendChild(copy);
+  document.body.appendChild(scene);
 
-  // 細微異常開始
-  await addMsg('sys', '手機收到陌生推播', { noTyping: true, delay: 300 });
-  await sleep(500);
-
-  // 推播通知
-  notification('📱', '未知App', '你的同步率：0%');
-  await sleep(1500);
-
-  await addMsg('other',
-    '你回來了。',
-    { typing: 2000, meta: '02:17', isUnk: true });
-
-  showOpts([
-    { text: '你是誰？',          sync: 0 },
-    { text: '我沒有回來。',      sync: 0 },
-    { text: '（封鎖此帳號）',    sync: 0 },
-  ], async () => {
-    // 不管選什麼，都繼續
-    await addMsg('sys', '訊息傳送失敗——對方已離線', { noTyping: true, delay: 400 });
-    await sleep(800);
-    await end_n_s3();
-  });
-}
-
-async function end_n_s3() {
-  await sleep(600);
-  await addMsg('sys', '── 手機關機 ──', { noTyping: true });
-  await sleep(1200);
-  // 畫面漸暗
-  chatBody.style.transition = 'background 2s';
-  chatBody.style.background = '#000';
-  await sleep(2000);
-
-  // 最後一幕：路人場景（純文字描述）
-  await addMsg('sys', '── 畫面切換：白天 · 捷運站出口 ──', { noTyping: true, delay: 300 });
-  await sleep(600);
-
-  // 描述性訊息，模擬旁白
-  const scene = [
-    '人群從捷運站湧出。',
-    '每個人都低著頭。',
-    '每個人都在看手機。',
-    '每個人的臉……都被螢幕光照亮。',
+  // Canon Marquee V5：先讓玩家接受「回到現實」，最後才翻面。
+  const lines = [
+    { html: ECHO_I18N.t('雨還在下'), hold: 1800 },
+    { html: ECHO_I18N.t('路還是原本的路'), hold: 1800 },
+    { html: ECHO_I18N.t('有些事情<br>沒有答案'), hold: 2100 },
+    { html: ECHO_I18N.t('你把手機留在了那裡'), hold: 2200 },
+    { html: ECHO_I18N.t('然後<br>繼續往前走'), hold: 2200 },
+    { html: ECHO_I18N.t('沒有誰攔住你'), hold: 1900 },
+    { html: ECHO_I18N.t('也沒有誰追上來'), hold: 2600 },
+    { html: ECHO_I18N.t('你離開了'), hold: 2600 },
+    { html: ECHO_I18N.t('至少<br>你是這麼以為的'), hold: 3200, className: 'is-turn' },
+    { html: ECHO_I18N.t('只是偶爾<br>你還是會想起 03:17'), hold: 3000, className: 'is-small' }
   ];
-  for (const s of scene) {
-    await sleep(700);
-    await addMsg('sys', s, { noTyping: true, delay: 100 });
+
+  await sleep(900);
+  for (const line of lines) {
+    copy.className = 'offline-ending-copy' + (line.className ? ' ' + line.className : '');
+    copy.innerHTML = line.html;
+    void copy.offsetWidth;
+    copy.classList.add('is-visible');
+    await sleep(line.hold);
+    copy.classList.remove('is-visible');
+    await sleep(450);
   }
 
-  await sleep(1200);
-  // 最後一行注意到某件事
-  await addMsg('sys', '你注意到一件事。', { noTyping: true, delay: 400 });
-  await sleep(1000);
-  await addMsg('sys', '他們的手機螢幕……', { noTyping: true, delay: 600 });
-  await sleep(800);
-  await addMsg('sys', '顯示的都是同一個聊天室。', { noTyping: true, delay: 400 });
-  await sleep(1500);
-
-  // 最終字幕
-  glitch();
-  await sleep(400);
-  await addMsg('inject', '你以為只有你看過聊天室嗎？', { noTyping: true, delay: 200 });
-  await sleep(2000);
-
-  await fadeOut();
+  scene.classList.add('is-black');
+  await sleep(1300);
+  scene.remove();
   showNormalEnd();
 };
 
 function showNormalEnd() {
   echoTelemetry('levelEnd', 'end_normal', { total_sync: totalSync });
   echoTelemetry('endingReached', 'normal_offline', { total_sync: totalSync });
+
+  const app = document.getElementById('app');
+  const syncBar = document.getElementById('sync-bar');
+  if (app) app.style.visibility = '';
+  if (syncBar) syncBar.style.visibility = '';
+
   const endEl = document.getElementById('chapter-end');
   endEl.style.display = 'flex';
-  endEl.className = ''; // 黑底
+  endEl.className = '';
 
-  document.getElementById('ce-title').textContent = '第一部 結束';
+  document.getElementById('ce-title').textContent = ECHO_I18N.t('第一部 結束');
   document.getElementById('ce-title').style.color = '#555';
-  document.getElementById('ce-name').textContent = '《離線》';
+  document.getElementById('ce-name').textContent = ECHO_I18N.t('《離線》');
   document.getElementById('ce-name').style.color = '#888';
   document.getElementById('ce-sn').textContent = totalSync + '%';
   document.getElementById('ce-sbf').style.width = Math.round(totalSync / 100 * 100) + '%';
 
-  // Normal End 專屬評語
   const msgEl = document.getElementById('ce-msg');
   msgEl.className = 'ce-msg';
-  msgEl.innerHTML = '<b style="color:#666">系統</b>：你成功離開了聊天室。<br><span style="font-size:.65rem;color:#444;letter-spacing:.1em">但「離開」這件事本身……<br>也被記錄下來了。</span>';
+  msgEl.innerHTML = ECHO_I18N.t('<b style="color:#666">Offline Ending</b><br><span style="font-size:.68rem;color:#555;letter-spacing:.1em">你離開了。<br>至少，你是這麼以為的。</span>');
 
-  document.getElementById('ce-next').textContent = 'Normal End · 同步率 ' + totalSync + '%';
-  document.getElementById('ce-next').style.color = '#333';
-
-  // 60 秒後 EVA 最後一條訊息
-  setTimeout(() => {
-    notification('👁', 'EVA', '你以為你真的離開了嗎？');
-  }, 60000);
+  document.getElementById('ce-next').textContent = ECHO_I18N.t('Offline Ending · 同步率 ') + totalSync + '%';
+  document.getElementById('ce-next').style.color = '#444';
 }

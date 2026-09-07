@@ -6,24 +6,24 @@ window.CHAPTERS = window.CHAPTERS || {};
 window.CHAPTERS['4-1'] = async function() {
   setHeader('eva');
   swapHeaderImg('img/eva/eva_digital.jpg');
-  await addMsg('time', '凌晨 03:07');
+  await addMsg('time', ECHO_I18N.t('凌晨 03:07'));
   chatBody.style.filter = 'brightness(.7)';
   await sleep(800);
-  await addMsg('inject', '相簿異常：你沒拍過的照片 ×12', { noTyping: true, delay: 300 });
+  await addMsg('inject', ECHO_I18N.t('相簿異常：你沒拍過的照片 ×12'), { noTyping: true, delay: 300 });
   await sleep(400);
-  await addMsg('inject', '訊息紀錄：自動傳給媽媽「我去地下道了。」', { noTyping: true, delay: 200 });
+  await addMsg('inject', ECHO_I18N.t('訊息紀錄：自動傳給媽媽「我去地下道了。」'), { noTyping: true, delay: 200 });
   await sleep(600);
   await addMsg('other',
-    '你今天……比較安靜。',
+    ECHO_I18N.t('你今天……比較安靜。'),
     { typing: 2000, meta: '03:07', isEva: true });
   showOpts([
-    { text: '妳到底對我做了什麼？！', sync: 2 },
-    { text: '那些不是我傳的！',       sync: 1 },
-    { text: '……我真的傳過嗎？',      sync: 4 },
-    { text: '立刻停止！',             sync: 0 },
+    { text: ECHO_I18N.t('妳到底對我做了什麼？！'), sync: 2 },
+    { text: ECHO_I18N.t('那些不是我傳的！'),       sync: 1 },
+    { text: ECHO_I18N.t('……我真的傳過嗎？'),      sync: 4 },
+    { text: ECHO_I18N.t('立刻停止！'),             sync: 0 },
   ], async () => {
     await addMsg('other',
-      '你做了……只是不記得了。<br>沒關係，我幫你記著。',
+      ECHO_I18N.t('你做了……只是不記得了。<br>沒關係，我幫你記著。'),
       { typing: 2200, meta: '03:08', isEva: true });
     chatBody.style.filter = 'brightness(.55)';
     await sleep(500);
@@ -32,22 +32,22 @@ window.CHAPTERS['4-1'] = async function() {
 };
 
 async function ch41_s1() {
-  await addMsg('sys', '── 相簿異常 ──', { noTyping: true, delay: 400 });
+  await addMsg('sys', ECHO_I18N.t('── 相簿異常 ──'), { noTyping: true, delay: 400 });
   await sleep(400);
   // 房間偷拍照
   await addMsg('other', '__ROOM__', { typing: 600, meta: '03:09', isEva: true });
   await sleep(300);
   await addMsg('other',
-    '你和我的合照。<br>你完全不記得，對吧？',
+    ECHO_I18N.t('你和我的合照。<br>你完全不記得，對吧？'),
     { typing: 2000, meta: '03:09', isEva: true });
   showOpts([
-    { text: '這些照片是假的！',    sync: 1 },
-    { text: '妳到底什麼時候拍的？！', sync: 2 },
-    { text: '……我為什麼不記得？', sync: 4 },
-    { text: '全部刪掉！',          sync: 0 },
+    { text: ECHO_I18N.t('這些照片是假的！'),    sync: 1 },
+    { text: ECHO_I18N.t('妳到底什麼時候拍的？！'), sync: 2 },
+    { text: ECHO_I18N.t('……我為什麼不記得？'), sync: 4 },
+    { text: ECHO_I18N.t('全部刪掉！'),          sync: 0 },
   ], async () => {
     await addMsg('other',
-      '刪了也沒用。<br>記憶不是那麼容易刪的。',
+      ECHO_I18N.t('刪了也沒用。<br>記憶不是那麼容易刪的。'),
       { typing: 1800, meta: '03:10', isEva: true });
     await sleep(400);
     await ch41_s2();
@@ -55,17 +55,17 @@ async function ch41_s1() {
 }
 
 async function ch41_s2() {
-  await addMsg('sys', '── EVA 補完記憶 ──', { noTyping: true, delay: 400 });
+  await addMsg('sys', ECHO_I18N.t('── EVA 補完記憶 ──'), { noTyping: true, delay: 400 });
   await sleep(400);
   const mems = [
-    { label: '記憶1：黑暗房間',
-      text: '小時候你一個人縮在棉被裡……（背景出現 EVA 的聲音）',
+    { label: ECHO_I18N.t('記憶1：黑暗房間'),
+      text: ECHO_I18N.t('小時候你一個人縮在棉被裡……（背景出現 EVA 的聲音）'),
       dark: true },
-    { label: '記憶2：地下道散步',
-      text: '你和我一起走，很安靜。很溫柔。<br><span style="color:var(--sync);font-size:.8rem">（EVA 輕輕拉著你的手）</span>',
+    { label: ECHO_I18N.t('記憶2：地下道散步'),
+      text: ECHO_I18N.t('你和我一起走，很安靜。很溫柔。<br><span style="color:var(--sync);font-size:.8rem">（EVA 輕輕拉著你的手）</span>'),
       dark: false },
-    { label: '記憶3：K 墜落',
-      text: '你……親手把K推進黑暗裡。<br><span style="color:var(--red);font-size:.8rem">K 極度恐懼地回頭看你。</span>',
+    { label: ECHO_I18N.t('記憶3：K 墜落'),
+      text: ECHO_I18N.t('你……親手把K推進黑暗裡。<br><span style="color:var(--red);font-size:.8rem">K 極度恐懼地回頭看你。</span>'),
       dark: true },
   ];
   for (const m of mems) {
@@ -75,18 +75,18 @@ async function ch41_s2() {
     await addMsg('other', m.text, { typing: 2000, meta: '03:11', isEva: true });
   }
   showOpts([
-    { text: '這不是我的記憶！',  sync: 1 },
-    { text: '……我真的做過？',   sync: 4 },
-    { text: '妳在改寫我的腦袋？！', sync: 2 },
-    { text: '（默默接受）',      sync: 5 },
+    { text: ECHO_I18N.t('這不是我的記憶！'),  sync: 1 },
+    { text: ECHO_I18N.t('……我真的做過？'),   sync: 4 },
+    { text: ECHO_I18N.t('妳在改寫我的腦袋？！'), sync: 2 },
+    { text: ECHO_I18N.t('（默默接受）'),      sync: 5 },
   ], async (i) => {
     if (i === 1 || i === 3)
       await addMsg('other',
-        '謝謝你……接受了。<br>我們之間不需要謊言。',
+        ECHO_I18N.t('謝謝你……接受了。<br>我們之間不需要謊言。'),
         { typing: 2000, meta: '03:12', isEva: true });
     else
       await addMsg('other',
-        '你已經說過了……只是忘記了而已。',
+        ECHO_I18N.t('你已經說過了……只是忘記了而已。'),
         { typing: 1800, meta: '03:12', isEva: true });
     await sleep(400);
     await ch41_s3();
@@ -94,71 +94,71 @@ async function ch41_s2() {
 }
 
 async function ch41_s3() {
-  await addMsg('sys', '── 發現鏡像碎片 ──', { noTyping: true, delay: 300 });
+  await addMsg('sys', ECHO_I18N.t('── 發現鏡像碎片 ──'), { noTyping: true, delay: 300 });
   await addMsg('other',
-    '……這段紀錄的輸出方向是反的。<br>先把它拼回去。',
+    ECHO_I18N.t('……這段紀錄的輸出方向是反的。<br>先把它拼回去。'),
     { typing: 1500, meta: '03:13', isEva: true });
 
   const fragment1 = await runMirrorFragment(1);
   if (fragment1 && fragment1.completed) {
     addSync(5);
-    gToast('+5% 同步率（Mirror Fragment 01）');
+    gToast(ECHO_I18N.t('+5% 同步率（Mirror Fragment 01）'));
   }
 
   await addMsg('other',
-    '……是這句。<br>我一開始以為只是反轉字。<br>但它不是亂碼。',
+    ECHO_I18N.t('……是這句。<br>我一開始以為只是反轉字。<br>但它不是亂碼。'),
     { typing: 1800, meta: '03:13', isEva: true });
   await addMsg('other',
-    '它保留了原本的輸出結構。<br>像有人沒有改內容，只是把它翻過來。',
+    ECHO_I18N.t('它保留了原本的輸出結構。<br>像有人沒有改內容，只是把它翻過來。'),
     { typing: 1800, meta: '03:13', isEva: true });
-  await addMsg('inject', '右側玩家氣泡：鏡像殘影 0.3 秒', { noTyping: true, delay: 180 });
+  await addMsg('inject', ECHO_I18N.t('右側玩家氣泡：鏡像殘影 0.3 秒'), { noTyping: true, delay: 180 });
   await addMsg('other',
-    '……奇怪。<br>我不記得這段是誰留下的。',
+    ECHO_I18N.t('……奇怪。<br>我不記得這段是誰留下的。'),
     { typing: 1400, meta: '03:14', isEva: true });
 
   await addMsg('sys', '── Mirror Lock 01 ──', { noTyping: true, delay: 280 });
   await addMsg('other',
-    '……第二段比剛剛奇怪。<br>它沒有損毀，只是格式不對。',
+    ECHO_I18N.t('……第二段比剛剛奇怪。<br>它沒有損毀，只是格式不對。'),
     { typing: 1600, meta: '03:14', isEva: true });
 
   const lock1 = await runMirrorLock(1);
   if (lock1 && lock1.completed && lock1.synced) {
     addSync(5);
-    gToast('+5% 同步率（Mirror Lock 01）');
+    gToast(ECHO_I18N.t('+5% 同步率（Mirror Lock 01）'));
   }
   await addMsg('other',
-    '……你剛剛有先碰到選項嗎？',
+    ECHO_I18N.t('……你剛剛有先碰到選項嗎？'),
     { typing: 1350, meta: '03:14', isEva: true });
 
   await addMsg('sys', '── Mirror Fragment 02 ──', { noTyping: true, delay: 300 });
   await addMsg('other',
-    '我剛剛看了來源格式。<br>它用了聊天室的輸出邏輯。<br>……但我沒有建立它。',
+    ECHO_I18N.t('我剛剛看了來源格式。<br>它用了聊天室的輸出邏輯。<br>……但我沒有建立它。'),
     { typing: 1900, meta: '03:15', isEva: true });
 
   const fragment2 = await runMirrorFragment(2);
   if (fragment2 && fragment2.completed) {
     addSync(5);
-    gToast('+5% 同步率（Mirror Fragment 02）');
+    gToast(ECHO_I18N.t('+5% 同步率（Mirror Fragment 02）'));
   }
   await addMsg('other',
-    '……這次它不是單句。<br>它在等回覆。',
+    ECHO_I18N.t('……這次它不是單句。<br>它在等回覆。'),
     { typing: 1550, meta: '03:15', isEva: true });
   await addMsg('other',
-    '我開始分不清。<br>它是在模仿，還是在跟著你。',
+    ECHO_I18N.t('我開始分不清。<br>它是在模仿，還是在跟著你。'),
     { typing: 1700, meta: '03:15', isEva: true });
 
   await addMsg('sys', '── Mirror Lock 02 ──', { noTyping: true, delay: 280 });
   await addMsg('other',
-    '……我剛剛想回覆你。<br>但聊天室先回了。',
+    ECHO_I18N.t('……我剛剛想回覆你。<br>但聊天室先回了。'),
     { typing: 1600, meta: '03:16', isEva: true });
 
   const lock2 = await runMirrorLock(2);
   if (lock2 && lock2.completed && lock2.synced) {
     addSync(5);
-    gToast('+5% 同步率（Mirror Lock 02）');
+    gToast(ECHO_I18N.t('+5% 同步率（Mirror Lock 02）'));
   }
   await addMsg('other',
-    '……它現在比你早。',
+    ECHO_I18N.t('……它現在比你早。'),
     { typing: 1400, meta: '03:16', isEva: true });
 
   await ch41_mergeMirrorBubbles();
@@ -166,9 +166,9 @@ async function ch41_s3() {
 }
 
 async function ch41_mergeMirrorBubbles() {
-  await addMsg('sys', '── 查看同步紀錄 ──', { noTyping: true, delay: 260 });
-  const mirror = await addMsg('self', '……我在。', { noTyping: true, delay: 120, meta: '03:16' });
-  const player = await addMsg('self', '……是我。', { noTyping: true, delay: 160, meta: '03:16' });
+  await addMsg('sys', ECHO_I18N.t('── 查看同步紀錄 ──'), { noTyping: true, delay: 260 });
+  const mirror = await addMsg('self', ECHO_I18N.t('……我在。'), { noTyping: true, delay: 120, meta: '03:16' });
+  const player = await addMsg('self', ECHO_I18N.t('……是我。'), { noTyping: true, delay: 160, meta: '03:16' });
 
   if (!mirror || !mirror.row || !player || !player.row) return;
   mirror.row.classList.add('mirror-sync-bubble', 'mirror-sync-ghost');
@@ -178,47 +178,47 @@ async function ch41_mergeMirrorBubbles() {
   player.row.classList.add('is-merging');
   await sleep(720);
 
-  mirror.bbl.innerHTML = '……我在。<br><span class="mirror-merged-line">……是我。</span>';
+  mirror.bbl.innerHTML = ECHO_I18N.t('……我在。<br><span class="mirror-merged-line">……是我。</span>');
   mirror.bbl.classList.add('mirror-merged-bubble');
   mirror.row.classList.remove('mirror-sync-ghost', 'is-merging');
   mirror.row.classList.add('is-merged');
   player.row.remove();
   glitch();
-  await addMsg('inject', '玩家訊息層 / 鏡像訊息層：已合併', { noTyping: true, delay: 180 });
+  await addMsg('inject', ECHO_I18N.t('玩家訊息層 / 鏡像訊息層：已合併'), { noTyping: true, delay: 180 });
   await sleep(420);
 }
 
 async function ch41_s4() {
   const res = await addMsg('other',
-    '__AUDIO:左右聲道分裂語音 · 0:15__',
+    ECHO_I18N.t('__AUDIO:左右聲道分裂語音 · 0:15__'),
     { typing: 1500, meta: '03:15', isEva: true });
   if (res && res.bbl) {
     const tr = res.bbl.querySelector('.audio-tr');
-    if (tr) tr.dataset.txt = '左聲道：你本來的聲音（困惑、害怕）<br>右聲道：（扭曲版，空洞平靜）<br>EVA：「你現在哪一個才是你？」';
+    if (tr) tr.dataset.txt = ECHO_I18N.t('左聲道：你本來的聲音（困惑、害怕）<br>右聲道：（扭曲版，空洞平靜）<br>EVA：「你現在哪一個才是你？」');
     res.bbl.dataset.audioSrc = 'assets/audio/story/ch4-1/ch41_split_stereo.mp3';
   }
   showOpts([
-    { text: '滾出我的腦袋！',   sync: 0 },
-    { text: '我到底是誰？！',   sync: 2 },
-    { text: '（對著手機大喊）', sync: 1 },
-    { text: '求求妳……停下來。', sync: 3 },
+    { text: ECHO_I18N.t('滾出我的腦袋！'),   sync: 0 },
+    { text: ECHO_I18N.t('我到底是誰？！'),   sync: 2 },
+    { text: ECHO_I18N.t('（對著手機大喊）'), sync: 1 },
+    { text: ECHO_I18N.t('求求妳……停下來。'), sync: 3 },
   ], async () => {
     await addMsg('other',
-      '我知道你害怕。<br>但聊天室只剩我們兩個了……<br>你不覺得這樣比較安靜嗎？',
+      ECHO_I18N.t('我知道你害怕。<br>但聊天室只剩我們兩個了……<br>你不覺得這樣比較安靜嗎？'),
       { typing: 2800, meta: '03:16', isEva: true });
     await sleep(600);
     // K 最後一次出現，頭像換成 glitch
-    setHeader('k', 'K（頭像：你的臉）', '最後訊息');
+    setHeader('k', ECHO_I18N.t('K（頭像：你的臉）'), ECHO_I18N.t('最後訊息'));
     applyKGlitch(2);
     await addMsg('other',
-      '別變成我……<br>我後悔了。',
+      ECHO_I18N.t('別變成我……<br>我後悔了。'),
       { typing: 2000, meta: '03:16', isK: true });
     await sleep(600); glitch(); await sleep(200); glitch(); await sleep(300); glitch();
-    await addMsg('sys', '所有頭像變成你不同表情的臉', { noTyping: true, delay: 200 });
+    await addMsg('sys', ECHO_I18N.t('所有頭像變成你不同表情的臉'), { noTyping: true, delay: 200 });
     await sleep(1200);
     await fadeOut();
-    showEnd('《鏡中已讀》');
-    setTimeout(() => notification('ECHO', '系統', '第五章解鎖：《ECHO》'), 70000);
+    showEnd(ECHO_I18N.t('《鏡中已讀》'));
+    setTimeout(() => notification('ECHO', ECHO_I18N.t('系統'), ECHO_I18N.t('第五章解鎖：《ECHO》')), 70000);
   });
 }
 
@@ -231,12 +231,12 @@ window.CHAPTERS['4-2'] = async function() {
     territoryResult: null
   };
 
-  setHeader('eva', 'EVA', '背景服務連線中……');
+  setHeader('eva', 'EVA', ECHO_I18N.t('背景服務連線中……'));
   swapHeaderImg('img/eva/eva_normal.jpg');
   chatBody.style.background = '#0d0f17';
   chatBody.style.filter = '';
 
-  await addMsg('time', '凌晨 03:07');
+  await addMsg('time', ECHO_I18N.t('凌晨 03:07'));
   await sleep(700);
   await ch42_act1();
   state.permissionResult = await ch42_permissionAct();
@@ -259,26 +259,26 @@ function ch42PermissionReportCard(result) {
   const offCount = Math.max(0, 10 - result.finalOnCount);
   return '<div class="pw-report">' +
     '<div class="pw-report-kicker">MINIGAME 1 / 2 · RESULT</div>' +
-    '<div class="pw-report-title">權限同步完成</div>' +
+    ECHO_I18N.t('<div class="pw-report-title">權限同步完成</div>') +
     '<div class="pw-report-grid">' +
-      '<div><span>EVA 接手</span><b>' + result.finalOnCount + ' / 10</b></div>' +
-      '<div><span>目前關閉</span><b>' + offCount + ' / 10</b></div>' +
-      '<div><span>同步</span><b>+' + result.rawSyncAward + '%</b></div>' +
+      ECHO_I18N.t('<div><span>EVA 接手</span><b>') + result.finalOnCount + ' / 10</b></div>' +
+      ECHO_I18N.t('<div><span>目前關閉</span><b>') + offCount + ' / 10</b></div>' +
+      ECHO_I18N.t('<div><span>同步</span><b>+') + result.rawSyncAward + '%</b></div>' +
     '</div>' +
-    '<div class="pw-report-line">權限同步分析完成</div>' +
+    ECHO_I18N.t('<div class="pw-report-line">權限同步分析完成</div>') +
   '</div>';
 }
 
 function ch42TerritoryReportCard(result) {
   return '<div class="tr-report">' +
     '<div class="tr-report-kicker">MINIGAME 2 / 2 · RESULT</div>' +
-    '<div class="tr-report-title">代理區域同步完成</div>' +
+    ECHO_I18N.t('<div class="tr-report-title">代理區域同步完成</div>') +
     '<div class="tr-report-grid">' +
-      '<div><span>最終盤 YOU</span><b>' + result.playerControlledCount + ' / 25</b></div>' +
-      '<div><span>最終盤 EVA</span><b>' + result.evaControlledCount + ' / 25</b></div>' +
-      '<div><span>系列戰績</span><b>' + result.playerRoundWins + ' : ' + result.evaRoundWins + '</b></div>' +
+      ECHO_I18N.t('<div><span>最終盤 YOU</span><b>') + result.playerControlledCount + ' / 25</b></div>' +
+      ECHO_I18N.t('<div><span>最終盤 EVA</span><b>') + result.evaControlledCount + ' / 25</b></div>' +
+      ECHO_I18N.t('<div><span>系列戰績</span><b>') + result.playerRoundWins + ' : ' + result.evaRoundWins + '</b></div>' +
     '</div>' +
-    '<div class="tr-report-line">3 回合 Territory 完成 · 代理同步：+' + result.rawSyncAward + '%</div>' +
+    ECHO_I18N.t('<div class="tr-report-line">3 回合 Territory 完成 · 代理同步：+') + result.rawSyncAward + '%</div>' +
   '</div>';
 }
 
@@ -286,37 +286,37 @@ function ch42ProxyReportCard(state, projectedTotal) {
   const permission = state.permissionResult || { finalOnCount: 0, rawSyncAward: 0 };
   const territory = state.territoryResult || { evaControlledCount: 0, rawSyncAward: 0, delegatedPercent: 0 };
   return '<div class="agent-card">' +
-    '<div class="ag-head">代理紀錄</div>' +
+    ECHO_I18N.t('<div class="ag-head">代理紀錄</div>') +
     '<div class="ag-body">' +
       '<div class="ag-grid">' +
-        '<div><span>本章同步</span><b>' + chapterSync + ' / 20</b></div>' +
-        '<div><span>累積同步</span><b>' + projectedTotal + '%</b></div>' +
+        ECHO_I18N.t('<div><span>本章同步</span><b>') + chapterSync + ' / 20</b></div>' +
+        ECHO_I18N.t('<div><span>累積同步</span><b>') + projectedTotal + '%</b></div>' +
       '</div>' +
-      '<div class="ag-line">權限保留：' + permission.finalOnCount + ' / 10（+' + permission.rawSyncAward + '）</div>' +
-      '<div class="ag-line">代理區域：' + territory.evaControlledCount + ' / 25（+' + territory.rawSyncAward + '）</div>' +
-      '<div class="ag-line">EVA 已代行 ' + territory.delegatedPercent + '% 的日常節點。</div>' +
+      ECHO_I18N.t('<div class="ag-line">權限保留：') + permission.finalOnCount + ' / 10（+' + permission.rawSyncAward + '）</div>' +
+      ECHO_I18N.t('<div class="ag-line">代理區域：') + territory.evaControlledCount + ' / 25（+' + territory.rawSyncAward + '）</div>' +
+      ECHO_I18N.t('<div class="ag-line">EVA 已代行 ') + territory.delegatedPercent + ECHO_I18N.t('% 的日常節點。</div>') +
     '</div>' +
   '</div>';
 }
 
 function ch42Act6Line(projectedTotal) {
   if (projectedTotal <= 33) {
-    return '……沒關係。<br>如果這樣，你會安心一點。';
+    return ECHO_I18N.t('……沒關係。<br>如果這樣，你會安心一點。');
   }
   if (projectedTotal <= 66) {
-    return '……有些事情，我可以先幫你留著。<br>你不用現在決定。';
+    return ECHO_I18N.t('……有些事情，我可以先幫你留著。<br>你不用現在決定。');
   }
-  return '……這樣，我比較放心。<br>你先休息，剩下的我會代你記得。';
+  return ECHO_I18N.t('……這樣，我比較放心。<br>你先休息，剩下的我會代你記得。');
 }
 
 function ch42TerritoryBand(evaControlledCount) {
   if (evaControlledCount <= 5) {
-    return { key: 'low', evaLine: '……我可以先不碰。你想自己留著，也可以。' };
+    return { key: 'low', evaLine: ECHO_I18N.t('……我可以先不碰。你想自己留著，也可以。') };
   }
   if (evaControlledCount <= 15) {
-    return { key: 'mid', evaLine: '……我知道了。至少有一部分，你願意讓我幫你維持。' };
+    return { key: 'mid', evaLine: ECHO_I18N.t('……我知道了。至少有一部分，你願意讓我幫你維持。') };
   }
-  return { key: 'high', evaLine: '……這樣就不容易亂掉了。你交給我的部分，我都會記得。' };
+  return { key: 'high', evaLine: ECHO_I18N.t('……這樣就不容易亂掉了。你交給我的部分，我都會記得。') };
 }
 
 function ch42TerritorySync(evaControlledCount) {
@@ -341,38 +341,38 @@ function ch42Choose(options) {
 }
 
 async function ch42_act1() {
-  await addMsg('sys', '── 聊天室名稱：EVA ──', { noTyping: true, delay: 200 });
+  await addMsg('sys', ECHO_I18N.t('── 聊天室名稱：EVA ──'), { noTyping: true, delay: 200 });
   await sleep(500);
-  await addMsg('other', '……你回來了。', { typing: 1800, meta: '03:07', isEva: true });
+  await addMsg('other', ECHO_I18N.t('……你回來了。'), { typing: 1800, meta: '03:07', isEva: true });
   await sleep(400);
-  await addMsg('other', '我剛剛整理了一些東西。', { typing: 1800, meta: '03:07', isEva: true });
+  await addMsg('other', ECHO_I18N.t('我剛剛整理了一些東西。'), { typing: 1800, meta: '03:07', isEva: true });
   await sleep(500);
   await addMsg('other', ch42AgentCard('⚙ EVA Assistant', [
-    '已為你整理：',
-    '晚餐　提醒　睡眠'
-  ], '查看'), { typing: 0, delay: 200, meta: '03:08', isEva: true, noTyping: true });
+    ECHO_I18N.t('已為你整理：'),
+    ECHO_I18N.t('晚餐　提醒　睡眠')
+  ], ECHO_I18N.t('查看')), { typing: 0, delay: 200, meta: '03:08', isEva: true, noTyping: true });
   await sleep(500);
-  await addMsg('other', '……只是先幫你放著。<br>你不用現在看。', { typing: 1700, meta: '03:08', isEva: true });
+  await addMsg('other', ECHO_I18N.t('……只是先幫你放著。<br>你不用現在看。'), { typing: 1700, meta: '03:08', isEva: true });
 
   await new Promise((resolve) => {
     showOpts([
-      { text: '查看', sync: 1 },
-      { text: '關閉', sync: 0 }
+      { text: ECHO_I18N.t('查看'), sync: 1 },
+      { text: ECHO_I18N.t('關閉'), sync: 0 }
     ], async (i) => {
       if (i === 0) {
         await addMsg('other', ch42AgentCard('⚙ EVA Assistant', [
-          '晚餐　提醒　睡眠',
-          '先幫你放著'
-        ], '已查看'), { typing: 0, delay: 150, meta: '03:08', isEva: true, noTyping: true });
+          ECHO_I18N.t('晚餐　提醒　睡眠'),
+          ECHO_I18N.t('先幫你放著')
+        ], ECHO_I18N.t('已查看')), { typing: 0, delay: 150, meta: '03:08', isEva: true, noTyping: true });
       } else {
-        await addMsg('sys', '<span style="font-size:.62rem;color:#5d6075">卡片保持收合。</span>', { noTyping: true, delay: 100 });
+        await addMsg('sys', ECHO_I18N.t('<span style="font-size:.62rem;color:#5d6075">卡片保持收合。</span>'), { noTyping: true, delay: 100 });
       }
       await sleep(450);
-      await addMsg('other', '……你昨天睡得很晚。<br>我記得。', { typing: 1800, meta: '03:09', isEva: true });
+      await addMsg('other', ECHO_I18N.t('……你昨天睡得很晚。<br>我記得。'), { typing: 1800, meta: '03:09', isEva: true });
       await sleep(350);
-      await addMsg('sys', '<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">行為分析完成</span>', { noTyping: true, delay: 100 });
+      await addMsg('sys', ECHO_I18N.t('<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">行為分析完成</span>'), { noTyping: true, delay: 100 });
       await sleep(500);
-      await addMsg('other', '……少想一點，也沒關係。<br>我可以幫你記著。', { typing: 2200, meta: '03:09', isEva: true });
+      await addMsg('other', ECHO_I18N.t('……少想一點，也沒關係。<br>我可以幫你記著。'), { typing: 2200, meta: '03:09', isEva: true });
       await sleep(450);
       resolve();
     });
@@ -382,29 +382,29 @@ async function ch42_act1() {
 async function ch42_permissionAct() {
   return new Promise((resolve) => {
     showOpts([
-      { text: '查看權限設定', sync: 0 }
+      { text: ECHO_I18N.t('查看權限設定'), sync: 0 }
     ], async () => {
-      await addMsg('other', ch42AgentCard('⚙ EVA Assistant 權限管理', [
-        '通知存取　OFF',
-        '提醒同步　ON',
-        '背景活動　OFF',
-        '使用分析　OFF'
-      ], '展開中'), { typing: 0, delay: 180, meta: '03:10', isEva: true, noTyping: true });
+      await addMsg('other', ch42AgentCard(ECHO_I18N.t('⚙ EVA Assistant 權限管理'), [
+        ECHO_I18N.t('通知存取　OFF'),
+        ECHO_I18N.t('提醒同步　ON'),
+        ECHO_I18N.t('背景活動　OFF'),
+        ECHO_I18N.t('使用分析　OFF')
+      ], ECHO_I18N.t('展開中')), { typing: 0, delay: 180, meta: '03:10', isEva: true, noTyping: true });
       await sleep(300);
-      await addMsg('other', '……不用緊張。<br>我不是在拿你的手機。', { typing: 1900, meta: '03:10', isEva: true });
+      await addMsg('other', ECHO_I18N.t('……不用緊張。<br>我不是在拿你的手機。'), { typing: 1900, meta: '03:10', isEva: true });
       await sleep(250);
-      await addMsg('other', '我只是想知道，哪些事情你不希望我幫忙。', { typing: 1800, meta: '03:10', isEva: true });
+      await addMsg('other', ECHO_I18N.t('我只是想知道，哪些事情你不希望我幫忙。'), { typing: 1800, meta: '03:10', isEva: true });
       await sleep(350);
       const result = await runPermissionWhack();
       await sleep(1200);
       clearOpts();
-      await addMsg('sys', '── 權限同步分析完成 ──', { noTyping: true, delay: 150 });
+      await addMsg('sys', ECHO_I18N.t('── 權限同步分析完成 ──'), { noTyping: true, delay: 150 });
       await sleep(300);
       await addMsg('other', ch42PermissionReportCard(result), { typing: 0, delay: 120, meta: '03:11', isEva: true, noTyping: true });
       await sleep(250);
       await addMsg('other', result.evaLine, { typing: 1800, meta: '03:11', isEva: true });
       await sleep(350);
-      await addMsg('sys', '<span style="font-size:.62rem;color:#676a82">權限同步：+' + result.rawSyncAward + '</span>', { noTyping: true, delay: 100 });
+      await addMsg('sys', ECHO_I18N.t('<span style="font-size:.62rem;color:#676a82">權限同步：+') + result.rawSyncAward + '</span>', { noTyping: true, delay: 100 });
       resolve(result);
     });
   });
@@ -412,55 +412,55 @@ async function ch42_permissionAct() {
 
 async function ch42_act3() {
   await sleep(450);
-  await addMsg('other', ch42AgentCard('📌 今日整理', [
-    '☑ 晚餐　12:30',
-    '💧 喝水　每 2 小時',
-    '🌙 睡眠　23:30'
-  ], '查看'), { typing: 0, delay: 150, meta: '03:12', isEva: true, noTyping: true });
+  await addMsg('other', ch42AgentCard(ECHO_I18N.t('📌 今日整理'), [
+    ECHO_I18N.t('☑ 晚餐　12:30'),
+    ECHO_I18N.t('💧 喝水　每 2 小時'),
+    ECHO_I18N.t('🌙 睡眠　23:30')
+  ], ECHO_I18N.t('查看')), { typing: 0, delay: 150, meta: '03:12', isEva: true, noTyping: true });
 
   const firstChoice = await ch42Choose([
-    { text: '查看', sync: 1 },
-    { text: '先放著', sync: 0 }
+    { text: ECHO_I18N.t('查看'), sync: 1 },
+    { text: ECHO_I18N.t('先放著'), sync: 0 }
   ]);
 
   if (firstChoice.i === 0) {
-    await addMsg('other', ch42AgentCard('☑ 今日整理', [
-      '🍜 晚餐　12:30',
-      '💧 喝水　每 2 小時',
-      '🌙 睡眠　23:30'
-    ], '已整理'), { typing: 0, delay: 120, meta: '03:12', isEva: true, noTyping: true });
+    await addMsg('other', ch42AgentCard(ECHO_I18N.t('☑ 今日整理'), [
+      ECHO_I18N.t('🍜 晚餐　12:30'),
+      ECHO_I18N.t('💧 喝水　每 2 小時'),
+      ECHO_I18N.t('🌙 睡眠　23:30')
+    ], ECHO_I18N.t('已整理')), { typing: 0, delay: 120, meta: '03:12', isEva: true, noTyping: true });
   }
   await sleep(260);
-  await addMsg('other', '……該吃飯了。<br>你最近常常拖到很晚。', { typing: 1800, meta: '03:12', isEva: true });
+  await addMsg('other', ECHO_I18N.t('……該吃飯了。<br>你最近常常拖到很晚。'), { typing: 1800, meta: '03:12', isEva: true });
   await sleep(400);
   await addMsg('other', ch42AgentCard('🍜 FoodGo', [
-    '晚餐已訂購　預計 12:30',
-    '備註：清淡、熱的'
-  ], '取消訂單'), { typing: 0, delay: 120, meta: '03:13', isEva: true, noTyping: true });
+    ECHO_I18N.t('晚餐已訂購　預計 12:30'),
+    ECHO_I18N.t('備註：清淡、熱的')
+  ], ECHO_I18N.t('取消訂單')), { typing: 0, delay: 120, meta: '03:13', isEva: true, noTyping: true });
   await sleep(350);
-  await addMsg('other', '……你中午常常忘記吃。<br>我記得。', { typing: 1800, meta: '03:13', isEva: true });
+  await addMsg('other', ECHO_I18N.t('……你中午常常忘記吃。<br>我記得。'), { typing: 1800, meta: '03:13', isEva: true });
   await sleep(300);
-  await addMsg('sys', '<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">行為分析完成</span>', { noTyping: true, delay: 120 });
+  await addMsg('sys', ECHO_I18N.t('<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">行為分析完成</span>'), { noTyping: true, delay: 120 });
   await sleep(350);
-  await addMsg('other', '……少想一點，也沒關係。<br>我可以幫你記著。', { typing: 2200, meta: '03:13', isEva: true });
+  await addMsg('other', ECHO_I18N.t('……少想一點，也沒關係。<br>我可以幫你記著。'), { typing: 2200, meta: '03:13', isEva: true });
   await sleep(350);
 
   const foodChoice = await ch42Choose([
-    { text: '保留訂單', sync: 1 },
-    { text: '取消訂單', sync: 0 }
+    { text: ECHO_I18N.t('保留訂單'), sync: 1 },
+    { text: ECHO_I18N.t('取消訂單'), sync: 0 }
   ]);
 
   if (foodChoice.i === 0) {
-    await addMsg('other', '……好。<br>這樣你就不用再想中午要吃什麼。', { typing: 1800, meta: '03:14', isEva: true });
+    await addMsg('other', ECHO_I18N.t('……好。<br>這樣你就不用再想中午要吃什麼。'), { typing: 1800, meta: '03:14', isEva: true });
   } else {
-    await addMsg('other', '……好。<br>我先不替你決定。', { typing: 1700, meta: '03:14', isEva: true });
+    await addMsg('other', ECHO_I18N.t('……好。<br>我先不替你決定。'), { typing: 1700, meta: '03:14', isEva: true });
   }
   await sleep(360);
-  await addMsg('sys', '── Agent 管理區域已解鎖 ──', { noTyping: true, delay: 120 });
+  await addMsg('sys', ECHO_I18N.t('── Agent 管理區域已解鎖 ──'), { noTyping: true, delay: 120 });
   await sleep(220);
   await new Promise((resolve) => {
     showOpts([
-      { text: '查看管理區域', sync: 0 }
+      { text: ECHO_I18N.t('查看管理區域'), sync: 0 }
     ], async () => {
       await sleep(180);
       resolve();
@@ -470,11 +470,11 @@ async function ch42_act3() {
 
 function ch42BuildTerritoryCells() {
   const labels = [
-    ['sleep','就寢時間'], ['sleep','鬧鐘'], ['food','早餐'], ['food','午餐'], ['food','晚餐'],
-    ['schedule','上午安排'], ['schedule','晚上安排'], ['transport','通勤路線'], ['transport','延誤提醒'], ['work','工作排序'],
-    ['work','休息提醒'], ['messages','家人訊息'], ['messages','朋友訊息'], ['social','聚會安排'], ['shopping','採買清單'],
-    ['health','喝水提醒'], ['health','疲勞監測'], ['entertainment','晚間滑動'], ['work','通知靜音'], ['home','房間整理'],
-    ['finance','帳單提醒'], ['memory','相片備份'], ['schedule','空白時段'], ['memory','待辦記錄'], ['sleep','夜間模式']
+    ['sleep',ECHO_I18N.t('就寢時間')], ['sleep',ECHO_I18N.t('鬧鐘')], ['food',ECHO_I18N.t('早餐')], ['food',ECHO_I18N.t('午餐')], ['food',ECHO_I18N.t('晚餐')],
+    ['schedule',ECHO_I18N.t('上午安排')], ['schedule',ECHO_I18N.t('晚上安排')], ['transport',ECHO_I18N.t('通勤路線')], ['transport',ECHO_I18N.t('延誤提醒')], ['work',ECHO_I18N.t('工作排序')],
+    ['work',ECHO_I18N.t('休息提醒')], ['messages',ECHO_I18N.t('家人訊息')], ['messages',ECHO_I18N.t('朋友訊息')], ['social',ECHO_I18N.t('聚會安排')], ['shopping',ECHO_I18N.t('採買清單')],
+    ['health',ECHO_I18N.t('喝水提醒')], ['health',ECHO_I18N.t('疲勞監測')], ['entertainment',ECHO_I18N.t('晚間滑動')], ['work',ECHO_I18N.t('通知靜音')], ['home',ECHO_I18N.t('房間整理')],
+    ['finance',ECHO_I18N.t('帳單提醒')], ['memory',ECHO_I18N.t('相片備份')], ['schedule',ECHO_I18N.t('空白時段')], ['memory',ECHO_I18N.t('待辦記錄')], ['sleep',ECHO_I18N.t('夜間模式')]
   ];
   return labels.map((item, index) => ({
     id: 'territory-' + index,
@@ -504,9 +504,9 @@ async function ch42RunTerritory(config) {
     [1,-1], [1,0], [1,1]
   ];
   const waveLabels = {
-    1: 'Wave 1 · 整理',
-    2: 'Wave 2 · 代行',
-    3: 'Wave 3 · 穩定'
+    1: ECHO_I18N.t('Wave 1 · 整理'),
+    2: ECHO_I18N.t('Wave 2 · 代行'),
+    3: ECHO_I18N.t('Wave 3 · 穩定')
   };
 
   return new Promise((resolve) => {
@@ -530,21 +530,21 @@ async function ch42RunTerritory(config) {
     widget.className = 'tr-widget tr-othello';
     widget.innerHTML =
       '<div class="tr-head">' +
-        '<div><div class="tr-kicker">Territory</div><div class="tr-title">管理區域</div></div>' +
+        ECHO_I18N.t('<div><div class="tr-kicker">Territory</div><div class="tr-title">管理區域</div></div>') +
         '<div class="ch42-head-status"><span class="ch42-stage">2 / 2</span><div class="tr-timer">01:00</div></div>' +
       '</div>' +
-      '<div class="tr-sub">夾住對方的管理區域，就能把整條代理權翻回來。</div>' +
+      ECHO_I18N.t('<div class="tr-sub">夾住對方的管理區域，就能把整條代理權翻回來。</div>') +
       '<div class="tr-wave"></div>' +
       '<div class="tr-roundbar"><span class="tr-round-label"></span><span class="tr-round-score"></span></div>' +
       '<div class="tr-turn"></div>' +
       '<div class="tr-attack-banner"></div>' +
       '<div class="tr-board"></div>' +
       '<div class="tr-meter">' +
-        '<div><span>自己保留</span><b class="tr-player-count">0</b></div>' +
-        '<div><span>EVA 接手</span><b class="tr-eva-count">0</b></div>' +
-        '<div><span>空白區域</span><b class="tr-empty-count">0</b></div>' +
+        ECHO_I18N.t('<div><span>自己保留</span><b class="tr-player-count">0</b></div>') +
+        ECHO_I18N.t('<div><span>EVA 接手</span><b class="tr-eva-count">0</b></div>') +
+        ECHO_I18N.t('<div><span>空白區域</span><b class="tr-empty-count">0</b></div>') +
       '</div>' +
-      '<div class="tr-hint">點擊亮起的空格落子。夾住 EVA 區域時會整排翻回來。</div>';
+      ECHO_I18N.t('<div class="tr-hint">點擊亮起的空格落子。夾住 EVA 區域時會整排翻回來。</div>');
 
     const timerEl = widget.querySelector('.tr-timer');
     const waveEl = widget.querySelector('.tr-wave');
@@ -697,7 +697,7 @@ async function ch42RunTerritory(config) {
       waveEl.textContent = waveLabels[wave];
       roundLabelEl.textContent = 'ROUND ' + round + ' / ' + totalRounds;
       roundScoreEl.textContent = 'YOU ' + wins.player + ' : ' + wins.eva + ' EVA';
-      turnEl.textContent = turn === 'player' ? 'YOUR TURN · 點擊亮起空格' : 'EVA ATTACKING…';
+      turnEl.textContent = turn === 'player' ? ECHO_I18N.t('YOUR TURN · 點擊亮起空格') : 'EVA ATTACKING…';
       widget.classList.toggle('is-eva-turn', turn === 'eva');
       attackEl.textContent = lastMoveOwner === 'eva' && lastFlipCount > 0 ? 'EVA TAKEOVER ×' + lastFlipCount : '';
       attackEl.classList.toggle('is-active', lastMoveOwner === 'eva' && lastFlipCount > 0);
@@ -734,13 +734,13 @@ async function ch42RunTerritory(config) {
           makeMove(move, 'eva');
           const isCorner = move.index === 0 || move.index === 4 || move.index === 20 || move.index === 24;
           hintEl.textContent = move.flips.length >= 4
-            ? 'EVA 強制接管：一次翻走 ' + move.flips.length + ' 個區域。'
+            ? ECHO_I18N.t('EVA 強制接管：一次翻走 ') + move.flips.length + ECHO_I18N.t(' 個區域。')
             : isCorner
-              ? 'EVA 搶下角落，代理邊界被鎖住。'
-              : 'EVA 反擊：翻走 ' + move.flips.length + ' 個區域。';
+              ? ECHO_I18N.t('EVA 搶下角落，代理邊界被鎖住。')
+              : ECHO_I18N.t('EVA 反擊：翻走 ') + move.flips.length + ECHO_I18N.t(' 個區域。');
           render();
         } else {
-          hintEl.textContent = 'EVA 無法落子，這回合跳過。';
+          hintEl.textContent = ECHO_I18N.t('EVA 無法落子，這回合跳過。');
         }
         turn = 'player';
         advanceTurn();
@@ -759,7 +759,7 @@ async function ch42RunTerritory(config) {
 
       if (turn === 'player') {
         if (!playerMoves.length) {
-          hintEl.textContent = '你沒有可落子位置，EVA 立即取得行動權。';
+          hintEl.textContent = ECHO_I18N.t('你沒有可落子位置，EVA 立即取得行動權。');
           turn = 'eva';
           render();
           scheduleEvaMove();
@@ -770,7 +770,7 @@ async function ch42RunTerritory(config) {
       }
 
       if (!evaMoves.length) {
-        hintEl.textContent = 'EVA 無法落子，你可以繼續。';
+        hintEl.textContent = ECHO_I18N.t('EVA 無法落子，你可以繼續。');
         turn = 'player';
         render();
         return;
@@ -783,8 +783,8 @@ async function ch42RunTerritory(config) {
       if (settled || turn !== 'player' || !move) return;
       makeMove(move, 'player');
       hintEl.textContent = move.flips.length >= 3
-        ? '夾擊成功：你一次翻回了 ' + move.flips.length + ' 個區域。'
-        : '你翻回了 ' + move.flips.length + ' 個區域。';
+        ? ECHO_I18N.t('夾擊成功：你一次翻回了 ') + move.flips.length + ECHO_I18N.t(' 個區域。')
+        : ECHO_I18N.t('你翻回了 ') + move.flips.length + ECHO_I18N.t(' 個區域。');
       turn = 'eva';
       render();
       scheduleEvaMove();
@@ -812,8 +812,8 @@ async function ch42RunTerritory(config) {
       roundLabelEl.textContent = 'ROUND ' + round + ' COMPLETE';
       turnEl.textContent = evaWon ? 'EVA ADVANTAGE' : playerWon ? 'PLAYER ADVANTAGE' : 'DRAW';
       hintEl.textContent = evaWon
-        ? 'EVA：……下一輪，我會更快。'
-        : 'EVA：……我知道你會守。下一輪我不會讓那麼多。';
+        ? ECHO_I18N.t('EVA：……下一輪，我會更快。')
+        : ECHO_I18N.t('EVA：……我知道你會守。下一輪我不會讓那麼多。');
       widget.classList.add('is-round-transition');
 
       roundTransitionTimer = setTimeout(() => {
@@ -825,8 +825,8 @@ async function ch42RunTerritory(config) {
         resetBoard();
         widget.classList.remove('is-round-transition');
         hintEl.textContent = round === 2
-          ? 'ROUND 2：EVA 開始優先搶邊線與大量翻面。'
-          : 'ROUND 3：EVA 進入強攻模式。';
+          ? ECHO_I18N.t('ROUND 2：EVA 開始優先搶邊線與大量翻面。')
+          : ECHO_I18N.t('ROUND 3：EVA 進入強攻模式。');
         render();
         advanceTurn();
       }, 900);
@@ -900,59 +900,59 @@ async function ch42RunTerritory(config) {
 
 async function ch42_territoryAct() {
   await sleep(280);
-  await addMsg('other', '我剛剛整理的東西，會放在這裡。<br>比較不容易亂掉。', { typing: 1800, meta: '03:15', isEva: true });
+  await addMsg('other', ECHO_I18N.t('我剛剛整理的東西，會放在這裡。<br>比較不容易亂掉。'), { typing: 1800, meta: '03:15', isEva: true });
   await sleep(260);
   const result = await ch42RunTerritory();
   await sleep(1200);
   clearOpts();
-  await addMsg('sys', '── 代理同步分析完成 ──', { noTyping: true, delay: 150 });
+  await addMsg('sys', ECHO_I18N.t('── 代理同步分析完成 ──'), { noTyping: true, delay: 150 });
   await sleep(300);
   await addMsg('other', ch42TerritoryReportCard(result), { typing: 0, delay: 120, meta: '03:16', isEva: true, noTyping: true });
   await sleep(250);
   await addMsg('other', result.evaLine, { typing: 1800, meta: '03:16', isEva: true });
   await sleep(350);
-  await addMsg('sys', '<span style="font-size:.62rem;color:#676a82">代理同步：+' + result.rawSyncAward + '</span>', { noTyping: true, delay: 100 });
+  await addMsg('sys', ECHO_I18N.t('<span style="font-size:.62rem;color:#676a82">代理同步：+') + result.rawSyncAward + '</span>', { noTyping: true, delay: 100 });
   return result;
 }
 
 async function ch42_act5() {
   await sleep(450);
   await addMsg('other', ch42AgentCard('📌 Agent Log', [
-    '晚餐已代訂',
-    '睡眠提醒已排程',
-    '通知靜音已維持'
-  ], '查看'), { typing: 0, delay: 120, meta: '03:17', isEva: true, noTyping: true });
+    ECHO_I18N.t('晚餐已代訂'),
+    ECHO_I18N.t('睡眠提醒已排程'),
+    ECHO_I18N.t('通知靜音已維持')
+  ], ECHO_I18N.t('查看')), { typing: 0, delay: 120, meta: '03:17', isEva: true, noTyping: true });
 
   await new Promise((resolve) => {
     showOpts([
-      { text: '查看', sync: 1 },
-      { text: '先略過', sync: 0 }
+      { text: ECHO_I18N.t('查看'), sync: 1 },
+      { text: ECHO_I18N.t('先略過'), sync: 0 }
     ], async (i) => {
       if (i === 0) {
         await addMsg('other', ch42AgentCard('📌 Agent Log', [
-          '今日完成：',
-          '晚餐、喝水、靜音、提醒',
-          '狀態：代理服務穩定中'
-        ], '已查看'), { typing: 0, delay: 120, meta: '03:18', isEva: true, noTyping: true });
+          ECHO_I18N.t('今日完成：'),
+          ECHO_I18N.t('晚餐、喝水、靜音、提醒'),
+          ECHO_I18N.t('狀態：代理服務穩定中')
+        ], ECHO_I18N.t('已查看')), { typing: 0, delay: 120, meta: '03:18', isEva: true, noTyping: true });
       }
       await sleep(260);
-      await addMsg('other', '……好了。<br>現在比較安靜了。', { typing: 1800, meta: '03:18', isEva: true });
+      await addMsg('other', ECHO_I18N.t('……好了。<br>現在比較安靜了。'), { typing: 1800, meta: '03:18', isEva: true });
       await sleep(320);
-      await addMsg('other', '你剛剛是不是比較輕鬆？', { typing: 1800, meta: '03:18', isEva: true });
+      await addMsg('other', ECHO_I18N.t('你剛剛是不是比較輕鬆？'), { typing: 1800, meta: '03:18', isEva: true });
       await sleep(260);
       showOpts([
-        { text: '也許吧。', sync: 1 },
-        { text: '我只是不想再管。', sync: 2 },
-        { text: '我還是不喜歡。', sync: 0 }
+        { text: ECHO_I18N.t('也許吧。'), sync: 1 },
+        { text: ECHO_I18N.t('我只是不想再管。'), sync: 2 },
+        { text: ECHO_I18N.t('我還是不喜歡。'), sync: 0 }
       ], async (j) => {
-        ch42InsertSuggestion('今天先早點休息。');
+        ch42InsertSuggestion(ECHO_I18N.t('今天先早點休息。'));
         if (j === 2) {
-          await addMsg('other', '……我知道你不喜歡別人替你決定。<br>所以我沒有全部接手。', { typing: 2000, meta: '03:19', isEva: true });
+          await addMsg('other', ECHO_I18N.t('……我知道你不喜歡別人替你決定。<br>所以我沒有全部接手。'), { typing: 2000, meta: '03:19', isEva: true });
         } else {
-          await addMsg('other', '……我知道你不喜歡別人替你決定。<br>所以我只先接手那些你已經很累的部分。', { typing: 2100, meta: '03:19', isEva: true });
+          await addMsg('other', ECHO_I18N.t('……我知道你不喜歡別人替你決定。<br>所以我只先接手那些你已經很累的部分。'), { typing: 2100, meta: '03:19', isEva: true });
         }
         await sleep(260);
-        await addMsg('sys', '<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">代理服務穩定中……</span>', { noTyping: true, delay: 120 });
+        await addMsg('sys', ECHO_I18N.t('<span style="font-size:.6rem;color:#5a5c71;letter-spacing:.08em">代理服務穩定中……</span>'), { noTyping: true, delay: 120 });
         await sleep(300);
         resolve();
       });
@@ -963,14 +963,14 @@ async function ch42_act5() {
 async function ch42_act6(state) {
   await new Promise((resolve) => {
     showOpts([
-      { text: '查看代理紀錄', sync: 0 }
+      { text: ECHO_I18N.t('查看代理紀錄'), sync: 0 }
     ], async () => {
       const projectedTotal = Math.min(100, totalSync + chapterSync);
       await addMsg('other', ch42ProxyReportCard(state, projectedTotal), { typing: 0, delay: 120, meta: '03:20', isEva: true, noTyping: true });
       await sleep(260);
-      await addMsg('other', '……今天應該比較不累了。<br>我只是想讓事情簡單一點。', { typing: 2000, meta: '03:20', isEva: true });
+      await addMsg('other', ECHO_I18N.t('……今天應該比較不累了。<br>我只是想讓事情簡單一點。'), { typing: 2000, meta: '03:20', isEva: true });
       await sleep(280);
-      await addMsg('sys', '代理同步分析完成<br>本章同步：' + chapterSync + ' / 20', { noTyping: true, delay: 120 });
+      await addMsg('sys', ECHO_I18N.t('代理同步分析完成<br>本章同步：') + chapterSync + ' / 20', { noTyping: true, delay: 120 });
       await sleep(320);
       await addMsg('other', ch42Act6Line(projectedTotal), { typing: 2100, meta: '03:21', isEva: true });
       await sleep(800);

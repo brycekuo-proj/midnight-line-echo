@@ -1,0 +1,17 @@
+.language-choice { display:flex; justify-content:center; gap:.35rem; margin:0 0 1.5rem; }
+.language-choice button { font:inherit; font-size:.75rem; color:#9292a4; background:transparent; border:1px solid #353542; border-radius:6px; padding:.65rem .85rem; min-height:44px; cursor:pointer; }
+.language-choice button[aria-pressed="true"] { color:#ded7ef; border-color:#81639c; background:#211a2b; }
+.language-choice button:focus-visible { outline:2px solid #c4a3ef; outline-offset:3px; }
+html[lang="en"] .bbl, html[lang="en"] .echo-mg, html[lang="en"] .oracle-copy { overflow-wrap:break-word; }
+html[lang="en"] .cs-desc, html[lang="en"] .cs-mode-note { letter-spacing:.02em; line-height:1.6; }
+html[lang="en"] .cs-ch, html[lang="en"] .cs-tag { letter-spacing:.04em; }
+html[lang="en"] .ce-btn, html[lang="en"] .echo-mg button { white-space:normal; }
+html[lang="en"] .t-warn { padding-inline:1rem; }
+/* Document screenshots contain source-language text. Keep the original files
+   and show a readable English document, reusing the news image's photo crop. */
+html[lang="en"] #lb-img.has-english-reading { display:none; }
+.english-evidence-reader { box-sizing:border-box; max-width:640px; width:100%; max-height:72vh; overflow:auto; padding:1.1rem; border:1px solid #41414c; border-radius:8px; background:#101017; color:#c5c5ce; text-align:left; font: .85rem/1.7 system-ui,sans-serif; letter-spacing:normal; }
+.english-evidence-reader[hidden] { display:none; }
+.english-evidence-reader h2 { margin:0 0 1rem; font-size:1rem; color:#eee; }
+.english-evidence-reader p { white-space:pre-line; }
+.english-news-photo { width:100%; aspect-ratio:624/407; background-size:144.23% 331.7%; background-position:11.2% 43.1%; border-radius:3px; }

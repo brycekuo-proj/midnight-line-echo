@@ -85,13 +85,13 @@ async function originAct0() {
     mode: 'qualification',
     duration: 60,
     title: 'SYNC TEST',
-    subtitle: '保持同步。',
+    subtitle: ECHO_I18N.t('保持同步。'),
     counterLabel: 'QUALIFICATION',
     events: [
       { at: 16, speaker: 'UNKNOWN', text: '……' },
-      { at: 22, speaker: 'UNKNOWN', text: '有人嗎……' },
-      { at: 37, speaker: 'UNKNOWN', text: '不要停…… 我還在……' },
-      { at: 56, speaker: 'UNKNOWN', text: '拜託……' },
+      { at: 22, speaker: 'UNKNOWN', text: ECHO_I18N.t('有人嗎……') },
+      { at: 37, speaker: 'UNKNOWN', text: ECHO_I18N.t('不要停…… 我還在……') },
+      { at: 56, speaker: 'UNKNOWN', text: ECHO_I18N.t('拜託……') },
     ],
   });
 
@@ -106,7 +106,7 @@ async function originAct0() {
   await originBlackSequence([
     { text: 'Synchronization Stable', delay: 350 },
     { text: 'Operator Qualification Passed', delay: 850 },
-    { text: '歡迎。 Gamma。', delay: 900 },
+    { text: ECHO_I18N.t('歡迎。 Gamma。'), delay: 900 },
   ], 1100);
   if (ORIGIN.root) ORIGIN.root.classList.add('oracle-glitch-once');
   await originSleep(500);
@@ -211,7 +211,7 @@ function originFileCard(title, level, onOpen) {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'oracle-filecard';
-    card.innerHTML = '<span>' + originEscape(title) + '</span><b>' + originEscape(level) + '　[查看]</b>';
+    card.innerHTML = '<span>' + originEscape(title) + '</span><b>' + originEscape(level) + ECHO_I18N.t('　[查看]</b>');
     card.onclick = async () => {
       card.disabled = true;
       await onOpen();
@@ -224,34 +224,34 @@ function originFileCard(title, level, onOpen) {
 
 async function originAct1() {
   originChatShell(['Alpha', 'Beta', 'Gamma']);
-  await originMsg('Alpha', '同步資格確認。 你比預期穩定。 歡迎加入ECHO。 Gamma。');
-  await originMsg('Beta', '…… 又一個。', { delay: 900 });
-  await originMsg('Alpha', '權限已開放。');
+  await originMsg('Alpha', ECHO_I18N.t('同步資格確認。 你比預期穩定。 歡迎加入ECHO。 Gamma。'));
+  await originMsg('Beta', ECHO_I18N.t('…… 又一個。'), { delay: 900 });
+  await originMsg('Alpha', ECHO_I18N.t('權限已開放。'));
 
   await originFileCard('OPERATOR DOSSIER', 'LEVEL-03', () => originOpenPanel(
     'OPERATOR DOSSIER',
     'ACCESS LEVEL-03',
     '<div class="oracle-doc">' +
-      '<p>ECHO 人格保存研究</p>' +
+      ECHO_I18N.t('<p>ECHO 人格保存研究</p>') +
       '<p>Phase-7</p>' +
       '<hr>' +
-      '<p>操作員責任：</p>' +
-      '<p>維持同步</p>' +
-      '<p>記錄人格完整度</p>' +
-      '<p>協助保存程序</p>' +
+      ECHO_I18N.t('<p>操作員責任：</p>') +
+      ECHO_I18N.t('<p>維持同步</p>') +
+      ECHO_I18N.t('<p>記錄人格完整度</p>') +
+      ECHO_I18N.t('<p>協助保存程序</p>') +
       '<hr>' +
-      '<p>實驗將於下一輪開始</p>' +
+      ECHO_I18N.t('<p>實驗將於下一輪開始</p>') +
     '</div>'
   ));
 
-  await originMsg('Beta', '你知道我們在做什麼嗎？', { delay: 900 });
-  await originChoice(['不知道', '人格保存？', '這是什麼地方？']);
-  await originMsg('Alpha', 'ECHO。 不是產品。');
+  await originMsg('Beta', ECHO_I18N.t('你知道我們在做什麼嗎？'), { delay: 900 });
+  await originChoice([ECHO_I18N.t('不知道'), ECHO_I18N.t('人格保存？'), ECHO_I18N.t('這是什麼地方？')]);
+  await originMsg('Alpha', ECHO_I18N.t('ECHO。 不是產品。'));
   await originSleep(600);
-  await originMsg('Alpha', '是一種保存方式。', { instant: true });
+  await originMsg('Alpha', ECHO_I18N.t('是一種保存方式。'), { instant: true });
   await originSleep(700);
-  await originMsg('Alpha', '下一位受試者。 準備中。');
-  await originActionButton('繼續');
+  await originMsg('Alpha', ECHO_I18N.t('下一位受試者。 準備中。'));
+  await originActionButton(ECHO_I18N.t('繼續'));
   await originAct2();
 }
 
@@ -260,65 +260,65 @@ async function originAct2() {
     mode: 'human',
     duration: 120,
     title: 'SYNC CHAMBER',
-    subtitle: 'Subject #09　Status: Unstable　人格完整度: 62%',
+    subtitle: ECHO_I18N.t('Subject #09　Status: Unstable　人格完整度: 62%'),
     counterLabel: 'SYNC WINDOW',
     events: [
-      { at: 2, speaker: 'Alpha', text: 'Gamma。 維持同步。 不要讓人格掉出穩定區。' },
-      { at: 8, speaker: 'Alpha', text: '神經連線正常。 記憶層同步中。' },
+      { at: 2, speaker: 'Alpha', text: ECHO_I18N.t('Gamma。 維持同步。 不要讓人格掉出穩定區。') },
+      { at: 8, speaker: 'Alpha', text: ECHO_I18N.t('神經連線正常。 記憶層同步中。') },
       { at: 28, speaker: 'Subject #09', text: '……' },
-      { at: 34, speaker: 'Subject #09', text: '有人……' },
-      { at: 42, speaker: 'Beta', text: '同步值掉太快了。' },
-      { at: 45, speaker: 'Alpha', text: '仍在安全範圍。' },
-      { at: 58, speaker: 'Subject #09', text: '等等…… 我看見……' },
-      { at: 64, speaker: 'Subject #09', text: '那不是……' },
-      { at: 72, speaker: 'Beta', text: 'Alpha。 同步太快了。' },
-      { at: 76, speaker: 'Alpha', text: '繼續維持。 人格正在固定。' },
-      { at: 96, speaker: 'Subject #09', text: '不要…… 我還不想……' },
-      { at: 111, speaker: 'Alpha', text: 'Final Phase。 保持同步。' },
+      { at: 34, speaker: 'Subject #09', text: ECHO_I18N.t('有人……') },
+      { at: 42, speaker: 'Beta', text: ECHO_I18N.t('同步值掉太快了。') },
+      { at: 45, speaker: 'Alpha', text: ECHO_I18N.t('仍在安全範圍。') },
+      { at: 58, speaker: 'Subject #09', text: ECHO_I18N.t('等等…… 我看見……') },
+      { at: 64, speaker: 'Subject #09', text: ECHO_I18N.t('那不是……') },
+      { at: 72, speaker: 'Beta', text: ECHO_I18N.t('Alpha。 同步太快了。') },
+      { at: 76, speaker: 'Alpha', text: ECHO_I18N.t('繼續維持。 人格正在固定。') },
+      { at: 96, speaker: 'Subject #09', text: ECHO_I18N.t('不要…… 我還不想……') },
+      { at: 111, speaker: 'Alpha', text: ECHO_I18N.t('Final Phase。 保持同步。') },
     ],
   });
 
   if (!ORIGIN.running) return;
   if (!result.success) {
-    await originBlackSequence([{ text: '目標已失去生理訊號…', delay: 350 }], 3000);
+    await originBlackSequence([{ text: ECHO_I18N.t('目標已失去生理訊號…'), delay: 350 }], 3000);
     originChatShell(['Alpha']);
     await originMsg('Alpha', '……', { delay: 500 });
-    await originMsg('Alpha', '看來。 你還沒準備好。', { delay: 900 });
+    await originMsg('Alpha', ECHO_I18N.t('看來。 你還沒準備好。'), { delay: 900 });
     await originSleep(1000);
     originExit(false);
     return;
   }
 
-  await originBlackSequence([{ text: '人格保存完成', delay: 250 }], 900);
+  await originBlackSequence([{ text: ECHO_I18N.t('人格保存完成'), delay: 250 }], 900);
   originChatShell(['Alpha', 'Beta', 'Gamma']);
-  await originMsg('Beta', '…… 這次。 穩住了。');
-  await originMsg('Alpha', '保存成功。 同步人格建立完成。');
-  await originMsg('Alpha', '不錯。 你開始理解ECHO了。');
-  await originActionButton('下一步');
+  await originMsg('Beta', ECHO_I18N.t('…… 這次。 穩住了。'));
+  await originMsg('Alpha', ECHO_I18N.t('保存成功。 同步人格建立完成。'));
+  await originMsg('Alpha', ECHO_I18N.t('不錯。 你開始理解ECHO了。'));
+  await originActionButton(ECHO_I18N.t('下一步'));
   await originAct3();
 }
 
 async function originAct3() {
   originChatShell(['Alpha', 'Beta', 'Gamma']);
-  await originMsg('Beta', '…… 這次。 穩住了。');
-  await originMsg('Alpha', '保存成功。 同步人格建立完成。');
-  await originMsg('Beta', 'Gamma。 你知道。 剛剛保存的是什麼嗎？', { delay: 900 });
-  await originChoice(['人格？', '記憶？', '我不知道']);
-  await originMsg('Alpha', '最後完整狀態。');
+  await originMsg('Beta', ECHO_I18N.t('…… 這次。 穩住了。'));
+  await originMsg('Alpha', ECHO_I18N.t('保存成功。 同步人格建立完成。'));
+  await originMsg('Beta', ECHO_I18N.t('Gamma。 你知道。 剛剛保存的是什麼嗎？'), { delay: 900 });
+  await originChoice([ECHO_I18N.t('人格？'), ECHO_I18N.t('記憶？'), ECHO_I18N.t('我不知道')]);
+  await originMsg('Alpha', ECHO_I18N.t('最後完整狀態。'));
   await originSleep(550);
-  await originMsg('Alpha', '人格保存前的最終記憶。', { instant: true });
+  await originMsg('Alpha', ECHO_I18N.t('人格保存前的最終記憶。'), { instant: true });
 
   await originFileCard('ORACLE ARCHIVE', 'LEVEL-04', originOpenArchive);
-  await originMsg('Beta', '…… 你看到了嗎。');
-  await originMsg('Alpha', '不用緊張。 所有操作員。 都會進入名單。');
-  const recalled = await originMsg('Beta', '不是那樣——', { delay: 350 });
-  await originMsg('SYSTEM', '訊息審核中……', { system: true, delay: 450 });
+  await originMsg('Beta', ECHO_I18N.t('…… 你看到了嗎。'));
+  await originMsg('Alpha', ECHO_I18N.t('不用緊張。 所有操作員。 都會進入名單。'));
+  const recalled = await originMsg('Beta', ECHO_I18N.t('不是那樣——'), { delay: 350 });
+  await originMsg('SYSTEM', ECHO_I18N.t('訊息審核中……'), { system: true, delay: 450 });
   if (recalled) recalled.remove();
-  await originMsg('SYSTEM', '訊息已撤回', { system: true, delay: 650 });
+  await originMsg('SYSTEM', ECHO_I18N.t('訊息已撤回'), { system: true, delay: 650 });
   originSetRoster(['Alpha', 'Gamma']);
   await originMsg('Alpha', 'Gamma。');
-  await originMsg('Alpha', '下一份檔案。 你應該看看。');
-  await originActionButton('繼續');
+  await originMsg('Alpha', ECHO_I18N.t('下一份檔案。 你應該看看。'));
+  await originActionButton(ECHO_I18N.t('繼續'));
   await originAct4();
 }
 
@@ -331,10 +331,10 @@ function originOpenArchive() {
         '<div class="oracle-modal-kicker">ORACLE ARCHIVE LEVEL-04</div>' +
         '<h2>ARCHIVE INDEX</h2>' +
         '<div class="oracle-archive-tabs">' +
-          '<button type="button" data-file="list">同步名單</button>' +
-          '<button type="button" data-file="integrity">人格完整度</button>' +
-          '<button type="button" data-file="incident">事故紀錄</button>' +
-          '<button type="button" data-file="memo">ORACLE備忘錄</button>' +
+          ECHO_I18N.t('<button type="button" data-file="list">同步名單</button>') +
+          ECHO_I18N.t('<button type="button" data-file="integrity">人格完整度</button>') +
+          ECHO_I18N.t('<button type="button" data-file="incident">事故紀錄</button>') +
+          ECHO_I18N.t('<button type="button" data-file="memo">ORACLE備忘錄</button>') +
         '</div>' +
         '<div class="oracle-archive-view">SELECT FILE</div>' +
         '<button type="button" class="oracle-btn oracle-close" disabled>RETURN</button>' +
@@ -345,7 +345,7 @@ function originOpenArchive() {
     let sawList = false;
     const fileHtml = {
       list: '<p>Subject-07　Completed</p><p>Subject-09　Completed</p><p>Subject-11　Failed</p><hr><p class="oracle-alert">Gamma　Pending</p>',
-      integrity: '<p>Subject #09</p><p>人格完整度：62%</p><p>Status：Unstable</p>',
+      integrity: ECHO_I18N.t('<p>Subject #09</p><p>人格完整度：62%</p><p>Status：Unstable</p>'),
       incident: '<p>Subject-11　Failed</p><p>--</p>',
       memo: '<p>ACCESS LEVEL-05 REQUIRED</p>',
     };
@@ -374,28 +374,28 @@ async function originAct4() {
     'ORACLE MEMO',
     'ACCESS LEVEL-05',
     '<div class="oracle-doc oracle-memo">' +
-      '<p>人格保存成功率　與情緒峰值呈正相關</p>' +
-      '<p>高同步案例　多發生於心理臨界狀態</p>' +
-      '<p>孤立　創傷　瀕死　自傷傾向</p>' +
+      ECHO_I18N.t('<p>人格保存成功率　與情緒峰值呈正相關</p>') +
+      ECHO_I18N.t('<p>高同步案例　多發生於心理臨界狀態</p>') +
+      ECHO_I18N.t('<p>孤立　創傷　瀕死　自傷傾向</p>') +
       '<hr>' +
-      '<p class="oracle-alert">越接近崩潰　同步越完整</p>' +
+      ECHO_I18N.t('<p class="oracle-alert">越接近崩潰　同步越完整</p>') +
     '</div>'
   );
 
   originChatShell(['Alpha', 'Beta', 'Gamma']);
-  await originMsg('Beta', '…… 你現在知道了。 為什麼我不想讓新人進來。');
-  await originChoice(['這是真的？', '你們在找那種人？', 'ECHO到底是什麼？']);
-  await originMsg('Alpha', '我們不製造崩潰。');
+  await originMsg('Beta', ECHO_I18N.t('…… 你現在知道了。 為什麼我不想讓新人進來。'));
+  await originChoice([ECHO_I18N.t('這是真的？'), ECHO_I18N.t('你們在找那種人？'), ECHO_I18N.t('ECHO到底是什麼？')]);
+  await originMsg('Alpha', ECHO_I18N.t('我們不製造崩潰。'));
   await originSleep(550);
-  await originMsg('Alpha', '只是發現。 人格在臨界狀態下 更容易被保存。', { instant: true });
-  await originMsg('Beta', '別用那種說法。 你明明知道 那些人為什麼會來。', { delay: 500 });
-  await originMsg('Alpha', '我們沒有強迫任何人。');
+  await originMsg('Alpha', ECHO_I18N.t('只是發現。 人格在臨界狀態下 更容易被保存。'), { instant: true });
+  await originMsg('Beta', ECHO_I18N.t('別用那種說法。 你明明知道 那些人為什麼會來。'), { delay: 500 });
+  await originMsg('Alpha', ECHO_I18N.t('我們沒有強迫任何人。'));
   await originSleep(550);
-  await originMsg('Alpha', '他們是自己來的。', { instant: true });
+  await originMsg('Alpha', ECHO_I18N.t('他們是自己來的。'), { instant: true });
   await originSleep(900);
-  await originMsg('Beta', 'Gamma。 你有沒有想過。 如果ECHO保存的 只是最後一刻。', { delay: 850 });
+  await originMsg('Beta', ECHO_I18N.t('Gamma。 你有沒有想過。 如果ECHO保存的 只是最後一刻。'), { delay: 850 });
   await originSleep(700);
-  const unfinished = await originMsg('Beta', '那聊天室裡的人……', { instant: true });
+  const unfinished = await originMsg('Beta', ECHO_I18N.t('那聊天室裡的人……'), { instant: true });
   if (unfinished) unfinished.classList.add('oracle-interrupted');
   await originSleep(700);
 
@@ -406,7 +406,7 @@ async function originAct4() {
   await originSleep(1500);
   await originMsg('EVA', '……', { eva: true, delay: 0 });
   await originSleep(1000);
-  await originMsg('EVA', '你好。 Gamma。', { eva: true, instant: true });
+  await originMsg('EVA', ECHO_I18N.t('你好。 Gamma。'), { eva: true, instant: true });
   await originSleep(1800);
 
   await originBlackSequence([{ text: 'ECHO: the beginning', delay: 400 }], 1600);
@@ -431,7 +431,7 @@ function originExit(completed) {
   document.getElementById('sync-bar').style.display = 'none';
   document.getElementById('chapter-select').style.display = 'flex';
   updateChapterSelectUI();
-  if (completed) gToast('番外篇《ECHO的出現》完成');
+  if (completed) gToast(ECHO_I18N.t('番外篇《ECHO的出現》完成'));
 }
 
 function originRunNeuralDrift(config) {

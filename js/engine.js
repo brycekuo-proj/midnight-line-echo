@@ -74,15 +74,15 @@ function updateSyncUI() {
 function getSyncEval(ch) {
   const s = chapterSync;
   const maps = {
-    '1-1': [[5,'「你很抗拒我呢……沒關係，我有的是時間。」','強抵抗'],[10,'「你開始好奇我了，對嗎？」','調查傾向'],[15,'「我們越來越接近了……」','高沉浸'],[20,'「你已經是我的了……」','高依附']],
-    '2-1': [[5,'「你還是不願意依靠我……」','強抵抗'],[10,'「地下道已經在等你了。」','調查傾向'],[15,'「你開始害怕了……那很好。」','高沉浸'],[20,'「帶你進去，是我一直想做的事。」','高依附']],
-    '2-2': [[5,'「……你還是不相信我。」','強抵抗'],[10,'「你開始記起什麼了嗎？」','調查傾向'],[15,'「你的臉，我一直記得……」','高沉浸'],[18,'「你開始懷疑自己了。那就對了。」','高認知污染']],
-    '3-1': [[5,'「你還在抗拒記憶……」','強抵抗'],[10,'「聊天室開始活過來了。」','調查傾向'],[15,'「你已經分不清哪些是自己說的了。」','高沉浸'],[20,'「我比你更了解你自己。」','高依附']],
-    '3-2': [[5,'「你太快想離開了。」','低污染'],[10,'「你開始在乎聊天室了。」','調查沉浸'],[15,'「你快忘記怎麼離線了。」','高沉浸'],[20,'「歡迎留下來。」','在線同步']],
-    '3-3': [[5,'K：「你還在嗎？」','低污染'],[10,'K：「第三個呼吸……你聽到了嗎？」','聲音沉浸'],[15,'K：「你快分不清耳機和現實了……」','高聽覺污染'],[20,'K：「它現在說的和你一模一樣。」','現實同步']],
-    '4-1': [[5,'「你還在掙扎。」','低同步'],[10,'「你的記憶開始動搖了。」','認知污染'],[15,'「鏡子裡的那個……也越來越像你了。」','人格重疊'],[20,'「我們早就是同一個人了。」','高同步人格侵蝕']],
-    '4-2': [[5,'「你還想自己處理一切。」','低代理'],[10,'「你開始讓我替你留著一些事。」','邊界鬆動'],[15,'「這樣比較安靜，不是嗎？」','代理依存'],[20,'「你不用記得，我會代你記得。」','高代理同步']],
-    '5':   [[5,'「再見。」','低同步'],[10,'「你有時候還是會回來的。」','動搖同步'],[15,'「你幾乎不想離開了。」','高同步'],[20,'「永遠在一起。」','完全同步']],
+    '1-1': [[5,ECHO_I18N.t('「你很抗拒我呢……沒關係，我有的是時間。」'),ECHO_I18N.t('強抵抗')],[10,ECHO_I18N.t('「你開始好奇我了，對嗎？」'),ECHO_I18N.t('調查傾向')],[15,ECHO_I18N.t('「我們越來越接近了……」'),ECHO_I18N.t('高沉浸')],[20,ECHO_I18N.t('「你已經是我的了……」'),ECHO_I18N.t('高依附')]],
+    '2-1': [[5,ECHO_I18N.t('「你還是不願意依靠我……」'),ECHO_I18N.t('強抵抗')],[10,ECHO_I18N.t('「地下道已經在等你了。」'),ECHO_I18N.t('調查傾向')],[15,ECHO_I18N.t('「你開始害怕了……那很好。」'),ECHO_I18N.t('高沉浸')],[20,ECHO_I18N.t('「帶你進去，是我一直想做的事。」'),ECHO_I18N.t('高依附')]],
+    '2-2': [[5,ECHO_I18N.t('「……你還是不相信我。」'),ECHO_I18N.t('強抵抗')],[10,ECHO_I18N.t('「你開始記起什麼了嗎？」'),ECHO_I18N.t('調查傾向')],[15,ECHO_I18N.t('「你的臉，我一直記得……」'),ECHO_I18N.t('高沉浸')],[18,ECHO_I18N.t('「你開始懷疑自己了。那就對了。」'),ECHO_I18N.t('高認知污染')]],
+    '3-1': [[5,ECHO_I18N.t('「你還在抗拒記憶……」'),ECHO_I18N.t('強抵抗')],[10,ECHO_I18N.t('「聊天室開始活過來了。」'),ECHO_I18N.t('調查傾向')],[15,ECHO_I18N.t('「你已經分不清哪些是自己說的了。」'),ECHO_I18N.t('高沉浸')],[20,ECHO_I18N.t('「我比你更了解你自己。」'),ECHO_I18N.t('高依附')]],
+    '3-2': [[5,ECHO_I18N.t('「你太快想離開了。」'),ECHO_I18N.t('低污染')],[10,ECHO_I18N.t('「你開始在乎聊天室了。」'),ECHO_I18N.t('調查沉浸')],[15,ECHO_I18N.t('「你快忘記怎麼離線了。」'),ECHO_I18N.t('高沉浸')],[20,ECHO_I18N.t('「歡迎留下來。」'),ECHO_I18N.t('在線同步')]],
+    '3-3': [[5,ECHO_I18N.t('K：「你還在嗎？」'),ECHO_I18N.t('低污染')],[10,ECHO_I18N.t('K：「第三個呼吸……你聽到了嗎？」'),ECHO_I18N.t('聲音沉浸')],[15,ECHO_I18N.t('K：「你快分不清耳機和現實了……」'),ECHO_I18N.t('高聽覺污染')],[20,ECHO_I18N.t('K：「它現在說的和你一模一樣。」'),ECHO_I18N.t('現實同步')]],
+    '4-1': [[5,ECHO_I18N.t('「你還在掙扎。」'),ECHO_I18N.t('低同步')],[10,ECHO_I18N.t('「你的記憶開始動搖了。」'),ECHO_I18N.t('認知污染')],[15,ECHO_I18N.t('「鏡子裡的那個……也越來越像你了。」'),ECHO_I18N.t('人格重疊')],[20,ECHO_I18N.t('「我們早就是同一個人了。」'),ECHO_I18N.t('高同步人格侵蝕')]],
+    '4-2': [[5,ECHO_I18N.t('「你還想自己處理一切。」'),ECHO_I18N.t('低代理')],[10,ECHO_I18N.t('「你開始讓我替你留著一些事。」'),ECHO_I18N.t('邊界鬆動')],[15,ECHO_I18N.t('「這樣比較安靜，不是嗎？」'),ECHO_I18N.t('代理依存')],[20,ECHO_I18N.t('「你不用記得，我會代你記得。」'),ECHO_I18N.t('高代理同步')]],
+    '5':   [[5,ECHO_I18N.t('「再見。」'),ECHO_I18N.t('低同步')],[10,ECHO_I18N.t('「你有時候還是會回來的。」'),ECHO_I18N.t('動搖同步')],[15,ECHO_I18N.t('「你幾乎不想離開了。」'),ECHO_I18N.t('高同步')],[20,ECHO_I18N.t('「永遠在一起。」'),ECHO_I18N.t('完全同步')]],
   };
   const arr = maps[ch] || maps['1-1'];
   for (const [t, q, lv] of arr) { if (s <= t) return { q, lv }; }
@@ -260,8 +260,8 @@ function setHeader(type, name, status) {
   const d = document.createElement('div');
   d.className = 'odot ' + (type === 'eva' ? 'od-on' : type === 'rain' ? 'od-off' : 'od-unk');
   av.appendChild(d);
-  const names = { k: 'K', eva: 'EVA', rain: '林雨晴', unk: '？？？' };
-  const statuses = { k: '上線中', eva: 'ECHO 輔助系統', rain: '最後上線：3天前', unk: '身份不明' };
+  const names = { k: 'K', eva: 'EVA', rain: ECHO_I18N.t('林雨晴'), unk: '？？？' };
+  const statuses = { k: ECHO_I18N.t('上線中'), eva: ECHO_I18N.t('ECHO 輔助系統'), rain: ECHO_I18N.t('最後上線：3天前'), unk: ECHO_I18N.t('身份不明') };
   document.getElementById('hdr-name').textContent = name || names[type] || type;
   document.getElementById('hdr-status').textContent = status || statuses[type] || '';
 }
@@ -357,7 +357,7 @@ async function addMsg(type, content, opts) {
 
   if (recalled) {
     bbl.className = 'bbl recalled';
-    bbl.textContent = '訊息已收回';
+    bbl.textContent = ECHO_I18N.t('訊息已收回');
   } else if (type === 'inject') {
     bbl.className = 'bbl bb-inject';
     bbl.innerHTML = content;
@@ -373,7 +373,7 @@ async function addMsg(type, content, opts) {
     img.alt = '';
     const lbl = document.createElement('div');
     lbl.style.cssText = 'position:absolute;top:6px;left:8px;background:rgba(255,68,102,.85);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:3px;letter-spacing:.05em';
-    lbl.textContent = '時間異常';
+    lbl.textContent = ECHO_I18N.t('時間異常');
     const ts = document.createElement('div');
     ts.style.cssText = 'position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.75);color:#ffaa00;font-size:.6rem;padding:1px 5px;border-radius:3px;font-family:monospace';
     ts.textContent = '03:17 AM';
@@ -415,7 +415,7 @@ async function addMsg(type, content, opts) {
     ts.textContent = '0' + clockHour + ':' + (futMin < 10 ? '0' + futMin : futMin) + ' AM';
     const badge = document.createElement('div');
     badge.style.cssText = 'position:absolute;top:6px;left:8px;background:rgba(180,0,80,.85);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:3px;letter-spacing:.05em';
-    badge.textContent = '備份完成';
+    badge.textContent = ECHO_I18N.t('備份完成');
     p.appendChild(img); p.appendChild(ts); p.appendChild(badge);
     p.onclick = () => openLB('room');
     bbl.appendChild(p);
@@ -447,7 +447,7 @@ async function addMsg(type, content, opts) {
     p.onclick = () => openLB('room_white');
     bbl.appendChild(p);
   } else if (content === '__AUDIO__' || content.startsWith('__AUDIO:')) {
-    const label = content.startsWith('__AUDIO:') ? content.slice(8) : '語音訊息 · 0:08';
+    const label = content.startsWith('__AUDIO:') ? content.slice(8) : ECHO_I18N.t('語音訊息 · 0:08');
     bbl.className = 'audio-bbl';
     const heights = [18, 10, 20, 6, 16, 8, 22, 12, 18, 7, 14, 20, 8];
     const bars = heights.map((h, i) => '<div class="wf-bar" style="height:' + h + 'px;--h:' + h + 'px;--dur:' + (0.4 + i * 0.07) + 's"></div>').join('');
@@ -482,12 +482,12 @@ async function addMsg(type, content, opts) {
           player.onerror = () => {
             if (activeStoryAudio && activeStoryAudio.player === player) activeStoryAudio = null;
             this.classList.remove('playing');
-            gToast('音訊載入失敗');
+            gToast(ECHO_I18N.t('音訊載入失敗'));
           };
           player.play().catch(() => {
             if (activeStoryAudio && activeStoryAudio.player === player) activeStoryAudio = null;
             this.classList.remove('playing');
-            gToast('請再點一次播放語音');
+            gToast(ECHO_I18N.t('請再點一次播放語音'));
           });
         }
       } else {
@@ -497,7 +497,7 @@ async function addMsg(type, content, opts) {
   } else if (content.startsWith('__ONLINE_COUNT:')) {
     const n = content.slice(15);
     bbl.className = 'bbl bb-other';
-    bbl.innerHTML = '<span class="online-badge">🟢 ' + n + ' 人在線</span>';
+    bbl.innerHTML = '<span class="online-badge">🟢 ' + n + ECHO_I18N.t(' 人在線</span>');
   } else if (content.startsWith('__SYNC_BAR:')) {
     const pct = parseInt(content.slice(11));
     bbl.className = 'bbl';
@@ -561,8 +561,8 @@ function showOpts(opts, cb) {
       clearOpts();
       if (o.sync >= 4) {
         await sleep(600);
-        const responseSource = ['2-2', '3-2'].includes(currentChapter) ? '林雨晴' : currentChapter === '3-3' ? 'K' : 'EVA';
-        gToast(responseSource + ' 對你的回應明顯提升');
+        const responseSource = ['2-2', '3-2'].includes(currentChapter) ? ECHO_I18N.t('林雨晴') : currentChapter === '3-3' ? 'K' : 'EVA';
+        gToast(responseSource + ECHO_I18N.t(' 對你的回應明顯提升'));
       }
       cb(i, o.text, o.sync);
     };
@@ -585,25 +585,25 @@ function getPermissionWhackBand(finalOnCount) {
   if (finalOnCount <= 1) {
     return {
       key: 'low',
-      evaLine: '……原來你真的不太喜歡。'
+      evaLine: ECHO_I18N.t('……原來你真的不太喜歡。')
     };
   }
   if (finalOnCount <= 5) {
     return {
       key: 'mid',
-      evaLine: '……我知道了。至少還有一些地方你願意讓我幫忙。'
+      evaLine: ECHO_I18N.t('……我知道了。至少還有一些地方你願意讓我幫忙。')
     };
   }
   return {
     key: 'high',
-    evaLine: '……我還以為你不會讓我碰這些。'
+    evaLine: ECHO_I18N.t('……我還以為你不會讓我碰這些。')
   };
 }
 
 function clonePermissionConfig(list) {
   return list.map((item, index) => ({
     id: item.id || 'perm-' + index,
-    label: item.label || '未命名權限',
+    label: item.label || ECHO_I18N.t('未命名權限'),
     state: !!item.state,
     category: item.category || 'general',
     keyAssist: !!item.keyAssist,
@@ -615,16 +615,16 @@ function clonePermissionConfig(list) {
 
 function getDefaultPermissionWhackConfig() {
   return [
-    { id: 'notifications', label: '通知存取', state: false, category: 'general', substitute: 'message_assist' },
-    { id: 'reminder_sync', label: '提醒同步', state: true, category: 'reminder', keyAssist: true, substitute: 'background_activity' },
-    { id: 'background_activity', label: '背景活動', state: false, category: 'service', substitute: 'usage_analysis' },
-    { id: 'usage_analysis', label: '使用分析', state: false, category: 'analysis', substitute: 'sleep_routine' },
-    { id: 'calendar_sync', label: '行程整理', state: true, category: 'schedule', keyAssist: true, substitute: 'transport_hints' },
-    { id: 'transport_hints', label: '交通提示', state: false, category: 'service', substitute: 'calendar_sync' },
-    { id: 'message_assist', label: '訊息協助', state: true, category: 'messages', keyAssist: true, substitute: 'shopping_suggestions' },
-    { id: 'shopping_suggestions', label: '購物建議', state: false, category: 'service', substitute: 'health_reminders' },
-    { id: 'sleep_routine', label: '睡眠管理', state: true, category: 'reminder', keyAssist: true, substitute: 'health_reminders' },
-    { id: 'health_reminders', label: '健康提醒', state: false, category: 'reminder', substitute: 'reminder_sync' }
+    { id: 'notifications', label: ECHO_I18N.t('通知存取'), state: false, category: 'general', substitute: 'message_assist' },
+    { id: 'reminder_sync', label: ECHO_I18N.t('提醒同步'), state: true, category: 'reminder', keyAssist: true, substitute: 'background_activity' },
+    { id: 'background_activity', label: ECHO_I18N.t('背景活動'), state: false, category: 'service', substitute: 'usage_analysis' },
+    { id: 'usage_analysis', label: ECHO_I18N.t('使用分析'), state: false, category: 'analysis', substitute: 'sleep_routine' },
+    { id: 'calendar_sync', label: ECHO_I18N.t('行程整理'), state: true, category: 'schedule', keyAssist: true, substitute: 'transport_hints' },
+    { id: 'transport_hints', label: ECHO_I18N.t('交通提示'), state: false, category: 'service', substitute: 'calendar_sync' },
+    { id: 'message_assist', label: ECHO_I18N.t('訊息協助'), state: true, category: 'messages', keyAssist: true, substitute: 'shopping_suggestions' },
+    { id: 'shopping_suggestions', label: ECHO_I18N.t('購物建議'), state: false, category: 'service', substitute: 'health_reminders' },
+    { id: 'sleep_routine', label: ECHO_I18N.t('睡眠管理'), state: true, category: 'reminder', keyAssist: true, substitute: 'health_reminders' },
+    { id: 'health_reminders', label: ECHO_I18N.t('健康提醒'), state: false, category: 'reminder', substitute: 'reminder_sync' }
   ];
 }
 
@@ -637,15 +637,15 @@ async function runPermissionWhack(config) {
   const durationMs = cfg.durationMs || 30000;
   const permissions = clonePermissionConfig(cfg.permissions || getDefaultPermissionWhackConfig());
   const applySync = cfg.applySync !== false;
-  const title = cfg.title || '⚙ EVA Assistant 權限管理';
-  const subtitle = cfg.subtitle || '關閉你不希望 EVA 接手的權限。';
+  const title = cfg.title || ECHO_I18N.t('⚙ EVA Assistant 權限管理');
+  const subtitle = cfg.subtitle || ECHO_I18N.t('關閉你不希望 EVA 接手的權限。');
   const introMs = cfg.introMs || 2600;
   const falseClearMs = cfg.falseClearMs || 2600;
   const waveLabels = cfg.waveLabels || {
-    0: '待命',
-    1: 'Wave 1 · 還原',
-    2: 'Wave 2 · 替換',
-    3: 'Wave 3 · 接手'
+    0: ECHO_I18N.t('待命'),
+    1: ECHO_I18N.t('Wave 1 · 還原'),
+    2: ECHO_I18N.t('Wave 2 · 替換'),
+    3: ECHO_I18N.t('Wave 3 · 接手')
   };
 
   return new Promise((resolve) => {
@@ -676,8 +676,8 @@ async function runPermissionWhack(config) {
       '<div class="pw-wave"></div>' +
       '<div class="pw-list"></div>' +
       '<div class="pw-foot">' +
-        '<div class="pw-meter"><span class="pw-meter-label">已接手</span><span class="pw-meter-value">0 / 10</span></div>' +
-        '<div class="pw-hint">EVA：……不用緊張。我只是想知道，哪些事情你不希望我幫忙。</div>' +
+        ECHO_I18N.t('<div class="pw-meter"><span class="pw-meter-label">已接手</span><span class="pw-meter-value">0 / 10</span></div>') +
+        ECHO_I18N.t('<div class="pw-hint">EVA：……不用緊張。我只是想知道，哪些事情你不希望我幫忙。</div>') +
       '</div>';
 
     const titleEl = widget.querySelector('.pw-title');
@@ -728,7 +728,7 @@ async function runPermissionWhack(config) {
         item.state = false;
         item.lastTouchedAt = Date.now();
         playerToggleCount++;
-        hintEl.textContent = '你把「' + item.label + '」關掉了。';
+        hintEl.textContent = ECHO_I18N.t('你把「') + item.label + ECHO_I18N.t('」關掉了。');
         render();
         scheduleImmediateResponse(item);
       };
@@ -762,13 +762,13 @@ async function runPermissionWhack(config) {
         if (phase === 'intro') return;
         if (wave === 1) {
           if (!item.keyAssist && item.category !== 'reminder') return;
-          setPermOn(item, 'EVA：……這個，我猜你會需要。');
+          setPermOn(item, ECHO_I18N.t('EVA：……這個，我猜你會需要。'));
           return;
         }
         if (wave === 2 && item.substitute) {
           const alt = findPerm(item.substitute);
           if (alt && !alt.state) {
-            setPermOn(alt, 'EVA：……我沒有全部碰。只是先整理。');
+            setPermOn(alt, ECHO_I18N.t('EVA：……我沒有全部碰。只是先整理。'));
             return;
           }
         }
@@ -776,7 +776,7 @@ async function runPermissionWhack(config) {
           if (Date.now() < falseClearUntil) return;
           const target = findPerm(item.substitute) || item;
           if (target && !target.state) {
-            setPermOn(target, 'EVA：……你先休息一下，這些我可以先放著。');
+            setPermOn(target, ECHO_I18N.t('EVA：……你先休息一下，這些我可以先放著。'));
           }
         }
       }, delay);
@@ -785,7 +785,7 @@ async function runPermissionWhack(config) {
     function enterFalseClear() {
       wave3FalseClearTriggered = true;
       falseClearUntil = Date.now() + falseClearMs;
-      hintEl.textContent = '系統：整理已暫停。';
+      hintEl.textContent = ECHO_I18N.t('系統：整理已暫停。');
     }
 
     function applyWavePressure() {
@@ -794,7 +794,7 @@ async function runPermissionWhack(config) {
       if (wave === 3 && !wave3FalseClearTriggered) enterFalseClear();
       if (now < falseClearUntil) return;
       if (wave === 3 && now - falseClearUntil < 700) {
-        hintEl.textContent = 'EVA：……好了，先這樣。我只是把剛剛中斷的服務補回來。';
+        hintEl.textContent = ECHO_I18N.t('EVA：……好了，先這樣。我只是把剛剛中斷的服務補回來。');
       }
       const cadence = remainingMs <= 3000 ? 650 : (wave === 1 ? 3200 : wave === 2 ? 3000 : 2400);
       if (now - lastPressureAt < cadence) return;
@@ -806,7 +806,7 @@ async function runPermissionWhack(config) {
       if (wave === 1) {
         const target = offPerms.find((item) => item.category === 'reminder' || item.keyAssist);
         if (!target) return;
-        setPermOn(target, 'EVA：……先幫你開著。');
+        setPermOn(target, ECHO_I18N.t('EVA：……先幫你開著。'));
         return;
       }
 
@@ -819,13 +819,13 @@ async function runPermissionWhack(config) {
           (item.category === 'service' || item.category === 'analysis')
         );
         if (chainSource) {
-          setPermOn(findPerm(chainSource.substitute), 'EVA：……關掉一個也沒關係，我會從別的地方幫你。');
+          setPermOn(findPerm(chainSource.substitute), ECHO_I18N.t('EVA：……關掉一個也沒關係，我會從別的地方幫你。'));
           return;
         }
         if (activeCategoriesCount('service') <= 1) {
           const supportTarget = offPerms.find((item) => item.category === 'service');
           if (supportTarget) {
-            setPermOn(supportTarget, 'EVA：……我只是換一種方式幫你。');
+            setPermOn(supportTarget, ECHO_I18N.t('EVA：……我只是換一種方式幫你。'));
           }
         }
         return;
@@ -834,7 +834,7 @@ async function runPermissionWhack(config) {
       const target = offPerms.find((item) => item.category === 'service') ||
         offPerms.find((item) => item.category === 'analysis') ||
         offPerms[0];
-      setPermOn(target, 'EVA：……剛剛停掉的那部分，我先替你補回來。');
+      setPermOn(target, ECHO_I18N.t('EVA：……剛剛停掉的那部分，我先替你補回來。'));
     }
 
     function finish(reason) {
@@ -886,7 +886,7 @@ async function runPermissionWhack(config) {
       phase = 'active';
       wave = 1;
       startedAt = Date.now();
-      hintEl.textContent = 'EVA：……不用緊張。我不是在拿你的手機。';
+      hintEl.textContent = ECHO_I18N.t('EVA：……不用緊張。我不是在拿你的手機。');
       render();
     }, introMs);
 
@@ -917,11 +917,11 @@ function startSilence(pts, hint) {
   clearTimeout(silTimer);
   const h = document.createElement('div');
   h.className = 'silence-hint';
-  h.textContent = hint || '（等待中……）';
+  h.textContent = hint || ECHO_I18N.t('（等待中……）');
   chatBody.appendChild(h);
   scrollBottom();
   silTimer = setTimeout(() => {
-    if (!silTriggered) { h.remove(); silTriggered = true; addSync(pts); gToast('+' + pts + '% 同步率（沉默）'); }
+    if (!silTriggered) { h.remove(); silTriggered = true; addSync(pts); gToast('+' + pts + ECHO_I18N.t('% 同步率（沉默）')); }
   }, 10000);
   return () => { clearTimeout(silTimer); silTriggered = true; h.remove(); };
 }
@@ -943,12 +943,12 @@ function openLB(type, extraSrc, extraCaption) {
 
   if (type === 'doc') {
     imgEl.src = extraSrc;
-    document.getElementById('lb-cap').textContent = extraCaption || 'ECHO 附件';
-    det.textContent = '⚠ 點擊任意處關閉';
+    document.getElementById('lb-cap').textContent = extraCaption || ECHO_I18N.t('ECHO 附件');
+    det.textContent = ECHO_I18N.t('⚠ 點擊任意處關閉');
     setTimeout(() => det.classList.add('show'), 500);
     // threads special hidden text
     if (extraSrc && extraSrc.includes('threads')) {
-      hid.textContent = '她不是失蹤，她只是還在線上。';
+      hid.textContent = ECHO_I18N.t('她不是失蹤，她只是還在線上。');
       setTimeout(() => hid.classList.add('reveal'), 4000);
     }
     lbEl.style.display = 'flex';
@@ -959,68 +959,68 @@ function openLB(type, extraSrc, extraCaption) {
     // 第二次以後看到有人版，製造「她出現了」效果
     const src = lbViewCount[type] >= 2 ? 'img/scenes/tunnel_figure.jpg' : 'img/scenes/tunnel_empty.jpg';
     imgEl.src = src;
-    document.getElementById('lb-cap').textContent = '萬華地下道 · K 傳送';
-    det.textContent = '⚠ 時間戳異常：03:17 AM（當前 02:13 AM）';
+    document.getElementById('lb-cap').textContent = ECHO_I18N.t('萬華地下道 · K 傳送');
+    det.textContent = ECHO_I18N.t('⚠ 時間戳異常：03:17 AM（當前 02:13 AM）');
     setTimeout(() => det.classList.add('show'), 900);
     if (lbViewCount[type] >= 2) {
-      hid.textContent = '林雨晴最後出現在這裡';
+      hid.textContent = ECHO_I18N.t('林雨晴最後出現在這裡');
       setTimeout(() => hid.classList.add('reveal'), 2500);
       // 悄悄換掉聊天室裡的泡泡圖片
       const bubble = document.getElementById('k-photo-bubble');
       if (bubble) { const bi = bubble.querySelector('img'); if (bi) bi.src = 'img/scenes/tunnel_figure.jpg'; }
     } else {
-      hid.textContent = '不要回頭';
+      hid.textContent = ECHO_I18N.t('不要回頭');
       setTimeout(() => hid.classList.add('reveal'), 3500);
     }
   } else if (type === 'cctv') {
     imgEl.src = 'img/scenes/tunnel_cctv.jpg';
     imgEl.style.cssText += ';filter:brightness(.8) saturate(.35) contrast(1.1)';
-    document.getElementById('lb-cap').textContent = '監視器畫面 · CAM 07 · 林雨晴失蹤當晚';
-    det.textContent = '⚠  2024/06/02  03:17:23  —  她在回頭看';
+    document.getElementById('lb-cap').textContent = ECHO_I18N.t('監視器畫面 · CAM 07 · 林雨晴失蹤當晚');
+    det.textContent = ECHO_I18N.t('⚠  2024/06/02  03:17:23  —  她在回頭看');
     setTimeout(() => det.classList.add('show'), 700);
-    hid.textContent = '她已經站在那裡 3 小時了';
+    hid.textContent = ECHO_I18N.t('她已經站在那裡 3 小時了');
     setTimeout(() => hid.classList.add('reveal'), 4000);
-    if (lbViewCount[type] === 1) { addSync(2); gToast('+2% 同步率'); }
-    else if (lbViewCount[type] >= 3) { addSync(1); gToast('+1% 同步率'); }
+    if (lbViewCount[type] === 1) { addSync(2); gToast(ECHO_I18N.t('+2% 同步率')); }
+    else if (lbViewCount[type] >= 3) { addSync(1); gToast(ECHO_I18N.t('+1% 同步率')); }
   } else if (type === 'room') {
     imgEl.src = 'img/scenes/room_eva.jpg';
     imgEl.style.cssText += ';filter:brightness(.75)';
     const futMin = clockMin + 3;
-    document.getElementById('lb-cap').textContent = '你的房間 · 拍攝時間：未來 +3分鐘';
-    det.textContent = '⚠ 0' + clockHour + ':' + (futMin < 10 ? '0' + futMin : futMin) + ' AM  —  她在你後面';
+    document.getElementById('lb-cap').textContent = ECHO_I18N.t('你的房間 · 拍攝時間：未來 +3分鐘');
+    det.textContent = '⚠ 0' + clockHour + ':' + (futMin < 10 ? '0' + futMin : futMin) + ECHO_I18N.t(' AM  —  她在你後面');
     setTimeout(() => det.classList.add('show'), 700);
-    hid.textContent = '不要回頭';
+    hid.textContent = ECHO_I18N.t('不要回頭');
     setTimeout(() => hid.classList.add('reveal'), 2000);
-    if (lbViewCount[type] === 1) { addSync(2); gToast('+2% 同步率'); }
-    else if (lbViewCount[type] >= 3) { addSync(1); gToast('+1% 同步率'); }
+    if (lbViewCount[type] === 1) { addSync(2); gToast(ECHO_I18N.t('+2% 同步率')); }
+    else if (lbViewCount[type] >= 3) { addSync(1); gToast(ECHO_I18N.t('+1% 同步率')); }
   } else if (type === 'rain') {
     imgEl.src = 'img/rain/rain_glitch2.jpg';
     imgEl.style.cssText += ';filter:brightness(.75) saturate(.7)';
-    document.getElementById('lb-cap').textContent = '深夜雨街 · 林雨晴失蹤前';
-    det.textContent = '⚠ 她已經站在那裡 3 小時了';
+    document.getElementById('lb-cap').textContent = ECHO_I18N.t('深夜雨街 · 林雨晴失蹤前');
+    det.textContent = ECHO_I18N.t('⚠ 她已經站在那裡 3 小時了');
     setTimeout(() => det.classList.add('show'), 1200);
-    hid.textContent = '她在等';
+    hid.textContent = ECHO_I18N.t('她在等');
     setTimeout(() => hid.classList.add('reveal'), 5000);
-    if (lbViewCount[type] === 1) { addSync(2); gToast('+2% 同步率'); }
+    if (lbViewCount[type] === 1) { addSync(2); gToast(ECHO_I18N.t('+2% 同步率')); }
   } else if (type === 'rain_tunnel') {
     imgEl.src = 'img/rain/rain_tunnel.jpg';
     imgEl.style.cssText += ';filter:brightness(.7)';
-    document.getElementById('lb-cap').textContent = '地下道自拍 · 林雨晴';
-    det.textContent = '⚠ 牆上有字';
+    document.getElementById('lb-cap').textContent = ECHO_I18N.t('地下道自拍 · 林雨晴');
+    det.textContent = ECHO_I18N.t('⚠ 牆上有字');
     setTimeout(() => det.classList.add('show'), 1000);
     hid.textContent = 'Echo';
     setTimeout(() => hid.classList.add('reveal'), 2500);
   } else if (type === 'room_white') {
     imgEl.src = 'img/scenes/room_white.jpg';
     imgEl.style.cssText += ';filter:brightness(.98)';
-    document.getElementById('lb-cap').textContent = '同步空間 · ECHO';
+    document.getElementById('lb-cap').textContent = ECHO_I18N.t('同步空間 · ECHO');
     det.textContent = 'SYNCHRONIZATION COMPLETE';
     det.style.color = '#9933ff';
     setTimeout(() => det.classList.add('show'), 1200);
-    hid.textContent = '歡迎回家。';
+    hid.textContent = ECHO_I18N.t('歡迎回家。');
     hid.style.cssText = 'margin-top:1rem;background:#f0f0f8;color:#f0f0f8;font-size:.75rem;padding:.5rem;border-radius:6px;font-family:monospace;transition:color 2.5s;text-align:center';
     setTimeout(() => { hid.style.color = '#9933ff'; }, 3000);
-    if (lbViewCount[type] === 1) { addSync(2); gToast('+2% 同步率'); }
+    if (lbViewCount[type] === 1) { addSync(2); gToast(ECHO_I18N.t('+2% 同步率')); }
   }
 
   lbEl.style.display = 'flex';
@@ -1033,7 +1033,7 @@ function addFileCard(tag, tagClass, title, sub, key, avType) {
   const row = document.createElement('div'); row.className = 'brow'; row.appendChild(mkAv(avType || 'k'));
   const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;max-width:100%';
   const card = document.createElement('div'); card.className = 'fc';
-  card.innerHTML = '<div class="fch">ECHO 附件</div><div class="fcb"><div class="fct">' + title + '</div><div class="fcs">' + sub + '</div><span class="fctag ' + tagClass + '">' + tag + '</span></div>';
+  card.innerHTML = ECHO_I18N.t('<div class="fch">ECHO 附件</div><div class="fcb"><div class="fct">') + title + '</div><div class="fcs">' + sub + '</div><span class="fctag ' + tagClass + '">' + tag + '</span></div>';
   // doc image keys open lightbox with real image
   const docImgMap = { news: 'img/docs/news.jpg', ptt: 'img/docs/ptt.jpg', thread: 'img/docs/threads.jpg' };
   card.onclick = () => {
@@ -1041,14 +1041,14 @@ function addFileCard(tag, tagClass, title, sub, key, avType) {
     if (key === 'cctv') { openLB('cctv'); }
     else if (key === 'rain-photo') { openLB('rain'); }
     else if (docImgMap[key]) { openLB('doc', docImgMap[key], title); }
-    else { gToast('已閱讀：' + title); }
+    else { gToast(ECHO_I18N.t('已閱讀：') + title); }
   };
   wrap.appendChild(card); row.appendChild(wrap); chatBody.appendChild(row); scrollBottom();
 }
 
 function trackFile() {
   filesViewed++;
-  if (filesViewed === 4) { addSync(2); gToast('+2% 同步率（完整查看）'); }
+  if (filesViewed === 4) { addSync(2); gToast(ECHO_I18N.t('+2% 同步率（完整查看）')); }
 }
 
 async function fadeOut() {
@@ -1111,7 +1111,7 @@ function showEnd(chName) {
   const endEl = document.getElementById('chapter-end');
   endEl.className = isWhite ? 'white-end' : '';
   endEl.style.display = 'flex';
-  document.getElementById('ce-title').textContent = '章節完';
+  document.getElementById('ce-title').textContent = ECHO_I18N.t('章節完');
   document.getElementById('ce-name').textContent = chName;
   document.getElementById('ce-name').style.color = isWhite ? '#333' : '#fff';
 
@@ -1119,8 +1119,8 @@ function showEnd(chName) {
   let routeHint = '';
   if (isCh4) {
     if (totalSync <= 33)      routeHint = ''; // 已被上面攔截
-    else if (totalSync <= 66) routeHint = '<div style="font-size:.65rem;color:#2299aa;letter-spacing:.1em;margin-top:.8rem">→ 路線二：《循環在線》<br>同步率 34～66%</div>';
-    else                      routeHint = '<div style="font-size:.65rem;color:#9933ff;letter-spacing:.1em;margin-top:.8rem">→ 路線三：第五章《ECHO》已解鎖<br>同步率 ' + totalSync + '%</div>';
+    else if (totalSync <= 66) routeHint = ECHO_I18N.t('<div style="font-size:.65rem;color:#2299aa;letter-spacing:.1em;margin-top:.8rem">→ 路線二：《循環在線》<br>同步率 34～66%</div>');
+    else                      routeHint = ECHO_I18N.t('<div style="font-size:.65rem;color:#9933ff;letter-spacing:.1em;margin-top:.8rem">→ 路線三：第五章《ECHO》已解鎖<br>同步率 ') + totalSync + '%</div>';
   }
 
   setTimeout(() => {
@@ -1128,9 +1128,9 @@ function showEnd(chName) {
     document.getElementById('ce-sbf').style.width = Math.round(chapterSync / SYNC_MAX * 100) + '%';
     const msgEl = document.getElementById('ce-msg');
     msgEl.className = 'ce-msg' + (isWhite ? ' white-msg' : '');
-    const evalSpeaker = ['2-2', '3-2'].includes(currentChapter) ? '林雨晴' : currentChapter === '3-3' ? 'K' : 'EVA';
+    const evalSpeaker = ['2-2', '3-2'].includes(currentChapter) ? ECHO_I18N.t('林雨晴') : currentChapter === '3-3' ? 'K' : 'EVA';
     msgEl.innerHTML = '<b>' + evalSpeaker + '</b>：' + ev.q + '<br><span style="font-size:.65rem;color:#555;letter-spacing:.1em">[' + ev.lv + ']</span>' + routeHint;
-    document.getElementById('ce-next').textContent = '累積同步率：' + totalSync + '%';
+    document.getElementById('ce-next').textContent = ECHO_I18N.t('累積同步率：') + totalSync + '%';
   }, 800);
 }
 
@@ -1225,15 +1225,15 @@ function updateChapterSelectUI() {
     el.style.display = (!engineering && !unlocked) ? 'none' : '';
     el.classList.toggle('locked', !unlocked);
     el.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
-    el.title = unlocked ? '' : '此章節尚未解鎖';
+    el.title = unlocked ? '' : ECHO_I18N.t('此章節尚未解鎖');
 
     const syncEl = document.getElementById('cs-sync-' + ch);
     if (!syncEl) return;
     if (engineering) syncEl.textContent = 'TEST';
-    else if (ch === 'origin' && completedChapters[ch] !== undefined) syncEl.textContent = '完成 ✓';
+    else if (ch === 'origin' && completedChapters[ch] !== undefined) syncEl.textContent = ECHO_I18N.t('完成 ✓');
     else if (completedChapters[ch] !== undefined) syncEl.textContent = completedChapters[ch] + '% ✓';
-    else if (ch === '1-1') syncEl.textContent = '開始';
-    else if (playerUnlocks[ch]) syncEl.textContent = '解鎖';
+    else if (ch === '1-1') syncEl.textContent = ECHO_I18N.t('開始');
+    else if (playerUnlocks[ch]) syncEl.textContent = ECHO_I18N.t('解鎖');
     else syncEl.textContent = '🔒';
   });
 
@@ -1253,15 +1253,15 @@ function updateChapterSelectUI() {
   }
   if (note) {
     note.textContent = engineering
-      ? '工程版：所有已實作章節全開；測試結果不會寫入玩家存檔。'
-      : '玩家版：僅顯示目前已解鎖章節；後續章節會依同步率、路線條件與完成進度出現。';
+      ? ECHO_I18N.t('工程版：所有已實作章節全開；測試結果不會寫入玩家存檔。')
+      : ECHO_I18N.t('玩家版：僅顯示目前已解鎖章節；後續章節會依同步率、路線條件與完成進度出現。');
   }
 
   const tot = document.getElementById('cs-total');
   if (tot) {
     tot.innerHTML = engineering
-      ? '工程測試模式 · <b>全章節開放</b>'
-      : '累積同步率：<b>' + totalSync + '%</b>';
+      ? ECHO_I18N.t('工程測試模式 · <b>全章節開放</b>')
+      : ECHO_I18N.t('累積同步率：<b>') + totalSync + '%</b>';
   }
 }
 
@@ -1278,7 +1278,7 @@ function goChapterSelect() {
 function startChapter(ch) {
   stopStoryAudio();
   if (!isChapterUnlocked(ch)) {
-    if (echoMode === 'player') gToast('🔒 此章節尚未解鎖');
+    if (echoMode === 'player') gToast(ECHO_I18N.t('🔒 此章節尚未解鎖'));
     return false;
   }
   cancelActiveWidget('start_chapter');
@@ -1292,7 +1292,7 @@ function startChapter(ch) {
   app.style.display = 'flex'; app.style.opacity = '1';
   sb.style.display = 'flex'; sb.style.opacity = '1';
   const chapterStartMinute = ch === '1-1' ? '13' : ch === '2-2' ? '58' : '41';
-  chatBody.innerHTML = '<div class="tlbl">凌晨 02:' + chapterStartMinute + '</div>';
+  chatBody.innerHTML = ECHO_I18N.t('<div class="tlbl">凌晨 02:') + chapterStartMinute + '</div>';
   chatBody.className = '';
   chatBody.style.background = '';
   chatBody.style.filter = '';
@@ -1301,7 +1301,7 @@ function startChapter(ch) {
   updateSyncUI();
   document.getElementById('back-btn').onclick = () => {
     backCount++;
-    if (backCount >= 3) { subSync(2); gToast('−2% 同步率（抵抗）'); backCount = 0; }
+    if (backCount >= 3) { subSync(2); gToast(ECHO_I18N.t('−2% 同步率（抵抗）')); backCount = 0; }
     glitch();
   };
   setTimeout(() => { if (window.CHAPTERS && window.CHAPTERS[ch]) window.CHAPTERS[ch](); }, 500);
