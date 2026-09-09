@@ -28,7 +28,7 @@ async function ch11_s1() {
   await addMsg('sys', ECHO_I18N.t('K 傳送了相關檔案'), { noTyping: true });
   await sleep(400);
   const files = [
-    [ECHO_I18N.t('新聞'), 'tn', ECHO_I18N.t('女高中生林雨晴失蹤'), ECHO_I18N.t('最後出現：萬華地下道<br>警方始終無法找到'), 'news'],
+    [ECHO_I18N.t('新聞'), 'tn', ECHO_I18N.t('26歲跨國公司高管林雨晴失蹤'), ECHO_I18N.t('最後出現：萬華地下道<br>警方始終無法找到'), 'news'],
     ['PTT', 'tp', ECHO_I18N.t('[討論] 地下道失蹤案真相'), ECHO_I18N.t('「我親眼看到那個女生……她好像在等什麼人」'), 'ptt'],
     ['Threads', 'tt', ECHO_I18N.t('林雨晴帳號最近有活動？'), ECHO_I18N.t('「她失蹤兩年了，昨天我看到她上線」'), 'thread'],
     [ECHO_I18N.t('監視器截圖'), 'tph', ECHO_I18N.t('失蹤當晚 CAM-03'), ECHO_I18N.t('影像模糊，右側有不明黑影'), 'cctv'],

@@ -381,7 +381,7 @@ window.ECHO_EN = Object.freeze({
   "林雨晴也走過這條路。": "Lin Yuqing took this path too.",
   "K 傳送了相關檔案": "K sent related files",
   "新聞": "News",
-  "女高中生林雨晴失蹤": "High school student Lin Yuqing missing",
+  "26歲跨國公司高管林雨晴失蹤": "26-year-old multinational company executive Lin Yuqing missing",
   "最後出現：萬華地下道": "Last seen: Wanhua Underpass",
   "警方始終無法找到": "Police have been unable to find her",
   "[討論] 地下道失蹤案真相": "[Discussion] The truth about the underpass disappearance",
